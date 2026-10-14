@@ -1,1 +1,24 @@
-{"name":"atlas-city","version":"0.1.0","private":true,"type":"module","scripts":{"dev":"vite --host 0.0.0.0","build":"vite build","preview":"vite preview --host 0.0.0.0"},"dependencies":{"@fontsource/dm-sans":"^5.3.0","@fontsource/manrope":"^5.3.0","lucide":"^0.468.0","three":"^0.180.0"},"devDependencies":{"@playwright/test":"^1.56.0","vite":"^7.1.0"}}
+{
+  "name": "atlas-city",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test tests/operations-model.test.mjs",
+    "test:e2e": "node tests/operations-browser.mjs",
+    "test:classic": "node tests/smoke.mjs"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
+    "lucide": "^0.468.0",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "vite": "^7.1.0"
+  }
+}

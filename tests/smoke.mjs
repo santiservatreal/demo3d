@@ -3,7 +3,7 @@ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'
 const page=await browser.newPage({viewport:{width:1440,height:1100}});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 try {
- await page.goto(process.env.BASE_URL||'http://127.0.0.1:5173');await expect(page.locator('canvas')).toBeVisible();await expect(page.locator('.district-label')).toHaveCount(5);await page.waitForTimeout(600);
+ await page.goto((process.env.BASE_URL||'http://127.0.0.1:5173')+'/?experience=classic');await expect(page.locator('canvas')).toBeVisible();await expect(page.locator('.district-label')).toHaveCount(5);await page.waitForTimeout(600);
  // Exercise actual rendered building selection through raycasting.
  const canvas=page.locator('canvas'),bounds=await canvas.boundingBox();let picked=false;
  for(let y=.3;y<.77&&!picked;y+=.06)for(let x=.3;x<.72&&!picked;x+=.04){await page.mouse.move(bounds.x+bounds.width*x,bounds.y+bounds.height*y);if(await page.locator('#building-tooltip').isVisible()){await page.mouse.click(bounds.x+bounds.width*x,bounds.y+bounds.height*y);picked=true;}}
