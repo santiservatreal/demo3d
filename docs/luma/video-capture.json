@@ -1,0 +1,11 @@
+{
+  "method": "Chromium CDP compositor JPEG frames + system FFmpeg, original timestamps",
+  "frames": 37,
+  "durationSeconds": 21.037966012954712,
+  "preset": "light",
+  "viewport": [
+    1280,
+    800
+  ],
+  "syntheticFrames": false
+}

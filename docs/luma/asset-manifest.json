@@ -1,0 +1,69 @@
+{
+  "totalBytes": 2818509,
+  "assets": [
+    {
+      "file": "carton.glb",
+      "bytes": 48312,
+      "sha256": "6d0a1e5a78a5b2315fa6830e0546db1ffe21561f05f94caf616274109c9b9682",
+      "source": "tools/build_luma_assets.py",
+      "license": "CC0-1.0",
+      "provenance": "Original, generated locally"
+    },
+    {
+      "file": "factory.glb",
+      "bytes": 511588,
+      "sha256": "7ec202362615f448b1ec32dbc2a828e16ad4dbc0d1fc891568321edf0d18ea2f",
+      "source": "tools/build_luma_assets.py",
+      "license": "CC0-1.0",
+      "provenance": "Original, generated locally"
+    },
+    {
+      "file": "forklift.glb",
+      "bytes": 140292,
+      "sha256": "ae3285fa099e61f94a83889a522712f09b51c8e1e5341f95ff9ae147d941fd66",
+      "source": "tools/build_luma_assets.py",
+      "license": "CC0-1.0",
+      "provenance": "Original, generated locally"
+    },
+    {
+      "file": "lamp.glb",
+      "bytes": 72176,
+      "sha256": "bb6b2ae6e6a9b82e7599623f13355df1bbc0ae2c77a45deede6c4f7b9d7dcc99",
+      "source": "tools/build_luma_assets.py",
+      "license": "CC0-1.0",
+      "provenance": "Original, generated locally"
+    },
+    {
+      "file": "pallet.glb",
+      "bytes": 86136,
+      "sha256": "2d549e2e1b8ca0d479edf5c5e800924a25653efe6dcc13a028dab9f82973a65b",
+      "source": "tools/build_luma_assets.py",
+      "license": "CC0-1.0",
+      "provenance": "Original, generated locally"
+    },
+    {
+      "file": "studio.hdr",
+      "bytes": 524337,
+      "sha256": "a3cf89fa89867524f991ade2d033036b2a671d92825b85639ef82be7d13bbc2a",
+      "source": "tools/build_luma_environment.py",
+      "license": "CC0-1.0",
+      "provenance": "Original, generated locally"
+    },
+    {
+      "file": "truck.glb",
+      "bytes": 826300,
+      "sha256": "e50b65822d10e07d6f9241e7bb805cf97f3466ace2fcb9fe543c0978a52cdb43",
+      "source": "tools/build_luma_assets.py",
+      "license": "CC0-1.0",
+      "provenance": "Original, generated locally"
+    },
+    {
+      "file": "warehouse.glb",
+      "bytes": 609368,
+      "sha256": "d2a988653ce8b8f520340276b5819823d4babf1e63e7456d2d1685d4273ddf8e",
+      "source": "tools/build_luma_assets.py",
+      "license": "CC0-1.0",
+      "provenance": "Original, generated locally"
+    }
+  ]
+}

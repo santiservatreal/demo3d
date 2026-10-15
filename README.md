@@ -1,8 +1,8 @@
-# Atlas · Business in motion
+# Atlas · Luma Works
 
-Una capa visual para comprender la empresa a partir de datos de CRM, ERP, logística y geolocalización. Primera versión vertical operativa con fuentes **simuladas**, Three.js y Vite. No necesita claves ni servicios externos para la demo. Las fuentes tipográficas son locales.
+Una maqueta industrial interactiva para entender cómo los datos de una empresa se convierten en actividad visual. La vista principal es **Luma Works**, una empresa ficticia que ensambla lámparas: taller, comprobación, embalaje, almacén, muelles y dos camiones.
 
-## Abrir y ejecutar
+## Ejecutar
 
 Node.js 22.12+ y npm; validado con Node 24.19.
 
@@ -11,68 +11,53 @@ npm ci
 npm run dev -- --port 5173
 ```
 
+En este entorno cloud, usa `npm ci --cache /tmp/atlas-npm-cache` si el caché del directorio personal no es escribible.
+
 ```sh
 npm run build
 npm run preview -- --port 4173
 ```
 
-Vercel: preset **Vite**, raíz `./`, build `npm run build`, directorio de salida `dist`. Cada push a `main` puede desplegarse si el proyecto Vercel está enlazado; Atlas no comprueba ni publica el despliegue remoto.
+**Vercel:** preset Vite, raíz `./`, build `npm run build`, salida `dist`. Los modelos ya están incluidos: no necesitas Blender para ejecutar ni desplegar. El push a `main` puede activar el despliegue si tu proyecto Vercel está enlazado; el estado de ese despliegue no se verifica desde esta aplicación.
 
-## Recorrido recomendado (dos minutos)
+## Qué probar primero
 
-1. Abre Norte Manufacturing. La ficha inicial corresponde a Felipe y su camión AT-001, con 40 unidades del pedido #1042.
-2. Pulsa **Siguiente evento**: se confirma la entrega, el pedido pasa a entregado y la carga queda a cero. El vehículo todavía no regresa.
-3. Pulsa de nuevo: un evento independiente inicia el **retorno vacío**, con una duración estimada de tres horas. **Seguir vehículo** centra y acompaña al recurso. Puedes iniciar, pausar y acelerar el reloj simulado.
-4. El escenario **Llegada sin confirmar** muestra qué ocurre al vencer la ETA: se mantiene el estado de retorno. Solo **Llegada confirmada** lo convierte en disponible.
-5. Explora producción bloqueada, falta de stock y GPS desactualizado. Los cambios se reflejan en fichas, escena, lista y pipeline.
-6. Busca un conductor, pedido o instalación. Combina departamento, responsable, estado e incidencias. La selección se mantiene al cambiar de vista. Si los filtros la excluyen, se indica en pantalla.
-7. Cambia a **Studio Norte · Servicios**: aparecen proyectos y horas registradas; desaparecen vehículos, líneas y existencias industriales.
+1. Explora los cuatro encuadres: **Campus**, **Producción**, **Muelles** y **Felipe**.
+2. Retira la cubierta para ver componentes, bancos, la lámpara en montaje, comprobación LED y embalaje.
+3. Selecciona un camión; sus puertas, ruedas, carga y movimiento tienen nodos independientes.
+4. Usa el escenario **Carga en muelle** y el reloj **×240** para observar las transferencias de palés.
+5. Abre **Entrega de LW-024**: Felipe lleva 50 lámparas, 10 cajas y 5 palés. La entrega reconoce ventas y coste, pero no un cobro.
+6. Prueba **Felipe vuelve vacío** y **Llegada sin confirmar**. El retorno es estimado; una ETA no confirma la llegada.
+7. Comprueba **Cierre del día 12** y **Cierre mensual** en la ficha económica. El mes base cierra en 100.000 € de ventas y 18.000 € de resultado operativo simplificado; quedan 200 lámparas terminadas.
+8. Alterna lista/pipeline, usa búsqueda/filtros y compara presets gráficos.
 
-El Atlas original se conserva en `/?experience=classic`, con sus escenarios anteriores y navegación.
+El **Atlas operativo anterior** (industria/servicios, adaptador de campos HubSpot, permisos de demo y escenarios) se conserva en `/?experience=operations`. El **Atlas original** (servicios/restaurante/productos) está en `/?experience=classic`.
 
-## Modelo y arquitectura
+## Datos y alcance
 
-- `src/operations/model.js`: entidades normalizadas, referencias estables, plantillas, eventos idempotentes, permisos de demo, reglas de posición y proveedores. La escena no incrusta los datos comerciales.
-- `src/operations/scene.js`: instalaciones funcionalmente distintas, muelles, palés, líneas de trabajo, señalización, aparcamientos, camiones con carga visible, rutas y selección. Los cambios de estado actualizan los mismos grupos por identificador; la escena solo se reconstruye al cambiar de plantilla.
-- `src/operations/app.js`: vistas 3D/lista/pipeline, filtros comunes, fichas con procedencia, reloj y escenarios reproducibles.
-- `src/operations/operations.css`: diseño adaptable a escritorio y móvil.
-- `src/classic.js` y `src/style.css`: MVP anterior preservado.
+**Todos los datos son ficticios.** Luma tiene un reloj determinista y eventos idempotentes; no genera ventas por frame ni atribuye productividad a avatares. Las rutas regionales son esquemáticas y no están a escala geográfica. El campus usa metros; los palés/cajas visibles son proxies identificados.
 
-`DemoProvider.read()` y `HubSpotProvider.read()` comparten la estructura del snapshot normalizado. El adaptador HubSpot acepta una función de lectura autorizada inyectada, valida los campos y conserva la etapa original sin inventar su correspondencia operativa. La interfaz permite revisar y guardar **localmente** la propuesta de campos con una muestra HubSpot; no inicia conexiones de red ni pretende importar producción o GPS desde oportunidades comerciales.
+No hay conexión real a CRM, ERP, TMS o GPS, backend, OAuth, persistencia operativa ni seguridad de servidor. Las correspondencias y arquitectura anteriores permanecen disponibles; no se presentan como conectores autenticados. Las restricciones financieras son una demostración en cliente.
 
-### Reglas que importan
+La ruta de producción es WebGLRenderer con Three.js 0.180.0, materiales PBR, HDR local, sombras y FXAA; AO opcional en alta. WebGPU nativo se evaluó, pero perdió el dispositivo en este entorno de software. Las mediciones no validan 60 FPS ni sustituyen pruebas en GPU física.
 
-- **GPS:** permanece en la última posición recibida y muestra antigüedad; no extrapola movimiento.
-- **Estimado:** avance interpolado por ruta, salida y duración. No se presenta como GPS ni confirma una llegada.
-- **Desconocido:** el recurso AT-005 aparece en lista y ficha, sin una posición ficticia en la maqueta.
-- **Instalación confirmada:** posición esquemática de carga, aparcamiento o llegada, distinta de GPS.
-- **Tiempo simulado:** 14 de octubre de 2026, mostrado en Europe/Madrid. Se inicia pausado. Los eventos del guion son confirmaciones ficticias explícitas, no consecuencias de alcanzar una ETA.
-- **Carga:** las cajas desaparecen al recibir la entrega total; la plataforma del camión permanece. Una entrega no implica siempre carga cero: el evento debe declarar unidades entregadas y carga restante coherentes.
-- **Inventario:** la carga en tránsito ya salió del almacén en el snapshot. La entrega al cliente no descuenta esas unidades otra vez. Las reservas son independientes de existencias; la falta de stock muestra el déficit sin inventar stock negativo.
-- **Producción:** la cinta se anima por estado activo; el progreso es el último valor ERP, no se transforma la animación en producción confirmada. No hay avatares de los que se infieran horas o productividad.
-- **Escala:** maqueta operativa, no mapa geográfico. Instalaciones dimensionadas por función, no por ingresos ni metros reales. La apariencia de las cajas es una indicación de carga, no un recuento uno a uno.
-- **Permisos:** el toggle de finanzas elimina instalación, registros y relaciones del snapshot que reciben escena e interfaz. Es una demostración de proyección en cliente, **no una frontera de seguridad**. Los conectores reales deben filtrar datos y agregaciones en el servidor según la identidad autenticada.
+## Documentación y evidencia
 
-## Qué falta para producción
+- [Implementación, renderer, modelos y reglas de simulación](docs/luma/IMPLEMENTATION.md)
+- [Verificación visual, rendimiento, capturas y vídeo real](docs/luma/VALIDATION.md)
+- [Procedencia, tamaños y SHA-256 de los assets](docs/luma/asset-manifest.json)
+- [Licencia CC0 de los modelos originales](public/assets/luma/LICENSE.txt)
 
-No hay backend, OAuth, conexión real a HubSpot/ERP/TMS/GPS, persistencia de operaciones, control de acceso del servidor ni importación automática del organigrama. No se ofrecen enlaces ficticios a registros: solo se puede mostrar un enlace si lo aporta una fuente autorizada. El siguiente paso de integración requiere elegir CRM y ERP, configurar correspondencias comerciales/operativas, gestionar autorizaciones y credenciales en servidor y recibir eventos verificables.
-
-Los escenarios vuelven al snapshot inicial. El mapping se guarda en el almacenamiento del navegador. No hay escritura a sistemas externos. El rol financiero es una simulación de interfaz y no cambia permisos reales.
-
-## Validación
+## Comprobar
 
 ```sh
 npm test
+npm run test:e2e
+npm run test:operations
+npm run test:classic
 npm run build
 ```
 
-Con el servidor activo y Chromium instalado:
+Los tests de navegador necesitan Chromium (`/usr/bin/chromium` por defecto; `CHROMIUM_PATH` y `BASE_URL` configuran los de Luma). El servidor debe estar activo. Los tests de operaciones y los scripts de comparación usan importaciones del servidor Vite de desarrollo. El resto de pruebas puede ejecutarse contra `npm run preview`.
 
-```sh
-npm run test:e2e
-npm run test:classic
-```
-
-`CHROMIUM_PATH` y `BASE_URL` configuran las pruebas de operaciones. La prueba clásica utiliza `BASE_URL`. La prueba 3D requiere un navegador con WebGL; los flags SwiftShader usados por las pruebas están limitados al proceso de Chromium de pruebas.
-
-Las 11 pruebas de modelo cubren coherencia de identificadores, entrega y repetición de eventos, inventario, retorno, ETA, GPS, stock, bloqueos, permisos, plantillas, filtros y contrato de proveedores. Las pruebas de navegador seleccionan un camión mediante raycasting real y verifican el recorrido completo, navegación, filtros, configuración de campos y vista móvil. Capturas locales: `/tmp/atlas-operations` y `/tmp/atlas-checks`.
+Assets originales generados con `tools/build_luma_assets.py` (Blender 4.3.2) y `tools/build_luma_environment.py` (Python). Se conservan como GLB/HDR en `public/assets/luma`. No hay modelos externos pendientes de descarga. La grabación de navegador usa CDP y el FFmpeg del sistema, sin imágenes generadas.

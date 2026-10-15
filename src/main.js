@@ -1,3 +1,4 @@
-if (new URLSearchParams(location.search).get("experience") === "classic")
-  import("./classic.js");
-else import("./operations/app.js");
+const experience = new URLSearchParams(location.search).get("experience");
+if (experience === "classic") import("./classic.js");
+else if (experience === "operations") import("./operations/app.js");
+else import("./luma/app.js");

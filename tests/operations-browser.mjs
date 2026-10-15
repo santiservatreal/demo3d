@@ -20,7 +20,7 @@ async function scenario(s) {
   await page.locator("#op-scenario").selectOption(s);
 }
 try {
-  await page.goto(base);
+  await page.goto(base+'/?experience=operations');
   await expect(page.locator(".op-canvas canvas")).toBeVisible();
   await expect(page.locator(".op-place-label")).toHaveCount(9);
   await expect(inspector).toContainText("Felipe García");

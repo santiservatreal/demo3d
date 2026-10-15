@@ -1,0 +1,109 @@
+{
+  "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "deviceDpr": 1,
+  "loadMs": 909.2000000029802,
+  "presets": {
+    "high": {
+      "internalResolution": [
+        1764,
+        724
+      ],
+      "canvasCss": [
+        1764,
+        724
+      ],
+      "effectiveDpr": 1,
+      "frameMedianMs": 2067.7999999970198,
+      "frameP95Ms": 2323.7999999970198,
+      "rafObservedFps": 0.4944872908524917,
+      "callsMedian": 732,
+      "trianglesMedian": 562110,
+      "submitMedianMs": 4.5,
+      "sampleCount": 30
+    },
+    "balanced": {
+      "internalResolution": [
+        1764,
+        724
+      ],
+      "canvasCss": [
+        1764,
+        724
+      ],
+      "effectiveDpr": 1,
+      "frameMedianMs": 753.3999999985099,
+      "frameP95Ms": 817.2000000029802,
+      "rafObservedFps": 1.3277626314485882,
+      "callsMedian": 486,
+      "trianglesMedian": 374738,
+      "submitMedianMs": 3,
+      "sampleCount": 30
+    },
+    "light": {
+      "internalResolution": [
+        1764,
+        724
+      ],
+      "canvasCss": [
+        1764,
+        724
+      ],
+      "effectiveDpr": 1,
+      "frameMedianMs": 720.2000000029802,
+      "frameP95Ms": 828.1999999955297,
+      "rafObservedFps": 1.391297895430435,
+      "callsMedian": 486,
+      "trianglesMedian": 374738,
+      "submitMedianMs": 3.100000001490116,
+      "sampleCount": 30
+    }
+  },
+  "finalLightAdjustment": {
+    "effectiveDpr": 0.75,
+    "internalResolution": [
+      1323,
+      543
+    ],
+    "frameMedianMs": 494.8999999985099,
+    "frameP95Ms": 712.8999999985099,
+    "rafObservedFps": 2.05701355914666,
+    "callsMedian": 486,
+    "trianglesMedian": 374738,
+    "sampleCount": 12
+  },
+  "note": "Baseline: 30 samples per preset, software SwiftShader. Final light: DPR reduced to 0.75, separate 12 sample check after campus refinements. These are headless frame observations, not physical GPU/display FPS.",
+  "finalCampus": {
+    "balanced": {
+      "effectiveDpr": 1,
+      "internalResolution": [
+        1764,
+        724
+      ],
+      "frameMedianMs": 867.3999999985099,
+      "frameP95Ms": 904.1000000014901,
+      "rafObservedFps": 1.1641330604086364,
+      "callsMedian": 470,
+      "trianglesMedian": 375602,
+      "sampleCount": 12
+    },
+    "light": {
+      "effectiveDpr": 0.75,
+      "internalResolution": [
+        1323,
+        543
+      ],
+      "frameMedianMs": 474.1000000014901,
+      "frameP95Ms": 567.5,
+      "rafObservedFps": 2.0855782265643947,
+      "callsMedian": 470,
+      "trianglesMedian": 375602,
+      "sampleCount": 12
+    }
+  },
+  "finalSceneSourceSha256": "279f8ed8c8df5756562cdebce011872af19269d6fdfcf01341a81cc24df24b6d"
+}

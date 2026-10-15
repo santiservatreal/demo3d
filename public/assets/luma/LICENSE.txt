@@ -1,0 +1,13 @@
+Luma Works — original procedural 3D assets and analytic studio environment
+
+Created for the Atlas project, 2026. These seven GLB models and studio.hdr
+were generated locally with the source scripts in tools/build_luma_assets.py
+(Blender 4.3.2) and tools/build_luma_environment.py (Python 3).
+No third-party models, photographic HDRIs or external textures were imported.
+
+These original asset files and their modeling scripts are dedicated to the
+public domain under CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/
+
+This dedication does not apply to application code, library dependencies,
+fonts, or trademark rights. Luma Works is a fictional demonstration brand.

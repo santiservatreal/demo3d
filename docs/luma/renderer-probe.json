@@ -1,0 +1,26 @@
+[
+  {
+    "requested": "webgpu",
+    "version": "180",
+    "webgpuApi": true,
+    "ok": false,
+    "error": "A valid external Instance reference no longer exists.",
+    "errors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "THREE.WebGPURenderer: WebGPU Device Lost:\n\nMessage: A valid external Instance reference no longer exists.\nReason: unknown",
+      "OperationError: A valid external Instance reference no longer exists."
+    ]
+  },
+  {
+    "requested": "webgl",
+    "version": "180",
+    "webgpuApi": true,
+    "picking": true,
+    "backend": "WebGLBackend",
+    "ok": true,
+    "material": "MeshPhysicalNodeMaterial",
+    "postprocessing": "PostProcessing + TSL pass",
+    "calls": 25,
+    "errors": []
+  }
+]
