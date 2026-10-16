@@ -14,7 +14,7 @@ const b = await chromium.launch({
   ],
 });
 const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
-await p.goto(process.env.BASE_URL || "http://127.0.0.1:5173");
+await p.goto((process.env.BASE_URL || "http://127.0.0.1:5173") + "/?experience=luma");
 await p.waitForFunction(() => !!window.__luma);
 await p.locator("#l-quality").selectOption("light");
 await p.locator('[data-action="fullscreen"]').click();

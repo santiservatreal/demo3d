@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-10-16T17:39:17.633Z",
+  "method": "Chromium CDP compositor JPEG frames + installed system FFmpeg; original timestamps",
+  "syntheticFrames": false,
+  "frames": 20,
+  "durationSeconds": 10.81423807144165,
+  "viewport": [
+    1280,
+    800
+  ],
+  "encodedDimensions": [
+    1280,
+    800
+  ],
+  "encodedDurationSeconds": 11.04,
+  "rejectedFrameSizes": [],
+  "preset": "light",
+  "physicalGpu": false
+}

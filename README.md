@@ -1,63 +1,70 @@
-# Atlas · Luma Works
+# Atlas · Ciudad CRM
 
-Una maqueta industrial interactiva para entender cómo los datos de una empresa se convierten en actividad visual. La vista principal es **Luma Works**, una empresa ficticia que ensambla lámparas: taller, comprobación, embalaje, almacén, muelles y dos camiones.
+Una ciudad 3D interactiva que transforma un pipeline comercial en barrios, oportunidades y relaciones con clientes. La aplicación usa Three.js y datos ficticios reproducibles; la ciudad, la tabla, las fichas y el feed comparten el mismo proveedor.
 
 ## Ejecutar
 
-Node.js 22.12+ y npm; validado con Node 24.19.
+Node.js 22.12+ y npm; entorno validado con Node 24.19.
 
 ```sh
 npm ci
 npm run dev -- --port 5173
 ```
 
-En este entorno cloud, usa `npm ci --cache /tmp/atlas-npm-cache` si el caché del directorio personal no es escribible.
+En este entorno cloud, `npm ci --cache /tmp/atlas-npm-cache` evita el caché personal no escribible.
 
 ```sh
 npm run build
 npm run preview -- --port 4173
 ```
 
-**Vercel:** preset Vite, raíz `./`, build `npm run build`, salida `dist`. Los modelos ya están incluidos: no necesitas Blender para ejecutar ni desplegar. El push a `main` puede activar el despliegue si tu proyecto Vercel está enlazado; el estado de ese despliegue no se verifica desde esta aplicación.
+**Vercel:** preset **Vite**, directorio raíz `./`, build `npm run build`, salida `dist`. Todos los assets necesarios están incluidos. El push a `main` puede activar un despliegue si el proyecto Vercel está enlazado. El estado de Vercel no se verifica desde esta aplicación.
 
-## Qué probar primero
+## Qué explorar
 
-1. Explora los cuatro encuadres: **Campus**, **Producción**, **Muelles** y **Felipe**.
-2. Retira la cubierta para ver componentes, bancos, la lámpara en montaje, comprobación LED y embalaje.
-3. Selecciona un camión; sus puertas, ruedas, carga y movimiento tienen nodos independientes.
-4. Usa el escenario **Carga en muelle** y el reloj **×240** para observar las transferencias de palés.
-5. Abre **Entrega de LW-024**: Felipe lleva 50 lámparas, 10 cajas y 5 palés. La entrega reconoce ventas y coste, pero no un cobro.
-6. Prueba **Felipe vuelve vacío** y **Llegada sin confirmar**. El retorno es estimado; una ETA no confirma la llegada.
-7. Comprueba **Cierre del día 12** y **Cierre mensual** en la ficha económica. El mes base cierra en 100.000 € de ventas y 18.000 € de resultado operativo simplificado; quedan 200 lámparas terminadas.
-8. Alterna lista/pipeline, usa búsqueda/filtros y compara presets gráficos.
+1. **Ciudad:** cada barrio es una etapa configurable y cada edificio, una oportunidad. La altura acotada representa su importe; la ficha muestra el valor exacto.
+2. Pulsa un edificio o busca por oportunidad, empresa o responsable. Filtra por etapa, responsable, atención y archivo de perdidas.
+3. En la ficha, cambia la etapa. El edificio conserva su identidad y se traslada a una parcela disponible del barrio de destino.
+4. **Simular una venta** genera un evento ficticio `deal.won`: actualiza importes y feed, y reutiliza la cuenta cliente. No crea facturas ni cobros.
+5. **Replay** reproduce las etapas históricas con pausa, velocidad y avance. Clientes y actividades conservan su instantánea. Al salir, restaura el estado guardado.
+6. **TV** presenta métricas y encuadres sin modificar registros. **Explore** permite navegar libremente.
+7. **Tabla** consulta y selecciona los mismos registros. Sigue funcionando si el navegador no puede iniciar WebGL2.
+8. **Capas** controla etiquetas, conexiones, actividad y tráfico ambiental. El tráfico no representa actividad real del CRM.
+9. **Hoy en tu ciudad** abre la actividad, el feed y los 18 clientes con renovaciones y venta adicional potencial.
+10. En móvil, la ficha tiene alturas contraída, media y expandida, además de controles táctiles y tabla.
 
-El **Atlas operativo anterior** (industria/servicios, adaptador de campos HubSpot, permisos de demo y escenarios) se conserva en `/?experience=operations`. El **Atlas original** (servicios/restaurante/productos) está en `/?experience=classic`.
+La demo comienza con **24 abiertas por 120.000 €**, **4 ganadas por 30.000 €**, **3 perdidas** y **18 clientes activos**. Incluye 7 contactos pendientes, 9 conversaciones por responder, 12 llamadas registradas hoy y 5 tareas vencidas. La tasa de éxito 4/7 usa historial explícito de cierres del mes.
 
-## Datos y alcance
+## Experiencias anteriores conservadas
 
-**Todos los datos son ficticios.** Luma tiene un reloj determinista y eventos idempotentes; no genera ventas por frame ni atribuye productividad a avatares. Las rutas regionales son esquemáticas y no están a escala geográfica. El campus usa metros; los palés/cajas visibles son proxies identificados.
+- `/?experience=luma`: Luma Works, fábrica de lámparas con producción, inventario, carga y camiones.
+- `/?experience=operations`: Atlas operativo, perfiles industria/servicios y escenarios logísticos.
+- `/?experience=classic`: concepto de ciudad original.
 
-No hay conexión real a CRM, ERP, TMS o GPS, backend, OAuth, persistencia operativa ni seguridad de servidor. Las correspondencias y arquitectura anteriores permanecen disponibles; no se presentan como conectores autenticados. Las restricciones financieras son una demostración en cliente.
+## Datos y límites
 
-La ruta de producción es WebGLRenderer con Three.js 0.180.0, materiales PBR, HDR local, sombras y FXAA; AO opcional en alta. WebGPU nativo se evaluó, pero perdió el dispositivo en este entorno de software. Las mediciones no validan 60 FPS ni sustituyen pruebas en GPU física.
+**Datos simulados.** No hay un CRM conectado, backend, OAuth, GPS ni permisos de servidor. El proveedor independiente define los registros y eventos que deberá suministrar un futuro adaptador autenticado. No se exponen credenciales ni se inventan enlaces de registros reales. Las ventas adicionales potenciales no se suman a oportunidades existentes.
 
-## Documentación y evidencia
+El kit arquitectónico es original y procedural: geometría 3D seleccionable, materiales PBR, HDR local, sombras, piezas instanciadas, niveles de detalle y controles de calidad. WebGL2 es la base de producción; no se añaden nuevas dependencias ni se cambia el motor. Se prioriza medir el render real; las pruebas con SwiftShader no acreditan 60 FPS en un ordenador ni 30 FPS en un móvil físico.
 
-- [Implementación, renderer, modelos y reglas de simulación](docs/luma/IMPLEMENTATION.md)
-- [Verificación visual, rendimiento, capturas y vídeo real](docs/luma/VALIDATION.md)
-- [Procedencia, tamaños y SHA-256 de los assets](docs/luma/asset-manifest.json)
-- [Licencia CC0 de los modelos originales](public/assets/luma/LICENSE.txt)
+No se recibió una imagen nueva con el último prompt. La web de referencia devolvió HTTP 403 desde este entorno; se implementan las definiciones escritas sin afirmar que sus controles se verificaron.
 
-## Comprobar
+## Validación
 
 ```sh
 npm test
+npm run build
+# Con preview activo en el puerto 4173:
 npm run test:e2e
+# Regresión de experiencias anteriores, con Vite dev en el puerto 5173:
+npm run test:luma
 npm run test:operations
 npm run test:classic
-npm run build
 ```
 
-Los tests de navegador necesitan Chromium (`/usr/bin/chromium` por defecto; `CHROMIUM_PATH` y `BASE_URL` configuran los de Luma). El servidor debe estar activo. Los tests de operaciones y los scripts de comparación usan importaciones del servidor Vite de desarrollo. El resto de pruebas puede ejecutarse contra `npm run preview`.
+Los tests de navegador usan Chromium (`/usr/bin/chromium` por defecto). `CHROMIUM_PATH` y `BASE_URL` permiten configurar las pruebas de ciudad y Luma. Los gestos se emulan; no se ha probado hardware táctil físico.
 
-Assets originales generados con `tools/build_luma_assets.py` (Blender 4.3.2) y `tools/build_luma_environment.py` (Python). Se conservan como GLB/HDR en `public/assets/luma`. No hay modelos externos pendientes de descarga. La grabación de navegador usa CDP y el FFmpeg del sistema, sin imágenes generadas.
+- [Arquitectura, datos y correspondencia visual](docs/city/IMPLEMENTATION.md)
+- [Validación, capturas y rendimiento medido](docs/city/VALIDATION.md)
+- [Documentación industrial Luma](docs/luma/IMPLEMENTATION.md)
+- [Modelos originales GLB/HDR y licencia CC0](public/assets/luma/LICENSE.txt)

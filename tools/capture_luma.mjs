@@ -16,7 +16,7 @@ const b = await chromium.launch({
 // Identical viewport and camera for the old operational model and the new campus.
 for (const variant of ["before", "after"]) {
   const p = await b.newPage({ viewport: { width: 1600, height: 1000 } });
-  await p.goto(base);
+  await p.goto(base+"/?experience=luma");
   await p.waitForFunction(() => !!window.__luma);
   await p.evaluate(async (variant) => {
     let scene;
@@ -54,7 +54,7 @@ const p = await b.newPage({
   viewport: { width: 1920, height: 1080 },
   deviceScaleFactor: 1,
 });
-await p.goto(base);
+await p.goto(base+"/?experience=luma");
 await p.waitForFunction(() => !!window.__luma);
 await p.locator("#l-speed").selectOption("1");
 await p.locator('[data-action="play"]').click();

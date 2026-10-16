@@ -16,7 +16,7 @@ const p = await b.newPage({ viewport: { width: 1600, height: 1100 } }),
 p.on("pageerror", (e) => errors.push(e.message));
 const url = process.env.BASE_URL || "http://127.0.0.1:5173";
 try {
-  await p.goto(url);
+  await p.goto(url+"/?experience=luma");
   await p.waitForFunction(() => !!window.__luma);
   await expect(p.locator("#l-loader")).toBeHidden();
   await expect(p.locator("#l-inspector")).toBeHidden();
