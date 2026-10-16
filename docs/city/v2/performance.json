@@ -1,0 +1,474 @@
+{
+  "generatedAt": "2026-10-16T18:17:42.584Z",
+  "browser": "154.0.8037.57",
+  "physicalGpu": false,
+  "measurement": "30 requestAnimationFrame intervals after 10 warm-up callbacks; headless SwiftShader, not a physical display FPS",
+  "sourceSha256": {
+    "src/city/app.js": "392b98e8c4f6a996c4c1549cc51d891ccdcd21f294a4cc65cbc6c2ab82e9380c",
+    "src/city/scene.js": "b4e1171f13ca9a6a72b5508870be87b12bf6dc29770d4670f50e1cadf3b56d70",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/architecture.js": "6ea5a7ceed119cad39ee518394c51efa7817cd1a8cd065926bd6e4c7be9bf8a7",
+    "src/city/construction.js": "af49604af67e1c0d763bc100dbc27b70ca0b321317465c3f9e9c772a1be142b3",
+    "src/city/people.js": "16e6ce01f16fbbcf17f0571d9373339e27a9a993a67c89d4a3553a2a0b6d826a",
+    "src/city/model.js": "36ecd51a22aaa20c0585182a99784bc1a9b77bc85c7816479f9008b88677e65c"
+  },
+  "presetRequested": "light",
+  "mode": "tv",
+  "profile": {
+    "viewport": [
+      1280,
+      800
+    ],
+    "internalPixels": [
+      1280,
+      800
+    ],
+    "cssPixels": [
+      1280,
+      800
+    ],
+    "samples": [
+      1050,
+      950,
+      1133.2000000000007,
+      966.7000000000007,
+      949.9000000000015,
+      1050,
+      983.1999999999971,
+      1066.7000000000007,
+      1066.6000000000022,
+      1133.2999999999993,
+      50,
+      1066.5999999999985,
+      1449.9000000000015,
+      1583.2999999999993,
+      966.6999999999971,
+      33.30000000000291,
+      983.3000000000029,
+      1866.5,
+      916.6999999999971,
+      966.6999999999971,
+      999.9000000000015,
+      1066.5999999999985,
+      1299.9000000000015,
+      33.400000000001455,
+      1416.5999999999985,
+      2766.5999999999985,
+      1183.2000000000044,
+      1516.5999999999985,
+      1383.300000000003,
+      1549.8999999999942
+    ],
+    "medianMs": 1066.5999999999985,
+    "p95Ms": 1866.5,
+    "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "diagnostics": {
+      "renderer": "WebGL2",
+      "trafficRunning": false,
+      "mode": "tv",
+      "tvPresentation": true,
+      "portraitTV": false,
+      "cameraMoving": false,
+      "landMinZ": -26.5,
+      "preset": "light",
+      "qualitySetting": "light",
+      "dpr": 1,
+      "calls": 105,
+      "triangles": 194340,
+      "geometries": 91,
+      "textures": 9,
+      "cssWidth": 1280,
+      "cssHeight": 800,
+      "internalWidth": 1280,
+      "internalHeight": 800,
+      "frameSamples": 48,
+      "frameMs": {
+        "median": 1066.5999999999985,
+        "p95": 2000
+      },
+      "submitMs": {
+        "median": 3.100000023841858,
+        "p95": 22.599999994039536
+      },
+      "entityCount": 49,
+      "transitionCount": 0,
+      "construction": {
+        "active": [],
+        "queued": [],
+        "completed": [],
+        "count": 0,
+        "queueCount": 0,
+        "reducedMotion": false,
+        "rigCount": 2,
+        "visibleRigs": 0
+      },
+      "people": {
+        "enabled": true,
+        "elapsed": 51.8811,
+        "source": "simulated-crm-role",
+        "reducedMotion": false,
+        "owners": [
+          {
+            "ownerId": "owner-ana",
+            "name": "Ana Torres",
+            "color": "#007fd6",
+            "activity": "Revisando propuesta con el cliente",
+            "phase": "walking",
+            "dealId": "deal-013",
+            "accountId": "account-013",
+            "targetEntityId": "account-013",
+            "position": [
+              -8.623825325909088,
+              0.20910826856869397,
+              25
+            ],
+            "moving": true,
+            "routeLength": 5,
+            "routeIndex": 3,
+            "distance": 17.690540000000013,
+            "win": false,
+            "winStep": null
+          },
+          {
+            "ownerId": "owner-marcos",
+            "name": "Marcos Vidal",
+            "color": "#ee7c22",
+            "activity": "Revisando propuesta con el cliente",
+            "phase": "walking",
+            "dealId": "deal-018",
+            "accountId": "account-018",
+            "targetEntityId": "account-018",
+            "position": [
+              5.126880988494218,
+              0.20910826856869397,
+              14.589603294980726
+            ],
+            "moving": true,
+            "routeLength": 7,
+            "routeIndex": 2,
+            "distance": 17.690540000000013,
+            "win": false,
+            "winStep": null
+          },
+          {
+            "ownerId": "owner-lucia",
+            "name": "Lucía Ferrer",
+            "color": "#a24ed3",
+            "activity": "Paseando entre visitas",
+            "phase": "walking",
+            "dealId": null,
+            "accountId": null,
+            "targetEntityId": null,
+            "position": [
+              1.6887343194392055,
+              0.22125806629407702,
+              17.82815033235457
+            ],
+            "moving": true,
+            "routeLength": 3,
+            "routeIndex": 1,
+            "distance": 15.73860373784196,
+            "win": false,
+            "winStep": null
+          },
+          {
+            "ownerId": "owner-david",
+            "name": "David Soler",
+            "color": "#d43667",
+            "activity": "Paseando entre visitas",
+            "phase": "walking",
+            "dealId": null,
+            "accountId": null,
+            "targetEntityId": null,
+            "position": [
+              18,
+              0.21039427140305522,
+              22.59146752548164
+            ],
+            "moving": true,
+            "routeLength": 4,
+            "routeIndex": 2,
+            "distance": 15.95065550298142,
+            "win": false,
+            "winStep": null
+          }
+        ]
+      },
+      "districts": [
+        {
+          "id": "lead",
+          "name": "Nuevos leads",
+          "count": 7,
+          "color": "rgb(35,139,236)",
+          "visible": true,
+          "labelX": 436,
+          "labelY": 298,
+          "anchor": [
+            -31.25,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "qualified",
+          "name": "Cualificados",
+          "count": 5,
+          "color": "rgb(12,185,176)",
+          "visible": true,
+          "labelX": 696,
+          "labelY": 409,
+          "anchor": [
+            -15.5,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "proposal",
+          "name": "Propuestas",
+          "count": 6,
+          "color": "rgb(243,171,34)",
+          "visible": true,
+          "labelX": 952,
+          "labelY": 518,
+          "anchor": [
+            0,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "negotiation",
+          "name": "Negociación",
+          "count": 6,
+          "color": "rgb(162,89,223)",
+          "visible": true,
+          "labelX": 1207,
+          "labelY": 627,
+          "anchor": [
+            15.5,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "won",
+          "name": "Ventas ganadas",
+          "count": 4,
+          "color": "rgb(36,182,107)",
+          "visible": false,
+          "labelX": 1069,
+          "labelY": 499,
+          "anchor": [
+            31.25,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "clients",
+          "name": "Clientes activos",
+          "count": 18,
+          "color": "#178f8c",
+          "visible": false,
+          "labelX": 420,
+          "labelY": 563,
+          "anchor": [
+            -1,
+            0.5,
+            25.2
+          ]
+        }
+      ],
+      "connectionCount": 0,
+      "traffic": {
+        "enabled": false,
+        "elapsed": 0.18333333333333332,
+        "laneLength": 124.27964473723102,
+        "minimumClearance": 11.868849415247835,
+        "vehicles": [
+          {
+            "id": "ambient-1",
+            "kind": "car",
+            "s": 4.225208333333427,
+            "length": 1.94,
+            "speed": 0.27499999999999997,
+            "cruise": 2.5,
+            "distance": 0.02520833333333333,
+            "brake": false,
+            "x": -17.424791666666575,
+            "z": -8.05,
+            "tx": 1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "north-eastbound"
+          },
+          {
+            "id": "ambient-2",
+            "kind": "car",
+            "s": 18.03405774858126,
+            "length": 1.94,
+            "speed": 0.27499999999999997,
+            "cruise": 2.72,
+            "distance": 0.02520833333333333,
+            "brake": false,
+            "x": -3.6159422514187405,
+            "z": -8.05,
+            "tx": 1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "north-eastbound"
+          },
+          {
+            "id": "ambient-3",
+            "kind": "car",
+            "s": 31.842907163829153,
+            "length": 1.94,
+            "speed": 0.27499999999999997,
+            "cruise": 2.94,
+            "distance": 0.02520833333333333,
+            "brake": false,
+            "x": 10.192907163829151,
+            "z": -8.05,
+            "tx": 1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "north-eastbound"
+          },
+          {
+            "id": "ambient-4",
+            "kind": "car",
+            "s": 45.65175657907699,
+            "length": 1.94,
+            "speed": 0.27499999999999997,
+            "cruise": 2.5,
+            "distance": 0.02520833333333333,
+            "brake": false,
+            "x": 23.64305808798639,
+            "z": -6.9870562657988815,
+            "tx": 0.5571067774162004,
+            "tz": 0.8304408699943279,
+            "curvature": 0.4166666666666667,
+            "segment": "north-east-corner"
+          },
+          {
+            "id": "ambient-5",
+            "kind": "car",
+            "s": 59.46060599432488,
+            "length": 1.94,
+            "speed": 0.27499999999999997,
+            "cruise": 2.72,
+            "distance": 0.02520833333333333,
+            "brake": false,
+            "x": 23.80639973061711,
+            "z": 6.7035369959306,
+            "tx": -0.43897374830441666,
+            "tz": 0.8984998877571274,
+            "curvature": 0.4166666666666667,
+            "segment": "south-east-corner"
+          },
+          {
+            "id": "ambient-6",
+            "kind": "car",
+            "s": 73.26945540957274,
+            "length": 1.94,
+            "speed": 0.27499999999999997,
+            "cruise": 2.94,
+            "distance": 0.02520833333333333,
+            "brake": false,
+            "x": 10.520366959042764,
+            "z": 8.05,
+            "tx": -1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "south-westbound"
+          },
+          {
+            "id": "ambient-7",
+            "kind": "car",
+            "s": 87.07830482482063,
+            "length": 1.94,
+            "speed": 0.27499999999999997,
+            "cruise": 2.5,
+            "distance": 0.02520833333333333,
+            "brake": false,
+            "x": -3.288482456205127,
+            "z": 8.05,
+            "tx": -1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "south-westbound"
+          },
+          {
+            "id": "ambient-8",
+            "kind": "car",
+            "s": 100.88715424006853,
+            "length": 1.94,
+            "speed": 0.27499999999999997,
+            "cruise": 2.72,
+            "distance": 0.02520833333333333,
+            "brake": false,
+            "x": -17.09733187145302,
+            "z": 8.05,
+            "tx": -1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "south-westbound"
+          },
+          {
+            "id": "ambient-9",
+            "kind": "motorcycle",
+            "s": 114.69600365531642,
+            "length": 1.24,
+            "speed": 0.27499999999999997,
+            "cruise": 3,
+            "distance": 0.02520833333333333,
+            "brake": false,
+            "x": -24.05,
+            "z": 0.16372989760685108,
+            "tx": 0,
+            "tz": -1,
+            "curvature": 0,
+            "segment": "west-northbound"
+          }
+        ],
+        "signals": [
+          {
+            "id": "north-crossing",
+            "s": 18.85,
+            "offset": 0,
+            "x": -0.9,
+            "z": -6.35,
+            "rotation": -1.5707963267948966,
+            "state": "green"
+          },
+          {
+            "id": "south-crossing",
+            "s": 80.9898223686155,
+            "offset": 2.5,
+            "x": 0.9,
+            "z": 6.35,
+            "rotation": 1.5707963267948966,
+            "state": "green"
+          }
+        ],
+        "source": "ambient-demo",
+        "quality": "light",
+        "meshes": 9,
+        "type": "ambient-traffic",
+        "businessData": false
+      },
+      "visibleLabelCount": 4,
+      "heightScale": {
+        "min": 1.8,
+        "max": 8.8,
+        "referenceAmount": 10000,
+        "referenceHeight": 6,
+        "unknownHeight": 4
+      },
+      "reducedMotion": false,
+      "active": true
+    }
+  },
+  "errors": []
+}

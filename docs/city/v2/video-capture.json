@@ -1,0 +1,108 @@
+{
+  "generatedAt": "2026-10-16T18:18:13.745Z",
+  "method": "Actual Chromium CDP compositor JPEG frames + installed FFmpeg; original frame timestamps",
+  "syntheticFrames": false,
+  "sourceEvent": {
+    "id": "demo-0001-91",
+    "entityId": "deal-001",
+    "timestamp": "2026-10-16T08:16:00.000Z",
+    "type": "deal.won",
+    "source": "Atlas · simulación manual",
+    "payload": {
+      "stageId": "won",
+      "accountId": "account-001"
+    }
+  },
+  "phases": [
+    {
+      "phase": "deconstruct",
+      "browserTime": 1792174674409,
+      "person": {
+        "ownerId": "owner-ana",
+        "name": "Ana Torres",
+        "color": "#007fd6",
+        "activity": "Cierre registrado · visitando al cliente",
+        "phase": "walking",
+        "dealId": "deal-001",
+        "accountId": "account-001",
+        "targetEntityId": "account-001",
+        "position": [
+          -8.841557902682691,
+          0.22025482436653943,
+          23.488703871090713
+        ],
+        "moving": true,
+        "routeLength": 5,
+        "routeIndex": 1,
+        "distance": 19.726378109941976,
+        "win": true,
+        "winStep": "client"
+      }
+    },
+    {
+      "phase": "transport",
+      "browserTime": 1792174677594,
+      "person": {
+        "ownerId": "owner-ana",
+        "name": "Ana Torres",
+        "color": "#007fd6",
+        "activity": "Cierre registrado · visitando al cliente",
+        "phase": "walking",
+        "dealId": "deal-001",
+        "accountId": "account-001",
+        "targetEntityId": "account-001",
+        "position": [
+          -11.29076341129273,
+          0.22148561992362736,
+          22.660776020158483
+        ],
+        "moving": true,
+        "routeLength": 5,
+        "routeIndex": 2,
+        "distance": 22.386238109941935,
+        "win": true,
+        "winStep": "client"
+      }
+    },
+    {
+      "phase": "build",
+      "browserTime": 1792174681719,
+      "person": {
+        "ownerId": "owner-ana",
+        "name": "Ana Torres",
+        "color": "#007fd6",
+        "activity": "Cierre registrado · visitando al cliente",
+        "phase": "walking",
+        "dealId": "deal-001",
+        "accountId": "account-001",
+        "targetEntityId": "account-001",
+        "position": [
+          -12.930757672401773,
+          0.22063219500274583,
+          20.74744938219793
+        ],
+        "moving": true,
+        "routeLength": 5,
+        "routeIndex": 2,
+        "distance": 24.906238109941942,
+        "win": true,
+        "winStep": "client"
+      }
+    }
+  ],
+  "frames": 26,
+  "durationSeconds": 18.468476057052612,
+  "encodedDurationSeconds": 18.68,
+  "encodedDimensions": [
+    1280,
+    800
+  ],
+  "viewport": [
+    1280,
+    800
+  ],
+  "rejectedFrameSizes": [],
+  "preset": "balanced",
+  "physicalGpu": false,
+  "errors": []
+}

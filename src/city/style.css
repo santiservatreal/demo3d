@@ -3121,3 +3121,778 @@ svg {
     isolation: auto;
   }
 }
+/* A brighter identity makes each sales stage recognisable at a glance. */
+:root {
+  --ink: #173d4c;
+  --muted: #607a88;
+  --teal: #087f8c;
+  --line: #dce7e9;
+  --paper: #fbfdfd;
+  color: #173d4c;
+  background: #f4f8fa;
+}
+.c-header,
+.c-rail {
+  background: #fcfefe;
+}
+.c-wordmark > span,
+.c-heading h1 > span {
+  color: #09aa9a;
+}
+.c-rail button.active {
+  color: #087fbc;
+  background: #e4f3fe;
+}
+.c-mode-tabs button.active {
+  color: #067caa;
+  background: #e9f6ff;
+}
+.c-win-button {
+  background: #0b9864;
+  box-shadow: 0 3px 10px #0596631a;
+}
+.c-world {
+  background: #eaf3fa;
+}
+.c-metric > div {
+  color: #607b89;
+}
+.c-metric > div > svg {
+  color: #4c98bd;
+}
+.c-metric > b {
+  color: #173e50;
+}
+.c-metric[data-key="won"] > b {
+  color: #09985c;
+}
+.c-metric[data-key="attention"] > b {
+  color: #cf7838;
+}
+.c-stage-cards > button {
+  background: #ffffffed;
+  border-color: color-mix(in srgb, var(--stage) 32%, #e7edf2);
+  box-shadow: 0 3px 15px #183e5810;
+}
+.c-stage-number {
+  color: var(--stage);
+  background: color-mix(in srgb, var(--stage) 18%, white);
+}
+.c-stage-line {
+  opacity: 1;
+  height: 3px;
+}
+.c-stage-cards strong {
+  color: #234959;
+}
+.c-stage-cards b {
+  color: #284758;
+}
+.c-search-row,
+.c-toolbar,
+.c-bottom-bar {
+  background: #fcfefe;
+}
+.c-search input::placeholder {
+  color: #7f96a1;
+}
+.c-gesture-hint {
+  color: #668b9d;
+}
+.c-filter-toggle {
+  color: #39809c;
+}
+.c-stage-pill {
+  color: color-mix(in srgb, var(--stage) 70%, #123749);
+  border-color: color-mix(in srgb, var(--stage) 42%, white);
+  background: color-mix(in srgb, var(--stage) 13%, white);
+}
+.c-team-shortcut {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  font-size: 9px;
+  white-space: nowrap;
+  color: #4a7b91;
+}
+.c-team-shortcut svg {
+  width: 14px;
+  height: 14px;
+}
+.c-team-shortcut b {
+  font-weight: 600;
+  color: #1785b5;
+  border-radius: 5px;
+  background: #e6f4fb;
+  padding: 2px 5px;
+}
+.c-owner-avatar {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--owner) 16%, white);
+  color: var(--owner);
+  font:
+    700 10px "Manrope",
+    sans-serif;
+  border: 1px solid color-mix(in srgb, var(--owner) 35%, white);
+}
+.c-team-intro {
+  font-size: 10px;
+  line-height: 1.8;
+  color: #76909a;
+  margin: 3px 0 15px;
+}
+.c-team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.c-team-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e2ecf1;
+  border-left: 3px solid var(--owner);
+  padding: 12px 10px;
+  border-radius: 9px;
+  min-height: 82px;
+  width: 100%;
+  text-align: left;
+  background: white;
+}
+.c-team-card:hover,
+.c-team-card.selected {
+  background: color-mix(in srgb, var(--owner) 5%, white);
+  border-color: color-mix(in srgb, var(--owner) 45%, white);
+}
+.c-team-person {
+  min-width: 0;
+  flex: 1;
+}
+.c-team-person b {
+  font-size: 11px;
+  display: block;
+  font-weight: 600;
+  color: #254e61;
+}
+.c-team-person small {
+  font-size: 9px;
+  display: block;
+  margin-top: 5px;
+  color: var(--owner);
+}
+.c-team-person em {
+  font-size: 8px;
+  display: block;
+  font-style: normal;
+  color: #7e96a3;
+  margin-top: 4px;
+}
+.c-team-result {
+  text-align: right;
+  flex-shrink: 0;
+}
+.c-team-result > b {
+  font: 700 22px/1.2 "Manrope";
+  color: var(--owner);
+  display: block;
+}
+.c-team-result > small {
+  display: block;
+  color: #8198a4;
+  font-size: 8px;
+  margin-top: 3px;
+}
+.c-team-result > strong {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  color: #4e7184;
+  margin-top: 5px;
+}
+.c-team-card > svg {
+  width: 13px;
+  height: 13px;
+  color: #89a6b5;
+}
+.c-owner-deals {
+  border-top: 1px solid #e1ebef;
+  margin-top: 17px;
+  padding-top: 5px;
+}
+.c-owner-deals h3 {
+  font-size: 12px;
+  font-weight: 500;
+  color: #456b7d;
+}
+.c-owner-deals button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 52px;
+  width: 100%;
+  text-align: left;
+  border-bottom: 1px solid #e4ecf0;
+  padding: 10px 0;
+}
+.c-owner-deals b {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+}
+.c-owner-deals small {
+  color: var(--stage);
+  display: block;
+  font-size: 8px;
+  margin-top: 4px;
+}
+.c-owner-deals strong {
+  font-size: 11px;
+  margin-left: auto;
+  font-weight: 500;
+}
+.c-owner-deals svg {
+  width: 12px;
+  height: 12px;
+  color: #85a0ae;
+}
+#city-tv-exit {
+  display: none;
+}
+/* TV is a presentation surface: city edge to edge, business figures above it. */
+.c-shell.c-tv-mode {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 0;
+  z-index: 40;
+  background: #eaf3fa;
+  padding: 0;
+  overflow: hidden;
+}
+.c-tv-mode .c-main {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.c-tv-mode .c-rail,
+.c-tv-mode .c-header,
+.c-tv-mode .c-heading,
+.c-tv-mode .c-toolbar,
+.c-tv-mode .c-search-row,
+.c-tv-mode .c-filter-row,
+.c-tv-mode .c-footer,
+.c-tv-mode .c-bottom-bar,
+.c-tv-mode .c-world-title,
+.c-tv-mode .c-north,
+.c-tv-mode .c-map-controls,
+.c-tv-mode .c-legend,
+.c-tv-mode .c-stage-cards,
+.c-tv-mode .c-gesture-hint,
+.c-tv-mode .c-inspector,
+.c-tv-mode .c-drawer,
+.c-tv-mode #city-layer-panel,
+.c-tv-mode #city-replay,
+.c-tv-mode #city-hover,
+.c-tv-mode #city-table {
+  display: none !important;
+}
+.c-tv-mode .c-workbench {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+  overflow: hidden;
+  isolation: auto;
+}
+.c-tv-mode .c-world {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  isolation: auto;
+}
+.c-tv-mode #city-canvas,
+.c-tv-mode #city-labels {
+  inset: 0;
+}
+.c-tv-mode #city-metrics {
+  position: absolute;
+  left: 220px;
+  right: 92px;
+  top: 24px;
+  z-index: 50;
+  margin: 0;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  pointer-events: none;
+}
+.c-tv-mode .c-metric {
+  background: #ffffffed;
+  backdrop-filter: blur(14px);
+  border: 1px solid #d7e8f1;
+  box-shadow: 0 5px 25px #1b537012;
+  border-radius: 12px;
+  padding: 12px 16px;
+  cursor: default;
+}
+.c-tv-mode .c-metric > b {
+  font-size: clamp(22px, 2.2vw, 36px);
+  line-height: 1.35;
+  letter-spacing: -1px;
+}
+.c-tv-mode .c-metric small {
+  font-size: 9px;
+  color: #6c8797;
+  white-space: normal;
+  min-height: 0;
+}
+.c-tv-mode .c-metric > div {
+  font-size: 10px;
+  color: #52788d;
+}
+.c-tv-mode #city-tv-brand {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 50;
+  top: 27px;
+  left: 28px;
+  gap: 4px;
+  color: #537b90;
+  pointer-events: none;
+}
+#city-tv-brand > b {
+  font:
+    700 35px/1 "Manrope",
+    sans-serif;
+  letter-spacing: -1.5px;
+  color: #194c66;
+}
+#city-tv-brand > b > span {
+  color: #08b89d;
+}
+#city-tv-brand > span {
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  font-weight: 600;
+}
+#city-tv-brand > small {
+  font-size: 8px;
+  color: #7997a6;
+  margin-top: 4px;
+  max-width: 165px;
+  line-height: 1.6;
+}
+.c-tv-mode #city-tv-exit {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  right: 24px;
+  top: 25px;
+  z-index: 80;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffffca;
+  color: #597f94;
+  border: 1px solid #d7e6ed;
+  backdrop-filter: blur(10px);
+  opacity: 0.72;
+  transition: opacity 0.2s;
+  box-shadow: 0 3px 15px #153a5610;
+}
+.c-tv-mode #city-tv-exit:hover,
+.c-tv-mode #city-tv-exit:focus-visible {
+  opacity: 1;
+  background: white;
+}
+.c-tv-mode #city-tv-team {
+  position: absolute;
+  z-index: 45;
+  bottom: 23px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1010px, calc(100% - 50px));
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  pointer-events: none;
+}
+.c-tv-owner {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #ffffffed;
+  backdrop-filter: blur(12px);
+  border: 1px solid #d7e6ed;
+  border-bottom: 3px solid var(--owner);
+  border-radius: 11px;
+  padding: 11px 13px;
+  box-shadow: 0 5px 20px #1c426510;
+  min-width: 0;
+}
+.c-tv-owner > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+.c-tv-owner b {
+  font: 600 12px "Manrope";
+  color: #254e66;
+  display: block;
+}
+.c-tv-owner small {
+  font-size: 9px;
+  color: #7894a3;
+  display: block;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+.c-tv-owner small strong {
+  color: var(--owner);
+  font-size: 11px;
+}
+.c-tv-owner small em {
+  font-style: normal;
+  margin: 0 3px;
+  color: #aec1c9;
+}
+.c-tv-owner > strong {
+  font: 600 14px "Manrope";
+  color: #0a9862;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+.c-tv-mode #city-tv-banner {
+  position: absolute;
+  top: auto;
+  bottom: 108px;
+  left: 28px;
+  right: auto;
+  transform: none;
+  max-width: calc(100% - 56px);
+  min-height: 0;
+  padding: 7px 12px;
+  background: #ffffffc7;
+  backdrop-filter: blur(10px);
+  color: #376d88;
+  border: 1px solid #d7e7ed;
+  border-radius: 7px;
+  box-shadow: none;
+  font-size: 10px;
+  pointer-events: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.c-tv-mode #city-tv-banner > svg,
+.c-tv-mode #city-tv-banner > button {
+  display: none;
+}
+.c-tv-mode .city-district-label {
+  font-size: 12px !important;
+}
+@media (max-width: 1100px) {
+  .c-tv-mode #city-tv-brand {
+    top: 19px;
+    left: 20px;
+  }
+  .c-tv-mode #city-metrics {
+    left: 165px;
+    right: 70px;
+    top: 18px;
+    gap: 7px;
+  }
+  .c-tv-mode .c-metric {
+    padding: 10px;
+  }
+  .c-tv-mode .c-metric > b {
+    font-size: 25px;
+  }
+  .c-tv-mode #city-tv-exit {
+    right: 16px;
+    top: 18px;
+  }
+  .c-tv-owner {
+    padding: 10px;
+    gap: 6px;
+  }
+  .c-tv-owner .c-owner-avatar {
+    width: 29px;
+    height: 29px;
+    font-size: 8px;
+  }
+  .c-tv-owner small {
+    font-size: 8px;
+  }
+  .c-tv-owner > strong {
+    font-size: 12px;
+  }
+  .c-team-shortcut > span {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .c-tv-mode #city-tv-brand {
+    top: calc(12px + env(safe-area-inset-top));
+    left: 16px;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .c-tv-mode #city-tv-brand > b {
+    font-size: 25px;
+  }
+  .c-tv-mode #city-tv-brand > span {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+  .c-tv-mode #city-tv-brand > small {
+    display: none;
+  }
+  .c-tv-mode #city-tv-exit {
+    right: 12px;
+    top: calc(5px + env(safe-area-inset-top));
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: #ffffff70;
+  }
+  .c-tv-mode #city-metrics {
+    left: 12px;
+    right: 12px;
+    top: calc(53px + env(safe-area-inset-top));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .c-tv-mode .c-metric {
+    padding: 8px 11px;
+    border-radius: 9px;
+  }
+  .c-tv-mode .c-metric > div {
+    font-size: 9px;
+  }
+  .c-tv-mode .c-metric > b {
+    font-size: 22px;
+    line-height: 1.25;
+  }
+  .c-tv-mode .c-metric small {
+    font-size: 7px;
+    min-height: 0;
+    white-space: nowrap;
+  }
+  .c-tv-mode #city-tv-team {
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    width: auto;
+    transform: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .c-tv-owner {
+    padding: 8px;
+    border-radius: 8px;
+    gap: 6px;
+    border-bottom-width: 2px;
+  }
+  .c-tv-owner .c-owner-avatar {
+    width: 26px;
+    height: 26px;
+    font-size: 8px;
+    border-radius: 7px;
+  }
+  .c-tv-owner b {
+    font-size: 10px;
+  }
+  .c-tv-owner small {
+    font-size: 7px;
+    margin-top: 2px;
+  }
+  .c-tv-owner small strong {
+    font-size: 9px;
+  }
+  .c-tv-owner > strong {
+    font-size: 11px;
+  }
+  .c-tv-mode #city-tv-banner {
+    left: 12px;
+    bottom: calc(122px + env(safe-area-inset-bottom));
+    max-width: calc(100% - 24px);
+    font-size: 8px;
+    padding: 6px 8px;
+  }
+  .c-team-shortcut {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .c-team-shortcut > span {
+    display: none;
+  }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  .c-tv-mode #city-metrics {
+    left: 145px;
+    right: 62px;
+    top: 10px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+  }
+  .c-tv-mode .c-metric {
+    padding: 7px 9px;
+  }
+  .c-tv-mode .c-metric > b {
+    font-size: 20px;
+  }
+  .c-tv-mode .c-metric > div {
+    font-size: 8px;
+  }
+  .c-tv-mode .c-metric small {
+    font-size: 7px;
+    min-height: 0;
+  }
+  .c-tv-mode #city-tv-brand {
+    top: 13px;
+    left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .c-tv-mode #city-tv-brand > b {
+    font-size: 25px;
+  }
+  .c-tv-mode #city-tv-brand > span {
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+  .c-tv-mode #city-tv-brand > small {
+    display: none;
+  }
+  .c-tv-mode #city-tv-exit {
+    right: 10px;
+    top: 10px;
+  }
+  .c-tv-mode #city-tv-team {
+    left: 12px;
+    right: 12px;
+    bottom: 9px;
+    width: auto;
+    transform: none;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+  }
+  .c-tv-owner {
+    padding: 6px;
+    border-radius: 7px;
+    gap: 5px;
+  }
+  .c-tv-owner b {
+    font-size: 9px;
+  }
+  .c-tv-owner small {
+    font-size: 7px;
+  }
+  .c-tv-owner > strong {
+    font-size: 10px;
+  }
+  .c-tv-owner .c-owner-avatar {
+    width: 25px;
+    height: 25px;
+    font-size: 7px;
+  }
+  .c-tv-mode #city-tv-banner {
+    left: 12px;
+    bottom: 67px;
+    font-size: 8px;
+    padding: 5px 7px;
+  }
+}
+@media (pointer: coarse) {
+  .c-mode-tabs button,
+  .c-icon-button,
+  .c-view-tabs > button,
+  .c-filter-toggle,
+  .c-layer-panel > div > button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .c-stage-editor select {
+    min-height: 44px;
+  }
+  .city-entity-label {
+    min-height: 44px !important;
+  }
+  .c-team-card {
+    min-height: 88px;
+  }
+}
+.c-construction-status {
+  border: 1px solid #d9e8f0;
+  background: #edf7fd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 11px;
+}
+.c-construction-status > span {
+  font-size: 7px;
+  letter-spacing: 1.2px;
+  color: #6c95a9;
+  display: block;
+}
+.c-construction-status > b {
+  font-size: 10px;
+  font-weight: 500;
+  display: block;
+  margin: 5px 0 9px;
+  color: #2d7b9f;
+}
+.c-construction-status > div {
+  height: 3px;
+  border-radius: 2px;
+  background: #d5e7f1;
+  overflow: hidden;
+}
+.c-construction-status > div > span {
+  display: block;
+  height: 100%;
+  background: #258cbd;
+  transition: width 0.4s;
+}
+.c-construction-status > small {
+  font-size: 7px;
+  line-height: 1.5;
+  color: #83a0af;
+  display: block;
+  margin-top: 7px;
+}
+.c-tv-mode #city-tv-banner {
+  display: none;
+}
+.c-tv-mode.c-tv-building #city-tv-banner {
+  display: flex;
+  bottom: auto;
+  top: 138px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 50px);
+}
+@media (max-width: 700px) {
+  .c-tv-mode.c-tv-building #city-tv-banner {
+    top: calc(202px + env(safe-area-inset-top));
+    font-size: 8px;
+  }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  .c-tv-mode.c-tv-building #city-tv-banner {
+    top: 88px;
+    font-size: 8px;
+  }
+}

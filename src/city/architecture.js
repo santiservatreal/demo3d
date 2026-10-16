@@ -23,18 +23,18 @@ export function dealHeight(amount) {
 }
 const palette = {
   ivory: "#edece2",
-  white: "#faf9f0",
+  white: "#fcfcf5",
   trim: "#d7ddcf",
-  glass: "#789a9c",
+  glass: "#76adc2",
   dark: "#526b71",
   metal: "#8f9e96",
   roof: "#b7c8bd",
   soil: "#a98d6a",
-  leaf: "#7f9b74",
-  leafLight: "#a5b88d",
+  leaf: "#78aa63",
+  leafLight: "#a0c778",
   wood: "#b9a17e",
   concrete: "#dedfd4",
-  accent: "#68a89b",
+  accent: "#37aa9c",
 };
 const tmp = new THREE.Object3D();
 function matrix(p, s, rotation = 0) {
@@ -53,7 +53,7 @@ function box(parts, key, x, y, z, w, h, d, color, rot = 0) {
 function planter(parts, x, y, z, w = 0.55, d = 0.45) {
   box(parts, "trim", x, y + 0.12, z, w, 0.24, d, "#e2e4d7");
   box(parts, "soil", x, y + 0.25, z, w * 0.82, 0.045, d * 0.8);
-  add(parts, "leaf", [x, y + 0.42, z], [w * 0.58, 0.35, d * 0.58], "#91a67d");
+  add(parts, "leaf", [x, y + 0.42, z], [w * 0.58, 0.35, d * 0.58], "#82b46d");
 }
 
 export function buildingParts({
@@ -148,7 +148,7 @@ export function buildingParts({
           fw * 0.255,
           wh * 0.83,
           0.035,
-          floor % 2 ? "#85a4a5" : "#91adab",
+          floor % 2 ? "#7eb2c2" : "#93bdd1",
         );
         for (const side of [-1, 1])
           box(
@@ -232,7 +232,7 @@ export function buildingParts({
           0.035,
           wh * 0.8,
           fd * 0.24,
-          "#94aca9",
+          "#93bdd1",
         );
         for (const k of [-1, 1])
           box(
@@ -358,6 +358,7 @@ export function createArchitecture(scene) {
       visible: true,
       scaleY: 1,
       scaleXZ: 1,
+      buildProgress: 1,
     };
     entities.set(spec.id, e);
     for (const part of model.parts) {
@@ -366,7 +367,18 @@ export function createArchitecture(scene) {
       const list = Array.isArray(bucket) ? bucket : bucket.entries;
       const index = list.length;
       list.push({ entity: e, part });
-      e.refs.push({ key: part.key, index, part });
+      const localPosition = new THREE.Vector3(),
+        localQuaternion = new THREE.Quaternion(),
+        localScale = new THREE.Vector3();
+      part.matrix.decompose(localPosition, localQuaternion, localScale);
+      e.refs.push({
+        key: part.key,
+        index,
+        part,
+        localPosition,
+        localQuaternion,
+        localScale,
+      });
       if (built) {
         bucket.mesh.count = list.length;
         idByMesh.get(bucket.mesh).push(e.id);
@@ -404,7 +416,10 @@ export function createArchitecture(scene) {
     p = new THREE.Vector3(),
     s = new THREE.Vector3(),
     q = new THREE.Quaternion(),
-    c = new THREE.Color();
+    c = new THREE.Color(),
+    partMatrix = new THREE.Matrix4(),
+    instanceMatrix = new THREE.Matrix4(),
+    piecePosition = new THREE.Vector3();
   function updateEntity(id, options = {}) {
     const e = entities.get(id);
     if (!e) return;
@@ -413,6 +428,8 @@ export function createArchitecture(scene) {
     if (options.visible !== undefined) e.visible = options.visible;
     if (options.scaleY) e.scaleY = options.scaleY;
     if (options.scaleXZ) e.scaleXZ = options.scaleXZ;
+    if (options.buildProgress !== undefined)
+      e.buildProgress = THREE.MathUtils.clamp(options.buildProgress, 0, 1);
     if (!built) return;
     e.group.scale.set(e.scaleXZ, e.scaleY, e.scaleXZ);
     e.group.updateMatrix();
@@ -420,9 +437,35 @@ export function createArchitecture(scene) {
     if (!e.visible) world.scale(s.set(0, 0, 0));
     for (const r of e.refs) {
       const b = buckets.get(r.key);
+      if (e.buildProgress >= 1) partMatrix.copy(r.part.matrix);
+      else {
+        // Pieces are lowered into place, bottom storeys first. Whole-building
+        // height and footprint remain unchanged throughout the work sequence.
+        const level = THREE.MathUtils.clamp(
+            r.localPosition.y / e.model.height,
+            0.02,
+            0.97,
+          ),
+          reveal =
+            e.buildProgress <= 0
+              ? 0
+              : THREE.MathUtils.clamp(
+                  (e.buildProgress - level + 0.055) / 0.055,
+                  0,
+                  1,
+                ),
+          smooth = reveal * reveal * (3 - 2 * reveal);
+        piecePosition.copy(r.localPosition);
+        piecePosition.y += (1 - smooth) * 1.35;
+        partMatrix.compose(
+          piecePosition,
+          r.localQuaternion,
+          reveal > 0 ? r.localScale : s.set(0, 0, 0),
+        );
+      }
       b.mesh.setMatrixAt(
         r.index,
-        new THREE.Matrix4().multiplyMatrices(world, r.part.matrix),
+        instanceMatrix.multiplyMatrices(world, partMatrix),
       );
       const col =
         r.key === "accent" ? e.accent : r.part.color || palette[r.key];

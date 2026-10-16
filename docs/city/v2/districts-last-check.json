@@ -1,0 +1,490 @@
+{
+  "generatedAt": "2026-10-16T18:10:34.011Z",
+  "districts": [
+    {
+      "id": "lead",
+      "text": "01Nuevos leads7 deals · 31.500 €",
+      "hidden": false,
+      "rect": {
+        "x": 526.5546875,
+        "y": 362.4375,
+        "right": 653.4453125,
+        "bottom": 416.4375
+      },
+      "fontSize": "16px",
+      "background": "rgba(255, 255, 255, 0.97)"
+    },
+    {
+      "id": "qualified",
+      "text": "02Cualificados5 deals · 25.000 €",
+      "hidden": false,
+      "rect": {
+        "x": 683.5625,
+        "y": 412.4375,
+        "right": 814.4375,
+        "bottom": 466.4375
+      },
+      "fontSize": "16px",
+      "background": "rgba(255, 255, 255, 0.97)"
+    },
+    {
+      "id": "proposal",
+      "text": "03Propuestas6 deals · 33.000 €",
+      "hidden": false,
+      "rect": {
+        "x": 759.5,
+        "y": 523.4375,
+        "right": 890.5,
+        "bottom": 577.4375
+      },
+      "fontSize": "16px",
+      "background": "rgba(255, 255, 255, 0.97)"
+    },
+    {
+      "id": "negotiation",
+      "text": "04Negociación6 deals · 30.500 €",
+      "hidden": false,
+      "rect": {
+        "x": 916.3984375,
+        "y": 510.4375,
+        "right": 1047.6015625,
+        "bottom": 564.4375
+      },
+      "fontSize": "16px",
+      "background": "rgba(255, 255, 255, 0.97)"
+    },
+    {
+      "id": "won",
+      "text": "05Ventas ganadas4 deals · 30.000 €",
+      "hidden": false,
+      "rect": {
+        "x": 994.265625,
+        "y": 621.4375,
+        "right": 1125.734375,
+        "bottom": 675.4375
+      },
+      "fontSize": "16px",
+      "background": "rgba(255, 255, 255, 0.97)"
+    },
+    {
+      "id": "clients",
+      "text": "Clientes activos · 18 empresas",
+      "hidden": false,
+      "rect": {
+        "x": 499.171875,
+        "y": 615.4375,
+        "right": 688.828125,
+        "bottom": 649.4375
+      },
+      "fontSize": "11px",
+      "background": "rgba(255, 255, 255, 0.98)"
+    }
+  ],
+  "overlaps": [],
+  "diagnostics": {
+    "renderer": "WebGL2",
+    "trafficRunning": true,
+    "mode": "explore",
+    "tvPresentation": false,
+    "cameraMoving": false,
+    "landMinZ": -26.5,
+    "preset": "balanced",
+    "qualitySetting": "balanced",
+    "dpr": 1,
+    "calls": 207,
+    "triangles": 211024,
+    "geometries": 92,
+    "textures": 9,
+    "cssWidth": 1322,
+    "cssHeight": 518,
+    "internalWidth": 1322,
+    "internalHeight": 518,
+    "frameSamples": 26,
+    "frameMs": {
+      "median": 850.0999999999999,
+      "p95": 1816.6000000000004
+    },
+    "submitMs": {
+      "median": 5,
+      "p95": 400.19999998807907
+    },
+    "entityCount": 49,
+    "transitionCount": 0,
+    "construction": {
+      "active": [],
+      "queued": [],
+      "completed": [],
+      "count": 0,
+      "queueCount": 0,
+      "reducedMotion": false,
+      "rigCount": 2,
+      "visibleRigs": 0
+    },
+    "people": {
+      "enabled": true,
+      "elapsed": 21.7824,
+      "source": "simulated-crm-role",
+      "reducedMotion": false,
+      "owners": [
+        {
+          "ownerId": "owner-ana",
+          "name": "Ana Torres",
+          "color": "#007fd6",
+          "activity": "Revisando propuesta con el cliente",
+          "phase": "walking",
+          "dealId": "deal-013",
+          "accountId": "account-013",
+          "targetEntityId": "account-013",
+          "position": [
+            -12.200610753352702,
+            0.20925483301285758,
+            17.66904153012606
+          ],
+          "moving": true,
+          "routeLength": 4,
+          "routeIndex": 1,
+          "distance": 8.080099999999984,
+          "win": false,
+          "winStep": null
+        },
+        {
+          "ownerId": "owner-marcos",
+          "name": "Marcos Vidal",
+          "color": "#ee7c22",
+          "activity": "Revisando propuesta con el cliente",
+          "phase": "walking",
+          "dealId": "deal-018",
+          "accountId": "account-018",
+          "targetEntityId": "account-018",
+          "position": [
+            -3.159526368102793,
+            0.20925483301285758,
+            12.97933890439573
+          ],
+          "moving": true,
+          "routeLength": 7,
+          "routeIndex": 1,
+          "distance": 8.080099999999984,
+          "win": false,
+          "winStep": null
+        },
+        {
+          "ownerId": "owner-lucia",
+          "name": "Lucía Ferrer",
+          "color": "#a24ed3",
+          "activity": "Revisando propuesta con el cliente",
+          "phase": "walking",
+          "dealId": "deal-023",
+          "accountId": "account-005",
+          "targetEntityId": "account-005",
+          "position": [
+            4.264344959369591,
+            0.20925483301285758,
+            15.44269506818376
+          ],
+          "moving": true,
+          "routeLength": 3,
+          "routeIndex": 1,
+          "distance": 8.080099999999984,
+          "win": false,
+          "winStep": null
+        },
+        {
+          "ownerId": "owner-david",
+          "name": "David Soler",
+          "color": "#d43667",
+          "activity": "Revisando propuesta con el cliente",
+          "phase": "walking",
+          "dealId": "deal-016",
+          "accountId": "account-016",
+          "targetEntityId": "account-016",
+          "position": [
+            18,
+            0.20925483301285758,
+            19.844032022500205
+          ],
+          "moving": true,
+          "routeLength": 3,
+          "routeIndex": 1,
+          "distance": 8.080099999999984,
+          "win": false,
+          "winStep": null
+        }
+      ]
+    },
+    "districts": [
+      {
+        "id": "lead",
+        "name": "Nuevos leads",
+        "count": 7,
+        "color": "rgb(35,139,236)",
+        "visible": true,
+        "labelX": 499,
+        "labelY": 82,
+        "anchor": [
+          -31.25,
+          0.4,
+          -12.25
+        ]
+      },
+      {
+        "id": "qualified",
+        "name": "Cualificados",
+        "count": 5,
+        "color": "rgb(12,185,176)",
+        "visible": true,
+        "labelX": 658,
+        "labelY": 132,
+        "anchor": [
+          -15.5,
+          0.4,
+          -12.25
+        ]
+      },
+      {
+        "id": "proposal",
+        "name": "Propuestas",
+        "count": 6,
+        "color": "rgb(243,171,34)",
+        "visible": true,
+        "labelX": 734,
+        "labelY": 243,
+        "anchor": [
+          0,
+          0.4,
+          -12.25
+        ]
+      },
+      {
+        "id": "negotiation",
+        "name": "Negociación",
+        "count": 6,
+        "color": "rgb(162,89,223)",
+        "visible": true,
+        "labelX": 891,
+        "labelY": 230,
+        "anchor": [
+          15.5,
+          0.4,
+          -12.25
+        ]
+      },
+      {
+        "id": "won",
+        "name": "Ventas ganadas",
+        "count": 4,
+        "color": "rgb(36,182,107)",
+        "visible": true,
+        "labelX": 969,
+        "labelY": 341,
+        "anchor": [
+          31.25,
+          0.4,
+          -12.25
+        ]
+      },
+      {
+        "id": "clients",
+        "name": "Clientes activos",
+        "count": 18,
+        "color": "#178f8c",
+        "visible": true,
+        "labelX": 503,
+        "labelY": 325,
+        "anchor": [
+          -1,
+          0.5,
+          25.2
+        ]
+      }
+    ],
+    "connectionCount": 0,
+    "traffic": {
+      "enabled": true,
+      "elapsed": 2.366666666666663,
+      "laneLength": 124.27964473723102,
+      "minimumClearance": 11.625432748580577,
+      "vehicles": [
+        {
+          "id": "ambient-1",
+          "kind": "car",
+          "s": 8.033333333333132,
+          "length": 1.94,
+          "speed": 2.5,
+          "cruise": 2.5,
+          "distance": 3.833333333333325,
+          "brake": false,
+          "x": -13.61666666666687,
+          "z": -8.05,
+          "tx": 1,
+          "tz": 0,
+          "curvature": 0,
+          "segment": "north-eastbound"
+        },
+        {
+          "id": "ambient-2",
+          "kind": "car",
+          "s": 21.98001608191467,
+          "length": 1.94,
+          "speed": 2.72,
+          "cruise": 2.72,
+          "distance": 3.9711666666666607,
+          "brake": false,
+          "x": 0.3300160819146676,
+          "z": -8.05,
+          "tx": 1,
+          "tz": 0,
+          "curvature": 0,
+          "segment": "north-eastbound"
+        },
+        {
+          "id": "ambient-3",
+          "kind": "car",
+          "s": 35.89444883049612,
+          "length": 1.94,
+          "speed": 2.94,
+          "cruise": 2.94,
+          "distance": 4.076749999999995,
+          "brake": false,
+          "x": 14.244448830496115,
+          "z": -8.05,
+          "tx": 1,
+          "tz": 0,
+          "curvature": 0,
+          "segment": "north-eastbound"
+        },
+        {
+          "id": "ambient-4",
+          "kind": "car",
+          "s": 49.45988157907669,
+          "length": 1.94,
+          "speed": 2.5,
+          "cruise": 2.5,
+          "distance": 3.833333333333325,
+          "brake": false,
+          "x": 24.05,
+          "z": -3.260029605231063,
+          "tx": 0,
+          "tz": 1,
+          "curvature": 0,
+          "segment": "east-southbound"
+        },
+        {
+          "id": "ambient-5",
+          "kind": "car",
+          "s": 63.079924327658404,
+          "length": 1.94,
+          "speed": 2.72,
+          "cruise": 2.72,
+          "distance": 3.6445266666666623,
+          "brake": false,
+          "x": 20.709898040957103,
+          "z": 8.05,
+          "tx": -1,
+          "tz": 0,
+          "curvature": 0,
+          "segment": "south-westbound"
+        },
+        {
+          "id": "ambient-6",
+          "kind": "car",
+          "s": 77.32099707623956,
+          "length": 1.94,
+          "speed": 2.94,
+          "cruise": 2.94,
+          "distance": 4.076749999999995,
+          "brake": false,
+          "x": 6.468825292375943,
+          "z": 8.05,
+          "tx": -1,
+          "tz": 0,
+          "curvature": 0,
+          "segment": "south-westbound"
+        },
+        {
+          "id": "ambient-7",
+          "kind": "car",
+          "s": 90.88642982482139,
+          "length": 1.94,
+          "speed": 2.5,
+          "cruise": 2.5,
+          "distance": 3.833333333333325,
+          "brake": false,
+          "x": -7.096607456205884,
+          "z": 8.05,
+          "tx": -1,
+          "tz": 0,
+          "curvature": 0,
+          "segment": "south-westbound"
+        },
+        {
+          "id": "ambient-8",
+          "kind": "car",
+          "s": 104.80200146229066,
+          "length": 1.94,
+          "speed": 2.253333333333335,
+          "cruise": 2.72,
+          "distance": 3.9400555555555505,
+          "brake": true,
+          "x": -21.012179093675154,
+          "z": 8.05,
+          "tx": -1,
+          "tz": 0,
+          "curvature": 0,
+          "segment": "south-westbound"
+        },
+        {
+          "id": "ambient-9",
+          "kind": "motorcycle",
+          "s": 118.77079532198331,
+          "length": 1.24,
+          "speed": 3,
+          "cruise": 3,
+          "distance": 4.0999999999999925,
+          "brake": false,
+          "x": -24.05,
+          "z": -3.911061769060046,
+          "tx": 0,
+          "tz": -1,
+          "curvature": 0,
+          "segment": "west-northbound"
+        }
+      ],
+      "signals": [
+        {
+          "id": "north-crossing",
+          "s": 18.85,
+          "offset": 0,
+          "x": -0.9,
+          "z": -6.35,
+          "rotation": -1.5707963267948966,
+          "state": "green"
+        },
+        {
+          "id": "south-crossing",
+          "s": 80.9898223686155,
+          "offset": 2.5,
+          "x": 0.9,
+          "z": 6.35,
+          "rotation": 1.5707963267948966,
+          "state": "green"
+        }
+      ],
+      "source": "ambient-demo",
+      "quality": "balanced",
+      "meshes": 9,
+      "type": "ambient-traffic",
+      "businessData": false
+    },
+    "visibleLabelCount": 8,
+    "heightScale": {
+      "min": 1.8,
+      "max": 8.8,
+      "referenceAmount": 10000,
+      "referenceHeight": 6,
+      "unknownHeight": 4
+    },
+    "reducedMotion": false,
+    "active": true
+  }
+}

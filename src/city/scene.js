@@ -10,9 +10,11 @@ import {
   HEIGHT_SCALE,
 } from "./architecture.js";
 import { createTraffic } from "./traffic.js";
+import { createConstructionDirector } from "./construction.js";
+import { createPeople } from "./people.js";
 import { stageKind, needsAttention as modelNeedsAttention } from "./model.js";
 
-const COLORS = ["#70a1b5", "#77afa5", "#cbb078", "#d49c7c", "#81ab8a"];
+const COLORS = ["#338ee0", "#00a99a", "#f1ab29", "#9468d2", "#31ab64"];
 const tmp = new THREE.Object3D(),
   v3 = new THREE.Vector3(),
   ray = new THREE.Raycaster(),
@@ -49,6 +51,7 @@ export async function createCityScene({
   onReady = () => {},
   onError = () => {},
   onNavigate = () => {},
+  onSelectOwner = () => {},
   reducedMotion = false,
 }) {
   let disposed = false,
@@ -59,6 +62,8 @@ export async function createCityScene({
     quality = "balanced",
     qualitySetting = "auto",
     mode = "explore",
+    tvPresentation = false,
+    lastPortraitTV = false,
     lastTime = 0,
     elapsed = 0,
     lastAuto = 0,
@@ -74,7 +79,8 @@ export async function createCityScene({
     connections = [],
     celebrations = [],
     flight = null,
-    followFocus = null;
+    followFocus = null,
+    followAnchor = null;
   const frameTimes = [],
     submitTimes = [],
     entityGroups = new Map(),
@@ -86,8 +92,8 @@ export async function createCityScene({
   const w = () => Math.max(1, container.clientWidth),
     h = () => Math.max(1, container.clientHeight);
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color("#e9eee9");
-  scene.fog = new THREE.Fog("#e9eee9", 130, 245);
+  scene.background = new THREE.Color("#e3eef2");
+  scene.fog = new THREE.Fog("#e3eef2", 145, 265);
   const camera = new THREE.OrthographicCamera(-50, 50, 30, -30, 0.1, 350);
   camera.position.set(54, 55, 68);
   camera.lookAt(0, 1, 0);
@@ -104,11 +110,11 @@ export async function createCityScene({
   }
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.98;
+  renderer.toneMappingExposure = 1.02;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.shadowMap.autoUpdate = false;
-  renderer.setClearColor("#e9eee9");
+  renderer.setClearColor("#e3eef2");
   renderer.domElement.className = "city-webgl";
   renderer.domElement.style.cssText =
     "width:100%;height:100%;display:block;touch-action:none;";
@@ -129,14 +135,14 @@ export async function createCityScene({
   controls.addEventListener("start", () => {
     flight = null;
     followFocus = null;
-    mode = "explore";
+    mode = tvPresentation ? "tv" : "explore";
     onNavigate();
   });
   controls.addEventListener("change", () => {
     if (active && !raf) schedule();
   });
-  scene.add(new THREE.HemisphereLight("#e9f0ed", "#b0ad96", 1.4));
-  const sun = new THREE.DirectionalLight("#fff3d8", 2.6);
+  scene.add(new THREE.HemisphereLight("#d5e8fa", "#b6aa8f", 1.15));
+  const sun = new THREE.DirectionalLight("#fff2d8", 2.35);
   sun.position.set(-30, 65, 25);
   sun.castShadow = true;
   sun.shadow.mapSize.set(2048, 2048);
@@ -162,7 +168,7 @@ export async function createCityScene({
     env = pmrem.fromScene(new RoomEnvironment(), 0.04);
   }
   scene.environment = env.texture;
-  scene.environmentIntensity = 0.38;
+  scene.environmentIntensity = 0.3;
   pmrem.dispose();
   const architecture = createArchitecture(scene);
   const worldResources = [];
@@ -170,17 +176,35 @@ export async function createCityScene({
   let landMinZ = -26.5;
   const overflowBase = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshStandardMaterial({ color: "#d5d8c9", roughness: 0.86 }),
+    new THREE.MeshStandardMaterial({ color: "#d5d8cb", roughness: 0.86 }),
   );
   const overflowPavement = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshStandardMaterial({ color: "#dedfd2", roughness: 0.86 }),
+    new THREE.MeshStandardMaterial({ color: "#e0e2d8", roughness: 0.86 }),
   );
   overflowBase.visible = overflowPavement.visible = false;
   overflowBase.receiveShadow = overflowBase.castShadow = true;
   overflowPavement.receiveShadow = true;
   scene.add(overflowBase, overflowPavement);
   const traffic = createTraffic(THREE, { scene, reducedMotion });
+  const construction = createConstructionDirector({
+    scene,
+    architecture,
+    reducedMotion,
+  });
+  const people = createPeople({ scene, reducedMotion, onSelectOwner });
+  const districtRoot = new THREE.Group();
+  districtRoot.name = "CRM district parcels and front plaques";
+  scene.add(districtRoot);
+  const districtResources = [];
+  const districtAnchors = new Map();
+  let districtSignature = "";
+  function clearDistrictGeometry() {
+    districtRoot.clear();
+    for (const resource of districtResources) resource.dispose?.();
+    districtResources.length = 0;
+  }
+
   const ringGeometry = new THREE.RingGeometry(2.15, 2.23, 64);
   const ringMaterial = new THREE.MeshBasicMaterial({
     color: "#255c61",
@@ -239,24 +263,62 @@ export async function createCityScene({
   renderer.domElement.addEventListener("pointercancel", handleCancel);
   document.addEventListener("visibilitychange", handleVisibility);
 
+  function portraitTV() {
+    return tvPresentation && w() < 650 && h() > w();
+  }
+  function portraitTVFit(width, height) {
+    // Face the long axis of the island in a portrait display. Reserve the
+    // actual TV HUD bands, rather than fitting a 96 m landscape into 390 px.
+    const direction = new THREE.Vector3(90, 70, 5).normalize();
+    const right = new THREE.Vector3(direction.z, 0, -direction.x).normalize();
+    const up = new THREE.Vector3().crossVectors(direction, right).normalize();
+    let minX = Infinity,
+      maxX = -Infinity,
+      minY = Infinity,
+      maxY = -Infinity;
+    for (const x of [-38.5, 38.5])
+      for (const y of [-1.5, 12])
+        for (const z of [landMinZ, 26.5]) {
+          const corner = new THREE.Vector3(x, y, z);
+          const px = corner.dot(right),
+            py = corner.dot(up);
+          minX = Math.min(minX, px);
+          maxX = Math.max(maxX, px);
+          minY = Math.min(minY, py);
+          maxY = Math.max(maxY, py);
+        }
+    const top = 210,
+      bottom = 120;
+    const scale = Math.min(
+      (width - 28) / (maxX - minX),
+      Math.max(100, height - top - bottom) / (maxY - minY),
+    );
+    return { vertical: height / scale, center: (top - bottom) / (2 * scale) };
+  }
   function resize() {
     const width = w(),
       height = h(),
       aspect = width / height;
     const extra = Math.max(0, -26.5 - landMinZ);
-    const vertical =
-      width < 600
+    const portrait = portraitTV();
+    const fit = portrait ? portraitTVFit(width, height) : null;
+    const vertical = fit
+      ? fit.vertical
+      : width < 600
         ? Math.max(67 + extra * 0.5, (96 + extra * 0.65) / aspect)
         : Math.max(54 + extra * 0.5, (88 + extra * 0.65) / aspect);
     camera.left = (-vertical * aspect) / 2;
     camera.right = (vertical * aspect) / 2;
-    const footerOffset = width < 600 ? 0 : 3.6;
-    camera.top = vertical / 2 - footerOffset;
-    camera.bottom = -vertical / 2 - footerOffset;
+    const footerOffset = tvPresentation ? -1.7 : width < 600 ? 0 : 3.6;
+    camera.top = vertical / 2 + (fit ? fit.center : -footerOffset);
+    camera.bottom = -vertical / 2 + (fit ? fit.center : -footerOffset);
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false);
     renderer.setPixelRatio(pixelRatio());
     lastLabel = 0;
+    const orientationChanged = portrait !== lastPortraitTV;
+    lastPortraitTV = portrait;
+    if (orientationChanged && tvPresentation) overview();
   }
   function pixelRatio() {
     const native = Math.min(window.devicePixelRatio || 1, 2);
@@ -283,6 +345,7 @@ export async function createCityScene({
     renderer.shadowMap.needsUpdate = true;
     architecture.setDetail(next !== "light");
     traffic.setQuality?.(quality);
+    people.setQuality?.(quality);
     traffic.setEnabled?.(
       layers.traffic && !reducedMotion && quality !== "light",
     );
@@ -385,10 +448,33 @@ export async function createCityScene({
   }
   function sync(
     next,
-    { filteredIds: ids, selectedId: id, layers: nextLayers } = {},
+    {
+      filteredIds: ids,
+      selectedId: id,
+      layers: nextLayers,
+      event,
+      animateEvents = true,
+    } = {},
   ) {
     if (disposed) return;
     const previous = state;
+    const reset =
+      event?.type === "demo.reset" ||
+      event?.type === "snapshot" ||
+      event?.type === "replay.reset";
+    if (reset) {
+      construction.clear();
+      transitionList = [];
+      celebrations = [];
+      positions.clear();
+      followFocus = null;
+      for (const connection of connections) {
+        connection.line.removeFromParent();
+        connection.line.geometry.dispose();
+        connection.line.material.dispose();
+      }
+      connections = [];
+    }
     state = next;
     if (ids !== undefined)
       filteredIds = ids instanceof Set ? ids : new Set(ids || []);
@@ -445,33 +531,39 @@ export async function createCityScene({
         identity.set(deal.id, e.group.uuid);
       }
       const e = architecture.entities.get(deal.id);
-      if (changed && visible && previous) {
+      if (changed && visible && previous && !reset && animateEvents) {
         const from = e.group.position.clone();
-        transitionList = transitionList.filter((t) => t.id !== deal.id);
-        transitionList.push({
+        construction.cancel(deal.id);
+        const job = construction.start({
           id: deal.id,
           from,
           to: target.clone(),
-          start: elapsed,
-          duration: reducedMotion ? 0.01 : 2.1,
+          startedAt: elapsed,
           color: stageColor(stage),
           won: stageKind(state, stage) === "won",
+          ownerId: deal.ownerId,
+          accountId: deal.accountId,
         });
-        if (layers.connections)
-          addConnection(from, target, stageColor(stage), 3.2, "transition");
-        if (stageKind(state, stage) === "won" && !reducedMotion)
-          celebrations.push({
-            position: target.clone(),
-            height: e.model.height,
-            start: elapsed,
-          });
-        if (stageKind(state, stage) === "won" && deal.accountId) {
-          const a = positions.get(deal.accountId);
-          if (a && layers.connections)
-            addConnection(target, a.target, "#709f85", 4.2, "customer");
+        transitionList = transitionList.filter((t) => t.id !== deal.id);
+        transitionList.push({ id: deal.id, from, to: target.clone(), job });
+      } else if (
+        !construction.has(deal.id) ||
+        (changed && (!animateEvents || !visible))
+      ) {
+        if (changed && (!animateEvents || !visible)) {
+          construction.cancel(deal.id);
+          transitionList = transitionList.filter(
+            (transition) => transition.id !== deal.id,
+          );
+          celebrations = celebrations.filter(
+            (celebration) => celebration.id !== deal.id,
+          );
         }
-      } else if (!transitionList.some((t) => t.id === deal.id))
-        e.group.position.copy(target);
+        architecture.updateEntity(deal.id, {
+          position: target,
+          buildProgress: 1,
+        });
+      }
       positions.set(deal.id, {
         stageId: stage,
         slot,
@@ -491,7 +583,7 @@ export async function createCityScene({
       entityData.set(account.id, { ...account, entityType: "account" });
       if (!architecture.entities.has(account.id)) {
         const e = architecture.addEntity(
-          { id: account.id, client: true, variant: index, accent: "#8cae94" },
+          { id: account.id, client: true, variant: index, accent: "#3d9f88" },
           target,
         );
         entityGroups.set(account.id, e.group);
@@ -507,7 +599,9 @@ export async function createCityScene({
     }
     if (!architecture.meshes.length) architecture.build();
     updateLand();
+    updateDistricts();
     makeStageLabels();
+    people.sync(state, { entityPositions: positions, construction });
     updateMarkers();
     if (selectedId) select(selectedId);
     else ring.visible = false;
@@ -540,6 +634,149 @@ export async function createCityScene({
     sun.shadow.camera.updateProjectionMatrix();
     resize();
     if (!selectedId) overview();
+  }
+  function updateDistricts() {
+    const stages = cityStages();
+    const signature = JSON.stringify([
+      stages.map((stage) => [stage.id, stageColor(stage.id)]),
+      [...positions].map(([id, value]) => [
+        id,
+        value.stageId,
+        value.target.x,
+        value.target.z,
+      ]),
+    ]);
+    if (signature === districtSignature) return;
+    districtSignature = signature;
+    clearDistrictGeometry();
+    districtAnchors.clear();
+    const box = new THREE.BoxGeometry(1, 1, 1);
+    districtResources.push(box);
+    const white = new THREE.Color("#ffffff");
+    function geometry(material, specs, name) {
+      const geometries = specs.map(([x, y, z, width, height, depth]) => {
+        tmp.position.set(x, y, z);
+        tmp.scale.set(width, height, depth);
+        tmp.rotation.set(0, 0, 0);
+        tmp.updateMatrix();
+        return box.clone().applyMatrix4(tmp.matrix);
+      });
+      if (!geometries.length) return;
+      const merged = mergeGeometries(geometries);
+      for (const item of geometries) item.dispose();
+      const mesh = new THREE.Mesh(merged, material);
+      mesh.name = name;
+      mesh.receiveShadow = true;
+      districtRoot.add(mesh);
+      districtResources.push(merged);
+    }
+    for (const [index, stage] of stages.entries()) {
+      const center = plotFor(stage.id, 1).x;
+      const color = new THREE.Color(stageColor(stage.id));
+      const tint = new THREE.MeshStandardMaterial({
+        color: color.clone().lerp(white, 0.73),
+        roughness: 0.9,
+      });
+      const edge = new THREE.MeshStandardMaterial({ color, roughness: 0.78 });
+      districtResources.push(tint, edge);
+      const breadth =
+        stages.length === 5 ? 13.2 : (63 / Math.max(1, stages.length)) * 0.9;
+      const padSpecs = [[center, 0.208, -18.7, breadth, 0.018, 12.4]];
+      const edgeSpecs = [
+        [center, 0.23, -12.6, breadth, 0.05, 0.28],
+        [center - breadth / 2, 0.224, -18.7, 0.13, 0.04, 12.4],
+        [center + breadth / 2, 0.224, -18.7, 0.13, 0.04, 12.4],
+        [center, 0.224, -24.8, breadth, 0.04, 0.13],
+      ];
+      for (const [id, position] of positions) {
+        if (position.stageId !== stage.id || position.target.z < -12) continue;
+        const scale = stages.length > 5 ? 4.1 / stages.length : 1;
+        const px = position.target.x,
+          pz = position.target.z,
+          pw = 4.07 * scale,
+          pd = 4.8;
+        padSpecs.push([px, 0.212, pz, pw, 0.025, pd]);
+        edgeSpecs.push(
+          [px, 0.235, pz + pd / 2, pw, 0.04, 0.2],
+          [px - pw / 2, 0.23, pz, 0.1, 0.035, pd],
+          [px + pw / 2, 0.23, pz, 0.1, 0.035, pd],
+        );
+      }
+      geometry(tint, padSpecs, `District ${stage.id} parcel surfaces`);
+      geometry(
+        edge,
+        edgeSpecs,
+        `District ${stage.id} boundary and stage stripe`,
+      );
+      const numeral = document.createElement("canvas");
+      numeral.width = 192;
+      numeral.height = 96;
+      const context = numeral.getContext("2d");
+      context.fillStyle = color.getStyle();
+      context.fillRect(0, 0, 192, 96);
+      context.fillStyle = "#ffffff";
+      context.font = "800 60px sans-serif";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.fillText(String(index + 1).padStart(2, "0"), 96, 50);
+      const texture = new THREE.CanvasTexture(numeral);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const material = new THREE.MeshBasicMaterial({
+        map: texture,
+        side: THREE.DoubleSide,
+      });
+      const planeGeometry = new THREE.PlaneGeometry(1.6, 0.8);
+      const plaque = new THREE.Mesh(planeGeometry, material);
+      plaque.rotation.x = -Math.PI / 2;
+      plaque.position.set(center, 0.265, -13.2);
+      plaque.name = `Ground stage number ${index + 1}`;
+      districtRoot.add(plaque);
+      districtResources.push(texture, material, planeGeometry);
+      districtAnchors.set(stage.id, new THREE.Vector3(center, 0.4, -12.25));
+    }
+    const clientColor = new THREE.Color("#178f8c");
+    const clientPad = new THREE.MeshStandardMaterial({
+      color: clientColor.clone().lerp(white, 0.83),
+      roughness: 0.9,
+    });
+    const clientEdge = new THREE.MeshStandardMaterial({
+      color: clientColor,
+      roughness: 0.8,
+    });
+    districtResources.push(clientPad, clientEdge);
+    geometry(
+      clientPad,
+      [[0, 0.208, 18.5, 70.4, 0.018, 12.4]],
+      "Customer neighbourhood surface",
+    );
+    geometry(
+      clientEdge,
+      [
+        [0, 0.235, 24.7, 70.4, 0.05, 0.25],
+        [-35.2, 0.23, 18.5, 0.13, 0.04, 12.4],
+        [35.2, 0.23, 18.5, 0.13, 0.04, 12.4],
+      ],
+      "Customer neighbourhood boundary",
+    );
+    districtAnchors.set("clients", new THREE.Vector3(-1, 0.5, 25.2));
+  }
+  function districtDiagnostics() {
+    return [...stageLabels].map(([id, element]) => ({
+      id,
+      name:
+        id === "clients"
+          ? "Clientes activos"
+          : state?.stages?.find((stage) => stage.id === id)?.name,
+      count:
+        id === "clients"
+          ? state?.accounts?.length || 0
+          : state?.deals?.filter((deal) => deal.stageId === id).length || 0,
+      color: id === "clients" ? "#178f8c" : stageColor(id),
+      visible: !element.hidden,
+      labelX: Number(element.dataset.labelX || 0),
+      labelY: Number(element.dataset.labelY || 0),
+      anchor: districtAnchors.get(id)?.toArray(),
+    }));
   }
   function addConnection(a, b, color, duration, type) {
     if (reducedMotion) return;
@@ -617,6 +854,7 @@ export async function createCityScene({
     if (!e) return;
     select(id);
     followFocus = id;
+    followAnchor = e.group.position.clone();
     const mobile = window.matchMedia("(max-width: 640px)").matches;
     const target = e.group.position.clone();
     target.y = 2;
@@ -654,19 +892,98 @@ export async function createCityScene({
     };
     schedule();
   }
-  function overview() {
-    followFocus = null;
+  function focusOwner(ownerId) {
+    const point = people.getOwnerPosition(ownerId);
+    if (!point) return;
+    followFocus = `owner:${ownerId}`;
+    followAnchor = point.clone();
+    const target = point.clone().add(new THREE.Vector3(0, 1.4, 0));
+    const offset = camera.position
+      .clone()
+      .sub(controls.target)
+      .normalize()
+      .multiplyScalar(90);
     flight = {
       fromPos: camera.position.clone(),
       fromTarget: controls.target.clone(),
       fromZoom: camera.zoom,
-      toTarget: new THREE.Vector3(0, 1, (landMinZ + 26.5) / 2),
-      toPos: new THREE.Vector3(54, 55, 68 + (landMinZ + 26.5) / 2),
-      toZoom: 1,
+      toTarget: target,
+      toPos: target.clone().add(offset),
+      toZoom: w() < 650 ? 3.4 : 3.8,
+      start: elapsed,
+      duration: reducedMotion ? 0.01 : 0.8,
+    };
+    schedule();
+  }
+  function projectOwner(ownerId) {
+    const point = people.getOwnerPosition(ownerId);
+    if (!point) return null;
+    point.y += 0.85;
+    point.project(camera);
+    const rect = renderer.domElement.getBoundingClientRect();
+    return {
+      id: ownerId,
+      x: rect.left + (point.x * 0.5 + 0.5) * rect.width,
+      y: rect.top + (-point.y * 0.5 + 0.5) * rect.height,
+      visible:
+        point.z > -1 &&
+        point.z < 1 &&
+        Math.abs(point.x) < 1 &&
+        Math.abs(point.y) < 1,
+    };
+  }
+  function focusDistrict(stageId) {
+    // Keep the complete city legible on a portrait TV; there is no room for
+    // a zoomed district plus the fixed KPI and salesperson bands.
+    if (portraitTV()) {
+      overview();
+      return;
+    }
+    const point =
+      stageId === "clients"
+        ? new THREE.Vector3(0, 1, 18)
+        : districtAnchors.get(stageId)?.clone();
+    if (!point) return;
+    followFocus = null;
+    point.y = 1;
+    if (stageId !== "clients") point.z = -8;
+    const offset = new THREE.Vector3(54, 55, 68)
+      .normalize()
+      .multiplyScalar(100);
+    flight = {
+      fromPos: camera.position.clone(),
+      fromTarget: controls.target.clone(),
+      fromZoom: camera.zoom,
+      toTarget: point,
+      toPos: point.clone().add(offset),
+      toZoom: tvPresentation ? 1.45 : 1.7,
+      start: elapsed,
+      duration: reducedMotion ? 0.01 : 1.6,
+    };
+    schedule();
+  }
+  function overview() {
+    followFocus = null;
+    const portrait = portraitTV();
+    const target = new THREE.Vector3(
+      0,
+      portrait ? 5.25 : 1,
+      (landMinZ + 26.5) / 2,
+    );
+    const position = portrait
+      ? target.clone().add(new THREE.Vector3(90, 70, 5))
+      : new THREE.Vector3(54, 55, 68 + (landMinZ + 26.5) / 2);
+    flight = {
+      fromPos: camera.position.clone(),
+      fromTarget: controls.target.clone(),
+      fromZoom: camera.zoom,
+      toTarget: target,
+      toPos: position,
+      toZoom: portrait ? 1 : tvPresentation ? 0.92 : 1,
       start: elapsed,
       duration: reducedMotion ? 0.01 : 1.1,
     };
-    mode = "explore";
+    mode = tvPresentation ? "tv" : "explore";
     schedule();
   }
   function zoomBy(factor) {
@@ -688,12 +1005,26 @@ export async function createCityScene({
     );
     for (const c of connections) c.line.visible = layers.connections;
     activityMesh.visible = layers.activity;
+    people.setEnabled(layers.activity);
     lastLabel = 0;
     schedule();
   }
+  function setTVPresentation(enabled) {
+    tvPresentation = !!enabled;
+    people.setPresentation?.(tvPresentation);
+    if (tvPresentation) {
+      selectedId = null;
+      ring.visible = false;
+      followFocus = null;
+    }
+    resize();
+    overview();
+    mode = tvPresentation ? "tv" : "explore";
+  }
   function setMode(next) {
-    if (next === "tv") overview();
-    mode = next === "tv" ? "tv" : "explore";
+    const tv = next === "tv";
+    if (tvPresentation !== tv) setTVPresentation(tv);
+    mode = tv ? "tv" : "explore";
   }
   function setActive(next) {
     active = !!next;
@@ -738,8 +1069,33 @@ export async function createCityScene({
       maxDrag = 0;
     }
     if (isTap) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.set(
+        ((e.clientX - rect.left) / rect.width) * 2 - 1,
+        -((e.clientY - rect.top) / rect.height) * 2 + 1,
+      );
+      ray.setFromCamera(pointer, camera);
+      const ownerHit = people.pickHit?.(ray);
+      const ownerId = ownerHit?.ownerId;
+      const facadeHit = ownerHit
+        ? ray.intersectObjects(
+            architecture.meshes.filter(
+              (mesh) => mesh.visible && mesh.name === "city-kit-mass",
+            ),
+            false,
+          )[0]
+        : null;
+      if (
+        ownerId &&
+        !tvPresentation &&
+        (!facadeHit || facadeHit.distance >= ownerHit.distance - 0.05)
+      ) {
+        onSelectOwner(ownerId);
+        focusOwner(ownerId);
+        return;
+      }
       const hit = pick(e.clientX, e.clientY);
-      if (hit) {
+      if (hit && !tvPresentation) {
         select(hit);
         onSelect(hit);
       } else {
@@ -818,43 +1174,51 @@ export async function createCityScene({
   function makeStageLabels() {
     if (!labelContainer) return;
     const currentStages = cityStages();
-    for (const [id, el] of stageLabels)
+    for (const [id, element] of stageLabels) {
       if (id !== "clients" && !currentStages.some((stage) => stage.id === id)) {
-        el.remove();
+        element.remove();
         stageLabels.delete(id);
       }
-    for (const [stageIndex, stage] of currentStages.entries()) {
-      let el = stageLabels.get(stage.id);
-      if (!el) {
-        el = document.createElement("div");
-        el.className = "city-district-label";
-        el.style.cssText =
-          "position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;transform:translate(-50%,-50%);text-align:center;color:#314e4b;font-family:inherit;";
-        labelContainer.append(el);
-        stageLabels.set(stage.id, el);
+    }
+    for (const [index, stage] of currentStages.entries()) {
+      let element = stageLabels.get(stage.id);
+      if (!element) {
+        element = document.createElement("div");
+        element.className = "city-district-label";
+        element.dataset.districtId = stage.id;
+        labelContainer.append(element);
+        stageLabels.set(stage.id, element);
       }
-      const deals = (state.deals || []).filter((d) => d.stageId === stage.id);
-      el.innerHTML = "";
+      const color = stageColor(stage.id);
+      element.style.cssText = `position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;transform:translate(-50%,-50%);text-align:left;color:#243b49;font-family:inherit;padding:7px 9px;border:1px solid #ffffff;border-top:3px solid ${color};border-radius:8px;background:rgba(255,255,255,.97);box-shadow:0 3px 12px #173c4d26;min-width:108px;`;
+      element.replaceChildren();
       const title = document.createElement("span");
-      title.textContent = `${String(stageIndex + 1).padStart(2, "0")}  ${stage.name}`;
       title.style.cssText =
-        "display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;";
-      const sub = document.createElement("span");
-      sub.textContent = `${deals.length} · ${deals.every((d) => typeof d.amount === "number" && Number.isFinite(d.amount)) ? euro.format(deals.reduce((n, d) => n + d.amount, 0)) : "No disponible"}`;
-      sub.style.cssText =
-        "display:block;font-size:10px;margin-top:3px;color:#6b7d72;";
-      el.append(title, sub);
+        "display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0;font-weight:800;";
+      const numeral = document.createElement("b");
+      numeral.textContent = String(index + 1).padStart(2, "0");
+      numeral.style.cssText = `display:inline-grid;place-items:center;min-width:19px;height:19px;color:white;background:${color};border-radius:5px;font-size:10px;`;
+      title.append(numeral, document.createTextNode(stage.name));
+      const deals = (state.deals || []).filter(
+        (deal) => deal.stageId === stage.id,
+      );
+      const subtitle = document.createElement("span");
+      subtitle.textContent = `${deals.length} ${deals.length === 1 ? "deal" : "deals"} · ${deals.every((deal) => typeof deal.amount === "number" && Number.isFinite(deal.amount)) ? euro.format(deals.reduce((sum, deal) => sum + deal.amount, 0)) : "Sin importe"}`;
+      subtitle.style.cssText =
+        "display:block;margin-top:4px;padding-left:25px;font-size:10px;color:#506572;font-weight:600;";
+      element.append(title, subtitle);
     }
     let clients = stageLabels.get("clients");
     if (!clients) {
       clients = document.createElement("div");
       clients.className = "city-district-label city-clients-label";
-      clients.style.cssText =
-        "position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;text-align:center;font-size:10px;letter-spacing:.13em;color:#59725f;font-weight:800;";
+      clients.dataset.districtId = "clients";
       labelContainer.append(clients);
       stageLabels.set("clients", clients);
     }
-    clients.textContent = `CLIENTES · ${(state?.accounts || []).length} CUENTAS ACTIVAS`;
+    clients.style.cssText =
+      "position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;text-align:center;padding:8px 13px;border:1px solid white;border-top:3px solid #178f8c;border-radius:8px;background:rgba(255,255,255,.98);box-shadow:0 3px 12px #173c4d26;color:#235353;font-family:inherit;font-weight:800;font-size:11px;letter-spacing:.02em;";
+    clients.textContent = `Clientes activos · ${(state?.accounts || []).length} empresas`;
   }
   function updateMarkers() {
     let p = 0,
@@ -894,11 +1258,20 @@ export async function createCityScene({
     const width = w(),
       height = h(),
       mobile = width < 650,
-      max = mobile ? 4 : 10,
+      max = mobile ? 2 : 4,
       occupied = [],
       rect = renderer.domElement.getBoundingClientRect();
     let count = 0;
-    function position(el, point, labelWidth = 90, priority = false) {
+    function position(
+      el,
+      point,
+      labelWidth = 90,
+      priority = false,
+      district = false,
+    ) {
+      if (!el) return;
+      labelWidth = el.offsetWidth || labelWidth;
+      const labelHeight = el.offsetHeight || (district ? 54 : 32);
       const worldPoint = point.clone();
       point.project(camera);
       let x = (point.x * 0.5 + 0.5) * width,
@@ -911,13 +1284,59 @@ export async function createCityScene({
         x < width - 30 &&
         y > 18 &&
         y < height - 35 &&
-        count < max;
-      const overlap = occupied.some(
-        (r) =>
-          Math.abs(x - r.x) < (r.w + labelWidth) / 2 && Math.abs(y - r.y) < 29,
-      );
+        (district || count < max);
+      const collides = (px, py) =>
+        occupied.some(
+          (rectangle) =>
+            Math.abs(px - rectangle.x) < (rectangle.w + labelWidth) / 2 + 6 &&
+            Math.abs(py - rectangle.y) < (rectangle.h + labelHeight) / 2 + 6,
+        );
+      if (valid && district) {
+        const halfWidth = labelWidth / 2,
+          halfHeight = labelHeight / 2;
+        const minX = halfWidth + 8,
+          maxX = width - halfWidth - 8;
+        const minY =
+          (portraitTV() ? 208 : tvPresentation ? 128 : 8) + halfHeight;
+        const maxY =
+          height - halfHeight - (portraitTV() ? 120 : tvPresentation ? 86 : 92);
+        const anchorX = clamp(x, minX, maxX),
+          anchorY = clamp(y, minY, Math.max(minY, maxY));
+        const yStep = labelHeight + 8;
+        const candidates = [];
+        // Resolve with actual rendered rectangles. Vertical alternatives keep
+        // each plaque next to its own stage; small lateral shifts handle a
+        // narrow/mobile view or the first frame after leaving fullscreen.
+        for (const dx of [0, -40, 40, -80, 80]) {
+          for (const step of [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5]) {
+            const px = clamp(anchorX + dx, minX, maxX);
+            const py = clamp(
+              anchorY + step * yStep,
+              minY,
+              Math.max(minY, maxY),
+            );
+            candidates.push({
+              x: px,
+              y: py,
+              distance: (px - anchorX) ** 2 + (py - anchorY) ** 2,
+            });
+          }
+        }
+        candidates.sort((a, b) => a.distance - b.distance);
+        const clear = candidates.find(
+          (candidate) => !collides(candidate.x, candidate.y),
+        );
+        if (clear) {
+          x = clear.x;
+          y = clear.y;
+        } else {
+          x = anchorX;
+          y = anchorY;
+        }
+      }
+      const overlap = collides(x, y);
       let occluded = false;
-      if (valid && !priority) {
+      if (valid && !priority && !district) {
         ray.setFromCamera(new THREE.Vector2(point.x, point.y), camera);
         const distance = ray.ray.origin.distanceTo(worldPoint);
         const hit = ray.intersectObjects(
@@ -928,16 +1347,65 @@ export async function createCityScene({
         )[0];
         occluded = !!(hit && hit.distance < distance - 0.35);
       }
-      el.hidden = !valid || (!priority && (overlap || occluded));
+      el.hidden = !valid || (!priority && !district && (overlap || occluded));
       if (!el.hidden) {
         el.style.transform = `translate(${Math.round(x)}px,${Math.round(y)}px) translate(-50%,-50%)`;
-        occupied.push({ x, y, w: labelWidth });
-        count++;
+        occupied.push({ x, y, w: labelWidth, h: labelHeight });
+        el.dataset.labelX = String(Math.round(x));
+        el.dataset.labelY = String(Math.round(y));
+        if (!district) count++;
       }
     }
+    // Stage titles belong to their coloured front edge; they have their own
+    // budget, so an alert or selected deal cannot silently remove a district.
+    for (const stage of cityStages()) {
+      const element = stageLabels.get(stage.id);
+      if (!element) continue;
+      const compact = portraitTV();
+      element.style.minWidth = compact ? "88px" : mobile ? "80px" : "108px";
+      element.style.padding = compact
+        ? "4px 6px"
+        : mobile
+          ? "5px 6px"
+          : "7px 9px";
+      element.style.fontSize = compact ? "8px" : mobile ? "9px" : "11px";
+      const title = element.firstElementChild;
+      const subtitle = element.lastElementChild;
+      const numeral = title?.firstElementChild;
+      if (title) {
+        title.style.fontSize = compact ? "8px" : "11px";
+        title.style.gap = compact ? "4px" : "6px";
+      }
+      if (subtitle) {
+        subtitle.style.fontSize = compact ? "8px" : "10px";
+        subtitle.style.paddingLeft = compact ? "0" : "25px";
+        subtitle.style.marginTop = compact ? "2px" : "4px";
+      }
+      if (numeral) {
+        numeral.style.minWidth = compact ? "15px" : "19px";
+        numeral.style.height = compact ? "15px" : "19px";
+        numeral.style.fontSize = compact ? "8px" : "10px";
+      }
+      const anchor = districtAnchors.get(stage.id);
+      if (anchor)
+        position(element, anchor.clone(), mobile ? 112 : 145, false, true);
+    }
+    const clientElement = stageLabels.get("clients");
+    if (clientElement) {
+      clientElement.style.fontSize = portraitTV() ? "8px" : "11px";
+      clientElement.style.padding = portraitTV() ? "6px 8px" : "8px 13px";
+    }
+    if (clientElement && districtAnchors.has("clients"))
+      position(
+        clientElement,
+        districtAnchors.get("clients").clone(),
+        mobile ? 185 : 215,
+        false,
+        true,
+      );
     const selected = architecture.entities.get(selectedId);
     const priorities = [];
-    if (selected) priorities.push(selectedId);
+    if (selected && !tvPresentation) priorities.push(selectedId);
     for (const [id, e] of architecture.entities)
       if (
         e.visible &&
@@ -946,7 +1414,7 @@ export async function createCityScene({
       )
         priorities.push(id);
     const visibleIds = new Set();
-    for (const id of priorities.slice(0, mobile ? 2 : 4)) {
+    for (const id of priorities.slice(0, tvPresentation ? 0 : mobile ? 2 : 4)) {
       const e = architecture.entities.get(id),
         d = entityData.get(id);
       if (!e?.visible) continue;
@@ -981,18 +1449,6 @@ export async function createCityScene({
     }
     for (const [id, el] of entityLabels)
       if (!visibleIds.has(id)) el.hidden = true;
-    const stages = cityStages();
-    for (const [stageIndex, stage] of stages.entries()) {
-      const first = plotFor(stage.id, 0),
-        last = plotFor(stage.id, 6);
-      const point = first.clone().lerp(last, 0.5);
-      point.z = -24.8;
-      point.y = 0.3;
-      position(stageLabels.get(stage.id), point, 105);
-    }
-    const clientLabel = stageLabels.get("clients");
-    if (clientLabel)
-      position(clientLabel, new THREE.Vector3(0, 0.3, 24.4), 200);
     // A red exclamation is the non-colour counterpart of the 3D incident marker.
     const attentionIds = new Set();
     for (const [id, e] of architecture.entities) {
@@ -1013,8 +1469,17 @@ export async function createCityScene({
         .clone()
         .add(new THREE.Vector3(0, e.model.height + 0.3, 0))
         .project(camera);
+      const markerX = (point.x * 0.5 + 0.5) * width;
+      const markerY = (-point.y * 0.5 + 0.5) * height;
+      const blockedByLabel = occupied.some(
+        (rectangle) =>
+          Math.abs(markerX - rectangle.x) < rectangle.w / 2 + 10 &&
+          Math.abs(markerY - rectangle.y) < rectangle.h / 2 + 10,
+      );
       el.hidden =
         !layers.activity ||
+        blockedByLabel ||
+        tvPresentation ||
         (entityLabels.has(id) && !entityLabels.get(id).hidden) ||
         point.z > 1 ||
         point.z < -1 ||
@@ -1050,17 +1515,33 @@ export async function createCityScene({
     });
     celebrationMesh.count = particleCount;
     celebrationMesh.instanceMatrix.needsUpdate = true;
-    let moving = false;
+    const outcome = construction.update(elapsed);
+    const moving = outcome.moving || outcome.active > 0;
     const priorTransitions = transitionList.length;
-    transitionList = transitionList.filter((t) => {
-      const k = clamp((elapsed - t.start) / t.duration, 0, 1),
-        e = architecture.entities.get(t.id);
-      if (!e) return false;
-      const ease = k * k * (3 - 2 * k);
-      const pos = t.from.clone().lerp(t.to, ease);
-      pos.y += Math.sin(k * Math.PI) * 0.55;
-      if (followFocus === t.id) {
-        const shift = pos.clone().sub(e.group.position);
+    for (const id of outcome.finished || []) {
+      const job = construction.get(id),
+        entity = architecture.entities.get(id);
+      if (job?.won && entity && !reducedMotion) {
+        celebrations.push({
+          id,
+          position: job.to.clone(),
+          height: entity.model.height,
+          start: elapsed,
+        });
+        const account = positions.get(entityData.get(id)?.accountId);
+        if (account && layers.connections)
+          addConnection(job.to, account.target, "#31ab64", 4.2, "customer");
+      }
+    }
+    transitionList = transitionList.filter((t) => construction.has(t.id));
+    if (typeof followFocus === "string" && !followFocus.startsWith("owner:")) {
+      const job = construction.get(followFocus);
+      const entity = architecture.entities.get(followFocus);
+      const point = construction.has(followFocus)
+        ? job?.focusPosition
+        : entity?.group.position;
+      if (point && followAnchor) {
+        const shift = point.clone().sub(followAnchor);
         if (flight) {
           flight.toTarget.add(shift);
           flight.toPos.add(shift);
@@ -1068,16 +1549,18 @@ export async function createCityScene({
           camera.position.add(shift);
           controls.target.add(shift);
         }
+        followAnchor.copy(point);
       }
-      architecture.updateEntity(t.id, { position: pos });
-      if (selectedId === t.id) ring.position.set(pos.x, 0.285, pos.z);
-      if (k >= 1) {
-        renderer.shadowMap.needsUpdate = true;
-        return false;
-      }
-      moving = true;
-      return true;
-    });
+    }
+    if (selectedId) {
+      const entity = architecture.entities.get(selectedId);
+      if (entity)
+        ring.position.set(
+          entity.group.position.x,
+          0.285,
+          entity.group.position.z,
+        );
+    }
     if (moving) renderer.shadowMap.needsUpdate = true;
     if (priorTransitions && !transitionList.length) updateLand();
     connections = connections.filter((c) => {
@@ -1117,6 +1600,21 @@ export async function createCityScene({
     }
     controls.update();
     updateTransitions();
+    people.update(delta, elapsed);
+    if (followFocus?.startsWith("owner:")) {
+      const point = people.getOwnerPosition(followFocus.slice(6));
+      if (point && followAnchor) {
+        const shift = point.clone().sub(followAnchor);
+        if (flight) {
+          flight.toTarget.add(shift);
+          flight.toPos.add(shift);
+        } else {
+          camera.position.add(shift);
+          controls.target.add(shift);
+        }
+        followAnchor.copy(point);
+      }
+    }
     if (!reducedMotion) traffic.update?.(delta, elapsed);
     if (elapsed - lastLabel > 0.12 || !lastLabel) {
       updateLabels();
@@ -1151,6 +1649,8 @@ export async function createCityScene({
       renderer: "WebGL2",
       trafficRunning: layers.traffic && !reducedMotion && quality !== "light",
       mode,
+      tvPresentation,
+      portraitTV: portraitTV(),
       cameraMoving: !!flight,
       landMinZ,
       preset: quality,
@@ -1168,7 +1668,11 @@ export async function createCityScene({
       frameMs: { median: median(frameTimes), p95: p95(frameTimes) },
       submitMs: { median: median(submitTimes), p95: p95(submitTimes) },
       entityCount: architecture.entities.size,
-      transitionCount: transitionList.length,
+      transitionCount:
+        construction.debug().count + construction.debug().queueCount,
+      construction: construction.debug(),
+      people: people.debug(),
+      districts: districtDiagnostics(),
       connectionCount: connections.length,
       traffic: traffic.debug?.() || null,
       visibleLabelCount: labelContainer?.querySelectorAll("[hidden]")
@@ -1184,8 +1688,16 @@ export async function createCityScene({
     cancelAnimationFrame(raf);
     resizeObserver.disconnect();
     document.removeEventListener("visibilitychange", handleVisibility);
+    renderer.domElement.removeEventListener("pointerdown", handleDown);
+    renderer.domElement.removeEventListener("pointerup", handleUp);
+    renderer.domElement.removeEventListener("pointermove", handleMove);
+    renderer.domElement.removeEventListener("pointerleave", handleLeave);
+    renderer.domElement.removeEventListener("pointercancel", handleCancel);
     controls.dispose();
     traffic.dispose?.();
+    people.dispose?.();
+    construction.dispose?.();
+    clearDistrictGeometry();
     architecture.dispose();
     for (const r of worldResources) r.dispose?.();
     for (const c of connections) {
@@ -1227,6 +1739,10 @@ export async function createCityScene({
     setQuality,
     setLayers,
     setMode,
+    setTVPresentation,
+    focusOwner,
+    projectOwner,
+    focusDistrict,
     setActive,
     resize,
     dispose,
@@ -1243,6 +1759,10 @@ export async function createCityScene({
       camera,
       controls,
       traffic,
+      people,
+      construction,
+      districtRoot,
+      projectOwner,
       architecture,
       getDiagnostics,
       identity,
@@ -1261,18 +1781,18 @@ function makeWorld(scene, resources) {
     return m;
   };
   const materials = {
-    stone: mat("Limestone pavement", "#dedfd2"),
-    base: mat("Warm limestone plinth", "#d5d8c9"),
-    asphalt: mat("Quiet asphalt", "#a7b0a9"),
+    stone: mat("Limestone pavement", "#e0e2d8"),
+    base: mat("Warm limestone plinth", "#d5d8cb"),
+    asphalt: mat("Quiet asphalt", "#717e83"),
     curb: mat("Limestone curb", "#f1eee2"),
     white: mat("Road paint", "#eae9dd"),
-    lawn: mat("Urban planting", "#a1b58b"),
+    lawn: mat("Urban planting", "#78ae50"),
     soil: mat("Planter soil", "#9e8d72"),
     wood: mat("Oak street furniture", "#aa916f"),
-    metal: mat("Muted street metal", "#64847c"),
-    leaf: mat("Tree canopies", "#92aa7d"),
+    metal: mat("Muted street metal", "#466f72"),
+    leaf: mat("Tree canopies", "#64a452"),
     trunk: mat("Tree bark", "#9c8c70"),
-    water: mat("Civic fountain", "#9abfb7", 0.2),
+    water: mat("Civic fountain", "#54b5c3", 0.2),
   };
   const noiseCanvas = document.createElement("canvas");
   noiseCanvas.width = noiseCanvas.height = 128;

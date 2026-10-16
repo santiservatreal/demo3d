@@ -1,0 +1,854 @@
+{
+  "generatedAt": "2026-10-16T18:11:56.018Z",
+  "base": "http://127.0.0.1:4173",
+  "browser": "154.0.8037.57",
+  "softwareGpu": "ANGLE SwiftShader",
+  "physicalTouchDevice": false,
+  "errors": [],
+  "results": [
+    {
+      "name": "four-identified-salespeople-walk-without-mutating-crm",
+      "passed": true,
+      "detail": {
+        "people": {
+          "enabled": true,
+          "elapsed": 3.5499,
+          "source": "simulated-crm-role",
+          "reducedMotion": false,
+          "owners": [
+            {
+              "ownerId": "owner-ana",
+              "name": "Ana Torres",
+              "color": "#007fd6",
+              "activity": "Revisando propuesta con el cliente",
+              "phase": "walking",
+              "dealId": "deal-013",
+              "accountId": "account-013",
+              "targetEntityId": "account-013",
+              "position": [
+                -15.9197420846483,
+                0.2218625673411263,
+                12.68743685522381
+              ],
+              "moving": true,
+              "routeLength": 5,
+              "routeIndex": 1,
+              "distance": 1.2804399999999996,
+              "win": false,
+              "winStep": null
+            },
+            {
+              "ownerId": "owner-marcos",
+              "name": "Marcos Vidal",
+              "color": "#ee7c22",
+              "activity": "Revisando propuesta con el cliente",
+              "phase": "walking",
+              "dealId": "deal-018",
+              "accountId": "account-018",
+              "targetEntityId": "account-018",
+              "position": [
+                -9.719560000000001,
+                0.2218625673411263,
+                12
+              ],
+              "moving": true,
+              "routeLength": 9,
+              "routeIndex": 1,
+              "distance": 1.2804399999999996,
+              "win": false,
+              "winStep": null
+            },
+            {
+              "ownerId": "owner-lucia",
+              "name": "Lucía Ferrer",
+              "color": "#a24ed3",
+              "activity": "Revisando propuesta con el cliente",
+              "phase": "walking",
+              "dealId": "deal-023",
+              "accountId": "account-005",
+              "targetEntityId": "account-005",
+              "position": [
+                9.719560000000001,
+                0.2218625673411263,
+                12
+              ],
+              "moving": true,
+              "routeLength": 4,
+              "routeIndex": 1,
+              "distance": 1.2804399999999996,
+              "win": false,
+              "winStep": null
+            },
+            {
+              "ownerId": "owner-david",
+              "name": "David Soler",
+              "color": "#d43667",
+              "activity": "Revisando propuesta con el cliente",
+              "phase": "walking",
+              "dealId": "deal-016",
+              "accountId": "account-016",
+              "targetEntityId": "account-016",
+              "position": [
+                17.572630176221967,
+                0.2218625673411263,
+                13.14526035244393
+              ],
+              "moving": true,
+              "routeLength": 4,
+              "routeIndex": 1,
+              "distance": 1.2804399999999996,
+              "win": false,
+              "winStep": null
+            }
+          ]
+        },
+        "ranking": [
+          {
+            "id": "owner-ana",
+            "name": "Ana Torres",
+            "initials": "AT",
+            "ownerId": "owner-ana",
+            "color": "#007fd6",
+            "openCount": 6,
+            "openAmount": 25000,
+            "wonCount": 1,
+            "wonAmount": 4500,
+            "activeDeals": [
+              "deal-001",
+              "deal-005",
+              "deal-009",
+              "deal-013",
+              "deal-017",
+              "deal-021"
+            ],
+            "wonDeals": [
+              "deal-025"
+            ],
+            "wonHistoryComplete": true,
+            "missingClosureHistory": [],
+            "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+          },
+          {
+            "id": "owner-marcos",
+            "name": "Marcos Vidal",
+            "initials": "MV",
+            "ownerId": "owner-marcos",
+            "color": "#ee7c22",
+            "openCount": 6,
+            "openAmount": 31000,
+            "wonCount": 1,
+            "wonAmount": 6500,
+            "activeDeals": [
+              "deal-002",
+              "deal-006",
+              "deal-010",
+              "deal-014",
+              "deal-018",
+              "deal-022"
+            ],
+            "wonDeals": [
+              "deal-026"
+            ],
+            "wonHistoryComplete": true,
+            "missingClosureHistory": [],
+            "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+          },
+          {
+            "id": "owner-lucia",
+            "name": "Lucía Ferrer",
+            "initials": "LF",
+            "ownerId": "owner-lucia",
+            "color": "#a24ed3",
+            "openCount": 6,
+            "openAmount": 31000,
+            "wonCount": 1,
+            "wonAmount": 8500,
+            "activeDeals": [
+              "deal-003",
+              "deal-007",
+              "deal-011",
+              "deal-015",
+              "deal-019",
+              "deal-023"
+            ],
+            "wonDeals": [
+              "deal-027"
+            ],
+            "wonHistoryComplete": true,
+            "missingClosureHistory": [],
+            "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+          },
+          {
+            "id": "owner-david",
+            "name": "David Soler",
+            "initials": "DS",
+            "ownerId": "owner-david",
+            "color": "#d43667",
+            "openCount": 6,
+            "openAmount": 33000,
+            "wonCount": 1,
+            "wonAmount": 10500,
+            "activeDeals": [
+              "deal-004",
+              "deal-008",
+              "deal-012",
+              "deal-016",
+              "deal-020",
+              "deal-024"
+            ],
+            "wonDeals": [
+              "deal-028"
+            ],
+            "wonHistoryComplete": true,
+            "missingClosureHistory": [],
+            "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+          }
+        ]
+      }
+    },
+    {
+      "name": "real-salesperson-geometry-opens-identified-owner",
+      "passed": true,
+      "detail": {
+        "id": "owner-ana",
+        "point": {
+          "id": "owner-ana",
+          "x": 751.9999999999993,
+          "y": 452.11346110845454,
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "tv-full-viewport-metrics-no-navigation-and-escape-restores-state",
+      "passed": true,
+      "detail": {
+        "canvas": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900,
+          "viewport": [
+            1440,
+            900
+          ]
+        },
+        "restored": {
+          "view": "table",
+          "selectedId": "deal-003",
+          "filters": {
+            "query": "Expansión de equipo",
+            "stageId": "",
+            "ownerId": "",
+            "attentionOnly": false,
+            "includeLost": false
+          }
+        }
+      }
+    },
+    {
+      "name": "tv-css-presentation-survives-native-fullscreen-refusal",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "name": "six-readable-separated-district-headers",
+      "passed": true,
+      "detail": {
+        "districts": [
+          {
+            "id": "lead",
+            "text": "01Nuevos leads7 deals · 31.500 €",
+            "hidden": false,
+            "rect": {
+              "x": 526.5546875,
+              "y": 362.4375,
+              "right": 653.4453125,
+              "bottom": 416.4375
+            },
+            "fontSize": "16px",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "id": "qualified",
+            "text": "02Cualificados5 deals · 25.000 €",
+            "hidden": false,
+            "rect": {
+              "x": 683.5625,
+              "y": 412.4375,
+              "right": 814.4375,
+              "bottom": 466.4375
+            },
+            "fontSize": "16px",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "id": "proposal",
+            "text": "03Propuestas6 deals · 33.000 €",
+            "hidden": false,
+            "rect": {
+              "x": 759.5,
+              "y": 523.4375,
+              "right": 890.5,
+              "bottom": 577.4375
+            },
+            "fontSize": "16px",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "id": "negotiation",
+            "text": "04Negociación6 deals · 30.500 €",
+            "hidden": false,
+            "rect": {
+              "x": 916.3984375,
+              "y": 510.4375,
+              "right": 1047.6015625,
+              "bottom": 564.4375
+            },
+            "fontSize": "16px",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "id": "won",
+            "text": "05Ventas ganadas4 deals · 30.000 €",
+            "hidden": false,
+            "rect": {
+              "x": 994.265625,
+              "y": 621.4375,
+              "right": 1125.734375,
+              "bottom": 675.4375
+            },
+            "fontSize": "16px",
+            "background": "rgba(255, 255, 255, 0.97)"
+          },
+          {
+            "id": "clients",
+            "text": "Clientes activos · 18 empresas",
+            "hidden": false,
+            "rect": {
+              "x": 499.171875,
+              "y": 615.4375,
+              "right": 688.828125,
+              "bottom": 649.4375
+            },
+            "fontSize": "11px",
+            "background": "rgba(255, 255, 255, 0.98)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "real-deconstruction-truck-construction-stable-building-and-idempotent-event",
+      "passed": true,
+      "detail": {
+        "eventId": "demo-0001-91",
+        "phases": [
+          {
+            "id": "deal-001",
+            "dealId": "deal-001",
+            "phase": "deconstruct",
+            "status": "active",
+            "progress": 0,
+            "buildProgress": 1,
+            "truckProgress": 0,
+            "from": [
+              -35.45,
+              0.1,
+              -17
+            ],
+            "to": [
+              19.7,
+              0.1,
+              -17
+            ],
+            "focusPosition": [
+              -35.45,
+              0.1,
+              -17
+            ],
+            "startedAt": 21.7824,
+            "requestedAt": 21.7824,
+            "duration": 12,
+            "ownerId": "owner-ana",
+            "accountId": "account-001",
+            "truckPosition": [
+              -35.45,
+              0.12,
+              -13.45
+            ],
+            "entityPosition": [
+              -35.45,
+              0.1,
+              -17
+            ],
+            "visible": true,
+            "scaleY": 1,
+            "uuid": "d0ab8e98-a479-40e5-8a62-b2239bf9b333",
+            "visibleRigs": 1
+          },
+          {
+            "id": "deal-001",
+            "dealId": "deal-001",
+            "phase": "transport",
+            "status": "active",
+            "progress": 0.33053333333333335,
+            "buildProgress": 0,
+            "truckProgress": 0.04384774525925924,
+            "from": [
+              -35.45,
+              0.1,
+              -17
+            ],
+            "to": [
+              19.7,
+              0.1,
+              -17
+            ],
+            "focusPosition": [
+              -35.45,
+              0.12,
+              -10.670342168115617
+            ],
+            "startedAt": 21.7824,
+            "requestedAt": 21.7824,
+            "duration": 12,
+            "ownerId": "owner-ana",
+            "accountId": "account-001",
+            "truckPosition": [
+              -35.45,
+              0.12,
+              -10.670342168115617
+            ],
+            "entityPosition": [
+              19.7,
+              0.1,
+              -17
+            ],
+            "visible": true,
+            "scaleY": 1,
+            "uuid": "d0ab8e98-a479-40e5-8a62-b2239bf9b333",
+            "visibleRigs": 1
+          },
+          {
+            "id": "deal-001",
+            "dealId": "deal-001",
+            "phase": "build",
+            "status": "active",
+            "progress": 0.7319083333333335,
+            "buildProgress": 0.07040297383241328,
+            "truckProgress": 1,
+            "from": [
+              -35.45,
+              0.1,
+              -17
+            ],
+            "to": [
+              19.7,
+              0.1,
+              -17
+            ],
+            "focusPosition": [
+              19.7,
+              0.1,
+              -17
+            ],
+            "startedAt": 21.7824,
+            "requestedAt": 21.7824,
+            "duration": 12,
+            "ownerId": "owner-ana",
+            "accountId": "account-001",
+            "truckPosition": [
+              19.7,
+              0.12,
+              -13.45
+            ],
+            "entityPosition": [
+              19.7,
+              0.1,
+              -17
+            ],
+            "visible": true,
+            "scaleY": 1,
+            "uuid": "d0ab8e98-a479-40e5-8a62-b2239bf9b333",
+            "visibleRigs": 1
+          }
+        ],
+        "complete": {
+          "active": [],
+          "queued": [],
+          "completed": [
+            {
+              "id": "deal-001",
+              "dealId": "deal-001",
+              "phase": "complete",
+              "status": "complete",
+              "progress": 1,
+              "buildProgress": 1,
+              "truckProgress": 1,
+              "from": [
+                -35.45,
+                0.1,
+                -17
+              ],
+              "to": [
+                19.7,
+                0.1,
+                -17
+              ],
+              "focusPosition": [
+                19.7,
+                0.1,
+                -17
+              ],
+              "startedAt": 21.7824,
+              "requestedAt": 21.7824,
+              "duration": 12,
+              "ownerId": "owner-ana",
+              "accountId": "account-001"
+            }
+          ],
+          "count": 0,
+          "queueCount": 0,
+          "reducedMotion": false,
+          "rigCount": 2,
+          "visibleRigs": 0
+        }
+      }
+    },
+    {
+      "name": "owner-win-ranking-and-visit-derive-once-from-real-event",
+      "passed": true,
+      "detail": {
+        "eventId": "demo-0002-92",
+        "ownerBeforeWin": {
+          "id": "owner-ana",
+          "name": "Ana Torres",
+          "initials": "AT",
+          "ownerId": "owner-ana",
+          "color": "#007fd6",
+          "openCount": 6,
+          "openAmount": 25000,
+          "wonCount": 1,
+          "wonAmount": 4500,
+          "activeDeals": [
+            "deal-001",
+            "deal-005",
+            "deal-009",
+            "deal-013",
+            "deal-017",
+            "deal-021"
+          ],
+          "wonDeals": [
+            "deal-025"
+          ],
+          "wonHistoryComplete": true,
+          "missingClosureHistory": [],
+          "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+        },
+        "ownerAfterWin": {
+          "id": "owner-ana",
+          "name": "Ana Torres",
+          "initials": "AT",
+          "ownerId": "owner-ana",
+          "color": "#007fd6",
+          "openCount": 5,
+          "openAmount": 23500,
+          "wonCount": 2,
+          "wonAmount": 6000,
+          "activeDeals": [
+            "deal-005",
+            "deal-009",
+            "deal-013",
+            "deal-017",
+            "deal-021"
+          ],
+          "wonDeals": [
+            "deal-001",
+            "deal-025"
+          ],
+          "wonHistoryComplete": true,
+          "missingClosureHistory": [],
+          "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+        },
+        "person": {
+          "ownerId": "owner-ana",
+          "name": "Ana Torres",
+          "color": "#007fd6",
+          "activity": "Cierre registrado · visitando al cliente",
+          "phase": "walking",
+          "dealId": "deal-001",
+          "accountId": "account-001",
+          "targetEntityId": "account-001",
+          "position": [
+            -11.334203700150763,
+            0.22008210479503462,
+            22.95934407596991
+          ],
+          "moving": true,
+          "routeLength": 4,
+          "routeIndex": 1,
+          "distance": 13.440879999999991,
+          "win": true,
+          "winStep": "client"
+        }
+      }
+    },
+    {
+      "name": "sales-team-panel-reflects-business-ranking",
+      "passed": true,
+      "detail": {
+        "owners": [
+          {
+            "id": "owner-ana",
+            "name": "Ana Torres",
+            "initials": "AT",
+            "ownerId": "owner-ana",
+            "color": "#007fd6",
+            "openCount": 5,
+            "openAmount": 23500,
+            "wonCount": 2,
+            "wonAmount": 6000,
+            "activeDeals": [
+              "deal-005",
+              "deal-009",
+              "deal-013",
+              "deal-017",
+              "deal-021"
+            ],
+            "wonDeals": [
+              "deal-001",
+              "deal-025"
+            ],
+            "wonHistoryComplete": true,
+            "missingClosureHistory": [],
+            "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+          },
+          {
+            "id": "owner-marcos",
+            "name": "Marcos Vidal",
+            "initials": "MV",
+            "ownerId": "owner-marcos",
+            "color": "#ee7c22",
+            "openCount": 6,
+            "openAmount": 31000,
+            "wonCount": 1,
+            "wonAmount": 6500,
+            "activeDeals": [
+              "deal-002",
+              "deal-006",
+              "deal-010",
+              "deal-014",
+              "deal-018",
+              "deal-022"
+            ],
+            "wonDeals": [
+              "deal-026"
+            ],
+            "wonHistoryComplete": true,
+            "missingClosureHistory": [],
+            "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+          },
+          {
+            "id": "owner-lucia",
+            "name": "Lucía Ferrer",
+            "initials": "LF",
+            "ownerId": "owner-lucia",
+            "color": "#a24ed3",
+            "openCount": 6,
+            "openAmount": 31000,
+            "wonCount": 1,
+            "wonAmount": 8500,
+            "activeDeals": [
+              "deal-003",
+              "deal-007",
+              "deal-011",
+              "deal-015",
+              "deal-019",
+              "deal-023"
+            ],
+            "wonDeals": [
+              "deal-027"
+            ],
+            "wonHistoryComplete": true,
+            "missingClosureHistory": [],
+            "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+          },
+          {
+            "id": "owner-david",
+            "name": "David Soler",
+            "initials": "DS",
+            "ownerId": "owner-david",
+            "color": "#d43667",
+            "openCount": 6,
+            "openAmount": 33000,
+            "wonCount": 1,
+            "wonAmount": 10500,
+            "activeDeals": [
+              "deal-004",
+              "deal-008",
+              "deal-012",
+              "deal-016",
+              "deal-020",
+              "deal-024"
+            ],
+            "wonDeals": [
+              "deal-028"
+            ],
+            "wonHistoryComplete": true,
+            "missingClosureHistory": [],
+            "basis": "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mobile-tv-and-sales-team-inbounds",
+      "passed": true,
+      "detail": {
+        "viewport": [
+          390,
+          844
+        ],
+        "physicalPhone": false
+      }
+    },
+    {
+      "name": "reduced-motion-skips-construction-and-walking",
+      "passed": true,
+      "detail": {
+        "people": {
+          "enabled": true,
+          "elapsed": 21.132499999999997,
+          "source": "simulated-crm-role",
+          "reducedMotion": true,
+          "owners": [
+            {
+              "ownerId": "owner-ana",
+              "name": "Ana Torres",
+              "color": "#007fd6",
+              "activity": "Revisando propuesta con el cliente",
+              "phase": "walking",
+              "dealId": "deal-013",
+              "accountId": "account-013",
+              "targetEntityId": "account-013",
+              "position": [
+                -17,
+                0.2,
+                12
+              ],
+              "moving": false,
+              "routeLength": 5,
+              "routeIndex": 1,
+              "distance": 0,
+              "win": false,
+              "winStep": null
+            },
+            {
+              "ownerId": "owner-marcos",
+              "name": "Marcos Vidal",
+              "color": "#ee7c22",
+              "activity": "Revisando propuesta con el cliente",
+              "phase": "walking",
+              "dealId": "deal-018",
+              "accountId": "account-018",
+              "targetEntityId": "account-018",
+              "position": [
+                -11,
+                0.2,
+                12
+              ],
+              "moving": false,
+              "routeLength": 9,
+              "routeIndex": 1,
+              "distance": 0,
+              "win": false,
+              "winStep": null
+            },
+            {
+              "ownerId": "owner-lucia",
+              "name": "Lucía Ferrer",
+              "color": "#a24ed3",
+              "activity": "Revisando propuesta con el cliente",
+              "phase": "walking",
+              "dealId": "deal-023",
+              "accountId": "account-005",
+              "targetEntityId": "account-005",
+              "position": [
+                11,
+                0.2,
+                12
+              ],
+              "moving": false,
+              "routeLength": 4,
+              "routeIndex": 1,
+              "distance": 0,
+              "win": false,
+              "winStep": null
+            },
+            {
+              "ownerId": "owner-david",
+              "name": "David Soler",
+              "color": "#d43667",
+              "activity": "Revisando propuesta con el cliente",
+              "phase": "walking",
+              "dealId": "deal-016",
+              "accountId": "account-016",
+              "targetEntityId": "account-016",
+              "position": [
+                17,
+                0.2,
+                12
+              ],
+              "moving": false,
+              "routeLength": 4,
+              "routeIndex": 1,
+              "distance": 0,
+              "win": false,
+              "winStep": null
+            }
+          ]
+        },
+        "construction": {
+          "active": [],
+          "queued": [],
+          "completed": [
+            {
+              "id": "deal-001",
+              "dealId": "deal-001",
+              "phase": "complete",
+              "status": "complete",
+              "progress": 1,
+              "buildProgress": 1,
+              "truckProgress": 1,
+              "from": [
+                -35.45,
+                0.1,
+                -17
+              ],
+              "to": [
+                19.7,
+                0.1,
+                -17
+              ],
+              "focusPosition": [
+                19.7,
+                0.1,
+                -17
+              ],
+              "startedAt": 21.132499999999997,
+              "requestedAt": 21.132499999999997,
+              "duration": 0,
+              "ownerId": "owner-ana",
+              "accountId": "account-001"
+            }
+          ],
+          "count": 0,
+          "queueCount": 0,
+          "reducedMotion": true,
+          "rigCount": 0,
+          "visibleRigs": 0
+        }
+      }
+    }
+  ]
+}

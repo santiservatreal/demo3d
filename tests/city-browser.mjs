@@ -310,7 +310,7 @@ try {
     );
     await page.waitForTimeout(1000);
     expect(await snapshot()).toEqual(stateBeforeModes);
-    await page.locator('.c-mode-tabs [data-action="explore"]').click();
+    await page.keyboard.press("Escape");
     await page.locator('[data-action="replay"]').click();
     await expect(page.locator("#city-replay")).toBeVisible();
     await page.locator("#city-replay-speed").selectOption("4");
@@ -591,7 +591,7 @@ try {
 
   expect(errors, "No uncaught browser JS errors").toEqual([]);
   await writeFile(
-    "docs/city/browser-validation.json",
+    process.env.RESULT_PATH || "docs/city/browser-validation.json",
     JSON.stringify(
       {
         generatedAt: new Date().toISOString(),

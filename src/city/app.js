@@ -55,6 +55,7 @@ import {
   createReplayState,
   applyEvent,
   stageKind,
+  ownerPerformance,
 } from "./model.js";
 import { createCityScene } from "./scene.js";
 import "./style.css";
@@ -168,10 +169,14 @@ const ui = {
   },
   drawer: null,
   tvIndex: 0,
+  tvSavedUi: null,
+  tvNativeFullscreen: false,
+  selectedOwnerId: null,
+  tvNavigationAt: 0,
 };
 const root = document.querySelector("#app");
 root.innerHTML = `<div id="city-app" class="c-shell">
-  <aside class="c-rail" aria-label="Navegación principal"><a href="./" class="c-logo" aria-label="Atlas inicio">a<span>•</span></a><button class="active" data-action="view-city" aria-label="Ciudad CRM" title="Ciudad CRM">${i("building-2")}</button><button data-action="view-table" aria-label="Tabla de oportunidades" title="Tabla">${i("table-2")}</button><button data-action="clients" aria-label="Clientes activos" title="Clientes">${i("users")}</button><button data-action="feed" aria-label="Feed de eventos" title="Eventos">${i("activity")}</button><span class="c-rail-line"></span><a href="?experience=luma" aria-label="Abrir la fábrica Luma" title="Luma Works · experiencia industrial">${i("box")}</a><div class="c-rail-bottom"><button data-action="sources" aria-label="Datos y conexión" title="Datos y conexión">${i("radio")}</button><button data-action="help" aria-label="Ayuda" title="Ayuda">${i("info")}</button><span class="c-avatar" aria-label="Usuario demo">SC</span></div></aside>
+  <aside class="c-rail" aria-label="Navegación principal"><a href="./" class="c-logo" aria-label="Atlas inicio">a<span>•</span></a><button class="active" data-action="view-city" aria-label="Ciudad CRM" title="Ciudad CRM">${i("building-2")}</button><button data-action="view-table" aria-label="Tabla de oportunidades" title="Tabla">${i("table-2")}</button><button data-action="clients" aria-label="Clientes activos" title="Clientes">${i("users")}</button><button data-action="feed" aria-label="Feed de eventos" title="Eventos">${i("activity")}</button><button data-action="team" aria-label="Equipo comercial" title="Equipo comercial">${i("users")}</button><span class="c-rail-line"></span><a href="?experience=luma" aria-label="Abrir la fábrica Luma" title="Luma Works · experiencia industrial">${i("box")}</a><div class="c-rail-bottom"><button data-action="sources" aria-label="Datos y conexión" title="Datos y conexión">${i("radio")}</button><button data-action="help" aria-label="Ayuda" title="Ayuda">${i("info")}</button><span class="c-avatar" aria-label="Usuario demo">SC</span></div></aside>
   <main class="c-main"><header class="c-header"><div class="c-wordmark">atlas<span>.</span><small>UNA NUEVA PERSPECTIVA</small></div><div class="c-workspace"><span class="c-workspace-icon">${i("building-2")}</span><div><b>Mi ciudad comercial</b><small>Workspace de demostración</small></div></div><div class="c-header-right"><button class="c-demo" data-action="sources"><span></span>Datos simulados</button><button class="c-header-help" data-action="help" aria-label="Cómo funciona">${i("info")}</button><span class="c-avatar">SC</span></div></header>
   <div class="c-heading"><div><div class="c-eyebrow">TU PIPELINE, EN PERSPECTIVA</div><h1>Cada oportunidad tiene su lugar<span>.</span></h1></div><p>Explora tu negocio. Descubre el siguiente paso.</p></div>
   <section id="city-metrics" class="c-metrics" aria-label="Indicadores del negocio"></section>
@@ -203,10 +208,10 @@ root.innerHTML = `<div id="city-app" class="c-shell">
     .join(
       "",
     )}<label class="c-quality-label"><span><b>Calidad gráfica</b><small>Auto se adapta con histéresis</small></span><select id="city-quality" aria-label="Calidad gráfica"><option value="auto">Auto</option><option value="high">Alta</option><option value="balanced">Equilibrada</option><option value="light">Ligera · sin tráfico</option></select></label><p>Geometría 3D real · Three.js / WebGL2</p></div>
-  <div id="city-hover" class="c-hover" hidden></div><div id="city-tv-banner" class="c-presentation-banner" hidden>${i("monitor-play")}<span>TV · Una vuelta por tu negocio</span><button data-action="explore">Salir ${i("x")}</button></div>
+  <div id="city-tv-brand" hidden><b>atlas<span>.</span></b><span>EL NEGOCIO, EN DIRECTO</span><small>Datos simulados · Importes de oportunidades</small></div><button id="city-tv-exit" data-action="explore" aria-label="Salir del modo televisión" title="Salir de TV · Esc">${i("x")}</button><div id="city-tv-team" aria-label="Resumen del equipo comercial" hidden></div><div id="city-hover" class="c-hover" hidden></div><div id="city-tv-banner" class="c-presentation-banner" hidden>${i("monitor-play")}<span>TV · Una vuelta por tu negocio</span><button data-action="explore">Salir ${i("x")}</button></div>
   </div><div id="city-replay" class="c-replay" hidden><button data-action="replay-play" aria-label="Reproducir historial">${i("play")}</button><div><b>Historial de etapas</b><small id="city-replay-date">Eventos del mes</small></div><input id="city-replay-progress" aria-label="Posición del historial" type="range" min="0" max="100" value="0"><select id="city-replay-speed" aria-label="Velocidad de reproducción"><option value="1">×1</option><option value="2">×2</option><option value="4">×4</option></select><button data-action="replay-next" aria-label="Siguiente evento">${i("skip-forward")}</button><button data-action="explore" aria-label="Salir de Replay">${i("x")}</button></div>
-  <footer class="c-bottom-bar"><button data-action="today" class="c-today">${i("activity")}<span>Hoy en tu ciudad</span></button><div id="city-today"></div><button data-action="feed" class="c-latest-event"><span class="c-live-dot"></span><span id="city-latest-event">Tu pipeline está listo para explorar</span>${i("arrow-up-right")}</button></footer></section>
-  <footer class="c-footer"><span>Menos tablas. Más perspectiva.</span><span>Datos ficticios · Tráfico ambiental · Ningún cobro se genera al ganar</span><button data-action="sources">Cómo se conectará a tu CRM ${i("arrow-up-right")}</button></footer></main>
+  <footer class="c-bottom-bar"><button data-action="today" class="c-today">${i("activity")}<span>Hoy en tu ciudad</span></button><div id="city-today"></div><button data-action="team" class="c-team-shortcut">${i("users")}<span>Comerciales</span><b>4</b></button><button data-action="feed" class="c-latest-event"><span class="c-live-dot"></span><span id="city-latest-event">Tu pipeline está listo para explorar</span>${i("arrow-up-right")}</button></footer></section>
+  <footer class="c-footer"><span>Menos tablas. Más perspectiva.</span><span>Datos ficticios · Tráfico ambiental · Las obras y los recorridos comerciales son simulados</span><button data-action="sources">Cómo se conectará a tu CRM ${i("arrow-up-right")}</button></footer></main>
   </div><div id="city-modal-root"></div><div id="city-toast" role="status" aria-live="polite"></div>`;
 const $ = (s) => document.querySelector(s);
 const refreshIcons = () => createIcons({ icons });
@@ -335,7 +340,7 @@ function syncFilterOptions() {
       .map((o) => `<option value="${esc(o.id)}">${esc(o.name)}</option>`)
       .join("");
 }
-function updateFilters() {
+function updateFilters(event) {
   syncFilterOptions();
   const f = ui.filters;
   const count = [
@@ -358,6 +363,8 @@ function updateFilters() {
     filteredIds: new Set(visible.map((d) => d.id)),
     selectedId: ui.selectedId,
     layers: ui.layers,
+    event,
+    animateEvents: ui.mode !== "replay",
   });
   if (ui.view === "table") renderTable();
   document
@@ -396,9 +403,11 @@ function renderInspector() {
     (x) => x.dealId === entity.id || x.accountId === entity.id,
   );
   const link = safeCrmLink(entity.crmUrl);
+  const constructionJob = d ? scene?.debug?.construction?.get?.(d.id) : null;
   el.innerHTML = `<div class="c-sheet-handle"><button data-action="sheet-cycle" aria-label="Cambiar altura de la ficha"><span></span></button></div><div class="c-inspector-top"><span class="c-eyebrow">${d ? "OPORTUNIDAD" : "RELACIÓN CON CLIENTE"} · ${esc(entity.id)}</span><button data-action="close-inspector" aria-label="Cerrar ficha">${i("x")}</button></div><div class="c-inspector-title"><span class="c-stage-pill" style="--stage:${stage.color}">${esc(stage.name)}</span><h2>${esc(entity.name)}</h2><p>${d ? esc(state.accounts.find((x) => x.id === d.accountId)?.name || "Sin cliente relacionado") : "Una relación que sigue creciendo"}</p></div><div class="c-sheet-sizes" role="group" aria-label="Altura de ficha"><button data-action="sheet-size" data-size="compact" aria-pressed="${ui.sheet === "compact"}">Contraída</button><button data-action="sheet-size" data-size="half" aria-pressed="${ui.sheet === "half"}">Media</button><button data-action="sheet-size" data-size="full" aria-pressed="${ui.sheet === "full"}">Expandida</button></div><div class="c-inspector-body">${
     d
       ? `
+  <div class="c-construction-status" data-construction-id="${d.id}" ${!constructionJob || !["active", "queued"].includes(constructionJob.status) ? "hidden" : ""}><span>CAMBIO DE ETAPA</span><b data-construction-phase>${constructionPhaseText(constructionJob)}</b><div><span data-construction-progress style="width:${Math.round((constructionJob?.progress || 0) * 100)}%"></span></div><small>La oportunidad y sus importes ya están actualizados.</small></div>
   <div class="c-deal-value"><div><small>Valor de la oportunidad</small><b>${eur(d.amount)}</b></div><span><b>${d.probability == null ? "No disponible" : `${d.probability} %`}</b><small>probabilidad</small></span></div>
   ${needsAttention(d, state) ? `<div class="c-attention-note">${i("alert-circle")}<span>Hay una tarea vencida. Revisa el siguiente paso.</span></div>` : ""}
   <dl class="c-details"><div><dt>Responsable</dt><dd><span class="c-owner-dot">${esc(state.owners.find((x) => x.id === d.ownerId)?.initials || "—")}</span>${esc(ownerName(d.ownerId))}</dd></div><div><dt>Cierre previsto</dt><dd>${date(d.expectedCloseAt)}</dd></div><div><dt>Última actividad</dt><dd>${date(d.lastActivityAt)} · ${time(d.lastActivityAt)}</dd></div></dl>
@@ -448,14 +457,19 @@ function renderDrawer() {
     return;
   }
   el.hidden = false;
+  if (ui.drawer === "team") {
+    el.innerHTML = teamDrawerHTML();
+    return;
+  }
   const state = getState(),
     m = metrics(state),
     titles = {
       clients: "Relaciones que crecen",
       feed: "Lo que pasa en tu ciudad",
       today: "Hoy en tu ciudad",
+      team: "El equipo que mueve tu ciudad",
     };
-  el.innerHTML = `<div class="c-drawer-header"><div><span class="c-eyebrow">${ui.drawer === "clients" ? `${m.activeClients} CLIENTES ACTIVOS` : "ACTIVIDAD CON PROCEDENCIA"}</span><h2>${titles[ui.drawer]}</h2></div><button data-action="close-drawer" aria-label="Cerrar panel">${i("x")}</button></div><nav class="c-drawer-tabs" aria-label="Vistas de actividad"><button data-action="today" class="${ui.drawer === "today" ? "active" : ""}">Hoy</button><button data-action="feed" class="${ui.drawer === "feed" ? "active" : ""}">Eventos</button><button data-action="clients" class="${ui.drawer === "clients" ? "active" : ""}">Clientes</button></nav><div class="c-drawer-body">${
+  el.innerHTML = `<div class="c-drawer-header"><div><span class="c-eyebrow">${ui.drawer === "clients" ? `${m.activeClients} CLIENTES ACTIVOS` : "ACTIVIDAD CON PROCEDENCIA"}</span><h2>${titles[ui.drawer]}</h2></div><button data-action="close-drawer" aria-label="Cerrar panel">${i("x")}</button></div><nav class="c-drawer-tabs" aria-label="Vistas de actividad"><button data-action="today" class="${ui.drawer === "today" ? "active" : ""}">Hoy</button><button data-action="feed" class="${ui.drawer === "feed" ? "active" : ""}">Eventos</button><button data-action="clients" class="${ui.drawer === "clients" ? "active" : ""}">Clientes</button><button data-action="team" class="${ui.drawer === "team" ? "active" : ""}">Equipo</button></nav><div class="c-drawer-body">${
     ui.drawer === "clients"
       ? state.accounts
           .map(
@@ -477,11 +491,124 @@ function renderDrawer() {
         : `<div class="c-today-summary"><b>${m.pendingContacts}</b> contactos pendientes <span>·</span><b>${m.pendingConversations}</b> conversaciones por responder</div>${state.activities.map((a) => `<button class="c-feed-event" data-select="${esc(a.dealId || a.accountId || "")}">${i(activityIcon(a.type))}<span><b>${esc(a.subject || a.type)}</b><small>${a.status === "pending" ? "Pendiente" : "Registrada"} · ${date(a.dueAt || a.occurredAt)} ${time(a.occurredAt)}</small><em>${esc(a.id)}</em></span></button>`).join("")}`
   }</div>`;
 }
-function render() {
+function constructionPhaseText(job) {
+  return (
+    {
+      queued: "Esperando equipo de obra",
+      deconstruct: "Desmontando el edificio",
+      transport: "Materiales en camino",
+      build: "Construyendo en la nueva etapa",
+      complete: "Cambio visual completado",
+    }[job?.phase] || "Preparando el cambio de etapa"
+  );
+}
+function peopleSnapshots() {
+  return scene?.debug?.people?.debug?.()?.owners || [];
+}
+function ownerActivity(id) {
+  const info = peopleSnapshots().find((p) => (p.ownerId || p.id) === id);
+  const activity = info?.activity || "Explorando oportunidades";
+  return (
+    {
+      walking: "En camino",
+      meeting: "Con el cliente",
+      negotiating: "Negociando",
+      celebrating: "Venta cerrada",
+      idle: "Planificando el siguiente paso",
+      construction: "Acompañando la venta",
+    }[activity] || activity
+  );
+}
+function renderTeam() {
+  const team = ownerPerformance(getState());
+  $("#city-tv-team").innerHTML = team
+    .map(
+      (o) =>
+        `<div class="c-tv-owner" data-owner-summary="${esc(o.id)}" style="--owner:${o.color}"><span class="c-owner-avatar">${esc(getState().owners.find((x) => x.id === o.id)?.initials || o.name.slice(0, 2))}</span><span><b>${esc(o.name.split(" ")[0])}</b><small><strong data-owner-won="${esc(o.id)}">${o.wonCount ?? "—"}</strong> ${o.wonCount === 1 ? "ganada" : "ganadas"} <em>·</em> ${o.openCount} en curso</small></span><strong>${eur(o.wonAmount)}</strong></div>`,
+    )
+    .join("");
+  $(".c-team-shortcut b").textContent = team.length;
+  $("#city-metrics")
+    .querySelectorAll("button")
+    .forEach((b) => {
+      b.tabIndex = ui.mode === "tv" ? -1 : 0;
+    });
+}
+function teamDrawerHTML() {
+  const team = [...ownerPerformance(getState())].sort(
+    (a, b) =>
+      (b.wonCount || 0) - (a.wonCount || 0) ||
+      (b.openAmount || 0) - (a.openAmount || 0),
+  );
+  const focused = team.find((o) => o.id === ui.selectedOwnerId);
+  return `<div class="c-drawer-header"><div><span class="c-eyebrow">${team.length} RESPONSABLES · DATOS SIMULADOS</span><h2>El equipo que mueve tu ciudad</h2></div><button data-action="close-drawer" aria-label="Cerrar equipo">${i("x")}</button></div><nav class="c-drawer-tabs" aria-label="Vistas de actividad"><button data-action="today">Hoy</button><button data-action="feed">Eventos</button><button data-action="clients">Clientes</button><button data-action="team" class="active">Equipo</button></nav><div class="c-drawer-body" id="city-team-panel"><p class="c-team-intro">Cada persona representa al responsable de sus oportunidades. Las posiciones y los paseos son una simulación visual.</p><div class="c-team-list">${team.map((o) => `<button data-owner="${esc(o.id)}" class="c-team-card ${o.id === ui.selectedOwnerId ? "selected" : ""}" style="--owner:${o.color}"><span class="c-owner-avatar">${esc(getState().owners.find((x) => x.id === o.id)?.initials || o.name.slice(0, 2))}</span><span class="c-team-person"><b>${esc(o.name)}</b><small data-owner-activity="${esc(o.id)}">${esc(ownerActivity(o.id))}</small><em>${o.openCount} abiertas · ${eur(o.openAmount)}</em></span><span class="c-team-result"><b data-owner-won="${esc(o.id)}">${o.wonCount ?? "—"}</b><small>${o.wonCount === 1 ? "ganada" : "ganadas"}</small><strong>${eur(o.wonAmount)}</strong></span>${i("locate-fixed")}</button>`).join("")}</div><p class="c-data-note">Ganadas del mes por responsable; un evento repetido no vuelve a contar. Los importes son ventas comerciales ganadas, no cobros ni beneficio.</p>${
+    focused
+      ? `<section class="c-owner-deals"><h3>La cartera de ${esc(focused.name.split(" ")[0])}</h3>${getState()
+          .deals.filter(
+            (d) =>
+              d.ownerId === focused.id &&
+              stageKind(getState(), d.stageId) !== "lost",
+          )
+          .map(
+            (d) =>
+              `<button data-select="${esc(d.id)}"><span><b>${esc(d.name)}</b><small style="--stage:${stageFor(d.stageId).color}">${esc(stageFor(d.stageId).name)}</small></span><strong>${eur(d.amount)}</strong>${i("arrow-up-right")}</button>`,
+          )
+          .join("")}</section>`
+      : ""
+  }</div>`;
+}
+function focusOwner(id) {
+  if (!getState().owners.some((o) => o.id === id)) return;
+  if (ui.mode === "tv") {
+    scene?.focusOwner?.(id, { panelWidth: 0 });
+    ui.tvNavigationAt = performance.now();
+    return;
+  }
+  ui.selectedOwnerId = id;
+  ui.selectedId = null;
+  ui.drawer = "team";
+  renderInspector();
+  scene?.select(null);
+  setView("city");
+  scene?.focusOwner?.(id);
+  renderDrawer();
+  refreshIcons();
+}
+function refreshTeamActivity() {
+  const nodes = document.querySelectorAll("[data-construction-id]");
+  for (const el of nodes) {
+    const job = scene?.debug?.construction?.get?.(el.dataset.constructionId);
+    el.hidden = !job || job.status === "completed" || job.phase === "complete";
+    if (!el.hidden) {
+      el.querySelector("[data-construction-phase]").textContent =
+        constructionPhaseText(job);
+      el.querySelector("[data-construction-progress]").style.width =
+        `${Math.round((job.progress || 0) * 100)}%`;
+    }
+  }
+
+  document.querySelectorAll("[data-owner-activity]").forEach((el) => {
+    const text = ownerActivity(el.dataset.ownerActivity);
+    if (el.textContent !== text) el.textContent = text;
+  });
+  if (ui.mode === "tv") {
+    const jobs = scene?.debug?.construction?.debug?.();
+    const current =
+      jobs?.active?.[0] || jobs?.jobs?.find((j) => j.status === "active");
+    $("#city-app").classList.toggle("c-tv-building", !!current);
+    if (current) {
+      const d = getState().deals.find((d) => d.id === current.id);
+      $("#city-tv-banner span").textContent =
+        `${d?.name || "Oportunidad"} · ${{ deconstruct: "Desmontando para dar el siguiente paso", transport: "En camino a su nueva etapa", build: "Construyendo una nueva oportunidad", dismantling: "Preparando el siguiente paso", building: "Construyendo una nueva oportunidad" }[current.phase] || "Cambiando de etapa"}`;
+    }
+  }
+}
+function render(event) {
   renderMetrics();
-  updateFilters();
+  updateFilters(event);
   renderInspector();
   renderDrawer();
+  renderTeam();
   const latest = getState().events.at(-1);
   $("#city-latest-event").textContent = latest
     ? eventText(latest)
@@ -513,6 +640,15 @@ function setView(view) {
 }
 function select(id, { focus = true } = {}) {
   const s = getState();
+  if (ui.mode === "tv") {
+    const item = [...s.deals, ...s.accounts].find((item) => item.id === id);
+    if (item) {
+      scene?.focus(id, { panelWidth: 0 });
+      ui.tvNavigationAt = performance.now();
+      $("#city-tv-banner span").textContent = item.name;
+    }
+    return;
+  }
   if (!s.deals.some((d) => d.id === id) && !s.accounts.some((a) => a.id === id))
     return;
   ui.selectedId = id;
@@ -602,6 +738,32 @@ function setLayers(partial) {
     .forEach((e) => (e.checked = ui.layers[e.dataset.layer]));
 }
 function setMode(mode) {
+  if (mode === ui.mode) return;
+  if (mode === "tv" && noWebGL) {
+    toast(
+      "TV necesita el entorno 3D. La tabla está disponible en este navegador.",
+    );
+    return;
+  }
+  if (ui.mode === "tv" && mode !== "tv") {
+    const saved = ui.tvSavedUi;
+    ui.tvSavedUi = null;
+    $("#city-app").classList.remove("c-tv-mode");
+    $("#city-tv-brand").hidden = true;
+    $("#city-tv-team").hidden = true;
+    scene?.setTVPresentation?.(false);
+    if (document.fullscreenElement === $("#city-app"))
+      document.exitFullscreen?.().catch(() => {});
+    ui.tvNativeFullscreen = false;
+    if (saved) {
+      ui.selectedId = saved.selectedId;
+      ui.filters = { ...saved.filters };
+      ui.drawer = saved.drawer;
+      ui.selectedOwnerId = saved.selectedOwnerId;
+      $("#city-search").value = ui.filters.query;
+      setView(saved.view);
+    }
+  }
   if (ui.mode === "replay" && mode !== "replay") {
     ui.replay.playing = false;
     const saved = ui.replay.saved;
@@ -644,7 +806,45 @@ function setMode(mode) {
     );
   }
   if (mode === "tv") {
+    ui.tvSavedUi = {
+      view: ui.view,
+      selectedId: ui.selectedId,
+      filters: { ...ui.filters },
+      drawer: ui.drawer,
+      selectedOwnerId: ui.selectedOwnerId,
+    };
+    ui.selectedId = null;
+    ui.drawer = null;
+    ui.selectedOwnerId = null;
+    ui.filters = {
+      query: "",
+      stageId: "",
+      ownerId: "",
+      attentionOnly: false,
+      includeLost: false,
+    };
+    $("#city-search").value = "";
+    $("#city-filters").hidden = true;
+    $("#city-layer-panel").hidden = true;
+    $("#city-hover").hidden = true;
+    closeModal();
+    setView("city");
+    scene?.select(null);
+    $("#city-app").classList.add("c-tv-mode");
+    $("#city-tv-brand").hidden = false;
+    $("#city-tv-team").hidden = false;
+    scene?.setTVPresentation?.(true);
+    scene?.resize();
+    scene?.overview();
+    const request = $("#city-app").requestFullscreen;
+    if (request && document.fullscreenElement !== $("#city-app")) {
+      try {
+        const pending = request.call($("#city-app"), { navigationUI: "hide" });
+        pending?.catch(() => {});
+      } catch {}
+    }
     ui.tvIndex = -1;
+    ui.tvNavigationAt = 0;
     tvLast = 0;
     if (reduced.matches)
       toast(
@@ -698,7 +898,7 @@ function showModal(type) {
   const copy = {
     help: [
       "Una ciudad para entender tu negocio",
-      `<p>Cada barrio representa una etapa configurable de tu CRM. Cada edificio es una oportunidad: su acento indica la etapa y su altura acotada, el importe. Pulsa uno para ver el valor exacto, la persona responsable y el siguiente paso.</p><ul><li><b>Explore:</b> arrastra para orbitar; botón derecho o dos dedos para desplazar; rueda o pellizco para zoom.</li><li><b>Replay:</b> recorre las etapas históricas con pausa, velocidad y avance. Clientes y actividades conservan su instantánea. Al salir, restaura la vista anterior.</li><li><b>Simular una venta:</b> crea un evento ficticio, mueve el edificio a Won y reutiliza su cuenta cliente.</li><li><b>TV:</b> alterna encuadres sin modificar los datos.</li><li><b>Rojo + !:</b> una tarea vencida requiere atención.</li></ul><p>El tráfico, los árboles y el mobiliario son ambientales. No representan actividad comercial. Los coches se desactivan desde Capas.</p><p>En móvil puedes ajustar la ficha a tres alturas. Todas las funciones principales también están disponibles en la tabla.</p>`,
+      `<p>Cada barrio representa una etapa configurable de tu CRM. Cada edificio es una oportunidad: su acento indica la etapa y su altura acotada, el importe. Pulsa uno para ver el valor exacto, la persona responsable y el siguiente paso.</p><ul><li><b>Explore:</b> arrastra para orbitar; botón derecho o dos dedos para desplazar; rueda o pellizco para zoom.</li><li><b>Replay:</b> recorre las etapas históricas con pausa, velocidad y avance. Clientes y actividades conservan su instantánea. Al salir, restaura la vista anterior.</li><li><b>Simular una venta:</b> crea un evento ficticio: las grúas desmontan el edificio, un camión lleva los materiales y se construye en Ventas ganadas. Conserva la misma oportunidad y su cuenta cliente.</li><li><b>TV:</b> muestra la ciudad a pantalla completa con las cifras arriba y el equipo comercial abajo. Sal con la X o Escape.</li><li><b>Comerciales:</b> representan a los responsables de las oportunidades; sus paseos y visitas son simulados. El recuento de ventas procede de los registros.</li><li><b>Rojo + !:</b> una tarea vencida requiere atención.</li></ul><p>Las grúas y el camión son una metáfora del cambio de etapa; no son obras ni repartos reales. El tráfico, los árboles y el mobiliario son ambientales. No representan actividad comercial. Los coches se desactivan desde Capas.</p><p>En móvil puedes ajustar la ficha a tres alturas. Todas las funciones principales también están disponibles en la tabla.</p>`,
     ],
     sources: [
       "Los datos ponen la ciudad en movimiento",
@@ -737,6 +937,11 @@ root.addEventListener("pointerup", (e) => {
   }
 });
 function onClick(e) {
+  const ownerEl = e.target.closest("[data-owner]");
+  if (ownerEl) {
+    focusOwner(ownerEl.dataset.owner);
+    return;
+  }
   const selectEl = e.target.closest("[data-select]");
   if (selectEl) {
     select(selectEl.dataset.select);
@@ -797,7 +1002,7 @@ function onClick(e) {
   } else if (a === "attention") {
     ui.filters.attentionOnly = !ui.filters.attentionOnly;
     updateFilters();
-  } else if (["clients", "feed", "today"].includes(a)) {
+  } else if (["clients", "feed", "today", "team"].includes(a)) {
     ui.drawer = ui.drawer === a ? null : a;
     renderDrawer();
     refreshIcons();
@@ -875,6 +1080,10 @@ $("#city-replay-progress").addEventListener("input", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
+    if (ui.mode === "tv") {
+      setMode("explore");
+      return;
+    }
     if ($("#city-modal-root").firstChild) closeModal();
     else if (!$("#city-layer-panel").hidden)
       $("#city-layer-panel").hidden = true;
@@ -901,10 +1110,11 @@ document.addEventListener("keydown", (e) => {
     }
   }
 });
-provider.subscribe(() => render());
+provider.subscribe((_state, event) => render(event));
 render();
 let lastTick = performance.now(),
-  tvLast = 0;
+  tvLast = 0,
+  lastTeamRefresh = 0;
 function tick() {
   const now = performance.now(),
     dt = Math.min(0.25, (now - lastTick) / 1000);
@@ -917,7 +1127,12 @@ function tick() {
         replayStep();
       }
     }
-    if (ui.mode === "tv" && now - tvLast > 7000) {
+    if (
+      ui.mode === "tv" &&
+      now - tvLast > 13000 &&
+      now - ui.tvNavigationAt > 12000 &&
+      !(scene?.getDiagnostics().transitionCount > 0)
+    ) {
       tvLast = now;
       ui.tvIndex++;
       const stages = getState().stages,
@@ -927,7 +1142,10 @@ function tick() {
         const d = getState().deals.find(
           (d) => d.stageId === stages[idx - 1].id,
         );
-        if (d) scene?.focus(d.id);
+        if (d) {
+          if (scene?.focusDistrict) scene.focusDistrict(stages[idx - 1].id);
+          else scene?.focus(d.id, { panelWidth: 0 });
+        }
       }
       const text =
         idx === 0
@@ -935,6 +1153,10 @@ function tick() {
           : `${stages[idx - 1].name} · ${metrics(getState()).stages.find((s) => s.id === stages[idx - 1].id)?.count || 0} oportunidades`;
       $("#city-tv-banner span").textContent = `TV · ${text}`;
     }
+  }
+  if (now - lastTeamRefresh > 900 && !document.hidden) {
+    lastTeamRefresh = now;
+    refreshTeamActivity();
   }
   requestAnimationFrame(tick);
 }
@@ -949,10 +1171,12 @@ async function boot() {
       labelContainer: $("#city-labels"),
       reducedMotion: reduced.matches,
       onSelect: (id) => (id ? select(id, { focus: false }) : closeInspector()),
+      onSelectOwner: (id) => focusOwner(id),
       onHover: (entity, data, point) => {
         const el = $("#city-hover");
         if (
           !entity ||
+          ui.mode === "tv" ||
           ui.view !== "city" ||
           matchMedia("(pointer: coarse)").matches
         ) {
@@ -975,7 +1199,7 @@ async function boot() {
         el.style.top = `${Math.max(8, Math.min(rect.height - 90, y - rect.top - 35))}px`;
       },
       onNavigate: () => {
-        if (ui.mode === "tv") setMode("explore");
+        if (ui.mode === "tv") ui.tvNavigationAt = performance.now();
         $("#city-hover").hidden = true;
       },
     });
@@ -1021,6 +1245,8 @@ window.__ATLAS_CITY__ = {
     },
   }),
   metrics: () => metrics(getState()),
+  ownerPerformance: () => ownerPerformance(getState()),
+  focusOwner,
   select,
   simulateWin,
   changeStage,
@@ -1038,4 +1264,13 @@ window.__ATLAS_CITY__ = {
 boot();
 window.addEventListener("pagehide", (event) => {
   if (!event.persisted) scene?.dispose();
+});
+
+document.addEventListener("fullscreenchange", () => {
+  if (document.fullscreenElement === $("#city-app"))
+    ui.tvNativeFullscreen = true;
+  else if (ui.mode === "tv" && ui.tvNativeFullscreen) {
+    ui.tvNativeFullscreen = false;
+    setMode("explore");
+  }
 });

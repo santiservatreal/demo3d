@@ -77,29 +77,29 @@ export function needsAttention(deal, state) {
 /** The initial snapshot has 24 open deals worth exactly EUR 120,000. */
 export function createDemoState() {
   const stages = [
-    { id: "lead", name: "Lead", color: "#6aaee5", order: 0, kind: "open" },
+    { id: "lead", name: "Nuevos leads", color: "#238bec", order: 0, kind: "open" },
     {
       id: "qualified",
-      name: "Qualified",
-      color: "#51bdb6",
+      name: "Cualificados",
+      color: "#0cb9b0",
       order: 1,
       kind: "open",
     },
     {
       id: "proposal",
-      name: "Proposal",
-      color: "#e6b65d",
+      name: "Propuestas",
+      color: "#f3ab22",
       order: 2,
       kind: "open",
     },
     {
       id: "negotiation",
-      name: "Negotiation",
-      color: "#b198d2",
+      name: "Negociación",
+      color: "#a259df",
       order: 3,
       kind: "open",
     },
-    { id: "won", name: "Won", color: "#7dbb90", order: 4, kind: "won" },
+    { id: "won", name: "Ventas ganadas", color: "#24b66b", order: 4, kind: "won" },
   ];
   const owners = [
     { id: "owner-ana", name: "Ana Torres", initials: "AT" },
@@ -493,4 +493,50 @@ export function createDemoProvider() {
       return state;
     },
   };
+}
+
+/**
+ * A stable, renderer-independent scorecard of CRM records per salesperson.
+ * Wins are evidenced by the deal's current closure history in the local month;
+ * repeated events, repeated sync calls and repeated animation frames add none.
+ * Missing money/history remains unavailable rather than an invented zero.
+ */
+export function ownerPerformance(state) {
+  const palette = ["#007fd6", "#ee7c22", "#a24ed3", "#d43667"];
+  const currentMonth = localMonth(state.now);
+  const uniqueDeals = [...new Map((state.deals || []).map((deal) => [deal.id, deal])).values()];
+  const historyComplete = Boolean(
+    state.historyCoverage?.closedDealsComplete &&
+    coversMonthStart(state.historyCoverage.from, state.now) &&
+    Date.parse(state.historyCoverage.to) >= Date.parse(state.now),
+  );
+  return (state.owners || []).map((owner, index) => {
+    const owned = uniqueDeals.filter((deal) => deal.ownerId === owner.id);
+    const open = owned.filter((deal) => stageKind(state, deal.stageId) === "open");
+    const won = [], missingClosureHistory = [];
+    for (const deal of owned) {
+      if (stageKind(state, deal.stageId) !== "won") continue;
+      const closure = [...(deal.history || [])].reverse().find((entry) =>
+        entry.stageId === deal.stageId &&
+        (entry.type === "deal.won" || (!entry.type && stageKind(state, entry.stageId) === "won")),
+      );
+      if (!closure || !validTime(closure.timestamp)) { missingClosureHistory.push(deal.id); continue; }
+      if (localMonth(closure.timestamp) === currentMonth && Date.parse(closure.timestamp) <= Date.parse(state.now)) won.push(deal);
+    }
+    return {
+      ...owner,
+      id: owner.id,
+      ownerId: owner.id,
+      color: owner.color || palette[index % palette.length],
+      openCount: open.length,
+      openAmount: amountTotal(open),
+      wonCount: missingClosureHistory.length ? null : won.length,
+      wonAmount: missingClosureHistory.length ? null : amountTotal(won),
+      activeDeals: open.map((deal) => deal.id),
+      wonDeals: won.map((deal) => deal.id),
+      wonHistoryComplete: historyComplete && missingClosureHistory.length === 0,
+      missingClosureHistory,
+      basis: "Oportunidades abiertas y ventas con cierre registrado este mes; no cobros ni beneficio",
+    };
+  });
 }

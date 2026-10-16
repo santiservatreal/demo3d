@@ -7,8 +7,9 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "test": "node --test tests/*model.test.mjs tests/city-traffic.test.mjs",
+    "test": "node --test tests/*model.test.mjs tests/city-traffic.test.mjs tests/city-construction.test.mjs tests/city-people.test.mjs",
     "test:e2e": "node tests/city-browser.mjs",
+    "test:city-v2": "node tests/city-v2-browser.mjs",
     "test:luma": "node tests/luma-browser.mjs",
     "test:classic": "node tests/smoke.mjs",
     "test:operations": "node tests/operations-browser.mjs"
