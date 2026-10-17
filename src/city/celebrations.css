@@ -1,0 +1,210 @@
+/* A small, composited celebration leaves the city centre available. */
+.c-celebrations {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: min(360px, calc(100% - 32px));
+  z-index: 44;
+  pointer-events: none;
+}
+.c-celebrations[hidden] {
+  display: none;
+}
+.c-celebration {
+  --celebration-color: #12976a;
+  --celebration-tint: #e5f7ef;
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: start;
+  gap: 11px;
+  box-sizing: border-box;
+  min-height: 106px;
+  max-height: 124px;
+  padding: 14px 42px 13px 14px;
+  border: 1px solid #d9e8e6;
+  border-left: 3px solid var(--celebration-color);
+  border-radius: 14px;
+  background: #fffffffa;
+  color: #244f63;
+  box-shadow: 0 8px 28px #1c4a641f;
+  pointer-events: auto;
+  animation: city-celebration-enter 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.c-celebration[data-kind="delivery"] {
+  --celebration-color: #237fbd;
+  --celebration-tint: #e7f3fc;
+  border-color: #d9e6ef;
+}
+.c-celebration-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  color: var(--celebration-color);
+  background: var(--celebration-tint);
+}
+.c-celebration-icon svg {
+  width: 25px;
+  height: 25px;
+}
+.c-celebration-content {
+  min-width: 0;
+}
+.c-celebration-title {
+  display: block;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--celebration-color);
+  font-weight: 700;
+}
+.c-celebration-name,
+.c-celebration-detail {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.c-celebration-name {
+  margin-top: 3px;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 600;
+}
+.c-celebration-detail {
+  margin: 2px 0 0;
+  font-size: 10px;
+  line-height: 16px;
+  color: #718c9a;
+}
+.c-celebration-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 5px;
+  font-size: 10px;
+  line-height: 15px;
+}
+.c-celebration-value {
+  color: var(--celebration-color);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.c-celebration-owner {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #647f8f;
+}
+.c-celebration-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 0 13px 0 10px;
+  background: transparent;
+  color: #7f97a3;
+  font: 23px/1 sans-serif;
+  cursor: pointer;
+}
+.c-celebration-close:hover {
+  color: #255973;
+  background: #eff6f9;
+}
+.c-celebration-close:focus-visible {
+  outline: 2px solid #2789b9;
+  outline-offset: -4px;
+}
+.c-celebration-confetti {
+  position: absolute;
+  inset: -15px 18px 0;
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+.c-celebration-particle {
+  position: absolute;
+  left: var(--confetti-x);
+  top: 0;
+  display: block;
+  width: 5px;
+  height: 8px;
+  border-radius: 1px;
+  background: var(--confetti-color);
+  opacity: 0;
+  animation: city-celebration-confetti var(--confetti-duration) ease-out
+    var(--confetti-delay) both;
+}
+.c-celebration-particle.is-round {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+@keyframes city-celebration-enter {
+  from {
+    transform: translate3d(0, -8px, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes city-celebration-confetti {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0);
+  }
+  12% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--confetti-drift), var(--confetti-fall), 0)
+      rotate(var(--confetti-spin));
+  }
+}
+.c-tv-mode .c-celebrations {
+  top: 150px;
+  right: 28px;
+  z-index: 48;
+}
+@media (max-width: 700px) {
+  .c-celebrations {
+    top: 12px;
+    right: 12px;
+    width: min(360px, calc(100% - 24px));
+  }
+  .c-tv-mode .c-celebrations {
+    top: calc(210px + env(safe-area-inset-top));
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  .c-tv-mode .c-celebrations {
+    top: calc(115px + env(safe-area-inset-top));
+    left: auto;
+    right: 16px;
+    width: min(340px, calc(100% - 32px));
+  }
+}
+.c-celebrations[data-motion="reduced"] .c-celebration {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .c-celebration {
+    animation: none;
+  }
+  .c-celebration-particle {
+    display: none;
+    animation: none;
+  }
+}

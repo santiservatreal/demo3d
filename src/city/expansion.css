@@ -1,4 +1,44 @@
 /* The additional districts share one map, one visual language and one ledger. */
+.c-production-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid #c7e0ee;
+  border-radius: 7px;
+  color: #297ba1;
+  background: #ecf7fc;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.c-production-button svg {
+  width: 13px;
+  height: 13px;
+}
+.c-production-button[aria-pressed="true"] {
+  background: #287ca1;
+  color: white;
+  border-color: #287ca1;
+}
+.c-tv-mode .c-production-button {
+  display: none !important;
+}
+@media (max-width: 700px) {
+  .c-production-button {
+    min-height: 38px;
+    padding: 7px;
+  }
+  .c-production-button > span {
+    display: none;
+  }
+}
+@media (pointer: coarse) {
+  .c-production-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
 .c-district-nav {
   display: flex;
   align-items: center;

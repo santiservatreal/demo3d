@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-10-17T15:04:29.660Z",
+  "rawBeforeBackingBufferSignal": [
+    {
+      "aspect": 1.44,
+      "expected": 0.46208530805687204,
+      "finite": true,
+      "cameraMoving": true
+    },
+    {
+      "aspect": 0.462085308056872,
+      "expected": 0.46208530805687204,
+      "finite": true,
+      "cameraMoving": true
+    },
+    {
+      "aspect": 0.462085308056872,
+      "expected": 0.46208530805687204,
+      "finite": true,
+      "cameraMoving": true
+    }
+  ],
+  "afterBackingBufferSignal": [
+    {
+      "aspect": 0.462085308056872,
+      "expected": 0.46208530805687204,
+      "finite": true,
+      "cameraMoving": true
+    },
+    {
+      "aspect": 0.4620853080568719,
+      "expected": 0.46208530805687204,
+      "finite": true,
+      "cameraMoving": true
+    },
+    {
+      "aspect": 0.4620853080568719,
+      "expected": 0.46208530805687204,
+      "finite": true,
+      "cameraMoving": true
+    }
+  ]
+}

@@ -42,6 +42,8 @@ La demo comienza con **24 abiertas por 120.000 €**, **4 ganadas por 30.000 €
 
 **Industria:** Fabricación → Empacado → Almacén → En transporte → Entregado. La demo contiene un producto, diez lotes y **1.320 unidades**: 240 en fabricación, 120 empacando, 480 en stock, 160 en reparto y 320 entregadas. Selecciona una estación, un palé o un camión; **Avanzar un lote** o **Simular → siguiente etapa** registra un evento explícito. Las rutas son ilustrativas y estimadas: una entrega requiere confirmación, y el regreso vacío y la llegada al almacén son eventos distintos. Un cierre comercial no fabrica productos ni genera cobros.
 
+**Movimiento y presentación:** los comerciales mantienen su etiqueta en cada fotograma; el contenido y las medidas se reutilizan. La maquinaria industrial se anima y las transferencias llevan palés en carretilla entre estaciones, incluida la carga y descarga. **Simular proceso** reproduce eventos ficticios de los lotes existentes cada 14 segundos y permite pausarlos; no crea unidades. Al seleccionar un distrito, el resto pierde algo de contraste y color. Desde **Empresa → TV** se recorren las tres zonas con transiciones de siete segundos y pausas de nueve; navegar manualmente pausa el recorrido. Las ventas ganadas y las entregas registradas muestran una tarjeta breve con confeti. Movimiento reducido mantiene la información sin partículas ni recorrido automático.
+
 ## Experiencias anteriores conservadas
 
 - `/?experience=luma`: Luma Works, fábrica de lámparas con producción, inventario, carga y camiones.
@@ -65,6 +67,7 @@ npm run build
 npm run test:e2e
 npm run test:city-v2
 npm run test:city-v3
+npm run test:city-v4
 # Regresión de experiencias anteriores, con Vite dev en el puerto 5173:
 npm run test:luma
 npm run test:operations
@@ -73,7 +76,9 @@ npm run test:classic
 
 Los tests de navegador usan Chromium (`/usr/bin/chromium` por defecto). `CHROMIUM_PATH` y `BASE_URL` permiten configurar las pruebas de ciudad y Luma. Los gestos se emulan; no se ha probado hardware táctil físico.
 
-- [Cambios actuales: comerciales, comunicaciones y pipeline industrial](docs/city/v3/IMPLEMENTATION.md)
+- [Cambios actuales: fluidez, animaciones y presentaciones](docs/city/v4/IMPLEMENTATION.md)
+- [Validación y comparación de esta versión](docs/city/v4/VALIDATION.md)
+- [Comerciales, comunicaciones y pipeline industrial](docs/city/v3/IMPLEMENTATION.md)
 - [Capturas y validación de la ciudad ampliada](docs/city/v3/VALIDATION.md)
 - [TV, obras y equipo comercial](docs/city/v2/IMPLEMENTATION.md)
 - [Capturas y validación de estos cambios](docs/city/v2/VALIDATION.md)

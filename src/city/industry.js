@@ -5,10 +5,24 @@ const STATION_X = [-28, -14, 0, 14, 28];
 const BOX_LIMIT = 25;
 const BATCH_LIMIT = 64;
 const VISUAL_ROUTE_SECONDS = 90;
+export const INDUSTRIAL_TRANSFER_SECONDS = 8;
+const TRANSFER_RIG_LIMIT = 2;
 const UP = new THREE.Vector3(0, 1, 0);
 const AXIS_Z = new THREE.Vector3(0, 0, 1);
 const clamp = (value) => THREE.MathUtils.clamp(value, 0, 1);
 const customerSlot = (lane = 0) => [28 + lane * 3.4, -58.1];
+export const INDUSTRIAL_SURFACES = Object.freeze({
+  islandPavementTop: 0.19,
+  ground: 0.3,
+  road: 0.34,
+  roadPaint: 0.375,
+  plot: 0.415,
+  parkingPaint: 0.45,
+  plotAccent: 0.485,
+});
+const PALLET_LIFT = 0.095;
+const vehicleY = (z) =>
+  z < -55.35 ? INDUSTRIAL_SURFACES.plot - 0.1 : INDUSTRIAL_SURFACES.road - 0.1;
 
 // A short, bounded road route. Fillets stay on the paved avenue; an estimate
 // reaching its destination never confirms a delivery or changes inventory.
@@ -28,13 +42,18 @@ export function industrialRoute(returning = false, lane = 0) {
         [customerX, z],
         [customerX, customerZ],
       ];
-  const vector = ([x, depth]) => new THREE.Vector3(x, 0.22, depth);
+  return roundedVehicleRoute(
+    points.map(([x, depth]) => new THREE.Vector3(x, vehicleY(depth), depth)),
+  );
+}
+
+function roundedVehicleRoute(points) {
   const curve = new THREE.CurvePath();
-  let previous = vector(points[0]);
+  let previous = points[0].clone();
   for (let index = 1; index < points.length - 1; index++) {
-    const before = vector(points[index - 1]);
-    const corner = vector(points[index]);
-    const after = vector(points[index + 1]);
+    const before = points[index - 1].clone();
+    const corner = points[index].clone();
+    const after = points[index + 1].clone();
     const radius = Math.min(
       1.05,
       before.distanceTo(corner) * 0.3,
@@ -50,7 +69,7 @@ export function industrialRoute(returning = false, lane = 0) {
     curve.add(new THREE.QuadraticBezierCurve3(enter, corner, exit));
     previous = exit;
   }
-  curve.add(new THREE.LineCurve3(previous, vector(points.at(-1))));
+  curve.add(new THREE.LineCurve3(previous, points.at(-1)));
   curve.updateArcLengths();
   return curve;
 }
@@ -95,6 +114,7 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
     roof: roofGeometry,
   };
   const staticParts = new Map();
+  const groundSurfaces = [];
   const dummy = new THREE.Object3D();
   const color = new THREE.Color();
   const wheelTurn = new THREE.Quaternion().setFromAxisAngle(
@@ -109,6 +129,12 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
   let lastElapsed = 0;
   let enabled = true;
   let disposed = false;
+  // Primitive copies survive providers that mutate and re-use their snapshot.
+  let priorBatches = null;
+  const transfers = new Map();
+  const completedTransfers = [];
+  let transferSerial = 0;
+  let transferQueueSerial = 0;
 
   function add(
     kind,
@@ -130,6 +156,21 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
   }
   function box(x, y, z, width, height, depth, tint, rotation = 0, surface) {
     add("box", x, y, z, width, height, depth, tint, rotation, surface);
+  }
+  function groundRect(layer, x, z, width, depth, tint, thickness = 0.018) {
+    const top = INDUSTRIAL_SURFACES[layer];
+    box(
+      x,
+      top - thickness / 2,
+      z,
+      width,
+      thickness,
+      depth,
+      tint,
+      0,
+      layer === "road" ? "road" : "paving",
+    );
+    groundSurfaces.push({ layer, x, z, width, depth, top });
   }
   function pillar(x, z, height = 3.7, tint = "#cbd5d5") {
     box(x, height / 2 + 0.3, z, 0.22, height, 0.22, tint);
@@ -186,32 +227,37 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
 
   // The industrial quarter has its own walkable forecourt and bounded road
   // network. The city scene extends the island beneath it.
-  box(0, 0.025, -61, 77, 0.15, 34, "#d8e2d2");
+  groundRect("ground", 0, -61, 77, 34, "#d8e2d2", 0.08);
   for (const z of [-72, -53]) {
-    box(0, 0.13, z, 72, 0.12, 4.7, "#526671", 0, "road");
-    for (let x = -33; x <= 33; x += 3)
-      box(x, 0.198, z, 1.25, 0.012, 0.08, "#ecedcf");
+    groundRect("road", 0, z, 75.4, 4.7, "#526671", 0.06);
+    for (let x = -33; x <= 33; x += 3) {
+      if (z === -53 && STATION_X.some((stageX) => Math.abs(stageX - x) < 2))
+        continue;
+      groundRect("roadPaint", x, z, 1.25, 0.08, "#ecedcf", 0.008);
+    }
     for (const side of [-1, 1])
-      box(0, 0.2, z + side * 2.43, 72, 0.2, 0.24, "#d8e1d6");
+      box(0, 0.41, z + side * 2.43, 68, 0.1, 0.24, "#d8e1d6");
   }
-  for (const x of [-35, 35]) {
-    box(x, 0.132, -62.5, 3.7, 0.13, 19, "#526671", 0, "road");
+  for (const x of [-36, 36]) {
+    // Side streets end at the horizontal road edges instead of overlaying
+    // coplanar asphalt boxes at the four intersections.
+    groundRect("road", x, -62.5, 3.4, 14.3, "#526671", 0.06);
     for (let z = -69; z < -55; z += 2.7)
-      box(x, 0.201, z, 0.08, 0.012, 1.15, "#ecedcf");
+      groundRect("roadPaint", x, z, 0.08, 1.15, "#ecedcf", 0.008);
   }
   for (const [index, x] of STATION_X.entries()) {
     const tint = INDUSTRY_STAGES[index].color;
-    box(x, 0.18, -62.2, 12.6, 0.22, 15.9, "#edf0e5");
-    box(x, 0.31, -68.9, 12.6, 0.12, 0.22, tint);
-    box(x - 6.18, 0.31, -62.2, 0.18, 0.12, 13.2, tint);
-    box(x + 6.18, 0.31, -62.2, 0.18, 0.12, 13.2, tint);
-    box(x, 0.25, -49.1, 12.5, 0.25, 2.45, "#e8eddf");
-    box(x, 0.4, -49.9, 11.6, 0.1, 0.18, tint);
+    groundRect("plot", x, -62.5, 12.6, 13.9, "#edf0e5", 0.06);
+    groundRect("plotAccent", x, -69.1, 12.2, 0.14, tint);
+    groundRect("plotAccent", x - 6.08, -62.45, 0.14, 12.8, tint);
+    groundRect("plotAccent", x + 6.08, -62.45, 0.14, 12.8, tint);
+    groundRect("plot", x, -49.1, 12.5, 2.45, "#e8eddf", 0.06);
+    groundRect("plotAccent", x, -49.9, 11.6, 0.18, tint);
     for (const side of [-1, 1]) tree(x + side * 5.65, -48.8);
     // Dedicated paved access from the avenue, with zebra crossings and bollards.
-    box(x, 0.29, -56.6, 3.1, 0.08, 3.25, "#b9c6be");
+    groundRect("plot", x, -55.45, 3.1, 0.2, "#b9c6be", 0.04);
     for (let offset = -1; offset <= 1; offset += 0.4)
-      box(x + offset, 0.208, -53, 0.22, 0.012, 3.6, "#f4f3e8");
+      groundRect("roadPaint", x + offset, -53, 0.22, 3.6, "#f4f3e8", 0.008);
   }
 
   // Manufacturing: north-light sawtooth roof, glazed rear hall, open assembly
@@ -339,8 +385,16 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
     }
     for (const offset of [0.6, 2.65, 4.7]) {
       for (const side of [-1, 1])
-        box(x + offset + side * 0.86, 0.32, -63, 0.065, 0.018, 6, "#f2e8a8");
-      box(x + offset, 0.32, -66, 1.72, 0.018, 0.08, "#f2e8a8");
+        groundRect(
+          "parkingPaint",
+          x + offset + side * 0.86,
+          -63,
+          0.065,
+          5.84,
+          "#f2e8a8",
+          0.008,
+        );
+      groundRect("parkingPaint", x + offset, -66, 1.72, 0.08, "#f2e8a8", 0.008);
       box(x + offset, 0.55, -66.8, 1.2, 0.48, 0.4, "#c0cbbf");
     }
     box(x - 4.8, 4.35, -65, 0.08, 2, 0.08, "#9eaead");
@@ -429,7 +483,7 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
       mesh.setColorAt(index, color.set(part.tint));
     }
     mesh.instanceMatrix.needsUpdate = true;
-    mesh.castShadow = surface !== "road";
+    mesh.castShadow = surface !== "road" && surface !== "paving";
     mesh.receiveShadow = true;
     mesh.computeBoundingSphere();
     root.add(mesh);
@@ -505,12 +559,18 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
           BOX_LIMIT,
           Math.max(1, Math.ceil(batch.quantity / 20)),
         );
-        batchPositions.set(batch.id, new THREE.Vector3(x, 1.3, z));
+        batchPositions.set(
+          batch.id,
+          new THREE.Vector3(x, 1.3 + PALLET_LIFT, z),
+        );
+        // Logical counts/selection already refer to the destination. A single
+        // moving sample represents the transfer until its visual hand-off ends.
+        if (transfers.has(batch.id)) continue;
         for (const offset of [-0.66, 0, 0.66])
           batchPart(
             partIndex++,
             x + offset,
-            0.42,
+            0.42 + PALLET_LIFT,
             z,
             0.15,
             0.19,
@@ -521,7 +581,7 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
           batchPart(
             partIndex++,
             x,
-            0.57,
+            0.57 + PALLET_LIFT,
             z + offset,
             2.2,
             0.13,
@@ -535,7 +595,7 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
           batchPart(
             partIndex++,
             x + (bx - 1) * 0.62,
-            0.9 + layer * 0.54,
+            0.9 + PALLET_LIFT + layer * 0.54,
             z + (bz - 1) * 0.48,
             0.58,
             0.5,
@@ -554,14 +614,14 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
           );
           batchProxies.set(batch.id, proxy);
         }
-        proxy.position.set(x, 1.25, z);
+        proxy.position.set(x, 1.25 + PALLET_LIFT, z);
         proxy.visible = true;
         batchVisuals.push({
           id: batch.id,
           stageId: stage.id,
           quantity: batch.quantity,
           representativeBoxes: count,
-          position: [x, 1.3, z],
+          position: [x, 1.3 + PALLET_LIFT, z],
         });
       }
     }
@@ -656,7 +716,7 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
     return actor;
   }
 
-  function syncVehicles() {
+  function syncVehicles(animateEvents = true) {
     for (const actor of vehicleActors.values()) actor.group.visible = false;
     for (const [index, vehicle] of (state?.vehicles || []).entries()) {
       const actor =
@@ -671,12 +731,49 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
       actor.model = vehicle;
       actor.group.visible = true;
       if (actor.signature !== signature) {
+        const hadSignature = actor.signature !== null;
+        const previousPosition = actor.group.position.clone();
         const estimate = getVehicleProgress(state, vehicle);
         actor.signature = signature;
         actor.baseProgress = clamp(Number(estimate?.progress) || 0);
         actor.born = lastElapsed;
         actor.returning = vehicle.status === "returning";
         actor.route = industrialRoute(actor.returning, actor.index - 1);
+        actor.handoff = null;
+        if (hadSignature && animateEvents && !reducedMotion) {
+          const [customerX, customerZ] = customerSlot(actor.index - 1);
+          const destination =
+            vehicle.status === "at_customer"
+              ? new THREE.Vector3(customerX, vehicleY(customerZ), customerZ)
+              : vehicle.status === "available"
+                ? new THREE.Vector3(
+                    14.6 + (actor.index % 3) * 2.05,
+                    vehicleY(-63.2),
+                    -63.2,
+                  )
+                : actor.route.getPointAt(actor.baseProgress);
+          if (previousPosition.distanceTo(destination) > 0.05) {
+            const point = (x, z) => new THREE.Vector3(x, vehicleY(z), z);
+            const viaZ =
+              previousPosition.z > -55.35 ? previousPosition.z : -58.1;
+            const points = [
+              previousPosition,
+              point(previousPosition.x, viaZ),
+              point(destination.x, viaZ),
+              destination,
+            ].filter(
+              (entry, i, list) =>
+                i === 0 || entry.distanceTo(list[i - 1]) > 0.01,
+            );
+            const route = roundedVehicleRoute(points);
+            const duration =
+              vehicle.status === "at_customer"
+                ? INDUSTRIAL_TRANSFER_SECONDS * 0.4
+                : INDUSTRIAL_TRANSFER_SECONDS;
+            actor.handoff = { route, startedAt: lastElapsed, duration };
+            actor.born = lastElapsed + duration;
+          }
+        }
       }
       const batch = (state.batches || []).find(
         (item) => item.id === vehicle.cargoBatchId,
@@ -707,6 +804,310 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
     }
   }
 
+  // Two reusable forklift samples connect process stages. Three shared dynamic
+  // draws include these rigs, factory pistons and packing rollers; no mesh is
+  // created by RAF and none of the moving pieces invalidate cached shadows.
+  const transferBoxes = new THREE.InstancedMesh(boxGeometry, material, 112);
+  transferBoxes.name = "Transferencias · dos carretillas reutilizables";
+  const machineryBoxes = new THREE.InstancedMesh(boxGeometry, material, 14);
+  machineryBoxes.name = "Fabricación · pistones y brazos en funcionamiento";
+  const movingCylinders = new THREE.InstancedMesh(
+    cylinderGeometry,
+    material,
+    32,
+  );
+  movingCylinders.name = "Rodillos, balizas y ruedas de carretillas";
+  for (const mesh of [transferBoxes, machineryBoxes, movingCylinders]) {
+    mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    mesh.castShadow = false;
+    mesh.receiveShadow = true;
+    mesh.frustumCulled = false;
+    mesh.count = 0;
+    root.add(mesh);
+  }
+  const rotatedPart = new THREE.Vector3();
+  function dynamicPart(
+    mesh,
+    index,
+    x,
+    y,
+    z,
+    w,
+    h,
+    d,
+    tint,
+    turn = 0,
+    roll = 0,
+    bank = 0,
+  ) {
+    dummy.position.set(x, y, z);
+    dummy.scale.set(w, h, d);
+    dummy.rotation.set(roll, turn, bank);
+    dummy.updateMatrix();
+    mesh.setMatrixAt(index, dummy.matrix);
+    mesh.setColorAt(index, color.set(tint));
+  }
+  function completeTransfer(job) {
+    job.status = "complete";
+    job.progress = 1;
+    job.phase = "complete";
+    job.position.copy(job.destination);
+    completedTransfers.push(transferSnapshot(job));
+    if (completedTransfers.length > 32) completedTransfers.shift();
+    transfers.delete(job.batchId);
+  }
+  function transferSnapshot(job) {
+    return {
+      id: job.id,
+      batchId: job.batchId,
+      fromStage: job.fromStage,
+      toStage: job.toStage,
+      quantity: job.quantity,
+      status: job.status,
+      phase: job.phase,
+      progress: job.progress,
+      startedAt: job.startedAt,
+      duration: INDUSTRIAL_TRANSFER_SECONDS,
+      rigIndex: job.rigIndex,
+      source: job.source.toArray(),
+      destination: job.destination.toArray(),
+      position: job.position.toArray(),
+      sourceEventId: job.sourceEventId,
+      representativeOnly: true,
+    };
+  }
+  function getTransitions() {
+    const jobs = [...transfers.values()];
+    return {
+      active: jobs
+        .filter((job) => job.status === "active")
+        .map(transferSnapshot),
+      queued: jobs
+        .filter((job) => job.status === "queued")
+        .map(transferSnapshot),
+      completed: completedTransfers.map((job) => ({ ...job })),
+      duration: INDUSTRIAL_TRANSFER_SECONDS,
+      maxActive: TRANSFER_RIG_LIMIT,
+      queueLimit: BATCH_LIMIT,
+      busy: jobs.length > 0,
+    };
+  }
+  function promoteTransfers(elapsed) {
+    const busyRigs = new Set(
+      [...transfers.values()]
+        .filter((job) => job.status === "active")
+        .map((job) => job.rigIndex),
+    );
+    for (const job of [...transfers.values()].sort(
+      (a, b) => a.queueOrder - b.queueOrder,
+    )) {
+      if (job.status !== "queued") continue;
+      let rigIndex = 0;
+      while (busyRigs.has(rigIndex)) rigIndex++;
+      if (rigIndex >= TRANSFER_RIG_LIMIT) break;
+      busyRigs.add(rigIndex);
+      job.rigIndex = rigIndex;
+      job.status = "active";
+      job.startedAt = elapsed;
+    }
+  }
+  function updateTransfers(elapsed) {
+    let finished = false;
+    for (const job of [...transfers.values()]) {
+      if (job.status !== "active") continue;
+      job.progress = clamp(
+        (elapsed - job.startedAt) / INDUSTRIAL_TRANSFER_SECONDS,
+      );
+      if (job.progress >= 1) {
+        completeTransfer(job);
+        finished = true;
+      }
+    }
+    if (finished) syncBatches();
+    promoteTransfers(elapsed);
+    let boxes = 0;
+    let cylinders = 0;
+    for (const job of transfers.values()) {
+      if (job.status !== "active") continue;
+      const start = job.toStage === "delivered" ? 0.4 : 0.18;
+      const progress = job.progress;
+      job.phase =
+        progress < start
+          ? job.toStage === "delivered"
+            ? "arrival"
+            : "pickup"
+          : progress < 0.82
+            ? "transfer"
+            : "unload";
+      const travel = clamp((progress - start) / (0.82 - start));
+      const smooth = travel * travel * (3 - 2 * travel);
+      job.position.lerpVectors(job.source, job.destination, smooth);
+      batchPositions.set(job.batchId, job.position);
+      const proxy = batchProxies.get(job.batchId);
+      if (proxy) {
+        proxy.position.copy(job.position);
+        proxy.position.y += 1;
+        proxy.visible = true;
+      }
+      // An explicit ERP delivery brings the truck into the customer bay first.
+      if (job.toStage === "delivered" && progress < start) continue;
+      const turn = Math.atan2(
+        job.destination.x - job.source.x,
+        job.destination.z - job.source.z,
+      );
+      const x = job.position.x,
+        z = job.position.z;
+      const floor = INDUSTRIAL_SURFACES.plot;
+      const lifting =
+        progress < start
+          ? clamp(progress / start)
+          : progress >= 0.82
+            ? 1 - clamp((progress - 0.82) / 0.18)
+            : 1;
+      const forkY = 0.2 + lifting * 0.23;
+      const part = (px, py, pz, w, h, d, tint) => {
+        rotatedPart.set(px, py + floor, pz).applyAxisAngle(UP, turn);
+        boxes < transferBoxes.instanceMatrix.count &&
+          dynamicPart(
+            transferBoxes,
+            boxes++,
+            x + rotatedPart.x,
+            rotatedPart.y,
+            z + rotatedPart.z,
+            w,
+            h,
+            d,
+            tint,
+            turn,
+          );
+      };
+      // Rear body, open cabin, driver's seat, lifting mast and forks.
+      part(0, 0.62, -0.67, 1.15, 0.78, 1.18, "#f5ac24");
+      part(0, 1.02, -0.75, 0.57, 0.25, 0.45, "#324c56");
+      part(0, 1.38, -0.72, 0.36, 0.55, 0.3, "#2b8fc0");
+      part(0, 1.78, -0.7, 0.3, 0.3, 0.3, "#edb78c");
+      part(0, 2.06, -0.58, 1.3, 0.1, 1.34, "#2f5662");
+      for (const side of [-1, 1]) {
+        part(side * 0.55, 1.44, -0.14, 0.09, 1.17, 0.09, "#344c55");
+        part(side * 0.46, 1.04, 0.2, 0.1, 1.8, 0.11, "#4b6265");
+        part(side * 0.39, forkY, 0.94, 0.12, 0.1, 1.45, "#728c8d");
+        for (const pz of [-0.95, 0.05]) {
+          rotatedPart
+            .set(side * 0.65, floor + 0.29, pz)
+            .applyAxisAngle(UP, turn);
+          dynamicPart(
+            movingCylinders,
+            cylinders++,
+            x + rotatedPart.x,
+            rotatedPart.y,
+            z + rotatedPart.z,
+            0.48,
+            0.22,
+            0.48,
+            "#263d43",
+            turn,
+            0,
+            Math.PI / 2,
+          );
+        }
+      }
+      part(0, forkY + 0.12, 1.08, 1.7, 0.18, 1.4, "#ba945c");
+      for (let index = 0; index < 6; index++)
+        part(
+          ((index % 2) - 0.5) * 0.72,
+          forkY + 0.48 + Math.floor(index / 4) * 0.52,
+          0.76 + (Math.floor(index / 2) % 2) * 0.65,
+          0.65,
+          0.49,
+          0.59,
+          index % 3 ? "#dab079" : "#f3c145",
+        );
+    }
+    transferBoxes.count = boxes;
+    machineryBoxes.count = 0;
+    const time = reducedMotion ? 0 : elapsed;
+    let machineIndex = 0;
+    for (const [index, offset] of [-3.5, -0.5, 2.7].entries()) {
+      const stroke = (1 + Math.sin(time * 2.8 + index * 1.8)) * 0.22;
+      dynamicPart(
+        machineryBoxes,
+        machineIndex++,
+        -28 + offset,
+        2.62 + stroke,
+        -62.8,
+        0.13,
+        0.72,
+        0.13,
+        "#d5ebe5",
+      );
+      dynamicPart(
+        machineryBoxes,
+        machineIndex++,
+        -28 + offset,
+        2.2 + stroke,
+        -62.3,
+        0.7,
+        0.15,
+        0.52,
+        "#f4b630",
+      );
+      dynamicPart(
+        movingCylinders,
+        cylinders++,
+        -28 + offset + 0.6,
+        2.79,
+        -63.6,
+        0.17,
+        0.14,
+        0.17,
+        stroke > 0.22 ? "#31dd89" : "#ffcc39",
+      );
+    }
+    // Visible sealing head and four synchronized packing rollers.
+    const seal = (1 + Math.sin(time * 3.2)) * 0.18;
+    dynamicPart(
+      machineryBoxes,
+      machineIndex++,
+      -14,
+      2.35 - seal,
+      -61.5,
+      1.5,
+      0.18,
+      0.9,
+      "#ec9b21",
+    );
+    for (let index = 0; index < 4; index++) {
+      dynamicPart(
+        movingCylinders,
+        cylinders++,
+        -17.5 + index * 2.3,
+        1.09,
+        -61.5,
+        0.21,
+        1.04,
+        0.21,
+        Math.sin(time * 4 + index) > 0 ? "#c5ddda" : "#648d90",
+        0,
+        Math.PI / 2,
+      );
+    }
+    machineryBoxes.count = machineIndex;
+    movingCylinders.count = cylinders;
+    for (const mesh of [transferBoxes, machineryBoxes, movingCylinders]) {
+      mesh.instanceMatrix.needsUpdate = true;
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    }
+  }
+  function clearTransfers() {
+    transfers.clear();
+    completedTransfers.length = 0;
+    transferBoxes.count = 0;
+    for (const actor of vehicleActors.values()) {
+      actor.handoff = null;
+      actor.signature = null;
+    }
+  }
+
   const beltCargo = new THREE.InstancedMesh(boxGeometry, material, 8);
   beltCargo.name = "Animación ilustrativa de fabricación y empacado";
   beltCargo.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
@@ -734,10 +1135,23 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
       beltCargo.setMatrixAt(index, dummy.matrix);
     }
     beltCargo.instanceMatrix.needsUpdate = true;
+    updateTransfers(elapsed);
     for (const actor of vehicleActors.values()) {
       const status = actor.model.status;
       if (!actor.group.visible) continue;
-      if (status === "outbound" || status === "returning") {
+      const handoffProgress = actor.handoff
+        ? clamp((elapsed - actor.handoff.startedAt) / actor.handoff.duration)
+        : 1;
+      if (actor.handoff && handoffProgress >= 1) actor.handoff = null;
+      if (actor.handoff && handoffProgress < 1) {
+        actor.handoff.route.getPointAt(handoffProgress, actor.group.position);
+        actor.handoff.route.getTangentAt(
+          Math.min(0.99999, handoffProgress),
+          actor.tangent,
+        );
+        actor.group.rotation.y = Math.atan2(actor.tangent.x, actor.tangent.z);
+      } else if (status === "outbound" || status === "returning") {
+        actor.handoff = null;
         actor.progress = clamp(
           actor.baseProgress +
             (reducedMotion
@@ -753,20 +1167,27 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
       } else if (status === "at_customer") {
         actor.progress = 1;
         const [x, z] = customerSlot(actor.index - 1);
-        actor.group.position.set(x, 0.22, z);
+        actor.group.position.set(x, vehicleY(z), z);
         actor.group.rotation.y = Math.PI;
       } else {
         actor.progress = 0;
-        actor.group.position.set(14.6 + (actor.index % 3) * 2.05, 0.22, -63.2);
+        actor.group.position.set(
+          14.6 + (actor.index % 3) * 2.05,
+          vehicleY(-63.2),
+          -63.2,
+        );
         actor.group.rotation.y = 0;
       }
+      actor.cargo.visible =
+        !actor.cargoBatchId || !transfers.has(actor.cargoBatchId);
       for (const [index, position] of actor.wheelPositions.entries()) {
         dummy.position.set(...position);
         dummy.scale.set(1, 1, 1);
         dummy.quaternion.copy(wheelTurn);
         if (
-          (status === "outbound" || status === "returning") &&
-          actor.progress < 1
+          ((status === "outbound" || status === "returning") &&
+            actor.progress < 1) ||
+          (actor.handoff && handoffProgress < 1)
         )
           dummy.quaternion.multiply(
             wheelSpin.setFromAxisAngle(UP, -visualElapsed * 3),
@@ -775,7 +1196,7 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
         actor.wheels.setMatrixAt(index, dummy.matrix);
       }
       actor.wheels.instanceMatrix.needsUpdate = true;
-      if (actor.cargoBatchId) {
+      if (actor.cargoBatchId && !transfers.has(actor.cargoBatchId)) {
         actor.batchPosition.copy(actor.group.position);
         actor.batchPosition.y += 1.4;
         batchPositions.set(actor.cargoBatchId, actor.batchPosition);
@@ -784,11 +1205,82 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
     return !reducedMotion;
   }
 
-  function sync(next) {
+  function sync(next, { event = null, animateEvents = true } = {}) {
     if (disposed) return;
+    const reset =
+      !animateEvents ||
+      reducedMotion ||
+      /(?:reset|snapshot|replay)/i.test(event?.type || "");
+    const nextBatches = new Map(
+      (next?.batches || []).map((batch) => [
+        batch.id,
+        {
+          stageId: batch.stageId,
+          quantity: batch.quantity,
+          assignedTruckId: batch.assignedTruckId,
+          updatedAt: batch.updatedAt,
+        },
+      ]),
+    );
+    if (reset) clearTransfers();
+    if (priorBatches && !reset) {
+      for (const [id, batch] of nextBatches) {
+        const previous = priorBatches.get(id);
+        if (!previous || previous.stageId === batch.stageId) continue;
+        const existing = transfers.get(id);
+        // Oversized external snapshots still render/count immediately; the
+        // illustrative queue is bounded independently of business quantities.
+        if (!existing && transfers.size >= BATCH_LIMIT) continue;
+        let source =
+          existing?.position.clone() || batchPositions.get(id)?.clone();
+        const fromIndex = INDUSTRY_STAGES.findIndex(
+          (stage) => stage.id === previous.stageId,
+        );
+        if (!source)
+          source = new THREE.Vector3(STATION_X[fromIndex] || 0, 0.4, -57.85);
+        // A delivery uses the customer bay after its truck's continuous arrival.
+        if (batch.stageId === "delivered") {
+          const actor = vehicleActors.get(previous.assignedTruckId);
+          const [x, z] = customerSlot((actor?.index ?? 1) - 1);
+          source.set(x, INDUSTRIAL_SURFACES.plot, z);
+        }
+        source.y = INDUSTRIAL_SURFACES.plot;
+        transfers.set(id, {
+          id: `industrial-transfer-${++transferSerial}-${id}`,
+          batchId: id,
+          fromStage: previous.stageId,
+          toStage: batch.stageId,
+          quantity: batch.quantity,
+          source,
+          destination: source.clone(),
+          position: source.clone(),
+          status: "queued",
+          phase: "queued",
+          progress: 0,
+          startedAt: null,
+          rigIndex: null,
+          queueOrder: ++transferQueueSerial,
+          sourceEventId: event?.id || null,
+        });
+      }
+    }
+    priorBatches = nextBatches;
+    for (const id of transfers.keys())
+      if (!nextBatches.has(id)) transfers.delete(id);
     state = next;
+    syncVehicles(!reset);
     syncBatches();
-    syncVehicles();
+    for (const job of transfers.values()) {
+      if (job.status !== "queued") continue;
+      const target = batchPositions.get(job.batchId);
+      if (job.toStage === "transit") {
+        job.destination.set(0, INDUSTRIAL_SURFACES.plot, -58.1);
+      } else if (target) {
+        job.destination.copy(target);
+        job.destination.y = INDUSTRIAL_SURFACES.plot;
+      }
+    }
+    promoteTransfers(lastElapsed);
     update(0, lastElapsed);
   }
   function getPlaces() {
@@ -835,6 +1327,18 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
       routeBasis: "Ruta estimada · animación ilustrativa",
       visualRouteSeconds: VISUAL_ROUTE_SECONDS,
       businessMutation: false,
+      pipelineBusy: transfers.size > 0,
+      transitions: getTransitions(),
+      surfaces: { ...INDUSTRIAL_SURFACES },
+      groundSurfaces: groundSurfaces.map((surface) => ({ ...surface })),
+      machinery: {
+        animated: !reducedMotion,
+        time: reducedMotion ? 0 : lastElapsed,
+        addedDrawCalls: 3,
+        geometryUUIDs: [transferBoxes, machineryBoxes, movingCylinders].map(
+          (mesh) => mesh.geometry.uuid,
+        ),
+      },
       boxLimitPerBatch: BOX_LIMIT,
       batchLimit: BATCH_LIMIT,
       places: getPlaces().map((place) => ({
@@ -843,8 +1347,21 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
       })),
       batches: [
         ...batchVisuals,
+        ...[...transfers.values()].map((job) => ({
+          id: job.batchId,
+          stageId: job.toStage,
+          quantity: job.quantity,
+          position: job.position.toArray(),
+          inTransfer: true,
+          representativeBoxes: 6,
+        })),
         ...[...vehicleActors.values()]
-          .filter((actor) => actor.group.visible && actor.cargoBatchId)
+          .filter(
+            (actor) =>
+              actor.group.visible &&
+              actor.cargoBatchId &&
+              !transfers.has(actor.cargoBatchId),
+          )
           .map((actor) => {
             const batch = (state?.batches || []).find(
               (item) => item.id === actor.cargoBatchId,
@@ -867,7 +1384,18 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
           driverName: actor.model.driverName,
           cargoBatchId: actor.cargoBatchId,
           cargoRepresentativeBoxes: actor.cargo.count,
+          sourceCargoRepresentativeBoxes: actor.cargo.count,
+          cargoVisible: actor.cargo.visible,
           progress: actor.progress,
+          handoff: actor.handoff
+            ? {
+                progress: clamp(
+                  (lastElapsed - actor.handoff.startedAt) /
+                    actor.handoff.duration,
+                ),
+                duration: actor.handoff.duration,
+              }
+            : null,
           sourceProgress: actor.baseProgress,
           awaitingConfirmation:
             actor.progress >= 1 &&
@@ -898,11 +1426,15 @@ export function createIndustryDistrict({ scene, reducedMotion = false }) {
     vehicleActors.clear();
     batchProxies.clear();
     batchPositions.clear();
+    transfers.clear();
+    completedTransfers.length = 0;
+    priorBatches = null;
   }
   return {
     sync,
     update,
     getPlaces,
+    getTransitions,
     pickHit,
     focusPoint,
     setEnabled,

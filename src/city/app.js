@@ -58,6 +58,8 @@ import {
   ownerPerformance,
 } from "./model.js";
 import { createCityScene } from "./scene.js";
+import { createCelebrations } from "./celebrations.js";
+import { nextProductionAction } from "./production-demo.js";
 import { communicationsSummary } from "./communications-model.js";
 import {
   createIndustryProvider,
@@ -66,6 +68,7 @@ import {
 } from "./industry-model.js";
 import "./style.css";
 import "./expansion.css";
+import "./celebrations.css";
 
 const icons = {
   Building2,
@@ -185,6 +188,9 @@ const ui = {
   selectedIndustryId: null,
   selectedIndustryKind: "place",
   tvNavigationAt: 0,
+  tvTourAll: false,
+  productionPlaying: false,
+  productionBatchId: null,
 };
 const root = document.querySelector("#app");
 root.innerHTML = `<div id="city-app" class="c-shell">
@@ -227,6 +233,17 @@ root.innerHTML = `<div id="city-app" class="c-shell">
   <footer class="c-footer"><span>Menos tablas. Más perspectiva.</span><span>Datos ficticios · Tráfico ambiental · Las obras y los recorridos comerciales son simulados</span><button data-action="sources">Cómo se conectará a tu CRM ${i("arrow-up-right")}</button></footer></main>
   </div><div id="city-modal-root"></div><div id="city-toast" role="status" aria-live="polite"></div>`;
 const $ = (s) => document.querySelector(s);
+const celebrations = createCelebrations({
+  container: $("#city-world"),
+  reducedMotion: () => reduced.matches,
+});
+let productionTimer = null;
+const productionButton = document.createElement("button");
+productionButton.id = "city-production-button";
+productionButton.className = "c-production-button";
+productionButton.dataset.action = "production-play";
+productionButton.hidden = true;
+$(".c-win-button").after(productionButton);
 const refreshIcons = () => createIcons({ icons });
 function getState() {
   return provider.getState();
@@ -368,6 +385,21 @@ function renderDistrict() {
   const winButton = $(".c-win-button");
   winButton.innerHTML = `${i("sparkles")}<span>${isIndustry ? "Avanzar un lote" : "Simular una venta"}</span>`;
   winButton.hidden = isCommunications;
+  productionButton.hidden = !isIndustry;
+  productionButton.disabled = ui.mode === "replay";
+  productionButton.setAttribute("aria-pressed", String(ui.productionPlaying));
+  productionButton.setAttribute(
+    "aria-label",
+    ui.productionPlaying
+      ? "Pausar simulación del proceso industrial"
+      : "Simular el proceso industrial completo",
+  );
+  if (productionButton.dataset.playing !== String(ui.productionPlaying)) {
+    productionButton.dataset.playing = String(ui.productionPlaying);
+    productionButton.innerHTML = `${i(ui.productionPlaying ? "pause" : "play")}<span>${ui.productionPlaying ? "Pausar simulación" : "Simular proceso"}</span>`;
+  }
+  productionButton.title =
+    "Demo automática: mueve los lotes y registra entregas simuladas. No utiliza datos reales.";
   $("#city-stage-cards").classList.toggle(
     "c-unit-cards",
     isIndustry || isCommunications,
@@ -557,9 +589,9 @@ function industryDrawerHTML() {
     batches
       .map((b) => {
         const stage = INDUSTRY_STAGES.find((stage) => stage.id === b.stageId);
-          const next = INDUSTRY_STAGES.find(
-            (candidate) => candidate.order === (stage?.order ?? 99) + 1,
-          );
+        const next = INDUSTRY_STAGES.find(
+          (candidate) => candidate.order === (stage?.order ?? 99) + 1,
+        );
         const truck = s.vehicles.find((v) => v.id === b.assignedTruckId);
         return `<article class="c-batch-card" data-batch-id="${b.id}" style="--stage:${stage?.color}"><button class="c-batch-title" data-industry="${b.id}" data-kind="batch"><span><small>${esc(b.sourceOrderId)}</small><b>${esc(b.id)} · ${esc(b.productName)}</b></span><strong>${units(b.quantity)} <small>uds</small></strong></button><span class="c-batch-stage">${esc(stage?.name)}</span><p>${esc(b.accountName)}${truck ? ` · ${esc(truck.driverName)} / ${esc(truck.plate)}` : ""}</p>${b.delivery ? `<small class="c-delivery-proof">${i("check")} Entrega registrada · ${date(b.delivery.recordedAt)} ${time(b.delivery.recordedAt)}</small>` : ""}${next ? `<button class="c-batch-advance" data-advance-batch="${b.id}">Simular → ${esc(next.name)} ${i("arrow-right")}</button>` : ""}${selectedBatch ? `<ol class="c-batch-history">${b.history.map((entry) => `<li>${esc(INDUSTRY_STAGES.find((stage) => stage.id === entry.stageId)?.name || entry.stageId)}<small>${date(entry.timestamp)} · ${time(entry.timestamp)}</small></li>`).join("")}</ol>` : ""}</article>`;
       })
@@ -604,6 +636,64 @@ function simulateIndustryStep() {
   ui.selectedIndustryId = batch.id;
   ui.selectedIndustryKind = "batch";
   if (advanceIndustryBatch(batch.id)) showIndustry(batch.id, "batch");
+}
+function stopProduction(update = true) {
+  clearTimeout(productionTimer);
+  productionTimer = null;
+  ui.productionPlaying = false;
+  if (update) {
+    renderDistrict();
+    refreshIcons();
+  }
+}
+function scheduleProduction(delay = 14000) {
+  clearTimeout(productionTimer);
+  productionTimer = setTimeout(() => {
+    productionTimer = null;
+    if (!ui.productionPlaying) return;
+    if (
+      document.hidden ||
+      ui.mode === "replay" ||
+      scene?.debug?.industry?.getTransitions?.()?.busy
+    ) {
+      scheduleProduction(1000);
+      return;
+    }
+    const action = nextProductionAction(
+      industryProvider.getState(),
+      ui.productionBatchId,
+    );
+    if (action.type === "complete") {
+      stopProduction();
+      toast("Simulación completada: todos los lotes están entregados.");
+      return;
+    }
+    ui.productionBatchId = action.batchId || ui.productionBatchId;
+    const method = {
+      advance: "advanceBatch",
+      return: "returnVehicle",
+      arrive: "arriveVehicle",
+    }[action.type];
+    if (method) industryProvider[method](action.id);
+    scheduleProduction();
+  }, delay);
+}
+function toggleProduction() {
+  if (ui.productionPlaying) return stopProduction();
+  if (ui.mode === "replay") return;
+  ui.productionPlaying = true;
+  ui.productionBatchId =
+    industryProvider
+      .getState()
+      .batches.find(
+        (b) => b.id === ui.selectedIndustryId && b.stageId !== "delivered",
+      )?.id || null;
+  renderDistrict();
+  refreshIcons();
+  toast(
+    "Simulación en marcha: fabricación, embalaje, reparto y entrega. Puedes pausarla.",
+  );
+  scheduleProduction(900);
 }
 function syncFilterOptions() {
   const state = getState(),
@@ -1063,6 +1153,8 @@ function setMode(mode) {
     return;
   }
   if (ui.mode === "tv" && mode !== "tv") {
+    scene?.setTVTour?.(false);
+    ui.tvTourAll = false;
     const saved = ui.tvSavedUi;
     ui.tvSavedUi = null;
     $("#city-app").classList.remove("c-tv-mode");
@@ -1111,6 +1203,8 @@ function setMode(mode) {
     .querySelectorAll(".c-mode-tabs button")
     .forEach((b) => b.classList.toggle("active", b.dataset.action === mode));
   if (mode === "replay" && !ui.replay.saved) {
+    stopProduction(false);
+    celebrations.reset();
     ui.replay.savedUi = {
       selectedId: ui.selectedId,
       filters: { ...ui.filters },
@@ -1167,6 +1261,8 @@ function setMode(mode) {
     scene?.setTVPresentation?.(true);
     scene?.resize();
     scene?.overview();
+    ui.tvTourAll = ui.district === "all";
+    scene?.setTVTour?.(ui.tvTourAll);
     const request = $("#city-app").requestFullscreen;
     if (request && document.fullscreenElement !== $("#city-app")) {
       try {
@@ -1282,6 +1378,7 @@ function onClick(e) {
   if (advanceEl) return advanceIndustryBatch(advanceEl.dataset.advanceBatch);
   const returnEl = e.target.closest("[data-return-truck]");
   if (returnEl) {
+    if (ui.mode === "replay") return;
     if (industryProvider.returnVehicle(returnEl.dataset.returnTruck))
       toast(
         "Regreso vacío registrado. La llegada al almacén se confirma por separado.",
@@ -1290,6 +1387,7 @@ function onClick(e) {
   }
   const arriveEl = e.target.closest("[data-arrive-truck]");
   if (arriveEl) {
+    if (ui.mode === "replay") return;
     if (industryProvider.arriveVehicle(arriveEl.dataset.arriveTruck))
       toast("Llegada confirmada. Camión disponible de nuevo.");
     return;
@@ -1328,6 +1426,7 @@ function onClick(e) {
   else if (a === "tv") setMode(ui.mode === "tv" ? "explore" : "tv");
   else if (a === "simulate-win")
     ui.district === "industry" ? simulateIndustryStep() : simulateWin();
+  else if (a === "production-play") toggleProduction();
   else if (a === "industry-records") showIndustry();
   else if (a === "communications-records") showCommunications();
   else if (a === "close-inspector") closeInspector();
@@ -1471,8 +1570,63 @@ document.addEventListener("keydown", (e) => {
     }
   }
 });
-provider.subscribe((_state, event) => render(event));
-industryProvider.subscribe((_state, event) => render(event));
+const observedSales = new Map(
+  getState().deals.map((d) => [d.id, stageKind(getState(), d.stageId)]),
+);
+const observedBatches = new Map(
+  industryProvider.getState().batches.map((b) => [b.id, b.stageId]),
+);
+provider.subscribe((state, event) => {
+  const deal = state.deals.find((d) => d.id === event?.entityId);
+  const kind = deal && stageKind(state, deal.stageId);
+  if (event?.type === "demo.reset") celebrations.reset();
+  else if (
+    ui.mode !== "replay" &&
+    deal &&
+    kind === "won" &&
+    observedSales.get(deal.id) !== "won" &&
+    ["deal.won", "deal.stage_changed"].includes(event?.type)
+  ) {
+    celebrations.notify({
+      kind: "sale",
+      eventId: event.id,
+      entityId: deal.id,
+      name: deal.name,
+      detail: state.accounts.find((a) => a.id === deal.accountId)?.name,
+      value: eur(deal.amount),
+      owner: ownerName(deal.ownerId),
+    });
+  }
+  observedSales.clear();
+  for (const d of state.deals)
+    observedSales.set(d.id, stageKind(state, d.stageId));
+  render(event);
+});
+industryProvider.subscribe((state, event) => {
+  const batch = state.batches.find((b) => b.id === event?.entityId);
+  if (event?.type === "industry.reset") {
+    stopProduction(false);
+    celebrations.reset();
+  } else if (
+    ui.mode !== "replay" &&
+    event?.type === "batch.stage_changed" &&
+    batch?.stageId === "delivered" &&
+    observedBatches.get(batch.id) !== "delivered"
+  ) {
+    celebrations.notify({
+      kind: "delivery",
+      eventId: event.id,
+      entityId: batch.id,
+      name: batch.productName,
+      detail: batch.accountName,
+      value: `${units(batch.quantity)} unidades entregadas`,
+      owner: batch.sourceOrderId,
+    });
+  }
+  observedBatches.clear();
+  for (const b of state.batches) observedBatches.set(b.id, b.stageId);
+  render(event);
+});
 render();
 let lastTick = performance.now(),
   tvLast = 0,
@@ -1491,6 +1645,8 @@ function tick() {
     }
     if (
       ui.mode === "tv" &&
+      !ui.tvTourAll &&
+      !reduced.matches &&
       now - tvLast > 13000 &&
       now - ui.tvNavigationAt > 12000 &&
       !(scene?.getDiagnostics().transitionCount > 0)
@@ -1625,6 +1781,11 @@ window.__ATLAS_CITY__ = {
   showCommunications,
   showIndustry,
   advanceIndustryBatch,
+  toggleProduction,
+  stopProduction,
+  get celebrations() {
+    return celebrations;
+  },
   focusOwner,
   select,
   simulateWin,
@@ -1634,6 +1795,8 @@ window.__ATLAS_CITY__ = {
   setReplay: (enabled) => setMode(enabled ? "replay" : "explore"),
   setMode,
   reset: () => {
+    stopProduction(false);
+    celebrations.reset();
     setMode("explore");
     provider.reset();
     industryProvider.reset();
@@ -1643,6 +1806,8 @@ window.__ATLAS_CITY__ = {
 };
 boot();
 window.addEventListener("pagehide", (event) => {
+  stopProduction(false);
+  celebrations.reset();
   if (!event.persisted) scene?.dispose();
 });
 

@@ -1,0 +1,4082 @@
+{
+  "generatedAt": "2026-10-17T15:04:44.550Z",
+  "browser": "154.0.8037.57",
+  "scope": "Real live provider closure; background scene paused and actual CSS animations sampled and paused at 500ms for evidence. DOM markup and provider event are unmodified; real auto-close timer remains active.",
+  "sourceSha256": {
+    "src/city/app.js": "a3eb3688cbac853e1a620e4b2736653d1845b6057aeb0484e3c7d1fe6decf5b5",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "1d9d6a62c10869ef3a3c5605f68d1b2ecbd1ff750fa72991503ad752c8626925",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020"
+  },
+  "errors": [],
+  "captures": [
+    {
+      "kind": "sale",
+      "before": {
+        "at": 6242.0999999940395,
+        "afterCommand": 6296.5999999940395,
+        "card": "¡Venta ganada!Nueva sedeNorte Studio1500 €Ana Torres×",
+        "debug": {
+          "size": 1,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": {
+            "kind": "sale",
+            "eventId": "demo-0001-91",
+            "entityId": "deal-001",
+            "title": "¡Venta ganada!",
+            "name": "Nueva sede",
+            "detail": "Norte Studio",
+            "value": "1500 €",
+            "owner": "Ana Torres"
+          },
+          "queued": [],
+          "rememberedEvents": 1,
+          "rememberedClosures": 1,
+          "particleCount": 36,
+          "timerActive": false,
+          "paintPending": true,
+          "reducedMotion": false
+        }
+      },
+      "cssPose": {
+        "sampleMs": 500,
+        "animations": 37,
+        "particleElements": 36
+      },
+      "painted": {
+        "at": 8181.5,
+        "opacity": "1",
+        "display": "grid",
+        "visibility": "visible",
+        "bounds": {
+          "x": 1037,
+          "y": 375.4375,
+          "width": 360,
+          "height": 106
+        },
+        "layer": {
+          "hidden": false,
+          "display": "block",
+          "opacity": "1",
+          "zIndex": "44"
+        },
+        "animations": [
+          {
+            "time": 500,
+            "state": "paused",
+            "start": null
+          }
+        ],
+        "hit": "c-celebration-content"
+      },
+      "after": {
+        "at": 9454.09999999404,
+        "card": "¡Venta ganada!Nueva sedeNorte Studio1500 €Ana Torres×",
+        "debug": {
+          "size": 1,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": {
+            "kind": "sale",
+            "eventId": "demo-0001-91",
+            "entityId": "deal-001",
+            "title": "¡Venta ganada!",
+            "name": "Nueva sede",
+            "detail": "Norte Studio",
+            "value": "1500 €",
+            "owner": "Ana Torres"
+          },
+          "queued": [],
+          "rememberedEvents": 1,
+          "rememberedClosures": 1,
+          "particleCount": 36,
+          "timerActive": true,
+          "paintPending": false,
+          "reducedMotion": false
+        }
+      },
+      "screenshotWallMs": 1274
+    },
+    {
+      "kind": "delivery",
+      "before": {
+        "at": 10762.09999999404,
+        "afterCommand": 10795.800000011921,
+        "card": "¡Entrega completada!Kit AtlasLumen Labs80 unidades entregadasERP-PED-1007×",
+        "debug": {
+          "size": 1,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": {
+            "kind": "delivery",
+            "eventId": "industry-demo-1-batch.stage_changed-batch-007",
+            "entityId": "batch-007",
+            "title": "¡Entrega completada!",
+            "name": "Kit Atlas",
+            "detail": "Lumen Labs",
+            "value": "80 unidades entregadas",
+            "owner": "ERP-PED-1007"
+          },
+          "queued": [],
+          "rememberedEvents": 1,
+          "rememberedClosures": 1,
+          "particleCount": 36,
+          "timerActive": false,
+          "paintPending": true,
+          "reducedMotion": false
+        }
+      },
+      "cssPose": {
+        "sampleMs": 500,
+        "animations": 37,
+        "particleElements": 36
+      },
+      "painted": {
+        "at": 12770,
+        "opacity": "1",
+        "display": "grid",
+        "visibility": "visible",
+        "bounds": {
+          "x": 1037,
+          "y": 336.4375,
+          "width": 360,
+          "height": 106
+        },
+        "layer": {
+          "hidden": false,
+          "display": "block",
+          "opacity": "1",
+          "zIndex": "44"
+        },
+        "animations": [
+          {
+            "time": 500,
+            "state": "paused",
+            "start": null
+          }
+        ],
+        "hit": "c-celebration-content"
+      },
+      "after": {
+        "at": 13731.5,
+        "card": "¡Entrega completada!Kit AtlasLumen Labs80 unidades entregadasERP-PED-1007×",
+        "debug": {
+          "size": 1,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": {
+            "kind": "delivery",
+            "eventId": "industry-demo-1-batch.stage_changed-batch-007",
+            "entityId": "batch-007",
+            "title": "¡Entrega completada!",
+            "name": "Kit Atlas",
+            "detail": "Lumen Labs",
+            "value": "80 unidades entregadas",
+            "owner": "ERP-PED-1007"
+          },
+          "queued": [],
+          "rememberedEvents": 1,
+          "rememberedClosures": 1,
+          "particleCount": 36,
+          "timerActive": true,
+          "paintPending": false,
+          "reducedMotion": false
+        }
+      },
+      "screenshotWallMs": 962
+    }
+  ],
+  "lifecycle": [
+    {
+      "kind": "sale",
+      "closed": {
+        "size": 0,
+        "capacity": 3,
+        "dropped": 0,
+        "disposed": false,
+        "visible": null,
+        "queued": [],
+        "rememberedEvents": 1,
+        "rememberedClosures": 1,
+        "particleCount": 0,
+        "timerActive": false,
+        "paintPending": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "kind": "delivery",
+      "closed": {
+        "size": 0,
+        "capacity": 3,
+        "dropped": 0,
+        "disposed": false,
+        "visible": null,
+        "queued": [],
+        "rememberedEvents": 1,
+        "rememberedClosures": 1,
+        "particleCount": 0,
+        "timerActive": false,
+        "paintPending": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "kind": "reset-before-paint",
+      "pendingReset": {
+        "pending": {
+          "size": 1,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": {
+            "kind": "sale",
+            "eventId": "demo-0002-91",
+            "entityId": "deal-001",
+            "title": "¡Venta ganada!",
+            "name": "Nueva sede",
+            "detail": "Norte Studio",
+            "value": "1500 €",
+            "owner": "Ana Torres"
+          },
+          "queued": [],
+          "rememberedEvents": 1,
+          "rememberedClosures": 1,
+          "particleCount": 36,
+          "timerActive": false,
+          "paintPending": true,
+          "reducedMotion": false
+        },
+        "after": {
+          "size": 0,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": null,
+          "queued": [],
+          "rememberedEvents": 0,
+          "rememberedClosures": 0,
+          "particleCount": 0,
+          "timerActive": false,
+          "paintPending": false,
+          "reducedMotion": false
+        }
+      },
+      "afterCancelledPaint": {
+        "size": 0,
+        "capacity": 3,
+        "dropped": 0,
+        "disposed": false,
+        "visible": null,
+        "queued": [],
+        "rememberedEvents": 0,
+        "rememberedClosures": 0,
+        "particleCount": 0,
+        "timerActive": false,
+        "paintPending": false,
+        "reducedMotion": false
+      }
+    },
+    {
+      "kind": "replay-keeps-truck-return-and-arrival-readonly",
+      "replayMode": "replay",
+      "beforeReturn": {
+        "stages": [
+          {
+            "id": "manufacturing",
+            "name": "Fabricación",
+            "color": "#f28b26",
+            "order": 0
+          },
+          {
+            "id": "packing",
+            "name": "Empacado",
+            "color": "#efbb26",
+            "order": 1
+          },
+          {
+            "id": "warehouse",
+            "name": "Almacén",
+            "color": "#2496d8",
+            "order": 2
+          },
+          {
+            "id": "transit",
+            "name": "En transporte",
+            "color": "#9863df",
+            "order": 3
+          },
+          {
+            "id": "delivered",
+            "name": "Entregado",
+            "color": "#24b66b",
+            "order": 4
+          }
+        ],
+        "products": [
+          {
+            "id": "product-kit-atlas",
+            "sku": "KIT-ATLAS",
+            "name": "Kit Atlas",
+            "unit": "unidades"
+          }
+        ],
+        "batches": [
+          {
+            "id": "batch-001",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "delivered",
+            "accountId": "account-001",
+            "accountName": "Norte Studio",
+            "sourceOrderId": "ERP-PED-1001",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T08:19:00.000Z",
+            "stageEnteredAt": "2026-10-16T08:19:00.000Z",
+            "delivery": {
+              "id": "delivery-industry-demo-4-batch.stage_changed-batch-001",
+              "recordedAt": "2026-10-16T08:19:00.000Z",
+              "sourceOrderId": "ERP-PED-1001",
+              "accountId": "account-001",
+              "quantity": 120,
+              "source": "atlas-industry-demo",
+              "truckId": "truck-03"
+            },
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-001",
+                "type": "batch.snapshot"
+              },
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T08:16:00.000Z",
+                "eventId": "industry-demo-1-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T08:17:00.000Z",
+                "eventId": "industry-demo-2-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T08:18:00.000Z",
+                "eventId": "industry-demo-3-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T08:19:00.000Z",
+                "eventId": "industry-demo-4-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              }
+            ]
+          },
+          {
+            "id": "batch-002",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "manufacturing",
+            "accountId": "account-005",
+            "accountName": "Casa Aurora",
+            "sourceOrderId": "ERP-PED-1002",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-002",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-003",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "packing",
+            "accountId": "account-002",
+            "accountName": "Oliva Hotels",
+            "sourceOrderId": "ERP-PED-1003",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-003",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-004",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-003",
+            "accountName": "Brisa Market",
+            "sourceOrderId": "ERP-PED-1004",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-004",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-005",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-006",
+            "accountName": "Taller Forma",
+            "sourceOrderId": "ERP-PED-1005",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-005",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-006",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-008",
+            "accountName": "Terra Supply",
+            "sourceOrderId": "ERP-PED-1006",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-006",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-007",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-004",
+            "accountName": "Lumen Labs",
+            "sourceOrderId": "ERP-PED-1007",
+            "assignedTruckId": "truck-01",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-007",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-008",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-007",
+            "accountName": "Marea Foods",
+            "sourceOrderId": "ERP-PED-1008",
+            "assignedTruckId": "truck-02",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-008",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-009",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-009",
+            "accountName": "Roca Design",
+            "sourceOrderId": "ERP-PED-1009",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:20:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:20:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-009",
+              "recordedAt": "2026-10-16T09:20:00+02:00",
+              "sourceOrderId": "ERP-PED-1009",
+              "accountId": "account-009",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:20:00+02:00",
+                "eventId": "snapshot-batch-009",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-010",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-010",
+            "accountName": "Delta Health",
+            "sourceOrderId": "ERP-PED-1010",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:40:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:40:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-010",
+              "recordedAt": "2026-10-16T09:40:00+02:00",
+              "sourceOrderId": "ERP-PED-1010",
+              "accountId": "account-010",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:40:00+02:00",
+                "eventId": "snapshot-batch-010",
+                "type": "batch.snapshot"
+              }
+            ]
+          }
+        ],
+        "vehicles": [
+          {
+            "id": "truck-01",
+            "name": "Camión 01",
+            "plate": "AT-101",
+            "driverName": "Felipe Martín",
+            "cargoBatchId": "batch-007",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-004",
+                "accountId": "account-004",
+                "name": "Lumen Labs"
+              },
+              "startedAt": "2026-10-16T08:00:00+02:00",
+              "durationMinutes": 180,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-004",
+              "accountId": "account-004",
+              "name": "Lumen Labs"
+            }
+          },
+          {
+            "id": "truck-02",
+            "name": "Camión 02",
+            "plate": "AT-102",
+            "driverName": "Sara Costa",
+            "cargoBatchId": "batch-008",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-007",
+                "accountId": "account-007",
+                "name": "Marea Foods"
+              },
+              "startedAt": "2026-10-16T08:45:00+02:00",
+              "durationMinutes": 150,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-007",
+              "accountId": "account-007",
+              "name": "Marea Foods"
+            }
+          },
+          {
+            "id": "truck-03",
+            "name": "Camión 03",
+            "plate": "AT-103",
+            "driverName": "Pablo Ríos",
+            "cargoBatchId": null,
+            "capacity": 200,
+            "status": "at_customer",
+            "location": "customer",
+            "updatedAt": "2026-10-16T08:19:00.000Z",
+            "route": null,
+            "lastCustomer": {
+              "id": "account-001",
+              "accountId": "account-001",
+              "name": "Norte Studio"
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": "snapshot-batch-009",
+            "entityId": "batch-009",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:20:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-010",
+            "entityId": "batch-010",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:40:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-001",
+            "entityId": "batch-001",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-002",
+            "entityId": "batch-002",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-003",
+            "entityId": "batch-003",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "packing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-004",
+            "entityId": "batch-004",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-005",
+            "entityId": "batch-005",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-006",
+            "entityId": "batch-006",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-007",
+            "entityId": "batch-007",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "snapshot-batch-008",
+            "entityId": "batch-008",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "industry-demo-1-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "packing",
+              "fromStageId": "manufacturing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:16:00.000Z"
+          },
+          {
+            "id": "industry-demo-2-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "warehouse",
+              "fromStageId": "packing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:17:00.000Z"
+          },
+          {
+            "id": "industry-demo-3-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "transit",
+              "fromStageId": "warehouse",
+              "truckId": "truck-03"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:18:00.000Z"
+          },
+          {
+            "id": "industry-demo-4-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "delivered",
+              "fromStageId": "transit"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:19:00.000Z"
+          }
+        ],
+        "appliedEventIds": [
+          "snapshot-batch-001",
+          "snapshot-batch-002",
+          "snapshot-batch-003",
+          "snapshot-batch-004",
+          "snapshot-batch-005",
+          "snapshot-batch-006",
+          "snapshot-batch-007",
+          "snapshot-batch-008",
+          "snapshot-batch-009",
+          "snapshot-batch-010",
+          "industry-demo-1-batch.stage_changed-batch-001",
+          "industry-demo-2-batch.stage_changed-batch-001",
+          "industry-demo-3-batch.stage_changed-batch-001",
+          "industry-demo-4-batch.stage_changed-batch-001"
+        ],
+        "now": "2026-10-16T08:19:00.000Z",
+        "source": {
+          "type": "simulated",
+          "system": "atlas-industry-demo",
+          "name": "ERP industrial simulado",
+          "description": "Lotes y entregas ficticios; independientes de las oportunidades comerciales",
+          "recordedAt": "2026-10-16T10:15:00+02:00"
+        },
+        "coverage": {
+          "batchesComplete": true,
+          "productsComplete": true,
+          "vehiclesComplete": true,
+          "totalUnits": 1320,
+          "productTotals": {
+            "product-kit-atlas": 1320
+          },
+          "unit": "unidades",
+          "from": "2026-10-16T00:00:00+02:00",
+          "to": "2026-10-16T08:19:00.000Z",
+          "scope": "Lotes registrados de Kit Atlas; no incluye materias primas"
+        }
+      },
+      "afterReturn": {
+        "stages": [
+          {
+            "id": "manufacturing",
+            "name": "Fabricación",
+            "color": "#f28b26",
+            "order": 0
+          },
+          {
+            "id": "packing",
+            "name": "Empacado",
+            "color": "#efbb26",
+            "order": 1
+          },
+          {
+            "id": "warehouse",
+            "name": "Almacén",
+            "color": "#2496d8",
+            "order": 2
+          },
+          {
+            "id": "transit",
+            "name": "En transporte",
+            "color": "#9863df",
+            "order": 3
+          },
+          {
+            "id": "delivered",
+            "name": "Entregado",
+            "color": "#24b66b",
+            "order": 4
+          }
+        ],
+        "products": [
+          {
+            "id": "product-kit-atlas",
+            "sku": "KIT-ATLAS",
+            "name": "Kit Atlas",
+            "unit": "unidades"
+          }
+        ],
+        "batches": [
+          {
+            "id": "batch-001",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "delivered",
+            "accountId": "account-001",
+            "accountName": "Norte Studio",
+            "sourceOrderId": "ERP-PED-1001",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T08:19:00.000Z",
+            "stageEnteredAt": "2026-10-16T08:19:00.000Z",
+            "delivery": {
+              "id": "delivery-industry-demo-4-batch.stage_changed-batch-001",
+              "recordedAt": "2026-10-16T08:19:00.000Z",
+              "sourceOrderId": "ERP-PED-1001",
+              "accountId": "account-001",
+              "quantity": 120,
+              "source": "atlas-industry-demo",
+              "truckId": "truck-03"
+            },
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-001",
+                "type": "batch.snapshot"
+              },
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T08:16:00.000Z",
+                "eventId": "industry-demo-1-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T08:17:00.000Z",
+                "eventId": "industry-demo-2-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T08:18:00.000Z",
+                "eventId": "industry-demo-3-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T08:19:00.000Z",
+                "eventId": "industry-demo-4-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              }
+            ]
+          },
+          {
+            "id": "batch-002",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "manufacturing",
+            "accountId": "account-005",
+            "accountName": "Casa Aurora",
+            "sourceOrderId": "ERP-PED-1002",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-002",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-003",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "packing",
+            "accountId": "account-002",
+            "accountName": "Oliva Hotels",
+            "sourceOrderId": "ERP-PED-1003",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-003",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-004",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-003",
+            "accountName": "Brisa Market",
+            "sourceOrderId": "ERP-PED-1004",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-004",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-005",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-006",
+            "accountName": "Taller Forma",
+            "sourceOrderId": "ERP-PED-1005",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-005",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-006",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-008",
+            "accountName": "Terra Supply",
+            "sourceOrderId": "ERP-PED-1006",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-006",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-007",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-004",
+            "accountName": "Lumen Labs",
+            "sourceOrderId": "ERP-PED-1007",
+            "assignedTruckId": "truck-01",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-007",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-008",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-007",
+            "accountName": "Marea Foods",
+            "sourceOrderId": "ERP-PED-1008",
+            "assignedTruckId": "truck-02",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-008",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-009",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-009",
+            "accountName": "Roca Design",
+            "sourceOrderId": "ERP-PED-1009",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:20:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:20:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-009",
+              "recordedAt": "2026-10-16T09:20:00+02:00",
+              "sourceOrderId": "ERP-PED-1009",
+              "accountId": "account-009",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:20:00+02:00",
+                "eventId": "snapshot-batch-009",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-010",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-010",
+            "accountName": "Delta Health",
+            "sourceOrderId": "ERP-PED-1010",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:40:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:40:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-010",
+              "recordedAt": "2026-10-16T09:40:00+02:00",
+              "sourceOrderId": "ERP-PED-1010",
+              "accountId": "account-010",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:40:00+02:00",
+                "eventId": "snapshot-batch-010",
+                "type": "batch.snapshot"
+              }
+            ]
+          }
+        ],
+        "vehicles": [
+          {
+            "id": "truck-01",
+            "name": "Camión 01",
+            "plate": "AT-101",
+            "driverName": "Felipe Martín",
+            "cargoBatchId": "batch-007",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-004",
+                "accountId": "account-004",
+                "name": "Lumen Labs"
+              },
+              "startedAt": "2026-10-16T08:00:00+02:00",
+              "durationMinutes": 180,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-004",
+              "accountId": "account-004",
+              "name": "Lumen Labs"
+            }
+          },
+          {
+            "id": "truck-02",
+            "name": "Camión 02",
+            "plate": "AT-102",
+            "driverName": "Sara Costa",
+            "cargoBatchId": "batch-008",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-007",
+                "accountId": "account-007",
+                "name": "Marea Foods"
+              },
+              "startedAt": "2026-10-16T08:45:00+02:00",
+              "durationMinutes": 150,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-007",
+              "accountId": "account-007",
+              "name": "Marea Foods"
+            }
+          },
+          {
+            "id": "truck-03",
+            "name": "Camión 03",
+            "plate": "AT-103",
+            "driverName": "Pablo Ríos",
+            "cargoBatchId": null,
+            "capacity": 200,
+            "status": "at_customer",
+            "location": "customer",
+            "updatedAt": "2026-10-16T08:19:00.000Z",
+            "route": null,
+            "lastCustomer": {
+              "id": "account-001",
+              "accountId": "account-001",
+              "name": "Norte Studio"
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": "snapshot-batch-009",
+            "entityId": "batch-009",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:20:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-010",
+            "entityId": "batch-010",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:40:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-001",
+            "entityId": "batch-001",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-002",
+            "entityId": "batch-002",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-003",
+            "entityId": "batch-003",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "packing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-004",
+            "entityId": "batch-004",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-005",
+            "entityId": "batch-005",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-006",
+            "entityId": "batch-006",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-007",
+            "entityId": "batch-007",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "snapshot-batch-008",
+            "entityId": "batch-008",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "industry-demo-1-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "packing",
+              "fromStageId": "manufacturing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:16:00.000Z"
+          },
+          {
+            "id": "industry-demo-2-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "warehouse",
+              "fromStageId": "packing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:17:00.000Z"
+          },
+          {
+            "id": "industry-demo-3-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "transit",
+              "fromStageId": "warehouse",
+              "truckId": "truck-03"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:18:00.000Z"
+          },
+          {
+            "id": "industry-demo-4-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "delivered",
+              "fromStageId": "transit"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:19:00.000Z"
+          }
+        ],
+        "appliedEventIds": [
+          "snapshot-batch-001",
+          "snapshot-batch-002",
+          "snapshot-batch-003",
+          "snapshot-batch-004",
+          "snapshot-batch-005",
+          "snapshot-batch-006",
+          "snapshot-batch-007",
+          "snapshot-batch-008",
+          "snapshot-batch-009",
+          "snapshot-batch-010",
+          "industry-demo-1-batch.stage_changed-batch-001",
+          "industry-demo-2-batch.stage_changed-batch-001",
+          "industry-demo-3-batch.stage_changed-batch-001",
+          "industry-demo-4-batch.stage_changed-batch-001"
+        ],
+        "now": "2026-10-16T08:19:00.000Z",
+        "source": {
+          "type": "simulated",
+          "system": "atlas-industry-demo",
+          "name": "ERP industrial simulado",
+          "description": "Lotes y entregas ficticios; independientes de las oportunidades comerciales",
+          "recordedAt": "2026-10-16T10:15:00+02:00"
+        },
+        "coverage": {
+          "batchesComplete": true,
+          "productsComplete": true,
+          "vehiclesComplete": true,
+          "totalUnits": 1320,
+          "productTotals": {
+            "product-kit-atlas": 1320
+          },
+          "unit": "unidades",
+          "from": "2026-10-16T00:00:00+02:00",
+          "to": "2026-10-16T08:19:00.000Z",
+          "scope": "Lotes registrados de Kit Atlas; no incluye materias primas"
+        }
+      },
+      "liveReturn": {
+        "stages": [
+          {
+            "id": "manufacturing",
+            "name": "Fabricación",
+            "color": "#f28b26",
+            "order": 0
+          },
+          {
+            "id": "packing",
+            "name": "Empacado",
+            "color": "#efbb26",
+            "order": 1
+          },
+          {
+            "id": "warehouse",
+            "name": "Almacén",
+            "color": "#2496d8",
+            "order": 2
+          },
+          {
+            "id": "transit",
+            "name": "En transporte",
+            "color": "#9863df",
+            "order": 3
+          },
+          {
+            "id": "delivered",
+            "name": "Entregado",
+            "color": "#24b66b",
+            "order": 4
+          }
+        ],
+        "products": [
+          {
+            "id": "product-kit-atlas",
+            "sku": "KIT-ATLAS",
+            "name": "Kit Atlas",
+            "unit": "unidades"
+          }
+        ],
+        "batches": [
+          {
+            "id": "batch-001",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "delivered",
+            "accountId": "account-001",
+            "accountName": "Norte Studio",
+            "sourceOrderId": "ERP-PED-1001",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T08:19:00.000Z",
+            "stageEnteredAt": "2026-10-16T08:19:00.000Z",
+            "delivery": {
+              "id": "delivery-industry-demo-4-batch.stage_changed-batch-001",
+              "recordedAt": "2026-10-16T08:19:00.000Z",
+              "sourceOrderId": "ERP-PED-1001",
+              "accountId": "account-001",
+              "quantity": 120,
+              "source": "atlas-industry-demo",
+              "truckId": "truck-03"
+            },
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-001",
+                "type": "batch.snapshot"
+              },
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T08:16:00.000Z",
+                "eventId": "industry-demo-1-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T08:17:00.000Z",
+                "eventId": "industry-demo-2-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T08:18:00.000Z",
+                "eventId": "industry-demo-3-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T08:19:00.000Z",
+                "eventId": "industry-demo-4-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              }
+            ]
+          },
+          {
+            "id": "batch-002",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "manufacturing",
+            "accountId": "account-005",
+            "accountName": "Casa Aurora",
+            "sourceOrderId": "ERP-PED-1002",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-002",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-003",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "packing",
+            "accountId": "account-002",
+            "accountName": "Oliva Hotels",
+            "sourceOrderId": "ERP-PED-1003",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-003",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-004",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-003",
+            "accountName": "Brisa Market",
+            "sourceOrderId": "ERP-PED-1004",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-004",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-005",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-006",
+            "accountName": "Taller Forma",
+            "sourceOrderId": "ERP-PED-1005",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-005",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-006",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-008",
+            "accountName": "Terra Supply",
+            "sourceOrderId": "ERP-PED-1006",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-006",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-007",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-004",
+            "accountName": "Lumen Labs",
+            "sourceOrderId": "ERP-PED-1007",
+            "assignedTruckId": "truck-01",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-007",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-008",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-007",
+            "accountName": "Marea Foods",
+            "sourceOrderId": "ERP-PED-1008",
+            "assignedTruckId": "truck-02",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-008",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-009",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-009",
+            "accountName": "Roca Design",
+            "sourceOrderId": "ERP-PED-1009",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:20:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:20:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-009",
+              "recordedAt": "2026-10-16T09:20:00+02:00",
+              "sourceOrderId": "ERP-PED-1009",
+              "accountId": "account-009",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:20:00+02:00",
+                "eventId": "snapshot-batch-009",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-010",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-010",
+            "accountName": "Delta Health",
+            "sourceOrderId": "ERP-PED-1010",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:40:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:40:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-010",
+              "recordedAt": "2026-10-16T09:40:00+02:00",
+              "sourceOrderId": "ERP-PED-1010",
+              "accountId": "account-010",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:40:00+02:00",
+                "eventId": "snapshot-batch-010",
+                "type": "batch.snapshot"
+              }
+            ]
+          }
+        ],
+        "vehicles": [
+          {
+            "id": "truck-01",
+            "name": "Camión 01",
+            "plate": "AT-101",
+            "driverName": "Felipe Martín",
+            "cargoBatchId": "batch-007",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-004",
+                "accountId": "account-004",
+                "name": "Lumen Labs"
+              },
+              "startedAt": "2026-10-16T08:00:00+02:00",
+              "durationMinutes": 180,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-004",
+              "accountId": "account-004",
+              "name": "Lumen Labs"
+            }
+          },
+          {
+            "id": "truck-02",
+            "name": "Camión 02",
+            "plate": "AT-102",
+            "driverName": "Sara Costa",
+            "cargoBatchId": "batch-008",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-007",
+                "accountId": "account-007",
+                "name": "Marea Foods"
+              },
+              "startedAt": "2026-10-16T08:45:00+02:00",
+              "durationMinutes": 150,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-007",
+              "accountId": "account-007",
+              "name": "Marea Foods"
+            }
+          },
+          {
+            "id": "truck-03",
+            "name": "Camión 03",
+            "plate": "AT-103",
+            "driverName": "Pablo Ríos",
+            "cargoBatchId": null,
+            "capacity": 200,
+            "status": "returning",
+            "location": "route",
+            "updatedAt": "2026-10-16T08:20:00.000Z",
+            "route": {
+              "origin": {
+                "id": "account-001",
+                "accountId": "account-001",
+                "name": "Norte Studio"
+              },
+              "destination": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "startedAt": "2026-10-16T08:20:00.000Z",
+              "durationMinutes": 180,
+              "estimateBasis": "Duración prevista de vuelta en vacío; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-001",
+              "accountId": "account-001",
+              "name": "Norte Studio"
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": "snapshot-batch-009",
+            "entityId": "batch-009",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:20:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-010",
+            "entityId": "batch-010",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:40:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-001",
+            "entityId": "batch-001",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-002",
+            "entityId": "batch-002",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-003",
+            "entityId": "batch-003",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "packing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-004",
+            "entityId": "batch-004",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-005",
+            "entityId": "batch-005",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-006",
+            "entityId": "batch-006",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-007",
+            "entityId": "batch-007",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "snapshot-batch-008",
+            "entityId": "batch-008",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "industry-demo-1-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "packing",
+              "fromStageId": "manufacturing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:16:00.000Z"
+          },
+          {
+            "id": "industry-demo-2-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "warehouse",
+              "fromStageId": "packing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:17:00.000Z"
+          },
+          {
+            "id": "industry-demo-3-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "transit",
+              "fromStageId": "warehouse",
+              "truckId": "truck-03"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:18:00.000Z"
+          },
+          {
+            "id": "industry-demo-4-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "delivered",
+              "fromStageId": "transit"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:19:00.000Z"
+          },
+          {
+            "id": "industry-demo-5-vehicle.return_started-truck-03",
+            "type": "vehicle.return_started",
+            "entityId": "truck-03",
+            "payload": {},
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:20:00.000Z"
+          }
+        ],
+        "appliedEventIds": [
+          "snapshot-batch-001",
+          "snapshot-batch-002",
+          "snapshot-batch-003",
+          "snapshot-batch-004",
+          "snapshot-batch-005",
+          "snapshot-batch-006",
+          "snapshot-batch-007",
+          "snapshot-batch-008",
+          "snapshot-batch-009",
+          "snapshot-batch-010",
+          "industry-demo-1-batch.stage_changed-batch-001",
+          "industry-demo-2-batch.stage_changed-batch-001",
+          "industry-demo-3-batch.stage_changed-batch-001",
+          "industry-demo-4-batch.stage_changed-batch-001",
+          "industry-demo-5-vehicle.return_started-truck-03"
+        ],
+        "now": "2026-10-16T08:20:00.000Z",
+        "source": {
+          "type": "simulated",
+          "system": "atlas-industry-demo",
+          "name": "ERP industrial simulado",
+          "description": "Lotes y entregas ficticios; independientes de las oportunidades comerciales",
+          "recordedAt": "2026-10-16T10:15:00+02:00"
+        },
+        "coverage": {
+          "batchesComplete": true,
+          "productsComplete": true,
+          "vehiclesComplete": true,
+          "totalUnits": 1320,
+          "productTotals": {
+            "product-kit-atlas": 1320
+          },
+          "unit": "unidades",
+          "from": "2026-10-16T00:00:00+02:00",
+          "to": "2026-10-16T08:20:00.000Z",
+          "scope": "Lotes registrados de Kit Atlas; no incluye materias primas"
+        }
+      },
+      "beforeArrive": {
+        "stages": [
+          {
+            "id": "manufacturing",
+            "name": "Fabricación",
+            "color": "#f28b26",
+            "order": 0
+          },
+          {
+            "id": "packing",
+            "name": "Empacado",
+            "color": "#efbb26",
+            "order": 1
+          },
+          {
+            "id": "warehouse",
+            "name": "Almacén",
+            "color": "#2496d8",
+            "order": 2
+          },
+          {
+            "id": "transit",
+            "name": "En transporte",
+            "color": "#9863df",
+            "order": 3
+          },
+          {
+            "id": "delivered",
+            "name": "Entregado",
+            "color": "#24b66b",
+            "order": 4
+          }
+        ],
+        "products": [
+          {
+            "id": "product-kit-atlas",
+            "sku": "KIT-ATLAS",
+            "name": "Kit Atlas",
+            "unit": "unidades"
+          }
+        ],
+        "batches": [
+          {
+            "id": "batch-001",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "delivered",
+            "accountId": "account-001",
+            "accountName": "Norte Studio",
+            "sourceOrderId": "ERP-PED-1001",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T08:19:00.000Z",
+            "stageEnteredAt": "2026-10-16T08:19:00.000Z",
+            "delivery": {
+              "id": "delivery-industry-demo-4-batch.stage_changed-batch-001",
+              "recordedAt": "2026-10-16T08:19:00.000Z",
+              "sourceOrderId": "ERP-PED-1001",
+              "accountId": "account-001",
+              "quantity": 120,
+              "source": "atlas-industry-demo",
+              "truckId": "truck-03"
+            },
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-001",
+                "type": "batch.snapshot"
+              },
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T08:16:00.000Z",
+                "eventId": "industry-demo-1-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T08:17:00.000Z",
+                "eventId": "industry-demo-2-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T08:18:00.000Z",
+                "eventId": "industry-demo-3-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T08:19:00.000Z",
+                "eventId": "industry-demo-4-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              }
+            ]
+          },
+          {
+            "id": "batch-002",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "manufacturing",
+            "accountId": "account-005",
+            "accountName": "Casa Aurora",
+            "sourceOrderId": "ERP-PED-1002",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-002",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-003",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "packing",
+            "accountId": "account-002",
+            "accountName": "Oliva Hotels",
+            "sourceOrderId": "ERP-PED-1003",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-003",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-004",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-003",
+            "accountName": "Brisa Market",
+            "sourceOrderId": "ERP-PED-1004",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-004",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-005",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-006",
+            "accountName": "Taller Forma",
+            "sourceOrderId": "ERP-PED-1005",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-005",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-006",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-008",
+            "accountName": "Terra Supply",
+            "sourceOrderId": "ERP-PED-1006",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-006",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-007",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-004",
+            "accountName": "Lumen Labs",
+            "sourceOrderId": "ERP-PED-1007",
+            "assignedTruckId": "truck-01",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-007",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-008",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-007",
+            "accountName": "Marea Foods",
+            "sourceOrderId": "ERP-PED-1008",
+            "assignedTruckId": "truck-02",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-008",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-009",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-009",
+            "accountName": "Roca Design",
+            "sourceOrderId": "ERP-PED-1009",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:20:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:20:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-009",
+              "recordedAt": "2026-10-16T09:20:00+02:00",
+              "sourceOrderId": "ERP-PED-1009",
+              "accountId": "account-009",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:20:00+02:00",
+                "eventId": "snapshot-batch-009",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-010",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-010",
+            "accountName": "Delta Health",
+            "sourceOrderId": "ERP-PED-1010",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:40:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:40:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-010",
+              "recordedAt": "2026-10-16T09:40:00+02:00",
+              "sourceOrderId": "ERP-PED-1010",
+              "accountId": "account-010",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:40:00+02:00",
+                "eventId": "snapshot-batch-010",
+                "type": "batch.snapshot"
+              }
+            ]
+          }
+        ],
+        "vehicles": [
+          {
+            "id": "truck-01",
+            "name": "Camión 01",
+            "plate": "AT-101",
+            "driverName": "Felipe Martín",
+            "cargoBatchId": "batch-007",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-004",
+                "accountId": "account-004",
+                "name": "Lumen Labs"
+              },
+              "startedAt": "2026-10-16T08:00:00+02:00",
+              "durationMinutes": 180,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-004",
+              "accountId": "account-004",
+              "name": "Lumen Labs"
+            }
+          },
+          {
+            "id": "truck-02",
+            "name": "Camión 02",
+            "plate": "AT-102",
+            "driverName": "Sara Costa",
+            "cargoBatchId": "batch-008",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-007",
+                "accountId": "account-007",
+                "name": "Marea Foods"
+              },
+              "startedAt": "2026-10-16T08:45:00+02:00",
+              "durationMinutes": 150,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-007",
+              "accountId": "account-007",
+              "name": "Marea Foods"
+            }
+          },
+          {
+            "id": "truck-03",
+            "name": "Camión 03",
+            "plate": "AT-103",
+            "driverName": "Pablo Ríos",
+            "cargoBatchId": null,
+            "capacity": 200,
+            "status": "returning",
+            "location": "route",
+            "updatedAt": "2026-10-16T08:20:00.000Z",
+            "route": {
+              "origin": {
+                "id": "account-001",
+                "accountId": "account-001",
+                "name": "Norte Studio"
+              },
+              "destination": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "startedAt": "2026-10-16T08:20:00.000Z",
+              "durationMinutes": 180,
+              "estimateBasis": "Duración prevista de vuelta en vacío; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-001",
+              "accountId": "account-001",
+              "name": "Norte Studio"
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": "snapshot-batch-009",
+            "entityId": "batch-009",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:20:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-010",
+            "entityId": "batch-010",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:40:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-001",
+            "entityId": "batch-001",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-002",
+            "entityId": "batch-002",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-003",
+            "entityId": "batch-003",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "packing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-004",
+            "entityId": "batch-004",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-005",
+            "entityId": "batch-005",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-006",
+            "entityId": "batch-006",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-007",
+            "entityId": "batch-007",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "snapshot-batch-008",
+            "entityId": "batch-008",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "industry-demo-1-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "packing",
+              "fromStageId": "manufacturing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:16:00.000Z"
+          },
+          {
+            "id": "industry-demo-2-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "warehouse",
+              "fromStageId": "packing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:17:00.000Z"
+          },
+          {
+            "id": "industry-demo-3-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "transit",
+              "fromStageId": "warehouse",
+              "truckId": "truck-03"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:18:00.000Z"
+          },
+          {
+            "id": "industry-demo-4-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "delivered",
+              "fromStageId": "transit"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:19:00.000Z"
+          },
+          {
+            "id": "industry-demo-5-vehicle.return_started-truck-03",
+            "type": "vehicle.return_started",
+            "entityId": "truck-03",
+            "payload": {},
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:20:00.000Z"
+          }
+        ],
+        "appliedEventIds": [
+          "snapshot-batch-001",
+          "snapshot-batch-002",
+          "snapshot-batch-003",
+          "snapshot-batch-004",
+          "snapshot-batch-005",
+          "snapshot-batch-006",
+          "snapshot-batch-007",
+          "snapshot-batch-008",
+          "snapshot-batch-009",
+          "snapshot-batch-010",
+          "industry-demo-1-batch.stage_changed-batch-001",
+          "industry-demo-2-batch.stage_changed-batch-001",
+          "industry-demo-3-batch.stage_changed-batch-001",
+          "industry-demo-4-batch.stage_changed-batch-001",
+          "industry-demo-5-vehicle.return_started-truck-03"
+        ],
+        "now": "2026-10-16T08:20:00.000Z",
+        "source": {
+          "type": "simulated",
+          "system": "atlas-industry-demo",
+          "name": "ERP industrial simulado",
+          "description": "Lotes y entregas ficticios; independientes de las oportunidades comerciales",
+          "recordedAt": "2026-10-16T10:15:00+02:00"
+        },
+        "coverage": {
+          "batchesComplete": true,
+          "productsComplete": true,
+          "vehiclesComplete": true,
+          "totalUnits": 1320,
+          "productTotals": {
+            "product-kit-atlas": 1320
+          },
+          "unit": "unidades",
+          "from": "2026-10-16T00:00:00+02:00",
+          "to": "2026-10-16T08:20:00.000Z",
+          "scope": "Lotes registrados de Kit Atlas; no incluye materias primas"
+        }
+      },
+      "afterArrive": {
+        "stages": [
+          {
+            "id": "manufacturing",
+            "name": "Fabricación",
+            "color": "#f28b26",
+            "order": 0
+          },
+          {
+            "id": "packing",
+            "name": "Empacado",
+            "color": "#efbb26",
+            "order": 1
+          },
+          {
+            "id": "warehouse",
+            "name": "Almacén",
+            "color": "#2496d8",
+            "order": 2
+          },
+          {
+            "id": "transit",
+            "name": "En transporte",
+            "color": "#9863df",
+            "order": 3
+          },
+          {
+            "id": "delivered",
+            "name": "Entregado",
+            "color": "#24b66b",
+            "order": 4
+          }
+        ],
+        "products": [
+          {
+            "id": "product-kit-atlas",
+            "sku": "KIT-ATLAS",
+            "name": "Kit Atlas",
+            "unit": "unidades"
+          }
+        ],
+        "batches": [
+          {
+            "id": "batch-001",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "delivered",
+            "accountId": "account-001",
+            "accountName": "Norte Studio",
+            "sourceOrderId": "ERP-PED-1001",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T08:19:00.000Z",
+            "stageEnteredAt": "2026-10-16T08:19:00.000Z",
+            "delivery": {
+              "id": "delivery-industry-demo-4-batch.stage_changed-batch-001",
+              "recordedAt": "2026-10-16T08:19:00.000Z",
+              "sourceOrderId": "ERP-PED-1001",
+              "accountId": "account-001",
+              "quantity": 120,
+              "source": "atlas-industry-demo",
+              "truckId": "truck-03"
+            },
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-001",
+                "type": "batch.snapshot"
+              },
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T08:16:00.000Z",
+                "eventId": "industry-demo-1-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T08:17:00.000Z",
+                "eventId": "industry-demo-2-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T08:18:00.000Z",
+                "eventId": "industry-demo-3-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T08:19:00.000Z",
+                "eventId": "industry-demo-4-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              }
+            ]
+          },
+          {
+            "id": "batch-002",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "manufacturing",
+            "accountId": "account-005",
+            "accountName": "Casa Aurora",
+            "sourceOrderId": "ERP-PED-1002",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-002",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-003",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "packing",
+            "accountId": "account-002",
+            "accountName": "Oliva Hotels",
+            "sourceOrderId": "ERP-PED-1003",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-003",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-004",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-003",
+            "accountName": "Brisa Market",
+            "sourceOrderId": "ERP-PED-1004",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-004",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-005",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-006",
+            "accountName": "Taller Forma",
+            "sourceOrderId": "ERP-PED-1005",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-005",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-006",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-008",
+            "accountName": "Terra Supply",
+            "sourceOrderId": "ERP-PED-1006",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-006",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-007",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-004",
+            "accountName": "Lumen Labs",
+            "sourceOrderId": "ERP-PED-1007",
+            "assignedTruckId": "truck-01",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-007",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-008",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-007",
+            "accountName": "Marea Foods",
+            "sourceOrderId": "ERP-PED-1008",
+            "assignedTruckId": "truck-02",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-008",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-009",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-009",
+            "accountName": "Roca Design",
+            "sourceOrderId": "ERP-PED-1009",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:20:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:20:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-009",
+              "recordedAt": "2026-10-16T09:20:00+02:00",
+              "sourceOrderId": "ERP-PED-1009",
+              "accountId": "account-009",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:20:00+02:00",
+                "eventId": "snapshot-batch-009",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-010",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-010",
+            "accountName": "Delta Health",
+            "sourceOrderId": "ERP-PED-1010",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:40:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:40:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-010",
+              "recordedAt": "2026-10-16T09:40:00+02:00",
+              "sourceOrderId": "ERP-PED-1010",
+              "accountId": "account-010",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:40:00+02:00",
+                "eventId": "snapshot-batch-010",
+                "type": "batch.snapshot"
+              }
+            ]
+          }
+        ],
+        "vehicles": [
+          {
+            "id": "truck-01",
+            "name": "Camión 01",
+            "plate": "AT-101",
+            "driverName": "Felipe Martín",
+            "cargoBatchId": "batch-007",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-004",
+                "accountId": "account-004",
+                "name": "Lumen Labs"
+              },
+              "startedAt": "2026-10-16T08:00:00+02:00",
+              "durationMinutes": 180,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-004",
+              "accountId": "account-004",
+              "name": "Lumen Labs"
+            }
+          },
+          {
+            "id": "truck-02",
+            "name": "Camión 02",
+            "plate": "AT-102",
+            "driverName": "Sara Costa",
+            "cargoBatchId": "batch-008",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-007",
+                "accountId": "account-007",
+                "name": "Marea Foods"
+              },
+              "startedAt": "2026-10-16T08:45:00+02:00",
+              "durationMinutes": 150,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-007",
+              "accountId": "account-007",
+              "name": "Marea Foods"
+            }
+          },
+          {
+            "id": "truck-03",
+            "name": "Camión 03",
+            "plate": "AT-103",
+            "driverName": "Pablo Ríos",
+            "cargoBatchId": null,
+            "capacity": 200,
+            "status": "returning",
+            "location": "route",
+            "updatedAt": "2026-10-16T08:20:00.000Z",
+            "route": {
+              "origin": {
+                "id": "account-001",
+                "accountId": "account-001",
+                "name": "Norte Studio"
+              },
+              "destination": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "startedAt": "2026-10-16T08:20:00.000Z",
+              "durationMinutes": 180,
+              "estimateBasis": "Duración prevista de vuelta en vacío; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-001",
+              "accountId": "account-001",
+              "name": "Norte Studio"
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": "snapshot-batch-009",
+            "entityId": "batch-009",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:20:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-010",
+            "entityId": "batch-010",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:40:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-001",
+            "entityId": "batch-001",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-002",
+            "entityId": "batch-002",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-003",
+            "entityId": "batch-003",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "packing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-004",
+            "entityId": "batch-004",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-005",
+            "entityId": "batch-005",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-006",
+            "entityId": "batch-006",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-007",
+            "entityId": "batch-007",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "snapshot-batch-008",
+            "entityId": "batch-008",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "industry-demo-1-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "packing",
+              "fromStageId": "manufacturing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:16:00.000Z"
+          },
+          {
+            "id": "industry-demo-2-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "warehouse",
+              "fromStageId": "packing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:17:00.000Z"
+          },
+          {
+            "id": "industry-demo-3-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "transit",
+              "fromStageId": "warehouse",
+              "truckId": "truck-03"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:18:00.000Z"
+          },
+          {
+            "id": "industry-demo-4-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "delivered",
+              "fromStageId": "transit"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:19:00.000Z"
+          },
+          {
+            "id": "industry-demo-5-vehicle.return_started-truck-03",
+            "type": "vehicle.return_started",
+            "entityId": "truck-03",
+            "payload": {},
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:20:00.000Z"
+          }
+        ],
+        "appliedEventIds": [
+          "snapshot-batch-001",
+          "snapshot-batch-002",
+          "snapshot-batch-003",
+          "snapshot-batch-004",
+          "snapshot-batch-005",
+          "snapshot-batch-006",
+          "snapshot-batch-007",
+          "snapshot-batch-008",
+          "snapshot-batch-009",
+          "snapshot-batch-010",
+          "industry-demo-1-batch.stage_changed-batch-001",
+          "industry-demo-2-batch.stage_changed-batch-001",
+          "industry-demo-3-batch.stage_changed-batch-001",
+          "industry-demo-4-batch.stage_changed-batch-001",
+          "industry-demo-5-vehicle.return_started-truck-03"
+        ],
+        "now": "2026-10-16T08:20:00.000Z",
+        "source": {
+          "type": "simulated",
+          "system": "atlas-industry-demo",
+          "name": "ERP industrial simulado",
+          "description": "Lotes y entregas ficticios; independientes de las oportunidades comerciales",
+          "recordedAt": "2026-10-16T10:15:00+02:00"
+        },
+        "coverage": {
+          "batchesComplete": true,
+          "productsComplete": true,
+          "vehiclesComplete": true,
+          "totalUnits": 1320,
+          "productTotals": {
+            "product-kit-atlas": 1320
+          },
+          "unit": "unidades",
+          "from": "2026-10-16T00:00:00+02:00",
+          "to": "2026-10-16T08:20:00.000Z",
+          "scope": "Lotes registrados de Kit Atlas; no incluye materias primas"
+        }
+      },
+      "liveArrival": {
+        "stages": [
+          {
+            "id": "manufacturing",
+            "name": "Fabricación",
+            "color": "#f28b26",
+            "order": 0
+          },
+          {
+            "id": "packing",
+            "name": "Empacado",
+            "color": "#efbb26",
+            "order": 1
+          },
+          {
+            "id": "warehouse",
+            "name": "Almacén",
+            "color": "#2496d8",
+            "order": 2
+          },
+          {
+            "id": "transit",
+            "name": "En transporte",
+            "color": "#9863df",
+            "order": 3
+          },
+          {
+            "id": "delivered",
+            "name": "Entregado",
+            "color": "#24b66b",
+            "order": 4
+          }
+        ],
+        "products": [
+          {
+            "id": "product-kit-atlas",
+            "sku": "KIT-ATLAS",
+            "name": "Kit Atlas",
+            "unit": "unidades"
+          }
+        ],
+        "batches": [
+          {
+            "id": "batch-001",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "delivered",
+            "accountId": "account-001",
+            "accountName": "Norte Studio",
+            "sourceOrderId": "ERP-PED-1001",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T08:19:00.000Z",
+            "stageEnteredAt": "2026-10-16T08:19:00.000Z",
+            "delivery": {
+              "id": "delivery-industry-demo-4-batch.stage_changed-batch-001",
+              "recordedAt": "2026-10-16T08:19:00.000Z",
+              "sourceOrderId": "ERP-PED-1001",
+              "accountId": "account-001",
+              "quantity": 120,
+              "source": "atlas-industry-demo",
+              "truckId": "truck-03"
+            },
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-001",
+                "type": "batch.snapshot"
+              },
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T08:16:00.000Z",
+                "eventId": "industry-demo-1-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T08:17:00.000Z",
+                "eventId": "industry-demo-2-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T08:18:00.000Z",
+                "eventId": "industry-demo-3-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              },
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T08:19:00.000Z",
+                "eventId": "industry-demo-4-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed"
+              }
+            ]
+          },
+          {
+            "id": "batch-002",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "manufacturing",
+            "accountId": "account-005",
+            "accountName": "Casa Aurora",
+            "sourceOrderId": "ERP-PED-1002",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "manufacturing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-002",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-003",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 120,
+            "stageId": "packing",
+            "accountId": "account-002",
+            "accountName": "Oliva Hotels",
+            "sourceOrderId": "ERP-PED-1003",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "packing",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-003",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-004",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-003",
+            "accountName": "Brisa Market",
+            "sourceOrderId": "ERP-PED-1004",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-004",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-005",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-006",
+            "accountName": "Taller Forma",
+            "sourceOrderId": "ERP-PED-1005",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-005",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-006",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "warehouse",
+            "accountId": "account-008",
+            "accountName": "Terra Supply",
+            "sourceOrderId": "ERP-PED-1006",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "warehouse",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-006",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-007",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-004",
+            "accountName": "Lumen Labs",
+            "sourceOrderId": "ERP-PED-1007",
+            "assignedTruckId": "truck-01",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-007",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-008",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 80,
+            "stageId": "transit",
+            "accountId": "account-007",
+            "accountName": "Marea Foods",
+            "sourceOrderId": "ERP-PED-1008",
+            "assignedTruckId": "truck-02",
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+            "delivery": null,
+            "history": [
+              {
+                "stageId": "transit",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "eventId": "snapshot-batch-008",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-009",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-009",
+            "accountName": "Roca Design",
+            "sourceOrderId": "ERP-PED-1009",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:20:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:20:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-009",
+              "recordedAt": "2026-10-16T09:20:00+02:00",
+              "sourceOrderId": "ERP-PED-1009",
+              "accountId": "account-009",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:20:00+02:00",
+                "eventId": "snapshot-batch-009",
+                "type": "batch.snapshot"
+              }
+            ]
+          },
+          {
+            "id": "batch-010",
+            "productId": "product-kit-atlas",
+            "productName": "Kit Atlas",
+            "quantity": 160,
+            "stageId": "delivered",
+            "accountId": "account-010",
+            "accountName": "Delta Health",
+            "sourceOrderId": "ERP-PED-1010",
+            "assignedTruckId": null,
+            "createdAt": "2026-10-16T06:00:00+02:00",
+            "updatedAt": "2026-10-16T09:40:00+02:00",
+            "stageEnteredAt": "2026-10-16T09:40:00+02:00",
+            "delivery": {
+              "id": "delivery-initial-batch-010",
+              "recordedAt": "2026-10-16T09:40:00+02:00",
+              "sourceOrderId": "ERP-PED-1010",
+              "accountId": "account-010",
+              "quantity": 160,
+              "source": "atlas-industry-demo"
+            },
+            "history": [
+              {
+                "stageId": "delivered",
+                "timestamp": "2026-10-16T09:40:00+02:00",
+                "eventId": "snapshot-batch-010",
+                "type": "batch.snapshot"
+              }
+            ]
+          }
+        ],
+        "vehicles": [
+          {
+            "id": "truck-01",
+            "name": "Camión 01",
+            "plate": "AT-101",
+            "driverName": "Felipe Martín",
+            "cargoBatchId": "batch-007",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-004",
+                "accountId": "account-004",
+                "name": "Lumen Labs"
+              },
+              "startedAt": "2026-10-16T08:00:00+02:00",
+              "durationMinutes": 180,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-004",
+              "accountId": "account-004",
+              "name": "Lumen Labs"
+            }
+          },
+          {
+            "id": "truck-02",
+            "name": "Camión 02",
+            "plate": "AT-102",
+            "driverName": "Sara Costa",
+            "cargoBatchId": "batch-008",
+            "capacity": 200,
+            "status": "outbound",
+            "location": "route",
+            "updatedAt": "2026-10-16T10:15:00+02:00",
+            "route": {
+              "origin": {
+                "id": "atlas-warehouse",
+                "name": "Almacén Atlas"
+              },
+              "destination": {
+                "id": "account-007",
+                "accountId": "account-007",
+                "name": "Marea Foods"
+              },
+              "startedAt": "2026-10-16T08:45:00+02:00",
+              "durationMinutes": 150,
+              "estimateBasis": "Duración prevista del ERP; sin GPS"
+            },
+            "lastCustomer": {
+              "id": "account-007",
+              "accountId": "account-007",
+              "name": "Marea Foods"
+            }
+          },
+          {
+            "id": "truck-03",
+            "name": "Camión 03",
+            "plate": "AT-103",
+            "driverName": "Pablo Ríos",
+            "cargoBatchId": null,
+            "capacity": 200,
+            "status": "available",
+            "location": "warehouse",
+            "updatedAt": "2026-10-16T08:21:00.000Z",
+            "route": null,
+            "lastCustomer": {
+              "id": "account-001",
+              "accountId": "account-001",
+              "name": "Norte Studio"
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": "snapshot-batch-009",
+            "entityId": "batch-009",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:20:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-010",
+            "entityId": "batch-010",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T09:40:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "delivered",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-001",
+            "entityId": "batch-001",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-002",
+            "entityId": "batch-002",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "manufacturing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-003",
+            "entityId": "batch-003",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "packing",
+              "quantity": 120
+            }
+          },
+          {
+            "id": "snapshot-batch-004",
+            "entityId": "batch-004",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-005",
+            "entityId": "batch-005",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-006",
+            "entityId": "batch-006",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "warehouse",
+              "quantity": 160
+            }
+          },
+          {
+            "id": "snapshot-batch-007",
+            "entityId": "batch-007",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "snapshot-batch-008",
+            "entityId": "batch-008",
+            "type": "batch.snapshot",
+            "timestamp": "2026-10-16T10:15:00+02:00",
+            "source": "atlas-industry-demo",
+            "payload": {
+              "stageId": "transit",
+              "quantity": 80
+            }
+          },
+          {
+            "id": "industry-demo-1-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "packing",
+              "fromStageId": "manufacturing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:16:00.000Z"
+          },
+          {
+            "id": "industry-demo-2-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "warehouse",
+              "fromStageId": "packing"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:17:00.000Z"
+          },
+          {
+            "id": "industry-demo-3-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "transit",
+              "fromStageId": "warehouse",
+              "truckId": "truck-03"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:18:00.000Z"
+          },
+          {
+            "id": "industry-demo-4-batch.stage_changed-batch-001",
+            "type": "batch.stage_changed",
+            "entityId": "batch-001",
+            "payload": {
+              "stageId": "delivered",
+              "fromStageId": "transit"
+            },
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:19:00.000Z"
+          },
+          {
+            "id": "industry-demo-5-vehicle.return_started-truck-03",
+            "type": "vehicle.return_started",
+            "entityId": "truck-03",
+            "payload": {},
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:20:00.000Z"
+          },
+          {
+            "id": "industry-demo-6-vehicle.arrived-truck-03",
+            "type": "vehicle.arrived",
+            "entityId": "truck-03",
+            "payload": {},
+            "source": "atlas-industry-demo",
+            "timestamp": "2026-10-16T08:21:00.000Z"
+          }
+        ],
+        "appliedEventIds": [
+          "snapshot-batch-001",
+          "snapshot-batch-002",
+          "snapshot-batch-003",
+          "snapshot-batch-004",
+          "snapshot-batch-005",
+          "snapshot-batch-006",
+          "snapshot-batch-007",
+          "snapshot-batch-008",
+          "snapshot-batch-009",
+          "snapshot-batch-010",
+          "industry-demo-1-batch.stage_changed-batch-001",
+          "industry-demo-2-batch.stage_changed-batch-001",
+          "industry-demo-3-batch.stage_changed-batch-001",
+          "industry-demo-4-batch.stage_changed-batch-001",
+          "industry-demo-5-vehicle.return_started-truck-03",
+          "industry-demo-6-vehicle.arrived-truck-03"
+        ],
+        "now": "2026-10-16T08:21:00.000Z",
+        "source": {
+          "type": "simulated",
+          "system": "atlas-industry-demo",
+          "name": "ERP industrial simulado",
+          "description": "Lotes y entregas ficticios; independientes de las oportunidades comerciales",
+          "recordedAt": "2026-10-16T10:15:00+02:00"
+        },
+        "coverage": {
+          "batchesComplete": true,
+          "productsComplete": true,
+          "vehiclesComplete": true,
+          "totalUnits": 1320,
+          "productTotals": {
+            "product-kit-atlas": 1320
+          },
+          "unit": "unidades",
+          "from": "2026-10-16T00:00:00+02:00",
+          "to": "2026-10-16T08:21:00.000Z",
+          "scope": "Lotes registrados de Kit Atlas; no incluye materias primas"
+        }
+      }
+    },
+    {
+      "kind": "tv-resize-during-flight-keeps-current-viewport-aspect",
+      "from": {
+        "elapsed": 17.8659,
+        "nextAt": 33.865899999999996,
+        "pausedUntil": 0,
+        "enabled": true,
+        "running": true,
+        "paused": false,
+        "step": 1,
+        "district": "sales",
+        "sequence": [
+          "all",
+          "sales",
+          "all",
+          "communications",
+          "all",
+          "industry"
+        ],
+        "nextIn": 15.999999999999996,
+        "pausedFor": 0,
+        "transitionDuration": 7,
+        "holdDuration": 9
+      },
+      "rawBeforeBackingBufferSignal": [
+        {
+          "aspect": 1.44,
+          "expected": 0.46208530805687204,
+          "finite": true,
+          "cameraMoving": true
+        },
+        {
+          "aspect": 0.462085308056872,
+          "expected": 0.46208530805687204,
+          "finite": true,
+          "cameraMoving": true
+        },
+        {
+          "aspect": 0.462085308056872,
+          "expected": 0.46208530805687204,
+          "finite": true,
+          "cameraMoving": true
+        }
+      ],
+      "frames": [
+        {
+          "aspect": 0.462085308056872,
+          "expected": 0.46208530805687204,
+          "finite": true,
+          "cameraMoving": true
+        },
+        {
+          "aspect": 0.4620853080568719,
+          "expected": 0.46208530805687204,
+          "finite": true,
+          "cameraMoving": true
+        },
+        {
+          "aspect": 0.4620853080568719,
+          "expected": 0.46208530805687204,
+          "finite": true,
+          "cameraMoving": true
+        }
+      ]
+    },
+    {
+      "kind": "reduced-motion",
+      "reduced": {
+        "debug": {
+          "size": 1,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": {
+            "kind": "sale",
+            "eventId": "demo-0001-91",
+            "entityId": "deal-001",
+            "title": "¡Venta ganada!",
+            "name": "Nueva sede",
+            "detail": "Norte Studio",
+            "value": "1500 €",
+            "owner": "Ana Torres"
+          },
+          "queued": [],
+          "rememberedEvents": 1,
+          "rememberedClosures": 1,
+          "particleCount": 0,
+          "timerActive": false,
+          "paintPending": true,
+          "reducedMotion": true
+        },
+        "opacity": "1",
+        "particles": 0
+      },
+      "closed": {
+        "size": 0,
+        "capacity": 3,
+        "dropped": 0,
+        "disposed": false,
+        "visible": null,
+        "queued": [],
+        "rememberedEvents": 1,
+        "rememberedClosures": 1,
+        "particleCount": 0,
+        "timerActive": false,
+        "paintPending": false,
+        "reducedMotion": true
+      }
+    }
+  ],
+  "results": [
+    {
+      "name": "sale-card-visible-with-real-css-confetti-pose",
+      "passed": true
+    },
+    {
+      "name": "delivery-card-visible-with-real-css-confetti-pose",
+      "passed": true
+    },
+    {
+      "name": "reset-before-paint",
+      "passed": true
+    },
+    {
+      "name": "replay-keeps-truck-return-and-arrival-readonly",
+      "passed": true
+    },
+    {
+      "name": "tv-resize-during-flight-keeps-current-viewport-aspect",
+      "passed": true
+    },
+    {
+      "name": "reduced-motion",
+      "passed": true
+    }
+  ],
+  "captureRefreshReport": "celebration-pictures-validation.json",
+  "captureRefreshedAt": "2026-10-17T15:08:19.605Z"
+}

@@ -354,11 +354,15 @@ export function createArchitecture(scene) {
       model,
       baseHeight: dealHeight(spec.amount),
       refs: [],
+      spans: new Map(),
       accent: spec.accent || "#73a99a",
       visible: true,
       scaleY: 1,
       scaleXZ: 1,
       buildProgress: 1,
+      uploadedWorld: null,
+      uploadedAccent: null,
+      uploadedBuildProgress: null,
     };
     entities.set(spec.id, e);
     for (const part of model.parts) {
@@ -367,6 +371,9 @@ export function createArchitecture(scene) {
       const list = Array.isArray(bucket) ? bucket : bucket.entries;
       const index = list.length;
       list.push({ entity: e, part });
+      const span = e.spans.get(part.key);
+      if (span) span.count++;
+      else e.spans.set(part.key, { start: index, count: 1 });
       const localPosition = new THREE.Vector3(),
         localQuaternion = new THREE.Quaternion(),
         localScale = new THREE.Vector3();
@@ -396,7 +403,15 @@ export function createArchitecture(scene) {
       );
       mesh.name = `city-kit-${key}`;
       mesh.count = entries.length;
-      mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+      mesh.instanceMatrix
+        .setUsage(THREE.DynamicDrawUsage)
+        .onUpload(clearUploadedRanges);
+      mesh.instanceColor = new THREE.InstancedBufferAttribute(
+        new Float32Array(mesh.instanceMatrix.count * 3).fill(1),
+        3,
+      )
+        .setUsage(THREE.DynamicDrawUsage)
+        .onUpload(clearUploadedRanges);
       mesh.castShadow = !["glass", "metal", "leaf", "soil"].includes(key);
       mesh.receiveShadow = true;
       mesh.userData.isArchitecture = true;
@@ -412,14 +427,46 @@ export function createArchitecture(scene) {
     for (const e of entities.values()) updateEntity(e.id);
     for (const m of meshes) m.computeBoundingSphere();
   }
+  function clearUploadedRanges() {
+    // Initial WebGL bufferData also invokes this callback; Three only clears
+    // updateRanges itself on subsequent bufferSubData uploads.
+    this.clearUpdateRanges();
+  }
   const world = new THREE.Matrix4(),
-    p = new THREE.Vector3(),
     s = new THREE.Vector3(),
-    q = new THREE.Quaternion(),
     c = new THREE.Color(),
+    accentColor = new THREE.Color(),
     partMatrix = new THREE.Matrix4(),
     instanceMatrix = new THREE.Matrix4(),
     piecePosition = new THREE.Vector3();
+  function dirtyRange(attribute, start, count) {
+    // Three clears these ranges after an upload. Merge pending edits as well, so
+    // a paused renderer (or Node consumer) never accumulates a range per frame.
+    const ranges = attribute.updateRanges;
+    let index = 0,
+      end = start + count;
+    while (
+      index < ranges.length &&
+      ranges[index].start + ranges[index].count < start
+    )
+      index++;
+    if (index === ranges.length) attribute.addUpdateRange(start, count);
+    else if (end < ranges[index].start) {
+      attribute.addUpdateRange(start, count);
+      ranges.splice(index, 0, ranges.pop());
+    } else {
+      const range = ranges[index];
+      end = Math.max(end, range.start + range.count);
+      range.start = Math.min(start, range.start);
+      while (index + 1 < ranges.length && ranges[index + 1].start <= end) {
+        const next = ranges[index + 1];
+        end = Math.max(end, next.start + next.count);
+        ranges.splice(index + 1, 1);
+      }
+      range.count = end - range.start;
+    }
+    attribute.needsUpdate = true;
+  }
   function updateEntity(id, options = {}) {
     const e = entities.get(id);
     if (!e) return;
@@ -435,44 +482,72 @@ export function createArchitecture(scene) {
     e.group.updateMatrix();
     world.copy(e.group.matrix);
     if (!e.visible) world.scale(s.set(0, 0, 0));
+    const matricesChanged =
+        !e.uploadedWorld ||
+        !e.uploadedWorld.equals(world) ||
+        e.uploadedBuildProgress !== e.buildProgress,
+      initializeColors = !e.uploadedAccent;
+    accentColor.set(e.accent);
+    const accentChanged =
+      initializeColors || !e.uploadedAccent.equals(accentColor);
+    if (!matricesChanged && !accentChanged) return;
     for (const r of e.refs) {
+      if (!matricesChanged && !initializeColors && r.key !== "accent") continue;
       const b = buckets.get(r.key);
-      if (e.buildProgress >= 1) partMatrix.copy(r.part.matrix);
-      else {
-        // Pieces are lowered into place, bottom storeys first. Whole-building
-        // height and footprint remain unchanged throughout the work sequence.
-        const level = THREE.MathUtils.clamp(
-            r.localPosition.y / e.model.height,
-            0.02,
-            0.97,
-          ),
-          reveal =
-            e.buildProgress <= 0
-              ? 0
-              : THREE.MathUtils.clamp(
-                  (e.buildProgress - level + 0.055) / 0.055,
-                  0,
-                  1,
-                ),
-          smooth = reveal * reveal * (3 - 2 * reveal);
-        piecePosition.copy(r.localPosition);
-        piecePosition.y += (1 - smooth) * 1.35;
-        partMatrix.compose(
-          piecePosition,
-          r.localQuaternion,
-          reveal > 0 ? r.localScale : s.set(0, 0, 0),
+      if (matricesChanged) {
+        if (e.buildProgress >= 1) partMatrix.copy(r.part.matrix);
+        else {
+          // Pieces are lowered into place, bottom storeys first. Whole-building
+          // height and footprint remain unchanged throughout the work sequence.
+          const level = THREE.MathUtils.clamp(
+              r.localPosition.y / e.model.height,
+              0.02,
+              0.97,
+            ),
+            reveal =
+              e.buildProgress <= 0
+                ? 0
+                : THREE.MathUtils.clamp(
+                    (e.buildProgress - level + 0.055) / 0.055,
+                    0,
+                    1,
+                  ),
+            smooth = reveal * reveal * (3 - 2 * reveal);
+          piecePosition.copy(r.localPosition);
+          piecePosition.y += (1 - smooth) * 1.35;
+          partMatrix.compose(
+            piecePosition,
+            r.localQuaternion,
+            reveal > 0 ? r.localScale : s.set(0, 0, 0),
+          );
+        }
+        b.mesh.setMatrixAt(
+          r.index,
+          instanceMatrix.multiplyMatrices(world, partMatrix),
         );
       }
-      b.mesh.setMatrixAt(
-        r.index,
-        instanceMatrix.multiplyMatrices(world, partMatrix),
-      );
-      const col =
-        r.key === "accent" ? e.accent : r.part.color || palette[r.key];
-      b.mesh.setColorAt(r.index, c.set(col));
-      b.mesh.instanceMatrix.needsUpdate = true;
-      b.mesh.instanceColor.needsUpdate = true;
+      if (initializeColors || (accentChanged && r.key === "accent")) {
+        const color =
+          r.key === "accent"
+            ? accentColor
+            : c.set(r.part.color || palette[r.key]);
+        b.mesh.setColorAt(r.index, color);
+      }
     }
+    for (const [key, span] of e.spans) {
+      const mesh = buckets.get(key).mesh;
+      if (matricesChanged)
+        dirtyRange(mesh.instanceMatrix, span.start * 16, span.count * 16);
+      if (initializeColors || (accentChanged && key === "accent"))
+        dirtyRange(mesh.instanceColor, span.start * 3, span.count * 3);
+    }
+    if (matricesChanged) {
+      if (!e.uploadedWorld) e.uploadedWorld = new THREE.Matrix4();
+      e.uploadedWorld.copy(world);
+      e.uploadedBuildProgress = e.buildProgress;
+    }
+    if (!e.uploadedAccent) e.uploadedAccent = new THREE.Color();
+    e.uploadedAccent.copy(accentColor);
   }
   function entityId(hit) {
     return idByMesh.get(hit.object)?.[hit.instanceId];

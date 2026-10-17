@@ -1,0 +1,4619 @@
+{
+  "generatedAt": "2026-10-17T14:51:56.558Z",
+  "browser": "154.0.8037.57",
+  "gpu": "ANGLE SwiftShader",
+  "physicalPhone": false,
+  "sourceSha256": {
+    "src/city/app.js": "e614a5836d3a9aaa0012686e397db4492012a3e65674ad1a1e62a7c3a77e826e",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/celebrations.css": "a5f6482a84c3c0e53c1f15a0c6f5e33c62daf0a3779c379fe62c41c9f259a0f1",
+    "src/city/celebrations.js": "8f3ece92a8cd61890f88d98528497a61c67289ae767278be32ae54846951c616",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "121b0749de9dc3540e8328c29d5f6eaeedd825bdeac642b77946d7054611c34b",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020"
+  },
+  "errors": [],
+  "results": [
+    {
+      "name": "owner-labels-use-subpixel-poses-and-preserve-content-between-frames",
+      "passed": true,
+      "detail": {
+        "frames": [
+          {
+            "now": 5268.1,
+            "transform": "translate3d(450.09px, 272.284px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 6484.7,
+            "transform": "translate3d(429.425px, 287.868px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 6501.4,
+            "transform": "translate3d(429.08px, 288.204px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 7368,
+            "transform": "translate3d(411.172px, 301.652px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 8184.6,
+            "transform": "translate3d(425.846px, 310.305px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 9701.2,
+            "transform": "translate3d(433.308px, 306.897px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 10684.5,
+            "transform": "translate3d(433.308px, 306.929px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 11467.8,
+            "transform": "translate3d(433.308px, 306.929px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 12184.4,
+            "transform": "translate3d(433.308px, 306.929px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 12384.5,
+            "transform": "translate3d(433.308px, 306.929px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 13201.1,
+            "transform": "translate3d(433.308px, 306.929px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          },
+          {
+            "now": 14267.7,
+            "transform": "translate3d(433.308px, 306.929px, 0px) translate(-50%, -50%)",
+            "text": "AT",
+            "visible": true
+          }
+        ],
+        "contentMutations": 0,
+        "initialCounters": {
+          "contentBuilds": 14,
+          "measurements": 15,
+          "projectionFrames": 4,
+          "layoutPasses": 2,
+          "occlusionTests": 8,
+          "cachedCount": 15
+        },
+        "transition": "all",
+        "diagnostics": {
+          "renderer": "WebGL2",
+          "trafficRunning": true,
+          "mode": "explore",
+          "tvPresentation": false,
+          "tvTour": {
+            "elapsed": 13.766100000000002,
+            "nextAt": 0,
+            "pausedUntil": 0,
+            "enabled": false,
+            "running": false,
+            "paused": false,
+            "step": 0,
+            "district": "all",
+            "sequence": [
+              "all",
+              "sales",
+              "all",
+              "communications",
+              "all",
+              "industry"
+            ],
+            "nextIn": 0,
+            "pausedFor": 0,
+            "transitionDuration": 7,
+            "holdDuration": 9
+          },
+          "labels": {
+            "contentBuilds": 14,
+            "measurements": 15,
+            "projectionFrames": 16,
+            "layoutPasses": 2,
+            "occlusionTests": 8,
+            "cachedCount": 15
+          },
+          "emphasis": {
+            "materialCount": 128,
+            "weights": [
+              1,
+              0,
+              0
+            ],
+            "target": [
+              1,
+              0,
+              0
+            ],
+            "passes": 1
+          },
+          "portraitTV": false,
+          "cameraMoving": false,
+          "landMinZ": -80,
+          "district": "sales",
+          "viewBounds": {
+            "minX": -38.5,
+            "maxX": 38.5,
+            "minY": -1.5,
+            "maxY": 12,
+            "minZ": -26.5,
+            "maxZ": 26.5
+          },
+          "communications": {
+            "enabled": true,
+            "disposed": false,
+            "reducedMotion": false,
+            "count": 4,
+            "drawCalls": 4,
+            "places": [
+              {
+                "id": "email",
+                "name": "Correos",
+                "color": "#218dec",
+                "x": -27,
+                "icon": "mail",
+                "sourceAvailable": true,
+                "todayCompleted": 6,
+                "pendingCount": 0,
+                "totalCount": 6,
+                "channels": {
+                  "email": {
+                    "sourceAvailable": true,
+                    "todayCompleted": 6,
+                    "pendingCount": 0,
+                    "totalCount": 6
+                  }
+                },
+                "timeZone": "Europe/Madrid",
+                "asOf": "2026-10-16T10:15:00+02:00",
+                "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+                "recordIds": [
+                  "activity-email-01",
+                  "activity-email-02",
+                  "activity-email-03",
+                  "activity-email-04",
+                  "activity-email-05",
+                  "activity-email-06"
+                ],
+                "position": [
+                  -27,
+                  6.3,
+                  -35
+                ],
+                "groundPosition": [
+                  -27,
+                  0.1,
+                  -35
+                ]
+              },
+              {
+                "id": "call",
+                "name": "Central de llamadas",
+                "color": "#f09a2e",
+                "x": -9,
+                "icon": "phone",
+                "sourceAvailable": true,
+                "todayCompleted": 12,
+                "pendingCount": 0,
+                "totalCount": 12,
+                "channels": {
+                  "call": {
+                    "sourceAvailable": true,
+                    "todayCompleted": 12,
+                    "pendingCount": 0,
+                    "totalCount": 12
+                  }
+                },
+                "timeZone": "Europe/Madrid",
+                "asOf": "2026-10-16T10:15:00+02:00",
+                "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+                "recordIds": [
+                  "activity-call-01",
+                  "activity-call-02",
+                  "activity-call-03",
+                  "activity-call-04",
+                  "activity-call-05",
+                  "activity-call-06",
+                  "activity-call-07",
+                  "activity-call-08",
+                  "activity-call-09",
+                  "activity-call-10",
+                  "activity-call-11",
+                  "activity-call-12"
+                ],
+                "position": [
+                  -9,
+                  6.3,
+                  -35
+                ],
+                "groundPosition": [
+                  -9,
+                  0.1,
+                  -35
+                ]
+              },
+              {
+                "id": "messages",
+                "name": "Casa de mensajes",
+                "color": "#21b77a",
+                "x": 9,
+                "icon": "message",
+                "sourceAvailable": true,
+                "todayCompleted": 6,
+                "pendingCount": 11,
+                "totalCount": 17,
+                "channels": {
+                  "whatsapp": {
+                    "sourceAvailable": true,
+                    "todayCompleted": 6,
+                    "pendingCount": 2,
+                    "totalCount": 8
+                  },
+                  "message": {
+                    "sourceAvailable": false,
+                    "todayCompleted": null,
+                    "pendingCount": null,
+                    "totalCount": null
+                  },
+                  "conversation": {
+                    "sourceAvailable": true,
+                    "todayCompleted": 0,
+                    "pendingCount": 9,
+                    "totalCount": 9
+                  }
+                },
+                "timeZone": "Europe/Madrid",
+                "asOf": "2026-10-16T10:15:00+02:00",
+                "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+                "recordIds": [
+                  "activity-conversation-01",
+                  "activity-conversation-02",
+                  "activity-conversation-03",
+                  "activity-conversation-04",
+                  "activity-conversation-05",
+                  "activity-conversation-06",
+                  "activity-conversation-07",
+                  "activity-conversation-08",
+                  "activity-conversation-09",
+                  "activity-whatsapp-01",
+                  "activity-whatsapp-02",
+                  "activity-whatsapp-03",
+                  "activity-whatsapp-04",
+                  "activity-whatsapp-05",
+                  "activity-whatsapp-06",
+                  "activity-whatsapp-07",
+                  "activity-whatsapp-08"
+                ],
+                "position": [
+                  9,
+                  6.3,
+                  -35
+                ],
+                "groundPosition": [
+                  9,
+                  0.1,
+                  -35
+                ]
+              },
+              {
+                "id": "meeting",
+                "name": "Cafetería reuniones",
+                "color": "#da657c",
+                "x": 27,
+                "icon": "coffee",
+                "sourceAvailable": true,
+                "todayCompleted": 1,
+                "pendingCount": 2,
+                "totalCount": 3,
+                "channels": {
+                  "meeting": {
+                    "sourceAvailable": true,
+                    "todayCompleted": 1,
+                    "pendingCount": 2,
+                    "totalCount": 3
+                  }
+                },
+                "timeZone": "Europe/Madrid",
+                "asOf": "2026-10-16T10:15:00+02:00",
+                "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+                "recordIds": [
+                  "activity-meeting-01",
+                  "activity-meeting-02",
+                  "activity-meeting-03"
+                ],
+                "position": [
+                  27,
+                  6.3,
+                  -35
+                ],
+                "groundPosition": [
+                  27,
+                  0.1,
+                  -35
+                ]
+              }
+            ]
+          },
+          "industry": {
+            "enabled": true,
+            "simulated": true,
+            "gps": false,
+            "routeBasis": "Ruta estimada · animación ilustrativa",
+            "visualRouteSeconds": 90,
+            "businessMutation": false,
+            "pipelineBusy": false,
+            "transitions": {
+              "active": [],
+              "queued": [],
+              "completed": [],
+              "duration": 8,
+              "maxActive": 2,
+              "queueLimit": 64,
+              "busy": false
+            },
+            "surfaces": {
+              "islandPavementTop": 0.19,
+              "ground": 0.3,
+              "road": 0.34,
+              "roadPaint": 0.375,
+              "plot": 0.415,
+              "parkingPaint": 0.45,
+              "plotAccent": 0.485
+            },
+            "groundSurfaces": [
+              {
+                "layer": "ground",
+                "x": 0,
+                "z": -61,
+                "width": 77,
+                "depth": 34,
+                "top": 0.3
+              },
+              {
+                "layer": "road",
+                "x": 0,
+                "z": -72,
+                "width": 75.4,
+                "depth": 4.7,
+                "top": 0.34
+              },
+              {
+                "layer": "roadPaint",
+                "x": -33,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -30,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -27,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -24,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -21,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -18,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -15,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -12,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -9,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -6,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -3,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 0,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 3,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 6,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 9,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 12,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 15,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 18,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 21,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 24,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 27,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 30,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 33,
+                "z": -72,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "road",
+                "x": 0,
+                "z": -53,
+                "width": 75.4,
+                "depth": 4.7,
+                "top": 0.34
+              },
+              {
+                "layer": "roadPaint",
+                "x": -33,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -30,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -24,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -21,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -18,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -12,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -9,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -6,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -3,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 3,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 6,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 9,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 12,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 18,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 21,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 24,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 30,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 33,
+                "z": -53,
+                "width": 1.25,
+                "depth": 0.08,
+                "top": 0.375
+              },
+              {
+                "layer": "road",
+                "x": -36,
+                "z": -62.5,
+                "width": 3.4,
+                "depth": 14.3,
+                "top": 0.34
+              },
+              {
+                "layer": "roadPaint",
+                "x": -36,
+                "z": -69,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -36,
+                "z": -66.3,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -36,
+                "z": -63.599999999999994,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -36,
+                "z": -60.89999999999999,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -36,
+                "z": -58.19999999999999,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -36,
+                "z": -55.499999999999986,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "road",
+                "x": 36,
+                "z": -62.5,
+                "width": 3.4,
+                "depth": 14.3,
+                "top": 0.34
+              },
+              {
+                "layer": "roadPaint",
+                "x": 36,
+                "z": -69,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 36,
+                "z": -66.3,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 36,
+                "z": -63.599999999999994,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 36,
+                "z": -60.89999999999999,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 36,
+                "z": -58.19999999999999,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 36,
+                "z": -55.499999999999986,
+                "width": 0.08,
+                "depth": 1.15,
+                "top": 0.375
+              },
+              {
+                "layer": "plot",
+                "x": -28,
+                "z": -62.5,
+                "width": 12.6,
+                "depth": 13.9,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": -28,
+                "z": -69.1,
+                "width": 12.2,
+                "depth": 0.14,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": -34.08,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": -21.92,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": -28,
+                "z": -49.1,
+                "width": 12.5,
+                "depth": 2.45,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": -28,
+                "z": -49.9,
+                "width": 11.6,
+                "depth": 0.18,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": -28,
+                "z": -55.45,
+                "width": 3.1,
+                "depth": 0.2,
+                "top": 0.415
+              },
+              {
+                "layer": "roadPaint",
+                "x": -29,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -28.6,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -28.2,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -27.8,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -27.4,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -27,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "plot",
+                "x": -14,
+                "z": -62.5,
+                "width": 12.6,
+                "depth": 13.9,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": -14,
+                "z": -69.1,
+                "width": 12.2,
+                "depth": 0.14,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": -20.08,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": -7.92,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": -14,
+                "z": -49.1,
+                "width": 12.5,
+                "depth": 2.45,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": -14,
+                "z": -49.9,
+                "width": 11.6,
+                "depth": 0.18,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": -14,
+                "z": -55.45,
+                "width": 3.1,
+                "depth": 0.2,
+                "top": 0.415
+              },
+              {
+                "layer": "roadPaint",
+                "x": -15,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -14.6,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -14.2,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -13.8,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -13.4,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -13,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "plot",
+                "x": 0,
+                "z": -62.5,
+                "width": 12.6,
+                "depth": 13.9,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": 0,
+                "z": -69.1,
+                "width": 12.2,
+                "depth": 0.14,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": -6.08,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": 6.08,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": 0,
+                "z": -49.1,
+                "width": 12.5,
+                "depth": 2.45,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": 0,
+                "z": -49.9,
+                "width": 11.6,
+                "depth": 0.18,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": 0,
+                "z": -55.45,
+                "width": 3.1,
+                "depth": 0.2,
+                "top": 0.415
+              },
+              {
+                "layer": "roadPaint",
+                "x": -1,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -0.6,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": -0.19999999999999996,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 0.20000000000000007,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 0.6000000000000001,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 1,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "plot",
+                "x": 14,
+                "z": -62.5,
+                "width": 12.6,
+                "depth": 13.9,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": 14,
+                "z": -69.1,
+                "width": 12.2,
+                "depth": 0.14,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": 7.92,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": 20.08,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": 14,
+                "z": -49.1,
+                "width": 12.5,
+                "depth": 2.45,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": 14,
+                "z": -49.9,
+                "width": 11.6,
+                "depth": 0.18,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": 14,
+                "z": -55.45,
+                "width": 3.1,
+                "depth": 0.2,
+                "top": 0.415
+              },
+              {
+                "layer": "roadPaint",
+                "x": 13,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 13.4,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 13.8,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 14.2,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 14.6,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 15,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "plot",
+                "x": 28,
+                "z": -62.5,
+                "width": 12.6,
+                "depth": 13.9,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": 28,
+                "z": -69.1,
+                "width": 12.2,
+                "depth": 0.14,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": 21.92,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plotAccent",
+                "x": 34.08,
+                "z": -62.45,
+                "width": 0.14,
+                "depth": 12.8,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": 28,
+                "z": -49.1,
+                "width": 12.5,
+                "depth": 2.45,
+                "top": 0.415
+              },
+              {
+                "layer": "plotAccent",
+                "x": 28,
+                "z": -49.9,
+                "width": 11.6,
+                "depth": 0.18,
+                "top": 0.485
+              },
+              {
+                "layer": "plot",
+                "x": 28,
+                "z": -55.45,
+                "width": 3.1,
+                "depth": 0.2,
+                "top": 0.415
+              },
+              {
+                "layer": "roadPaint",
+                "x": 27,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 27.4,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 27.8,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 28.2,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 28.6,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "roadPaint",
+                "x": 29,
+                "z": -53,
+                "width": 0.22,
+                "depth": 3.6,
+                "top": 0.375
+              },
+              {
+                "layer": "parkingPaint",
+                "x": 13.74,
+                "z": -63,
+                "width": 0.065,
+                "depth": 5.84,
+                "top": 0.45
+              },
+              {
+                "layer": "parkingPaint",
+                "x": 15.459999999999999,
+                "z": -63,
+                "width": 0.065,
+                "depth": 5.84,
+                "top": 0.45
+              },
+              {
+                "layer": "parkingPaint",
+                "x": 14.6,
+                "z": -66,
+                "width": 1.72,
+                "depth": 0.08,
+                "top": 0.45
+              },
+              {
+                "layer": "parkingPaint",
+                "x": 15.79,
+                "z": -63,
+                "width": 0.065,
+                "depth": 5.84,
+                "top": 0.45
+              },
+              {
+                "layer": "parkingPaint",
+                "x": 17.509999999999998,
+                "z": -63,
+                "width": 0.065,
+                "depth": 5.84,
+                "top": 0.45
+              },
+              {
+                "layer": "parkingPaint",
+                "x": 16.65,
+                "z": -66,
+                "width": 1.72,
+                "depth": 0.08,
+                "top": 0.45
+              },
+              {
+                "layer": "parkingPaint",
+                "x": 17.84,
+                "z": -63,
+                "width": 0.065,
+                "depth": 5.84,
+                "top": 0.45
+              },
+              {
+                "layer": "parkingPaint",
+                "x": 19.56,
+                "z": -63,
+                "width": 0.065,
+                "depth": 5.84,
+                "top": 0.45
+              },
+              {
+                "layer": "parkingPaint",
+                "x": 18.7,
+                "z": -66,
+                "width": 1.72,
+                "depth": 0.08,
+                "top": 0.45
+              }
+            ],
+            "machinery": {
+              "animated": true,
+              "time": 13.766100000000002,
+              "addedDrawCalls": 3,
+              "geometryUUIDs": [
+                "31022a3c-c3bd-4c7b-bf4f-c9261844f188",
+                "31022a3c-c3bd-4c7b-bf4f-c9261844f188",
+                "94c17062-a5e1-4814-b8a5-ecc8348febe2"
+              ]
+            },
+            "boxLimitPerBatch": 25,
+            "batchLimit": 64,
+            "places": [
+              {
+                "id": "manufacturing",
+                "name": "Fabricación",
+                "color": "#f28b26",
+                "position": [
+                  -28,
+                  0.55,
+                  -50.5
+                ],
+                "count": 240,
+                "unit": "uds"
+              },
+              {
+                "id": "packing",
+                "name": "Empacado",
+                "color": "#efbb26",
+                "position": [
+                  -14,
+                  0.55,
+                  -50.5
+                ],
+                "count": 120,
+                "unit": "uds"
+              },
+              {
+                "id": "warehouse",
+                "name": "Almacén",
+                "color": "#2496d8",
+                "position": [
+                  0,
+                  0.55,
+                  -50.5
+                ],
+                "count": 480,
+                "unit": "uds"
+              },
+              {
+                "id": "transit",
+                "name": "En transporte",
+                "color": "#9863df",
+                "position": [
+                  14,
+                  0.55,
+                  -50.5
+                ],
+                "count": 160,
+                "unit": "uds"
+              },
+              {
+                "id": "delivered",
+                "name": "Entregado",
+                "color": "#24b66b",
+                "position": [
+                  28,
+                  0.55,
+                  -50.5
+                ],
+                "count": 320,
+                "unit": "uds"
+              }
+            ],
+            "batches": [
+              {
+                "id": "batch-001",
+                "stageId": "manufacturing",
+                "quantity": 120,
+                "representativeBoxes": 6,
+                "position": [
+                  -31.05,
+                  1.395,
+                  -57.85
+                ]
+              },
+              {
+                "id": "batch-002",
+                "stageId": "manufacturing",
+                "quantity": 120,
+                "representativeBoxes": 6,
+                "position": [
+                  -28,
+                  1.395,
+                  -57.85
+                ]
+              },
+              {
+                "id": "batch-003",
+                "stageId": "packing",
+                "quantity": 120,
+                "representativeBoxes": 6,
+                "position": [
+                  -17.05,
+                  1.395,
+                  -57.85
+                ]
+              },
+              {
+                "id": "batch-004",
+                "stageId": "warehouse",
+                "quantity": 160,
+                "representativeBoxes": 8,
+                "position": [
+                  -3.05,
+                  1.395,
+                  -57.85
+                ]
+              },
+              {
+                "id": "batch-005",
+                "stageId": "warehouse",
+                "quantity": 160,
+                "representativeBoxes": 8,
+                "position": [
+                  0,
+                  1.395,
+                  -57.85
+                ]
+              },
+              {
+                "id": "batch-006",
+                "stageId": "warehouse",
+                "quantity": 160,
+                "representativeBoxes": 8,
+                "position": [
+                  3.05,
+                  1.395,
+                  -57.85
+                ]
+              },
+              {
+                "id": "batch-009",
+                "stageId": "delivered",
+                "quantity": 160,
+                "representativeBoxes": 8,
+                "position": [
+                  24.95,
+                  1.395,
+                  -57.85
+                ]
+              },
+              {
+                "id": "batch-010",
+                "stageId": "delivered",
+                "quantity": 160,
+                "representativeBoxes": 8,
+                "position": [
+                  28,
+                  1.395,
+                  -57.85
+                ]
+              },
+              {
+                "id": "batch-007",
+                "stageId": "transit",
+                "quantity": 80,
+                "representativeBoxes": 4,
+                "position": [
+                  24.6,
+                  1.669284982694156,
+                  -54.710993383726766
+                ],
+                "vehicleId": "truck-01"
+              },
+              {
+                "id": "batch-008",
+                "stageId": "transit",
+                "quantity": 80,
+                "representativeBoxes": 4,
+                "position": [
+                  23.77546497986982,
+                  1.64,
+                  -52.38
+                ],
+                "vehicleId": "truck-02"
+              }
+            ],
+            "vehicles": [
+              {
+                "id": "truck-01",
+                "status": "outbound",
+                "driverName": "Felipe Martín",
+                "cargoBatchId": "batch-007",
+                "cargoRepresentativeBoxes": 4,
+                "sourceCargoRepresentativeBoxes": 4,
+                "cargoVisible": true,
+                "progress": 0.9029566666666666,
+                "handoff": null,
+                "sourceProgress": 0.75,
+                "awaitingConfirmation": false,
+                "position": [
+                  24.6,
+                  0.269284982694156,
+                  -54.710993383726766
+                ],
+                "uuid": "b596740d-ec9c-402a-b0db-4327b1f5bd66",
+                "routeEstimated": true
+              },
+              {
+                "id": "truck-02",
+                "status": "outbound",
+                "driverName": "Sara Costa",
+                "cargoBatchId": "batch-008",
+                "cargoRepresentativeBoxes": 4,
+                "sourceCargoRepresentativeBoxes": 4,
+                "cargoVisible": true,
+                "progress": 0.7529566666666667,
+                "handoff": null,
+                "sourceProgress": 0.6,
+                "awaitingConfirmation": false,
+                "position": [
+                  23.77546497986982,
+                  0.24000000000000002,
+                  -52.38
+                ],
+                "uuid": "114de13e-0a92-4584-9746-81ce5ec59243",
+                "routeEstimated": true
+              },
+              {
+                "id": "truck-03",
+                "status": "available",
+                "driverName": "Pablo Ríos",
+                "cargoBatchId": null,
+                "cargoRepresentativeBoxes": 0,
+                "sourceCargoRepresentativeBoxes": 0,
+                "cargoVisible": true,
+                "progress": 0,
+                "handoff": null,
+                "sourceProgress": 0,
+                "awaitingConfirmation": false,
+                "position": [
+                  18.7,
+                  0.31499999999999995,
+                  -63.2
+                ],
+                "uuid": "73795409-2ae0-46ef-bd8c-3f0ea3748729",
+                "routeEstimated": true
+              }
+            ]
+          },
+          "preset": "balanced",
+          "qualitySetting": "auto",
+          "dpr": 1,
+          "calls": 235,
+          "triangles": 235408,
+          "geometries": 107,
+          "textures": 9,
+          "cssWidth": 1322,
+          "cssHeight": 566,
+          "internalWidth": 1322,
+          "internalHeight": 566,
+          "frameSamples": 15,
+          "frameMs": {
+            "median": 816.6000000000004,
+            "p95": 2433.2000000000003
+          },
+          "submitMs": {
+            "median": 6.799999982118607,
+            "p95": 472.59999999403954
+          },
+          "entityCount": 49,
+          "transitionCount": 0,
+          "construction": {
+            "active": [],
+            "queued": [],
+            "completed": [],
+            "count": 0,
+            "queueCount": 0,
+            "reducedMotion": false,
+            "rigCount": 2,
+            "visibleRigs": 0
+          },
+          "people": {
+            "enabled": true,
+            "elapsed": 13.766100000000002,
+            "source": "simulated-crm-role",
+            "reducedMotion": false,
+            "owners": [
+              {
+                "ownerId": "owner-ana",
+                "initials": "AT",
+                "name": "Ana Torres",
+                "color": "#007fd6",
+                "activity": "Paseando entre visitas",
+                "phase": "walking",
+                "dealId": null,
+                "accountId": null,
+                "targetEntityId": null,
+                "position": [
+                  -8.8,
+                  0.2,
+                  23.85
+                ],
+                "moving": false,
+                "routeLength": 5,
+                "routeIndex": 1,
+                "distance": 19.199612953415702,
+                "win": false,
+                "winStep": null,
+                "attendingConstruction": false,
+                "constructionStageId": null,
+                "constructionStep": null,
+                "sourceVisited": false,
+                "queuedConstructionDeals": [],
+                "movementSource": "illustrative-pedestrian-route"
+              },
+              {
+                "ownerId": "owner-marcos",
+                "initials": "MV",
+                "name": "Marcos Vidal",
+                "color": "#ee7c22",
+                "activity": "Revisando propuesta con el cliente",
+                "phase": "walking",
+                "dealId": "deal-018",
+                "accountId": "account-018",
+                "targetEntityId": "account-018",
+                "position": [
+                  24.303054653521386,
+                  0.20257720663990764,
+                  17.90673454785605
+                ],
+                "moving": true,
+                "routeLength": 8,
+                "routeIndex": 4,
+                "distance": 36.946099999999994,
+                "win": false,
+                "winStep": null,
+                "attendingConstruction": false,
+                "constructionStageId": null,
+                "constructionStep": null,
+                "sourceVisited": false,
+                "queuedConstructionDeals": [],
+                "movementSource": "illustrative-pedestrian-route"
+              },
+              {
+                "ownerId": "owner-lucia",
+                "initials": "LF",
+                "name": "Lucía Ferrer",
+                "color": "#a24ed3",
+                "activity": "Paseando entre visitas",
+                "phase": "walking",
+                "dealId": null,
+                "accountId": null,
+                "targetEntityId": null,
+                "position": [
+                  7.423881839947695,
+                  0.21284568071699675,
+                  12.432088620039227
+                ],
+                "moving": true,
+                "routeLength": 5,
+                "routeIndex": 3,
+                "distance": 22.24930317203579,
+                "win": false,
+                "winStep": null,
+                "attendingConstruction": false,
+                "constructionStageId": null,
+                "constructionStep": null,
+                "sourceVisited": false,
+                "queuedConstructionDeals": [],
+                "movementSource": "illustrative-pedestrian-route"
+              },
+              {
+                "ownerId": "owner-david",
+                "initials": "DS",
+                "name": "David Soler",
+                "color": "#d43667",
+                "activity": "Paseando entre visitas",
+                "phase": "patrol",
+                "dealId": null,
+                "accountId": null,
+                "targetEntityId": null,
+                "position": [
+                  17,
+                  0.22168948923049428,
+                  18.4
+                ],
+                "moving": true,
+                "routeLength": 4,
+                "routeIndex": 4,
+                "distance": 19.79334327806033,
+                "win": false,
+                "winStep": null,
+                "attendingConstruction": false,
+                "constructionStageId": null,
+                "constructionStep": null,
+                "sourceVisited": false,
+                "queuedConstructionDeals": [],
+                "movementSource": "illustrative-pedestrian-route"
+              }
+            ]
+          },
+          "districts": [
+            {
+              "id": "lead",
+              "name": "Nuevos leads",
+              "count": 7,
+              "color": "rgb(35,139,236)",
+              "visible": true,
+              "labelX": 484.343,
+              "labelY": 87.781,
+              "anchor": [
+                -31.25,
+                0.4,
+                -12.25
+              ]
+            },
+            {
+              "id": "qualified",
+              "name": "Cualificados",
+              "count": 5,
+              "color": "rgb(12,185,176)",
+              "visible": true,
+              "labelX": 653.622,
+              "labelY": 142.714,
+              "anchor": [
+                -15.5,
+                0.4,
+                -12.25
+              ]
+            },
+            {
+              "id": "proposal",
+              "name": "Propuestas",
+              "count": 6,
+              "color": "rgb(243,171,34)",
+              "visible": true,
+              "labelX": 740.849,
+              "labelY": 258.776,
+              "anchor": [
+                0,
+                0.4,
+                -12.25
+              ]
+            },
+            {
+              "id": "negotiation",
+              "name": "Negociación",
+              "count": 6,
+              "color": "rgb(162,89,223)",
+              "visible": true,
+              "labelX": 908.075,
+              "labelY": 250.838,
+              "anchor": [
+                15.5,
+                0.4,
+                -12.25
+              ]
+            },
+            {
+              "id": "won",
+              "name": "Ventas ganadas",
+              "count": 4,
+              "color": "rgb(36,182,107)",
+              "visible": true,
+              "labelX": 997.354,
+              "labelY": 367.772,
+              "anchor": [
+                31.25,
+                0.4,
+                -12.25
+              ]
+            },
+            {
+              "id": "clients",
+              "name": "Clientes activos",
+              "count": 18,
+              "color": "#178f8c",
+              "visible": true,
+              "labelX": 488.532,
+              "labelY": 356.887,
+              "anchor": [
+                -1,
+                0.5,
+                25.2
+              ]
+            }
+          ],
+          "ownerBadges": [
+            {
+              "id": "owner-ana",
+              "visible": true,
+              "text": "AT"
+            },
+            {
+              "id": "owner-marcos",
+              "visible": true,
+              "text": "MV"
+            },
+            {
+              "id": "owner-lucia",
+              "visible": true,
+              "text": "LF"
+            },
+            {
+              "id": "owner-david",
+              "visible": true,
+              "text": "DS"
+            }
+          ],
+          "placeLabels": [],
+          "industryLabels": [],
+          "connectionCount": 0,
+          "traffic": {
+            "enabled": true,
+            "elapsed": 1.5999999999999992,
+            "laneLength": 124.27964473723102,
+            "minimumClearance": 11.748764415247875,
+            "vehicles": [
+              {
+                "id": "ambient-1",
+                "kind": "car",
+                "s": 6.120000000000175,
+                "length": 1.94,
+                "speed": 2.3999999999999955,
+                "cruise": 2.5,
+                "distance": 1.9199999999999982,
+                "brake": false,
+                "x": -15.529999999999827,
+                "z": -8.05,
+                "tx": 1,
+                "tz": 0,
+                "curvature": 0,
+                "segment": "north-eastbound"
+              },
+              {
+                "id": "ambient-2",
+                "kind": "car",
+                "s": 19.92884941524801,
+                "length": 1.94,
+                "speed": 2.3999999999999955,
+                "cruise": 2.72,
+                "distance": 1.9199999999999982,
+                "brake": false,
+                "x": -1.7211505847519923,
+                "z": -8.05,
+                "tx": 1,
+                "tz": 0,
+                "curvature": 0,
+                "segment": "north-eastbound"
+              },
+              {
+                "id": "ambient-3",
+                "kind": "car",
+                "s": 33.7376988304959,
+                "length": 1.94,
+                "speed": 2.3999999999999955,
+                "cruise": 2.94,
+                "distance": 1.9199999999999982,
+                "brake": false,
+                "x": 12.0876988304959,
+                "z": -8.05,
+                "tx": 1,
+                "tz": 0,
+                "curvature": 0,
+                "segment": "north-eastbound"
+              },
+              {
+                "id": "ambient-4",
+                "kind": "car",
+                "s": 47.546548245743736,
+                "length": 1.94,
+                "speed": 2.3999999999999955,
+                "cruise": 2.5,
+                "distance": 1.9199999999999982,
+                "brake": false,
+                "x": 24.05,
+                "z": -5.17336293856402,
+                "tx": 0,
+                "tz": 1,
+                "curvature": 0,
+                "segment": "east-southbound"
+              },
+              {
+                "id": "ambient-5",
+                "kind": "car",
+                "s": 61.23531266099161,
+                "length": 1.94,
+                "speed": 1.8701999999999999,
+                "cruise": 2.72,
+                "distance": 1.7999149999999982,
+                "brake": false,
+                "x": 22.533248832767963,
+                "z": 7.881562569011686,
+                "tx": -0.9298177370882024,
+                "tz": 0.3680203469866504,
+                "curvature": 0.4166666666666667,
+                "segment": "south-east-corner"
+              },
+              {
+                "id": "ambient-6",
+                "kind": "car",
+                "s": 75.16424707623938,
+                "length": 1.94,
+                "speed": 2.3999999999999955,
+                "cruise": 2.94,
+                "distance": 1.9199999999999982,
+                "brake": false,
+                "x": 8.62557529237613,
+                "z": 8.05,
+                "tx": -1,
+                "tz": 0,
+                "curvature": 0,
+                "segment": "south-westbound"
+              },
+              {
+                "id": "ambient-7",
+                "kind": "car",
+                "s": 88.97309649148727,
+                "length": 1.94,
+                "speed": 2.3999999999999955,
+                "cruise": 2.5,
+                "distance": 1.9199999999999982,
+                "brake": false,
+                "x": -5.183274122871762,
+                "z": 8.05,
+                "tx": -1,
+                "tz": 0,
+                "curvature": 0,
+                "segment": "south-westbound"
+              },
+              {
+                "id": "ambient-8",
+                "kind": "car",
+                "s": 102.78194590673516,
+                "length": 1.94,
+                "speed": 2.3999999999999955,
+                "cruise": 2.72,
+                "distance": 1.9199999999999982,
+                "brake": false,
+                "x": -18.992123538119653,
+                "z": 8.05,
+                "tx": -1,
+                "tz": 0,
+                "curvature": 0,
+                "segment": "south-westbound"
+              },
+              {
+                "id": "ambient-9",
+                "kind": "motorcycle",
+                "s": 116.59079532198305,
+                "length": 1.24,
+                "speed": 2.3999999999999955,
+                "cruise": 3,
+                "distance": 1.9199999999999982,
+                "brake": false,
+                "x": -24.05,
+                "z": -1.7310617690597834,
+                "tx": 0,
+                "tz": -1,
+                "curvature": 0,
+                "segment": "west-northbound"
+              }
+            ],
+            "signals": [
+              {
+                "id": "north-crossing",
+                "s": 18.85,
+                "offset": 0,
+                "x": -0.9,
+                "z": -6.35,
+                "rotation": -1.5707963267948966,
+                "state": "green"
+              },
+              {
+                "id": "south-crossing",
+                "s": 80.9898223686155,
+                "offset": 2.5,
+                "x": 0.9,
+                "z": 6.35,
+                "rotation": 1.5707963267948966,
+                "state": "green"
+              }
+            ],
+            "source": "ambient-demo",
+            "quality": "balanced",
+            "meshes": 9,
+            "type": "ambient-traffic",
+            "businessData": false
+          },
+          "visibleLabelCount": 10,
+          "heightScale": {
+            "min": 1.8,
+            "max": 8.8,
+            "referenceAmount": 10000,
+            "referenceHeight": 6,
+            "unknownHeight": 4
+          },
+          "reducedMotion": false,
+          "active": true
+        }
+      }
+    },
+    {
+      "name": "four-communications-icons-retain-recorded-completed-and-pending-counts",
+      "passed": true,
+      "detail": {
+        "icons": [
+          {
+            "id": "email",
+            "text": "6Correos6 hoy · 0 pendientes",
+            "svg": 1,
+            "aria": "Correos: 6 completadas hoy. 6 hoy · 0 pendientes"
+          },
+          {
+            "id": "call",
+            "text": "12Central de llamadas12 hoy · 0 pendientes",
+            "svg": 1,
+            "aria": "Central de llamadas: 12 completadas hoy. 12 hoy · 0 pendientes"
+          },
+          {
+            "id": "messages",
+            "text": "6Casa de mensajes6 hoy · 11 pendientes",
+            "svg": 1,
+            "aria": "Casa de mensajes: 6 completadas hoy. 6 hoy · 11 pendientes"
+          },
+          {
+            "id": "meeting",
+            "text": "1Cafetería reuniones1 hoy · 2 pendientes",
+            "svg": 1,
+            "aria": "Cafetería reuniones: 1 completadas hoy. 1 hoy · 2 pendientes"
+          }
+        ],
+        "summary": [
+          {
+            "id": "email",
+            "name": "Correos",
+            "color": "#218dec",
+            "x": -27,
+            "icon": "mail",
+            "sourceAvailable": true,
+            "todayCompleted": 6,
+            "pendingCount": 0,
+            "totalCount": 6,
+            "channels": {
+              "email": {
+                "sourceAvailable": true,
+                "todayCompleted": 6,
+                "pendingCount": 0,
+                "totalCount": 6
+              }
+            },
+            "records": [
+              {
+                "id": "activity-email-01",
+                "type": "email",
+                "channel": "email",
+                "subject": "Correo de seguimiento enviado",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:00:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-ana",
+                "dealId": "deal-013",
+                "accountId": "account-013",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-email-02",
+                "type": "email",
+                "channel": "email",
+                "subject": "Correo de seguimiento enviado",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:00:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-marcos",
+                "dealId": "deal-014",
+                "accountId": "account-014",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-email-03",
+                "type": "email",
+                "channel": "email",
+                "subject": "Correo de seguimiento enviado",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:00:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-lucia",
+                "dealId": "deal-015",
+                "accountId": "account-015",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-email-04",
+                "type": "email",
+                "channel": "email",
+                "subject": "Correo de seguimiento enviado",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:00:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-david",
+                "dealId": "deal-016",
+                "accountId": "account-016",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-email-05",
+                "type": "email",
+                "channel": "email",
+                "subject": "Correo de seguimiento enviado",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:00:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-ana",
+                "dealId": "deal-017",
+                "accountId": "account-017",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-email-06",
+                "type": "email",
+                "channel": "email",
+                "subject": "Correo de seguimiento enviado",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:00:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-marcos",
+                "dealId": "deal-018",
+                "accountId": "account-018",
+                "source": "atlas-demo"
+              }
+            ],
+            "timeZone": "Europe/Madrid",
+            "asOf": "2026-10-16T10:15:00+02:00",
+            "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa"
+          },
+          {
+            "id": "call",
+            "name": "Central de llamadas",
+            "color": "#f09a2e",
+            "x": -9,
+            "icon": "phone",
+            "sourceAvailable": true,
+            "todayCompleted": 12,
+            "pendingCount": 0,
+            "totalCount": 12,
+            "channels": {
+              "call": {
+                "sourceAvailable": true,
+                "todayCompleted": 12,
+                "pendingCount": 0,
+                "totalCount": 12
+              }
+            },
+            "records": [
+              {
+                "id": "activity-call-01",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:02:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-ana",
+                "dealId": "deal-001",
+                "accountId": "account-001",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-02",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:05:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-marcos",
+                "dealId": "deal-002",
+                "accountId": "account-002",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-03",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:08:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-lucia",
+                "dealId": "deal-003",
+                "accountId": "account-003",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-04",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:11:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-david",
+                "dealId": "deal-004",
+                "accountId": "account-004",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-05",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:14:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-ana",
+                "dealId": "deal-005",
+                "accountId": "account-005",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-06",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:17:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-marcos",
+                "dealId": "deal-006",
+                "accountId": "account-006",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-07",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:20:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-lucia",
+                "dealId": "deal-007",
+                "accountId": "account-007",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-08",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:23:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-david",
+                "dealId": "deal-008",
+                "accountId": "account-008",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-09",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:26:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-ana",
+                "dealId": "deal-009",
+                "accountId": "account-009",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-10",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:29:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-marcos",
+                "dealId": "deal-010",
+                "accountId": "account-010",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-11",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:32:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-lucia",
+                "dealId": "deal-011",
+                "accountId": "account-011",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-call-12",
+                "type": "call",
+                "channel": "call",
+                "subject": "Llamada de seguimiento registrada",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:35:00+02:00",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-david",
+                "dealId": "deal-012",
+                "accountId": "account-012",
+                "source": "atlas-demo"
+              }
+            ],
+            "timeZone": "Europe/Madrid",
+            "asOf": "2026-10-16T10:15:00+02:00",
+            "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa"
+          },
+          {
+            "id": "messages",
+            "name": "Casa de mensajes",
+            "color": "#21b77a",
+            "x": 9,
+            "icon": "message",
+            "sourceAvailable": true,
+            "todayCompleted": 6,
+            "pendingCount": 11,
+            "totalCount": 17,
+            "channels": {
+              "whatsapp": {
+                "sourceAvailable": true,
+                "todayCompleted": 6,
+                "pendingCount": 2,
+                "totalCount": 8
+              },
+              "message": {
+                "sourceAvailable": false,
+                "todayCompleted": null,
+                "pendingCount": null,
+                "totalCount": null
+              },
+              "conversation": {
+                "sourceAvailable": true,
+                "todayCompleted": 0,
+                "pendingCount": 9,
+                "totalCount": 9
+              }
+            },
+            "records": [
+              {
+                "id": "activity-conversation-01",
+                "type": "conversation",
+                "channel": "conversation",
+                "subject": "Responder a la consulta del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T08:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-17T10:00:00+02:00",
+                "ownerId": "owner-david",
+                "dealId": "deal-004",
+                "accountId": "account-004",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-conversation-02",
+                "type": "conversation",
+                "channel": "conversation",
+                "subject": "Responder a la consulta del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T08:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-17T10:00:00+02:00",
+                "ownerId": "owner-ana",
+                "dealId": "deal-005",
+                "accountId": "account-005",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-conversation-03",
+                "type": "conversation",
+                "channel": "conversation",
+                "subject": "Responder a la consulta del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T08:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-17T10:00:00+02:00",
+                "ownerId": "owner-marcos",
+                "dealId": "deal-006",
+                "accountId": "account-006",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-conversation-04",
+                "type": "conversation",
+                "channel": "conversation",
+                "subject": "Responder a la consulta del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T08:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-17T10:00:00+02:00",
+                "ownerId": "owner-lucia",
+                "dealId": "deal-007",
+                "accountId": "account-007",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-conversation-05",
+                "type": "conversation",
+                "channel": "conversation",
+                "subject": "Responder a la consulta del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T08:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-17T10:00:00+02:00",
+                "ownerId": "owner-david",
+                "dealId": "deal-008",
+                "accountId": "account-008",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-conversation-06",
+                "type": "conversation",
+                "channel": "conversation",
+                "subject": "Responder a la consulta del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T08:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-17T10:00:00+02:00",
+                "ownerId": "owner-ana",
+                "dealId": "deal-009",
+                "accountId": "account-009",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-conversation-07",
+                "type": "conversation",
+                "channel": "conversation",
+                "subject": "Responder a la consulta del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T08:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-17T10:00:00+02:00",
+                "ownerId": "owner-marcos",
+                "dealId": "deal-010",
+                "accountId": "account-010",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-conversation-08",
+                "type": "conversation",
+                "channel": "conversation",
+                "subject": "Responder a la consulta del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T08:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-17T10:00:00+02:00",
+                "ownerId": "owner-lucia",
+                "dealId": "deal-011",
+                "accountId": "account-011",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-conversation-09",
+                "type": "conversation",
+                "channel": "conversation",
+                "subject": "Responder a la consulta del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T08:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-17T10:00:00+02:00",
+                "ownerId": "owner-david",
+                "dealId": "deal-012",
+                "accountId": "account-012",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-whatsapp-01",
+                "type": "message",
+                "channel": "whatsapp",
+                "subject": "WhatsApp: confirmación de requisitos",
+                "status": "done",
+                "occurredAt": "2026-10-16T06:22:00.000Z",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-ana",
+                "dealId": "deal-001",
+                "accountId": "account-001",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-whatsapp-02",
+                "type": "message",
+                "channel": "whatsapp",
+                "subject": "WhatsApp: horario de entrega",
+                "status": "done",
+                "occurredAt": "2026-10-16T06:34:00.000Z",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-david",
+                "dealId": "deal-004",
+                "accountId": "account-004",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-whatsapp-03",
+                "type": "message",
+                "channel": "whatsapp",
+                "subject": "WhatsApp: propuesta recibida",
+                "status": "done",
+                "occurredAt": "2026-10-16T06:46:00.000Z",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-lucia",
+                "dealId": "deal-007",
+                "accountId": "account-007",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-whatsapp-04",
+                "type": "message",
+                "channel": "whatsapp",
+                "subject": "WhatsApp: dudas del presupuesto",
+                "status": "done",
+                "occurredAt": "2026-10-16T06:58:00.000Z",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-marcos",
+                "dealId": "deal-010",
+                "accountId": "account-010",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-whatsapp-05",
+                "type": "message",
+                "channel": "whatsapp",
+                "subject": "WhatsApp: documentación compartida",
+                "status": "done",
+                "occurredAt": "2026-10-16T07:10:00.000Z",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-ana",
+                "dealId": "deal-013",
+                "accountId": "account-013",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-whatsapp-06",
+                "type": "message",
+                "channel": "whatsapp",
+                "subject": "WhatsApp: seguimiento del acuerdo",
+                "status": "done",
+                "occurredAt": "2026-10-16T07:22:00.000Z",
+                "completedAt": null,
+                "dueAt": null,
+                "ownerId": "owner-david",
+                "dealId": "deal-016",
+                "accountId": "account-016",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-whatsapp-07",
+                "type": "message",
+                "channel": "whatsapp",
+                "subject": "WhatsApp: respuesta pendiente del cliente",
+                "status": "pending",
+                "occurredAt": "2026-10-16T07:34:00.000Z",
+                "completedAt": null,
+                "dueAt": "2026-10-16T09:15:00.000Z",
+                "ownerId": "owner-lucia",
+                "dealId": "deal-019",
+                "accountId": "account-001",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-whatsapp-08",
+                "type": "message",
+                "channel": "whatsapp",
+                "subject": "WhatsApp: confirmar disponibilidad",
+                "status": "pending",
+                "occurredAt": "2026-10-16T07:46:00.000Z",
+                "completedAt": null,
+                "dueAt": "2026-10-16T10:15:00.000Z",
+                "ownerId": "owner-marcos",
+                "dealId": "deal-022",
+                "accountId": "account-004",
+                "source": "atlas-demo"
+              }
+            ],
+            "timeZone": "Europe/Madrid",
+            "asOf": "2026-10-16T10:15:00+02:00",
+            "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa"
+          },
+          {
+            "id": "meeting",
+            "name": "Cafetería reuniones",
+            "color": "#da657c",
+            "x": 27,
+            "icon": "coffee",
+            "sourceAvailable": true,
+            "todayCompleted": 1,
+            "pendingCount": 2,
+            "totalCount": 3,
+            "channels": {
+              "meeting": {
+                "sourceAvailable": true,
+                "todayCompleted": 1,
+                "pendingCount": 2,
+                "totalCount": 3
+              }
+            },
+            "records": [
+              {
+                "id": "activity-meeting-01",
+                "type": "meeting",
+                "channel": "meeting",
+                "subject": "Reunión de cuenta",
+                "status": "done",
+                "occurredAt": "2026-10-16T09:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-16T09:00:00+02:00",
+                "ownerId": "owner-ana",
+                "dealId": null,
+                "accountId": "account-001",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-meeting-02",
+                "type": "meeting",
+                "channel": "meeting",
+                "subject": "Reunión de cuenta",
+                "status": "pending",
+                "occurredAt": "2026-10-16T12:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-16T12:00:00+02:00",
+                "ownerId": "owner-marcos",
+                "dealId": null,
+                "accountId": "account-002",
+                "source": "atlas-demo"
+              },
+              {
+                "id": "activity-meeting-03",
+                "type": "meeting",
+                "channel": "meeting",
+                "subject": "Reunión de cuenta",
+                "status": "pending",
+                "occurredAt": "2026-10-16T15:00:00+02:00",
+                "completedAt": null,
+                "dueAt": "2026-10-16T15:00:00+02:00",
+                "ownerId": "owner-lucia",
+                "dealId": null,
+                "accountId": "account-003",
+                "source": "atlas-demo"
+              }
+            ],
+            "timeZone": "Europe/Madrid",
+            "asOf": "2026-10-16T10:15:00+02:00",
+            "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa"
+          }
+        ]
+      }
+    },
+    {
+      "name": "district-focus-uses-subtle-single-pass-material-emphasis-and-restores-all",
+      "passed": true,
+      "detail": [
+        {
+          "district": "sales",
+          "materialCount": 128,
+          "weights": [
+            0.4450597211780526,
+            0.5549402788219474,
+            0
+          ],
+          "target": [
+            1,
+            0,
+            0
+          ],
+          "passes": 1
+        },
+        {
+          "district": "communications",
+          "materialCount": 128,
+          "weights": [
+            0.3031441630661383,
+            0.6968558369338618,
+            0
+          ],
+          "target": [
+            0,
+            1,
+            0
+          ],
+          "passes": 1
+        },
+        {
+          "district": "industry",
+          "materialCount": 128,
+          "weights": [
+            0.13332216308342304,
+            0.33061785800822363,
+            0.5360599789083533
+          ],
+          "target": [
+            0,
+            0,
+            1
+          ],
+          "passes": 1
+        },
+        {
+          "district": "all",
+          "materialCount": 128,
+          "weights": [
+            0.40967848803612916,
+            0.5440627862966392,
+            0.6839958713081375
+          ],
+          "target": [
+            1,
+            1,
+            1
+          ],
+          "passes": 1
+        }
+      ]
+    },
+    {
+      "name": "industrial-ground-road-markings-and-plots-use-separated-heights",
+      "passed": true,
+      "detail": {
+        "surfaces": {
+          "islandPavementTop": 0.19,
+          "ground": 0.3,
+          "road": 0.34,
+          "roadPaint": 0.375,
+          "plot": 0.415,
+          "parkingPaint": 0.45,
+          "plotAccent": 0.485
+        },
+        "groundSurfaces": [
+          {
+            "layer": "ground",
+            "x": 0,
+            "z": -61,
+            "width": 77,
+            "depth": 34,
+            "top": 0.3
+          },
+          {
+            "layer": "road",
+            "x": 0,
+            "z": -72,
+            "width": 75.4,
+            "depth": 4.7,
+            "top": 0.34
+          },
+          {
+            "layer": "roadPaint",
+            "x": -33,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -30,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -27,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -24,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -21,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -18,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -15,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -12,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -9,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -6,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -3,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 0,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 3,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 6,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 9,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 12,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 15,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 18,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 21,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 24,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 27,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 30,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 33,
+            "z": -72,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "road",
+            "x": 0,
+            "z": -53,
+            "width": 75.4,
+            "depth": 4.7,
+            "top": 0.34
+          },
+          {
+            "layer": "roadPaint",
+            "x": -33,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -30,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -24,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -21,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -18,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -12,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -9,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -6,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -3,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 3,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 6,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 9,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 12,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 18,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 21,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 24,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 30,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 33,
+            "z": -53,
+            "width": 1.25,
+            "depth": 0.08,
+            "top": 0.375
+          },
+          {
+            "layer": "road",
+            "x": -36,
+            "z": -62.5,
+            "width": 3.4,
+            "depth": 14.3,
+            "top": 0.34
+          },
+          {
+            "layer": "roadPaint",
+            "x": -36,
+            "z": -69,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -36,
+            "z": -66.3,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -36,
+            "z": -63.599999999999994,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -36,
+            "z": -60.89999999999999,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -36,
+            "z": -58.19999999999999,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -36,
+            "z": -55.499999999999986,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "road",
+            "x": 36,
+            "z": -62.5,
+            "width": 3.4,
+            "depth": 14.3,
+            "top": 0.34
+          },
+          {
+            "layer": "roadPaint",
+            "x": 36,
+            "z": -69,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 36,
+            "z": -66.3,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 36,
+            "z": -63.599999999999994,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 36,
+            "z": -60.89999999999999,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 36,
+            "z": -58.19999999999999,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 36,
+            "z": -55.499999999999986,
+            "width": 0.08,
+            "depth": 1.15,
+            "top": 0.375
+          },
+          {
+            "layer": "plot",
+            "x": -28,
+            "z": -62.5,
+            "width": 12.6,
+            "depth": 13.9,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": -28,
+            "z": -69.1,
+            "width": 12.2,
+            "depth": 0.14,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": -34.08,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": -21.92,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": -28,
+            "z": -49.1,
+            "width": 12.5,
+            "depth": 2.45,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": -28,
+            "z": -49.9,
+            "width": 11.6,
+            "depth": 0.18,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": -28,
+            "z": -55.45,
+            "width": 3.1,
+            "depth": 0.2,
+            "top": 0.415
+          },
+          {
+            "layer": "roadPaint",
+            "x": -29,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -28.6,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -28.2,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -27.8,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -27.4,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -27,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "plot",
+            "x": -14,
+            "z": -62.5,
+            "width": 12.6,
+            "depth": 13.9,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": -14,
+            "z": -69.1,
+            "width": 12.2,
+            "depth": 0.14,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": -20.08,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": -7.92,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": -14,
+            "z": -49.1,
+            "width": 12.5,
+            "depth": 2.45,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": -14,
+            "z": -49.9,
+            "width": 11.6,
+            "depth": 0.18,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": -14,
+            "z": -55.45,
+            "width": 3.1,
+            "depth": 0.2,
+            "top": 0.415
+          },
+          {
+            "layer": "roadPaint",
+            "x": -15,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -14.6,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -14.2,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -13.8,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -13.4,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -13,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "plot",
+            "x": 0,
+            "z": -62.5,
+            "width": 12.6,
+            "depth": 13.9,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": 0,
+            "z": -69.1,
+            "width": 12.2,
+            "depth": 0.14,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": -6.08,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": 6.08,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": 0,
+            "z": -49.1,
+            "width": 12.5,
+            "depth": 2.45,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": 0,
+            "z": -49.9,
+            "width": 11.6,
+            "depth": 0.18,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": 0,
+            "z": -55.45,
+            "width": 3.1,
+            "depth": 0.2,
+            "top": 0.415
+          },
+          {
+            "layer": "roadPaint",
+            "x": -1,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -0.6,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": -0.19999999999999996,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 0.20000000000000007,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 0.6000000000000001,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 1,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "plot",
+            "x": 14,
+            "z": -62.5,
+            "width": 12.6,
+            "depth": 13.9,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": 14,
+            "z": -69.1,
+            "width": 12.2,
+            "depth": 0.14,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": 7.92,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": 20.08,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": 14,
+            "z": -49.1,
+            "width": 12.5,
+            "depth": 2.45,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": 14,
+            "z": -49.9,
+            "width": 11.6,
+            "depth": 0.18,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": 14,
+            "z": -55.45,
+            "width": 3.1,
+            "depth": 0.2,
+            "top": 0.415
+          },
+          {
+            "layer": "roadPaint",
+            "x": 13,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 13.4,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 13.8,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 14.2,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 14.6,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 15,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "plot",
+            "x": 28,
+            "z": -62.5,
+            "width": 12.6,
+            "depth": 13.9,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": 28,
+            "z": -69.1,
+            "width": 12.2,
+            "depth": 0.14,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": 21.92,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plotAccent",
+            "x": 34.08,
+            "z": -62.45,
+            "width": 0.14,
+            "depth": 12.8,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": 28,
+            "z": -49.1,
+            "width": 12.5,
+            "depth": 2.45,
+            "top": 0.415
+          },
+          {
+            "layer": "plotAccent",
+            "x": 28,
+            "z": -49.9,
+            "width": 11.6,
+            "depth": 0.18,
+            "top": 0.485
+          },
+          {
+            "layer": "plot",
+            "x": 28,
+            "z": -55.45,
+            "width": 3.1,
+            "depth": 0.2,
+            "top": 0.415
+          },
+          {
+            "layer": "roadPaint",
+            "x": 27,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 27.4,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 27.8,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 28.2,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 28.6,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "roadPaint",
+            "x": 29,
+            "z": -53,
+            "width": 0.22,
+            "depth": 3.6,
+            "top": 0.375
+          },
+          {
+            "layer": "parkingPaint",
+            "x": 13.74,
+            "z": -63,
+            "width": 0.065,
+            "depth": 5.84,
+            "top": 0.45
+          },
+          {
+            "layer": "parkingPaint",
+            "x": 15.459999999999999,
+            "z": -63,
+            "width": 0.065,
+            "depth": 5.84,
+            "top": 0.45
+          },
+          {
+            "layer": "parkingPaint",
+            "x": 14.6,
+            "z": -66,
+            "width": 1.72,
+            "depth": 0.08,
+            "top": 0.45
+          },
+          {
+            "layer": "parkingPaint",
+            "x": 15.79,
+            "z": -63,
+            "width": 0.065,
+            "depth": 5.84,
+            "top": 0.45
+          },
+          {
+            "layer": "parkingPaint",
+            "x": 17.509999999999998,
+            "z": -63,
+            "width": 0.065,
+            "depth": 5.84,
+            "top": 0.45
+          },
+          {
+            "layer": "parkingPaint",
+            "x": 16.65,
+            "z": -66,
+            "width": 1.72,
+            "depth": 0.08,
+            "top": 0.45
+          },
+          {
+            "layer": "parkingPaint",
+            "x": 17.84,
+            "z": -63,
+            "width": 0.065,
+            "depth": 5.84,
+            "top": 0.45
+          },
+          {
+            "layer": "parkingPaint",
+            "x": 19.56,
+            "z": -63,
+            "width": 0.065,
+            "depth": 5.84,
+            "top": 0.45
+          },
+          {
+            "layer": "parkingPaint",
+            "x": 18.7,
+            "z": -66,
+            "width": 1.72,
+            "depth": 0.08,
+            "top": 0.45
+          }
+        ]
+      }
+    },
+    {
+      "name": "four-explicit-stage-events-produce-bounded-moving-handoffs-without-changing-source-or-ids",
+      "passed": true,
+      "detail": [
+        {
+          "stage": "packing",
+          "eventId": "industry-demo-1-batch.stage_changed-batch-001",
+          "job": {
+            "id": "industrial-transfer-1-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "manufacturing",
+            "toStage": "packing",
+            "quantity": 120,
+            "status": "active",
+            "phase": "pickup",
+            "progress": 0.16665000000000063,
+            "startedAt": 41.38179999999999,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -31.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              -31.05,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-1-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "mid": {
+            "id": "industrial-transfer-1-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "manufacturing",
+            "toStage": "packing",
+            "quantity": 120,
+            "status": "active",
+            "phase": "transfer",
+            "progress": 0.5,
+            "startedAt": 41.38179999999999,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -31.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              -24.049999999999997,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-1-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "completed": {
+            "id": "industrial-transfer-1-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "manufacturing",
+            "toStage": "packing",
+            "quantity": 120,
+            "status": "complete",
+            "phase": "complete",
+            "progress": 1,
+            "startedAt": 41.38179999999999,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -31.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-1-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          }
+        },
+        {
+          "stage": "warehouse",
+          "eventId": "industry-demo-2-batch.stage_changed-batch-001",
+          "job": {
+            "id": "industrial-transfer-2-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "packing",
+            "toStage": "warehouse",
+            "quantity": 120,
+            "status": "active",
+            "phase": "pickup",
+            "progress": 0.0812375000000003,
+            "startedAt": 42.731700000000004,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              -3.05,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-2-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "mid": {
+            "id": "industrial-transfer-2-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "packing",
+            "toStage": "warehouse",
+            "quantity": 120,
+            "status": "active",
+            "phase": "transfer",
+            "progress": 0.5,
+            "startedAt": 42.731700000000004,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              -3.05,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              -10.049999999999999,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-2-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "completed": {
+            "id": "industrial-transfer-2-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "packing",
+            "toStage": "warehouse",
+            "quantity": 120,
+            "status": "complete",
+            "phase": "complete",
+            "progress": 1,
+            "startedAt": 42.731700000000004,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              -3.05,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              -3.05,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-2-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          }
+        },
+        {
+          "stage": "transit",
+          "eventId": "industry-demo-3-batch.stage_changed-batch-001",
+          "job": {
+            "id": "industrial-transfer-3-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "warehouse",
+            "toStage": "transit",
+            "quantity": 120,
+            "status": "active",
+            "phase": "pickup",
+            "progress": 0.00208750000000002,
+            "startedAt": 43.381600000000006,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -3.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              0,
+              0.415,
+              -58.1
+            ],
+            "position": [
+              -3.05,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-3-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "mid": {
+            "id": "industrial-transfer-3-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "warehouse",
+            "toStage": "transit",
+            "quantity": 120,
+            "status": "active",
+            "phase": "transfer",
+            "progress": 0.5,
+            "startedAt": 43.381600000000006,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -3.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              0,
+              0.415,
+              -58.1
+            ],
+            "position": [
+              -1.5249999999999995,
+              0.415,
+              -57.975
+            ],
+            "sourceEventId": "industry-demo-3-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "completed": {
+            "id": "industrial-transfer-3-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "warehouse",
+            "toStage": "transit",
+            "quantity": 120,
+            "status": "complete",
+            "phase": "complete",
+            "progress": 1,
+            "startedAt": 43.381600000000006,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -3.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              0,
+              0.415,
+              -58.1
+            ],
+            "position": [
+              0,
+              0.415,
+              -58.1
+            ],
+            "sourceEventId": "industry-demo-3-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          }
+        },
+        {
+          "stage": "delivered",
+          "eventId": "industry-demo-4-batch.stage_changed-batch-001",
+          "job": {
+            "id": "industrial-transfer-4-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "transit",
+            "toStage": "delivered",
+            "quantity": 120,
+            "status": "active",
+            "phase": "arrival",
+            "progress": 0.09999999999999964,
+            "startedAt": 43.4149,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              31.4,
+              0.415,
+              -58.1
+            ],
+            "destination": [
+              24.95,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              31.4,
+              0.415,
+              -58.1
+            ],
+            "sourceEventId": "industry-demo-4-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "mid": {
+            "id": "industrial-transfer-4-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "transit",
+            "toStage": "delivered",
+            "quantity": 120,
+            "status": "active",
+            "phase": "transfer",
+            "progress": 0.5,
+            "startedAt": 43.4149,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              31.4,
+              0.415,
+              -58.1
+            ],
+            "destination": [
+              24.95,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              30.477178490443794,
+              0.415,
+              -58.06423172443581
+            ],
+            "sourceEventId": "industry-demo-4-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "completed": {
+            "id": "industrial-transfer-4-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "transit",
+            "toStage": "delivered",
+            "quantity": 120,
+            "status": "complete",
+            "phase": "complete",
+            "progress": 1,
+            "startedAt": 43.4149,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              31.4,
+              0.415,
+              -58.1
+            ],
+            "destination": [
+              24.95,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              24.95,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-4-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "explicit-production-play-and-pause-publish-one-conserved-demo-command",
+      "passed": true,
+      "detail": {
+        "beforeEvents": 10,
+        "afterEvents": 11,
+        "ui": {
+          "view": "city",
+          "selectedId": null,
+          "filters": {
+            "query": "",
+            "stageId": "",
+            "ownerId": "",
+            "attentionOnly": false,
+            "includeLost": false
+          },
+          "layers": {
+            "labels": true,
+            "connections": true,
+            "activity": true,
+            "traffic": true
+          },
+          "mode": "explore",
+          "sheet": "half",
+          "quality": "auto",
+          "replay": {
+            "playing": false,
+            "speed": 1,
+            "index": 0
+          },
+          "drawer": null,
+          "tvIndex": 0,
+          "tvSavedUi": null,
+          "tvNativeFullscreen": false,
+          "selectedOwnerId": null,
+          "district": "industry",
+          "selectedPlaceId": null,
+          "selectedIndustryId": null,
+          "selectedIndustryKind": "place",
+          "tvNavigationAt": 0,
+          "tvTourAll": false,
+          "productionPlaying": false,
+          "productionBatchId": "batch-001"
+        }
+      }
+    },
+    {
+      "name": "whole-company-tv-tours-calmly-pauses-for-navigation-and-restores-without-business-events",
+      "passed": true,
+      "detail": {
+        "initialTour": {
+          "elapsed": 57.84780000000001,
+          "nextAt": 66.1478,
+          "pausedUntil": 0,
+          "enabled": true,
+          "running": true,
+          "paused": false,
+          "step": 0,
+          "district": "all",
+          "sequence": [
+            "all",
+            "sales",
+            "all",
+            "communications",
+            "all",
+            "industry"
+          ],
+          "nextIn": 8.299999999999997,
+          "pausedFor": 0,
+          "transitionDuration": 7,
+          "holdDuration": 9
+        },
+        "touring": {
+          "district": "sales",
+          "tour": {
+            "elapsed": 66.28070000000001,
+            "nextAt": 82.28070000000001,
+            "pausedUntil": 0,
+            "enabled": true,
+            "running": true,
+            "paused": false,
+            "step": 1,
+            "district": "sales",
+            "sequence": [
+              "all",
+              "sales",
+              "all",
+              "communications",
+              "all",
+              "industry"
+            ],
+            "nextIn": 16,
+            "pausedFor": 0,
+            "transitionDuration": 7,
+            "holdDuration": 9
+          },
+          "cameraMoving": true
+        },
+        "pausedTour": {
+          "elapsed": 66.28070000000001,
+          "nextAt": 82.28070000000001,
+          "pausedUntil": 80.28070000000001,
+          "enabled": true,
+          "running": false,
+          "paused": true,
+          "step": 1,
+          "district": "sales",
+          "sequence": [
+            "all",
+            "sales",
+            "all",
+            "communications",
+            "all",
+            "industry"
+          ],
+          "nextIn": 16,
+          "pausedFor": 14,
+          "transitionDuration": 7,
+          "holdDuration": 9
+        }
+      }
+    },
+    {
+      "name": "sale-and-delivery-celebrate-once-and-reset-or-replay-never-replay-popups",
+      "passed": true,
+      "detail": {
+        "sale": {
+          "size": 1,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": {
+            "kind": "sale",
+            "eventId": "demo-0001-91",
+            "entityId": "deal-001",
+            "title": "¡Venta ganada!",
+            "name": "Nueva sede",
+            "detail": "Norte Studio",
+            "value": "1500 €",
+            "owner": "Ana Torres"
+          },
+          "queued": [],
+          "rememberedEvents": 1,
+          "rememberedClosures": 1,
+          "particleCount": 36,
+          "timerActive": true,
+          "reducedMotion": false
+        },
+        "delivery": {
+          "size": 1,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": {
+            "kind": "delivery",
+            "eventId": "industry-demo-1-batch.stage_changed-batch-007",
+            "entityId": "batch-007",
+            "title": "¡Entrega completada!",
+            "name": "Kit Atlas",
+            "detail": "Lumen Labs",
+            "value": "80 unidades entregadas",
+            "owner": "ERP-PED-1007"
+          },
+          "queued": [],
+          "rememberedEvents": 1,
+          "rememberedClosures": 1,
+          "particleCount": 36,
+          "timerActive": true,
+          "reducedMotion": false
+        }
+      }
+    },
+    {
+      "name": "mobile-icons-and-immersive-industrial-tv-fit-the-viewport",
+      "passed": true,
+      "detail": {
+        "communications": [
+          {
+            "id": "email",
+            "x": 46.845497131347656,
+            "y": 452.4420166015625,
+            "right": 139.72048950195312,
+            "bottom": 517.4420166015625
+          },
+          {
+            "id": "call",
+            "x": 149.82192993164062,
+            "y": 480.8389892578125,
+            "right": 250.40005493164062,
+            "bottom": 545.8389892578125
+          },
+          {
+            "id": "messages",
+            "x": 180.41656494140625,
+            "y": 582.2369995117188,
+            "right": 273.46343994140625,
+            "bottom": 647.2369995117188
+          },
+          {
+            "id": "meeting",
+            "x": 271.9921875,
+            "y": 464.6340026855469,
+            "right": 371.0078125,
+            "bottom": 529.634033203125
+          }
+        ],
+        "canvas": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        }
+      }
+    },
+    {
+      "name": "reduced-motion-keeps-static-status-without-transfer-confetti-or-tv-tour",
+      "passed": true,
+      "detail": {
+        "celebration": {
+          "size": 1,
+          "capacity": 3,
+          "dropped": 0,
+          "disposed": false,
+          "visible": {
+            "kind": "sale",
+            "eventId": "demo-0001-91",
+            "entityId": "deal-001",
+            "title": "¡Venta ganada!",
+            "name": "Nueva sede",
+            "detail": "Norte Studio",
+            "value": "1500 €",
+            "owner": "Ana Torres"
+          },
+          "queued": [],
+          "rememberedEvents": 1,
+          "rememberedClosures": 1,
+          "particleCount": 0,
+          "timerActive": true,
+          "reducedMotion": true
+        },
+        "tour": {
+          "elapsed": 8.799700000000001,
+          "nextAt": 15.183100000000001,
+          "pausedUntil": 0,
+          "enabled": false,
+          "running": false,
+          "paused": false,
+          "step": 0,
+          "district": "all",
+          "sequence": [
+            "all",
+            "sales",
+            "all",
+            "communications",
+            "all",
+            "industry"
+          ],
+          "nextIn": 6.3834,
+          "pausedFor": 0,
+          "transitionDuration": 7,
+          "holdDuration": 9
+        }
+      }
+    }
+  ]
+}

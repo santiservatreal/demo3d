@@ -1,0 +1,1215 @@
+{
+  "generatedAt": "2026-10-17T14:41:10.887Z",
+  "phase": "baseline",
+  "sourceGitHead": "bf8a9dc04fdd18cf1a28cca0f4ead345fd736d53",
+  "browser": "154.0.8037.57",
+  "physicalGpu": false,
+  "method": "Same 1280×800 page, light preset, industry overview, 5 warm-up and 20 requestAnimationFrame intervals; software ANGLE/SwiftShader, not physical display FPS. Separate 20-frame sales-owner DOM observation.",
+  "errors": [],
+  "builtJsSha256": {
+    "RGBELoader-mCRLE_S5.js": "38642bd645c89fa65551c9cc44bac6b75a8a59f066ff5fddb69102c66370cd11",
+    "app-CjeFV8gq.js": "e2e1bb728e634bc5b71a42b00c7ecd36ef29d5cdef48481cd2c7f9c02e593dbe",
+    "app-KGMJDHJc.js": "2af787cd58fab37218b95dc3f0d8632101c126e92d1311044af2ac98921d52de",
+    "app-KobCB0rS.js": "712ce45d21a5a6adc221b4bd1747e5b47c769d26530c22b274b8fc0143230213",
+    "classic-8XW244KJ.js": "14d93e33d4c0ff2af7c6aa69b828ca94c0bd9730bd4629347ea82b5c223a82bd",
+    "index-CJws3QPj.js": "9e277f1d756e090aa19bdb35e4178b8322f6e32725ba399b4bf6363a9b58d480",
+    "info-Bxl4APgq.js": "b334ea9c915ee2145cca1ed3371b915e8cbfed0604ef1a494e30ad0b7d3e3a3d",
+    "latin-500-C64SQk4W.js": "7b8a27e110c076868354f723b086dc2a6eed5262766e472e3763d7db1e70e83e",
+    "package-CqIh2EMb.js": "75ca0c5fa12d2924c586688954f1d5a0d61432f8c443fb72691109431c786a8b",
+    "sliders-horizontal-ZixOwNuB.js": "457df9d499940e6c11816a75c05b7dd4d37f4509b7bdcd65369e09e3019ff211",
+    "sparkles-CTruFN2L.js": "ed5b721408322358f6466861182e6f7a59100780e47bc759820e40828233aec7",
+    "truck-ZdRgM2x7.js": "f6fb7815e214629323d00e481987b153bccc2570e97172b15c756a1017dffde6",
+    "users-_cyAfPru.js": "ecbb7d4293d10f2498e52a79c8ecea004c15358e39ad3c6d36a0ecc5bed6de78"
+  },
+  "industry": {
+    "viewport": [
+      1280,
+      800
+    ],
+    "internalPixels": [
+      1162,
+      405
+    ],
+    "samples": [
+      450.10000000000036,
+      449.89999999999964,
+      433.39999999999964,
+      466.60000000000036,
+      433.2999999999993,
+      483.3000000000011,
+      483.2999999999993,
+      383.39999999999964,
+      433.3000000000011,
+      399.89999999999964,
+      383.39999999999964,
+      416.60000000000036,
+      399.89999999999964,
+      400.10000000000036,
+      1099.8999999999996,
+      66.70000000000073,
+      33.29999999999927,
+      450,
+      400,
+      433.3000000000011
+    ],
+    "medianMs": 433.3000000000011,
+    "p95Ms": 483.3000000000011,
+    "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "diagnostics": {
+      "renderer": "WebGL2",
+      "trafficRunning": false,
+      "mode": "explore",
+      "tvPresentation": false,
+      "portraitTV": false,
+      "cameraMoving": false,
+      "landMinZ": -80,
+      "district": "industry",
+      "viewBounds": {
+        "minX": -38.5,
+        "maxX": 38.5,
+        "minY": -1.5,
+        "maxY": 8,
+        "minZ": -74,
+        "maxZ": -49
+      },
+      "communications": {
+        "enabled": true,
+        "disposed": false,
+        "reducedMotion": false,
+        "count": 4,
+        "drawCalls": 4,
+        "places": [
+          {
+            "id": "email",
+            "name": "Correos",
+            "color": "#218dec",
+            "x": -27,
+            "icon": "mail",
+            "sourceAvailable": true,
+            "todayCompleted": 6,
+            "pendingCount": 0,
+            "totalCount": 6,
+            "channels": {
+              "email": {
+                "sourceAvailable": true,
+                "todayCompleted": 6,
+                "pendingCount": 0,
+                "totalCount": 6
+              }
+            },
+            "timeZone": "Europe/Madrid",
+            "asOf": "2026-10-16T10:15:00+02:00",
+            "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+            "recordIds": [
+              "activity-email-01",
+              "activity-email-02",
+              "activity-email-03",
+              "activity-email-04",
+              "activity-email-05",
+              "activity-email-06"
+            ],
+            "position": [
+              -27,
+              6.3,
+              -35
+            ],
+            "groundPosition": [
+              -27,
+              0.1,
+              -35
+            ]
+          },
+          {
+            "id": "call",
+            "name": "Central de llamadas",
+            "color": "#f09a2e",
+            "x": -9,
+            "icon": "phone",
+            "sourceAvailable": true,
+            "todayCompleted": 12,
+            "pendingCount": 0,
+            "totalCount": 12,
+            "channels": {
+              "call": {
+                "sourceAvailable": true,
+                "todayCompleted": 12,
+                "pendingCount": 0,
+                "totalCount": 12
+              }
+            },
+            "timeZone": "Europe/Madrid",
+            "asOf": "2026-10-16T10:15:00+02:00",
+            "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+            "recordIds": [
+              "activity-call-01",
+              "activity-call-02",
+              "activity-call-03",
+              "activity-call-04",
+              "activity-call-05",
+              "activity-call-06",
+              "activity-call-07",
+              "activity-call-08",
+              "activity-call-09",
+              "activity-call-10",
+              "activity-call-11",
+              "activity-call-12"
+            ],
+            "position": [
+              -9,
+              6.3,
+              -35
+            ],
+            "groundPosition": [
+              -9,
+              0.1,
+              -35
+            ]
+          },
+          {
+            "id": "messages",
+            "name": "Casa de mensajes",
+            "color": "#21b77a",
+            "x": 9,
+            "icon": "message",
+            "sourceAvailable": true,
+            "todayCompleted": 6,
+            "pendingCount": 11,
+            "totalCount": 17,
+            "channels": {
+              "whatsapp": {
+                "sourceAvailable": true,
+                "todayCompleted": 6,
+                "pendingCount": 2,
+                "totalCount": 8
+              },
+              "message": {
+                "sourceAvailable": false,
+                "todayCompleted": null,
+                "pendingCount": null,
+                "totalCount": null
+              },
+              "conversation": {
+                "sourceAvailable": true,
+                "todayCompleted": 0,
+                "pendingCount": 9,
+                "totalCount": 9
+              }
+            },
+            "timeZone": "Europe/Madrid",
+            "asOf": "2026-10-16T10:15:00+02:00",
+            "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+            "recordIds": [
+              "activity-conversation-01",
+              "activity-conversation-02",
+              "activity-conversation-03",
+              "activity-conversation-04",
+              "activity-conversation-05",
+              "activity-conversation-06",
+              "activity-conversation-07",
+              "activity-conversation-08",
+              "activity-conversation-09",
+              "activity-whatsapp-01",
+              "activity-whatsapp-02",
+              "activity-whatsapp-03",
+              "activity-whatsapp-04",
+              "activity-whatsapp-05",
+              "activity-whatsapp-06",
+              "activity-whatsapp-07",
+              "activity-whatsapp-08"
+            ],
+            "position": [
+              9,
+              6.3,
+              -35
+            ],
+            "groundPosition": [
+              9,
+              0.1,
+              -35
+            ]
+          },
+          {
+            "id": "meeting",
+            "name": "Cafetería reuniones",
+            "color": "#da657c",
+            "x": 27,
+            "icon": "coffee",
+            "sourceAvailable": true,
+            "todayCompleted": 1,
+            "pendingCount": 2,
+            "totalCount": 3,
+            "channels": {
+              "meeting": {
+                "sourceAvailable": true,
+                "todayCompleted": 1,
+                "pendingCount": 2,
+                "totalCount": 3
+              }
+            },
+            "timeZone": "Europe/Madrid",
+            "asOf": "2026-10-16T10:15:00+02:00",
+            "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+            "recordIds": [
+              "activity-meeting-01",
+              "activity-meeting-02",
+              "activity-meeting-03"
+            ],
+            "position": [
+              27,
+              6.3,
+              -35
+            ],
+            "groundPosition": [
+              27,
+              0.1,
+              -35
+            ]
+          }
+        ]
+      },
+      "industry": {
+        "enabled": true,
+        "simulated": true,
+        "gps": false,
+        "routeBasis": "Ruta estimada · animación ilustrativa",
+        "visualRouteSeconds": 90,
+        "businessMutation": false,
+        "boxLimitPerBatch": 25,
+        "batchLimit": 64,
+        "places": [
+          {
+            "id": "manufacturing",
+            "name": "Fabricación",
+            "color": "#f28b26",
+            "position": [
+              -28,
+              0.55,
+              -50.5
+            ],
+            "count": 240,
+            "unit": "uds"
+          },
+          {
+            "id": "packing",
+            "name": "Empacado",
+            "color": "#efbb26",
+            "position": [
+              -14,
+              0.55,
+              -50.5
+            ],
+            "count": 120,
+            "unit": "uds"
+          },
+          {
+            "id": "warehouse",
+            "name": "Almacén",
+            "color": "#2496d8",
+            "position": [
+              0,
+              0.55,
+              -50.5
+            ],
+            "count": 480,
+            "unit": "uds"
+          },
+          {
+            "id": "transit",
+            "name": "En transporte",
+            "color": "#9863df",
+            "position": [
+              14,
+              0.55,
+              -50.5
+            ],
+            "count": 160,
+            "unit": "uds"
+          },
+          {
+            "id": "delivered",
+            "name": "Entregado",
+            "color": "#24b66b",
+            "position": [
+              28,
+              0.55,
+              -50.5
+            ],
+            "count": 320,
+            "unit": "uds"
+          }
+        ],
+        "batches": [
+          {
+            "id": "batch-001",
+            "stageId": "manufacturing",
+            "quantity": 120,
+            "representativeBoxes": 6,
+            "position": [
+              -31.05,
+              1.3,
+              -57.85
+            ]
+          },
+          {
+            "id": "batch-002",
+            "stageId": "manufacturing",
+            "quantity": 120,
+            "representativeBoxes": 6,
+            "position": [
+              -28,
+              1.3,
+              -57.85
+            ]
+          },
+          {
+            "id": "batch-003",
+            "stageId": "packing",
+            "quantity": 120,
+            "representativeBoxes": 6,
+            "position": [
+              -17.05,
+              1.3,
+              -57.85
+            ]
+          },
+          {
+            "id": "batch-004",
+            "stageId": "warehouse",
+            "quantity": 160,
+            "representativeBoxes": 8,
+            "position": [
+              -3.05,
+              1.3,
+              -57.85
+            ]
+          },
+          {
+            "id": "batch-005",
+            "stageId": "warehouse",
+            "quantity": 160,
+            "representativeBoxes": 8,
+            "position": [
+              0,
+              1.3,
+              -57.85
+            ]
+          },
+          {
+            "id": "batch-006",
+            "stageId": "warehouse",
+            "quantity": 160,
+            "representativeBoxes": 8,
+            "position": [
+              3.05,
+              1.3,
+              -57.85
+            ]
+          },
+          {
+            "id": "batch-009",
+            "stageId": "delivered",
+            "quantity": 160,
+            "representativeBoxes": 8,
+            "position": [
+              24.95,
+              1.3,
+              -57.85
+            ]
+          },
+          {
+            "id": "batch-010",
+            "stageId": "delivered",
+            "quantity": 160,
+            "representativeBoxes": 8,
+            "position": [
+              28,
+              1.3,
+              -57.85
+            ]
+          },
+          {
+            "id": "batch-007",
+            "stageId": "transit",
+            "quantity": 80,
+            "representativeBoxes": 4,
+            "position": [
+              24.6,
+              1.6199999999999999,
+              -54.58792558474798
+            ],
+            "vehicleId": "truck-01"
+          },
+          {
+            "id": "batch-008",
+            "stageId": "transit",
+            "quantity": 80,
+            "representativeBoxes": 4,
+            "position": [
+              23.639275783116762,
+              1.6199999999999999,
+              -52.38
+            ],
+            "vehicleId": "truck-02"
+          }
+        ],
+        "vehicles": [
+          {
+            "id": "truck-01",
+            "status": "outbound",
+            "driverName": "Felipe Martín",
+            "cargoBatchId": "batch-007",
+            "cargoRepresentativeBoxes": 4,
+            "progress": 0.8994388888888889,
+            "sourceProgress": 0.75,
+            "awaitingConfirmation": false,
+            "position": [
+              24.6,
+              0.22,
+              -54.58792558474798
+            ],
+            "uuid": "5966cd3d-6cbe-42ac-8164-e3194c5fa536",
+            "routeEstimated": true
+          },
+          {
+            "id": "truck-02",
+            "status": "outbound",
+            "driverName": "Sara Costa",
+            "cargoBatchId": "batch-008",
+            "cargoRepresentativeBoxes": 4,
+            "progress": 0.7494388888888889,
+            "sourceProgress": 0.6,
+            "awaitingConfirmation": false,
+            "position": [
+              23.639275783116762,
+              0.22,
+              -52.38
+            ],
+            "uuid": "6c0f48c5-986b-46bc-96d0-1fbe6de1ffb3",
+            "routeEstimated": true
+          },
+          {
+            "id": "truck-03",
+            "status": "available",
+            "driverName": "Pablo Ríos",
+            "cargoBatchId": null,
+            "cargoRepresentativeBoxes": 0,
+            "progress": 0,
+            "sourceProgress": 0,
+            "awaitingConfirmation": false,
+            "position": [
+              18.7,
+              0.22,
+              -63.2
+            ],
+            "uuid": "98137952-380b-4306-bdd4-1cf76a58b584",
+            "routeEstimated": true
+          }
+        ]
+      },
+      "preset": "light",
+      "qualitySetting": "light",
+      "dpr": 1,
+      "calls": 61,
+      "triangles": 215358,
+      "geometries": 108,
+      "textures": 9,
+      "cssWidth": 1162,
+      "cssHeight": 405,
+      "internalWidth": 1162,
+      "internalHeight": 405,
+      "frameSamples": 28,
+      "frameMs": {
+        "median": 433.2999999999993,
+        "p95": 1233.3000000000002
+      },
+      "submitMs": {
+        "median": 5.4000000059604645,
+        "p95": 555.8999999761581
+      },
+      "entityCount": 49,
+      "transitionCount": 0,
+      "construction": {
+        "active": [],
+        "queued": [],
+        "completed": [],
+        "count": 0,
+        "queueCount": 0,
+        "reducedMotion": false,
+        "rigCount": 2,
+        "visibleRigs": 0
+      },
+      "people": {
+        "enabled": true,
+        "elapsed": 13.449499999999999,
+        "source": "simulated-crm-role",
+        "reducedMotion": false,
+        "owners": [
+          {
+            "ownerId": "owner-ana",
+            "initials": "AT",
+            "name": "Ana Torres",
+            "color": "#007fd6",
+            "activity": "Paseando entre visitas",
+            "phase": "walking",
+            "dealId": null,
+            "accountId": null,
+            "targetEntityId": null,
+            "position": [
+              -12.527076630753038,
+              0.21224281360127284,
+              18.89169347698785
+            ],
+            "moving": true,
+            "routeLength": 5,
+            "routeIndex": 3,
+            "distance": 27.650504935851323,
+            "win": false,
+            "winStep": null,
+            "attendingConstruction": false,
+            "constructionStageId": null,
+            "constructionStep": null,
+            "sourceVisited": false,
+            "queuedConstructionDeals": [],
+            "movementSource": "illustrative-pedestrian-route"
+          },
+          {
+            "ownerId": "owner-marcos",
+            "initials": "MV",
+            "name": "Marcos Vidal",
+            "color": "#ee7c22",
+            "activity": "Revisando propuesta con el cliente",
+            "phase": "walking",
+            "dealId": "deal-018",
+            "accountId": "account-018",
+            "targetEntityId": "account-018",
+            "position": [
+              27.124553128173122,
+              0.20552316947775076,
+              19.842521102476084
+            ],
+            "moving": true,
+            "routeLength": 8,
+            "routeIndex": 5,
+            "distance": 40.685759999999995,
+            "win": false,
+            "winStep": null,
+            "attendingConstruction": false,
+            "constructionStageId": null,
+            "constructionStep": null,
+            "sourceVisited": false,
+            "queuedConstructionDeals": [],
+            "movementSource": "illustrative-pedestrian-route"
+          },
+          {
+            "ownerId": "owner-lucia",
+            "initials": "LF",
+            "name": "Lucía Ferrer",
+            "color": "#a24ed3",
+            "activity": "Paseando entre visitas",
+            "phase": "patrol",
+            "dealId": null,
+            "accountId": null,
+            "targetEntityId": null,
+            "position": [
+              11,
+              0.2,
+              12
+            ],
+            "moving": false,
+            "routeLength": 5,
+            "routeIndex": 5,
+            "distance": 25.969450872101163,
+            "win": false,
+            "winStep": null,
+            "attendingConstruction": false,
+            "constructionStageId": null,
+            "constructionStep": null,
+            "sourceVisited": false,
+            "queuedConstructionDeals": [],
+            "movementSource": "illustrative-pedestrian-route"
+          },
+          {
+            "ownerId": "owner-david",
+            "initials": "DS",
+            "name": "David Soler",
+            "color": "#d43667",
+            "activity": "Revisando propuesta con el cliente",
+            "phase": "walking",
+            "dealId": "deal-016",
+            "accountId": "account-016",
+            "targetEntityId": "account-016",
+            "position": [
+              18,
+              0.21398066134579727,
+              20.84661312526815
+            ],
+            "moving": true,
+            "routeLength": 4,
+            "routeIndex": 2,
+            "distance": 22.62656327806034,
+            "win": false,
+            "winStep": null,
+            "attendingConstruction": false,
+            "constructionStageId": null,
+            "constructionStep": null,
+            "sourceVisited": false,
+            "queuedConstructionDeals": [],
+            "movementSource": "illustrative-pedestrian-route"
+          }
+        ]
+      },
+      "districts": [
+        {
+          "id": "lead",
+          "name": "Nuevos leads",
+          "count": 7,
+          "color": "rgb(35,139,236)",
+          "visible": false,
+          "labelX": 467,
+          "labelY": 64,
+          "anchor": [
+            -31.25,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "qualified",
+          "name": "Cualificados",
+          "count": 5,
+          "color": "rgb(12,185,176)",
+          "visible": false,
+          "labelX": 590,
+          "labelY": 161,
+          "anchor": [
+            -15.5,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "proposal",
+          "name": "Propuestas",
+          "count": 6,
+          "color": "rgb(243,171,34)",
+          "visible": false,
+          "labelX": 633,
+          "labelY": 71,
+          "anchor": [
+            0,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "negotiation",
+          "name": "Negociación",
+          "count": 6,
+          "color": "rgb(162,89,223)",
+          "visible": false,
+          "labelX": 755,
+          "labelY": 168,
+          "anchor": [
+            15.5,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "won",
+          "name": "Ventas ganadas",
+          "count": 4,
+          "color": "rgb(36,182,107)",
+          "visible": false,
+          "labelX": 799,
+          "labelY": 247,
+          "anchor": [
+            31.25,
+            0.4,
+            -12.25
+          ]
+        },
+        {
+          "id": "clients",
+          "name": "Clientes activos",
+          "count": 18,
+          "color": "#178f8c",
+          "visible": false,
+          "labelX": 469,
+          "labelY": 257,
+          "anchor": [
+            -1,
+            0.5,
+            25.2
+          ]
+        }
+      ],
+      "ownerBadges": [
+        {
+          "id": "owner-ana",
+          "visible": false,
+          "text": "AT"
+        },
+        {
+          "id": "owner-marcos",
+          "visible": false,
+          "text": "MV"
+        },
+        {
+          "id": "owner-lucia",
+          "visible": false,
+          "text": "LF"
+        },
+        {
+          "id": "owner-david",
+          "visible": false,
+          "text": "DS"
+        }
+      ],
+      "placeLabels": [],
+      "industryLabels": [
+        {
+          "id": "manufacturing",
+          "visible": true,
+          "text": "Fabricación240 uds"
+        },
+        {
+          "id": "packing",
+          "visible": true,
+          "text": "Empacado120 uds"
+        },
+        {
+          "id": "warehouse",
+          "visible": true,
+          "text": "Almacén480 uds"
+        },
+        {
+          "id": "transit",
+          "visible": true,
+          "text": "En transporte160 uds"
+        },
+        {
+          "id": "delivered",
+          "visible": true,
+          "text": "Entregado320 uds"
+        }
+      ],
+      "connectionCount": 0,
+      "traffic": {
+        "enabled": false,
+        "elapsed": 0.13333333333333333,
+        "laneLength": 124.27964473723102,
+        "minimumClearance": 11.868849415247835,
+        "vehicles": [
+          {
+            "id": "ambient-1",
+            "kind": "car",
+            "s": 4.213333333333395,
+            "length": 1.94,
+            "speed": 0.19999999999999998,
+            "cruise": 2.5,
+            "distance": 0.013333333333333332,
+            "brake": false,
+            "x": -17.436666666666607,
+            "z": -8.05,
+            "tx": 1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "north-eastbound"
+          },
+          {
+            "id": "ambient-2",
+            "kind": "car",
+            "s": 18.02218274858123,
+            "length": 1.94,
+            "speed": 0.19999999999999998,
+            "cruise": 2.72,
+            "distance": 0.013333333333333332,
+            "brake": false,
+            "x": -3.6278172514187723,
+            "z": -8.05,
+            "tx": 1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "north-eastbound"
+          },
+          {
+            "id": "ambient-3",
+            "kind": "car",
+            "s": 31.83103216382912,
+            "length": 1.94,
+            "speed": 0.19999999999999998,
+            "cruise": 2.94,
+            "distance": 0.013333333333333332,
+            "brake": false,
+            "x": 10.18103216382912,
+            "z": -8.05,
+            "tx": 1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "north-eastbound"
+          },
+          {
+            "id": "ambient-4",
+            "kind": "car",
+            "s": 45.639881579076985,
+            "length": 1.94,
+            "speed": 0.19999999999999998,
+            "cruise": 2.5,
+            "distance": 0.013333333333333332,
+            "brake": false,
+            "x": 23.63641807514439,
+            "z": -6.996901344100473,
+            "tx": 0.5612088933751967,
+            "tz": 0.827674197976829,
+            "curvature": 0.4166666666666667,
+            "segment": "north-east-corner"
+          },
+          {
+            "id": "ambient-5",
+            "kind": "car",
+            "s": 59.448730994324876,
+            "length": 1.94,
+            "speed": 0.19999999999999998,
+            "cruise": 2.72,
+            "distance": 0.013333333333333332,
+            "brake": false,
+            "x": 23.811586126303183,
+            "z": 6.692854457042593,
+            "tx": -0.4345226904344135,
+            "tz": 0.9006608859596595,
+            "curvature": 0.4166666666666667,
+            "segment": "south-east-corner"
+          },
+          {
+            "id": "ambient-6",
+            "kind": "car",
+            "s": 73.25758040957277,
+            "length": 1.94,
+            "speed": 0.19999999999999998,
+            "cruise": 2.94,
+            "distance": 0.013333333333333332,
+            "brake": false,
+            "x": 10.53224195904274,
+            "z": 8.05,
+            "tx": -1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "south-westbound"
+          },
+          {
+            "id": "ambient-7",
+            "kind": "car",
+            "s": 87.06642982482066,
+            "length": 1.94,
+            "speed": 0.19999999999999998,
+            "cruise": 2.5,
+            "distance": 0.013333333333333332,
+            "brake": false,
+            "x": -3.276607456205152,
+            "z": 8.05,
+            "tx": -1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "south-westbound"
+          },
+          {
+            "id": "ambient-8",
+            "kind": "car",
+            "s": 100.87527924006855,
+            "length": 1.94,
+            "speed": 0.19999999999999998,
+            "cruise": 2.72,
+            "distance": 0.013333333333333332,
+            "brake": false,
+            "x": -17.085456871453044,
+            "z": 8.05,
+            "tx": -1,
+            "tz": 0,
+            "curvature": 0,
+            "segment": "south-westbound"
+          },
+          {
+            "id": "ambient-9",
+            "kind": "motorcycle",
+            "s": 114.68412865531644,
+            "length": 1.24,
+            "speed": 0.19999999999999998,
+            "cruise": 3,
+            "distance": 0.013333333333333332,
+            "brake": false,
+            "x": -24.05,
+            "z": 0.17560489760682607,
+            "tx": 0,
+            "tz": -1,
+            "curvature": 0,
+            "segment": "west-northbound"
+          }
+        ],
+        "signals": [
+          {
+            "id": "north-crossing",
+            "s": 18.85,
+            "offset": 0,
+            "x": -0.9,
+            "z": -6.35,
+            "rotation": -1.5707963267948966,
+            "state": "green"
+          },
+          {
+            "id": "south-crossing",
+            "s": 80.9898223686155,
+            "offset": 2.5,
+            "x": 0.9,
+            "z": 6.35,
+            "rotation": 1.5707963267948966,
+            "state": "green"
+          }
+        ],
+        "source": "ambient-demo",
+        "quality": "light",
+        "meshes": 9,
+        "type": "ambient-traffic",
+        "businessData": false
+      },
+      "visibleLabelCount": 5,
+      "heightScale": {
+        "min": 1.8,
+        "max": 8.8,
+        "referenceAmount": 10000,
+        "referenceHeight": 6,
+        "unknownHeight": 4
+      },
+      "reducedMotion": false,
+      "active": true
+    }
+  },
+  "ownerLabels": {
+    "id": "owner-ana",
+    "frames": [
+      {
+        "now": 19475.6,
+        "transform": "translate(442px, 147px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -16.66157884939976,
+          0.20792765232527097,
+          12.067684230120049
+        ]
+      },
+      {
+        "now": 20008.8,
+        "transform": "translate(440px, 146px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -17,
+          0.2119954778726622,
+          12
+        ]
+      },
+      {
+        "now": 20592.2,
+        "transform": "translate(440px, 146px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -17,
+          0.2,
+          12
+        ]
+      },
+      {
+        "now": 21208.9,
+        "transform": "translate(440px, 146px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -17,
+          0.2,
+          12
+        ]
+      },
+      {
+        "now": 21842.2,
+        "transform": "translate(440px, 146px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -17,
+          0.2,
+          12
+        ]
+      },
+      {
+        "now": 22408.7,
+        "transform": "translate(444px, 153px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -15.375023608479186,
+          0.20191598318054188,
+          13.03407588551325
+        ]
+      },
+      {
+        "now": 23008.7,
+        "transform": "translate(449px, 160px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -13.653954173505685,
+          0.22175806264373127,
+          14.129301889587298
+        ]
+      },
+      {
+        "now": 23608.7,
+        "transform": "translate(453px, 167px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -11.932884738532184,
+          0.20457926287794928,
+          15.224527893661339
+        ]
+      },
+      {
+        "now": 24158.7,
+        "transform": "translate(449px, 173px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -11.428683045750363,
+          0.2085006563989363,
+          16.85502213074305
+        ]
+      },
+      {
+        "now": 24708.7,
+        "transform": "translate(442px, 178px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -11.330398027810793,
+          0.21212553958399,
+          18.722437471594855
+        ]
+      },
+      {
+        "now": 25258.7,
+        "transform": "translate(435px, 184px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -11.232113009871226,
+          0.21532747333470686,
+          20.589852812446658
+        ]
+      },
+      {
+        "now": 25841.9,
+        "transform": "translate(427px, 189px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -11.12789515084876,
+          0.2206923863276312,
+          22.569992133873523
+        ]
+      },
+      {
+        "now": 26408.6,
+        "transform": "translate(419px, 195px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -11.026625842364483,
+          0.21158560113082614,
+          24.494108995074814
+        ]
+      },
+      {
+        "now": 26991.9,
+        "transform": "translate(425px, 200px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -9.523371200422812,
+          0.2123273510341875,
+          25
+        ]
+      },
+      {
+        "now": 28025.2,
+        "transform": "translate(434px, 198px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -8.8,
+          0.2148796682910496,
+          23.85
+        ]
+      },
+      {
+        "now": 28575.2,
+        "transform": "translate(434px, 198px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -8.8,
+          0.2,
+          23.85
+        ]
+      },
+      {
+        "now": 29158.5,
+        "transform": "translate(434px, 198px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -8.8,
+          0.2,
+          23.85
+        ]
+      },
+      {
+        "now": 29775.1,
+        "transform": "translate(434px, 198px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -8.8,
+          0.2,
+          23.85
+        ]
+      },
+      {
+        "now": 29791.9,
+        "transform": "translate(434px, 198px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -8.8,
+          0.2,
+          23.85
+        ]
+      },
+      {
+        "now": 30975.1,
+        "transform": "translate(434px, 198px) translate(-50%, -50%)",
+        "text": "AT",
+        "visible": true,
+        "owner": [
+          -8.8,
+          0.2,
+          23.85
+        ]
+      }
+    ],
+    "styleMutations": 38,
+    "contentMutations": 38,
+    "distinctTransforms": 12
+  }
+}

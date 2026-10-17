@@ -15,6 +15,7 @@ import { createPeople } from "./people.js";
 import { createCommunicationsDistrict } from "./communications.js";
 import { createIndustryDistrict } from "./industry.js";
 import { stageKind, needsAttention as modelNeedsAttention } from "./model.js";
+import { createSectorEmphasis } from "./sector-emphasis.js";
 
 const COLORS = ["#338ee0", "#00a99a", "#f1ab29", "#9468d2", "#31ab64"];
 const tmp = new THREE.Object3D(),
@@ -88,6 +89,15 @@ export async function createCityScene({
     flight = null,
     followFocus = null,
     followAnchor = null;
+  const tvTour = {
+    enabled: false,
+    sequence: ["all", "sales", "all", "communications", "all", "industry"],
+    index: 0,
+    nextAt: 0,
+    pausedUntil: 0,
+    transitionDuration: 7,
+    holdDuration: 9,
+  };
   const frameTimes = [],
     submitTimes = [],
     entityGroups = new Map(),
@@ -102,6 +112,20 @@ export async function createCityScene({
     identity = new Map();
   const w = () => Math.max(1, container.clientWidth),
     h = () => Math.max(1, container.clientHeight);
+  let labelSpecs = [],
+    labelLayoutDirty = true,
+    lastCameraSignature = "",
+    lastLayoutCameraSignature = "",
+    lastCameraMotionAt = -1;
+  const labelCache = new WeakMap();
+  const labelMetrics = {
+    contentBuilds: 0,
+    measurements: 0,
+    projectionFrames: 0,
+    layoutPasses: 0,
+    occlusionTests: 0,
+  };
+  const emphasis = createSectorEmphasis();
   const scene = new THREE.Scene();
   scene.background = new THREE.Color("#e3eef2");
   scene.fog = new THREE.Fog("#e3eef2", 145, 265);
@@ -147,6 +171,7 @@ export async function createCityScene({
     flight = null;
     followFocus = null;
     mode = tvPresentation ? "tv" : "explore";
+    pauseTVTour();
     onNavigate();
   });
   controls.addEventListener("change", () => {
@@ -316,11 +341,20 @@ export async function createCityScene({
       ? new THREE.Vector3(5, 70, 90)
       : new THREE.Vector3(90, 70, 5);
   }
-  function setDistrict(next) {
+  function setDistrict(next, { tour = false, duration } = {}) {
     if (!["sales", "communications", "industry", "all"].includes(next))
       return district;
+    if (!tour) pauseTVTour();
+    const fromFrustum = {
+      left: camera.left,
+      right: camera.right,
+      top: camera.top,
+      bottom: camera.bottom,
+    };
     const districtChanged = district !== next;
     district = next;
+    emphasis.setDistrict(next);
+    labelLayoutDirty = true;
     selectedId = null;
     ring.visible = false;
     followFocus = null;
@@ -336,8 +370,19 @@ export async function createCityScene({
     sun.shadow.camera.far = 220;
     sun.shadow.camera.updateProjectionMatrix();
     renderer.shadowMap.needsUpdate = true;
-    resize();
-    overview();
+    resize({ preserveFlight: false });
+    overview({ tour, duration });
+    if (tour && flight) {
+      flight.fromFrustum = fromFrustum;
+      flight.toFrustum = {
+        left: camera.left,
+        right: camera.right,
+        top: camera.top,
+        bottom: camera.bottom,
+      };
+      Object.assign(camera, fromFrustum);
+      camera.updateProjectionMatrix();
+    }
     lastLabel = 0;
     if (districtChanged) onDistrictChange(district);
     return district;
@@ -373,7 +418,11 @@ export async function createCityScene({
     );
     return { vertical: height / scale, center: (top - bottom) / (2 * scale) };
   }
-  function resize() {
+  function resize({ preserveFlight = true } = {}) {
+    const interruptedFlight =
+      preserveFlight && tvPresentation && flight?.fromFrustum ? flight : null;
+    const previousTop = camera.top,
+      previousBottom = camera.bottom;
     const width = w(),
       height = h(),
       aspect = width / height;
@@ -397,7 +446,41 @@ export async function createCityScene({
     lastLabel = 0;
     const orientationChanged = portrait !== lastPortraitTV;
     lastPortraitTV = portrait;
-    if (orientationChanged && tvPresentation) overview();
+    if (interruptedFlight) {
+      // Rebase the remaining tour in the new viewport. Reusing the old flight's
+      // frustums here would overwrite resize on the next RAF and distort the map.
+      const targetFrustum = {
+        left: camera.left,
+        right: camera.right,
+        top: camera.top,
+        bottom: camera.bottom,
+      };
+      const remaining = Math.max(
+        0.5,
+        interruptedFlight.duration - (elapsed - interruptedFlight.start),
+      );
+      if (orientationChanged) overview({ tour: true, duration: remaining });
+      else
+        flight = {
+          ...interruptedFlight,
+          fromPos: camera.position.clone(),
+          fromTarget: controls.target.clone(),
+          fromZoom: camera.zoom,
+          start: elapsed,
+          duration: remaining,
+        };
+      const previousVertical = previousTop - previousBottom;
+      const currentFrustum = {
+        left: (-previousVertical * aspect) / 2,
+        right: (previousVertical * aspect) / 2,
+        top: previousTop,
+        bottom: previousBottom,
+      };
+      flight.fromFrustum = currentFrustum;
+      flight.toFrustum = targetFrustum;
+      Object.assign(camera, currentFrustum);
+      camera.updateProjectionMatrix();
+    } else if (orientationChanged && tvPresentation) overview();
   }
   function pixelRatio() {
     const native = Math.min(window.devicePixelRatio || 1, 2);
@@ -559,7 +642,7 @@ export async function createCityScene({
     state = next;
     if (nextIndustryState !== undefined) industryState = nextIndustryState;
     communications.sync(state);
-    if (industryState) industry.sync(industryState);
+    if (industryState) industry.sync(industryState, { event, animateEvents });
     if (ids !== undefined)
       filteredIds = ids instanceof Set ? ids : new Set(ids || []);
     if (id !== undefined) selectedId = id;
@@ -690,7 +773,9 @@ export async function createCityScene({
     if (selectedId) select(selectedId);
     else ring.visible = false;
     renderer.shadowMap.needsUpdate = true;
+    emphasis.install(scene);
     lastLabel = 0;
+    labelLayoutDirty = true;
     if (!initialReady) {
       initialReady = true;
       onReady({ renderer: "WebGL2", heightScale: HEIGHT_SCALE });
@@ -935,6 +1020,7 @@ export async function createCityScene({
     lastLabel = 0;
   }
   function focus(id, { panelWidth = 350 } = {}) {
+    pauseTVTour();
     if (district !== "sales") setDistrict("sales");
     const e = architecture.entities.get(id);
     if (!e) return;
@@ -979,6 +1065,7 @@ export async function createCityScene({
     schedule();
   }
   function focusOwner(ownerId) {
+    pauseTVTour();
     if (district !== "sales") setDistrict("sales");
     const point = people.getOwnerPosition(ownerId);
     if (!point) return;
@@ -1045,6 +1132,7 @@ export async function createCityScene({
     return projectPoint(industry.focusPoint(id), id);
   }
   function focusPoint(point, { panelWidth = 350, zoom = 2.25 } = {}) {
+    pauseTVTour();
     if (!point) return;
     followFocus = null;
     const target = point.clone();
@@ -1090,6 +1178,7 @@ export async function createCityScene({
     followAnchor = point.clone();
   }
   function focusDistrict(stageId) {
+    pauseTVTour();
     // Keep the complete city legible on a portrait TV; there is no room for
     // a zoomed district plus the fixed KPI and salesperson bands.
     if (district !== "sales") setDistrict("sales");
@@ -1120,7 +1209,8 @@ export async function createCityScene({
     };
     schedule();
   }
-  function overview() {
+  function overview({ tour = false, duration } = {}) {
+    if (!tour) pauseTVTour();
     followFocus = null;
     const portrait = portraitTV();
     const bounds = viewBounds();
@@ -1138,7 +1228,7 @@ export async function createCityScene({
       toPos: position,
       toZoom: portrait || district !== "sales" ? 1 : tvPresentation ? 0.92 : 1,
       start: elapsed,
-      duration: reducedMotion ? 0.01 : 1.1,
+      duration: reducedMotion ? 0.01 : (duration ?? 1.1),
     };
     mode = tvPresentation ? "tv" : "explore";
     schedule();
@@ -1152,6 +1242,7 @@ export async function createCityScene({
     );
     camera.updateProjectionMatrix();
     controls.update();
+    pauseTVTour();
     onNavigate();
     schedule();
   }
@@ -1169,8 +1260,64 @@ export async function createCityScene({
     lastLabel = 0;
     schedule();
   }
+  function getTVTourState() {
+    return {
+      elapsed,
+      nextAt: tvTour.nextAt,
+      pausedUntil: tvTour.pausedUntil,
+      enabled: tvTour.enabled,
+      running:
+        tvTour.enabled &&
+        tvPresentation &&
+        !reducedMotion &&
+        elapsed >= tvTour.pausedUntil,
+      paused: tvTour.enabled && elapsed < tvTour.pausedUntil,
+      step: tvTour.index,
+      district: tvTour.sequence[tvTour.index],
+      sequence: [...tvTour.sequence],
+      nextIn: Math.max(0, tvTour.nextAt - elapsed),
+      pausedFor: Math.max(0, tvTour.pausedUntil - elapsed),
+      transitionDuration: tvTour.transitionDuration,
+      holdDuration: tvTour.holdDuration,
+    };
+  }
+  function pauseTVTour(seconds = 14) {
+    if (tvTour.enabled)
+      tvTour.pausedUntil = Math.max(tvTour.pausedUntil, elapsed + seconds);
+  }
+  function setTVTour(enabled) {
+    tvTour.enabled = Boolean(enabled) && !reducedMotion;
+    tvTour.index = 0;
+    tvTour.pausedUntil = 0;
+    tvTour.nextAt = elapsed + tvTour.holdDuration;
+    if (tvTour.enabled && tvPresentation && district !== "all")
+      setDistrict("all", { tour: true, duration: tvTour.transitionDuration });
+    schedule();
+  }
+  function updateTVTour() {
+    if (
+      !tvTour.enabled ||
+      !tvPresentation ||
+      reducedMotion ||
+      pointerDown ||
+      elapsed < tvTour.pausedUntil ||
+      elapsed < tvTour.nextAt
+    )
+      return;
+    if (construction.debug().count) {
+      tvTour.nextAt = elapsed + 2;
+      return;
+    }
+    tvTour.index = (tvTour.index + 1) % tvTour.sequence.length;
+    setDistrict(tvTour.sequence[tvTour.index], {
+      tour: true,
+      duration: tvTour.transitionDuration,
+    });
+    tvTour.nextAt = elapsed + tvTour.transitionDuration + tvTour.holdDuration;
+  }
   function setTVPresentation(enabled) {
     tvPresentation = !!enabled;
+    if (!tvPresentation) setTVTour(false);
     people.setPresentation?.(tvPresentation);
     if (tvPresentation) {
       selectedId = null;
@@ -1366,6 +1513,22 @@ export async function createCityScene({
         stageLabels.set(stage.id, element);
       }
       const color = stageColor(stage.id);
+      const deals = (state.deals || []).filter(
+        (deal) => deal.stageId === stage.id,
+      );
+      const sourceSignature = JSON.stringify([
+        index,
+        stage.name,
+        color,
+        deals.map((deal) => [deal.id, deal.amount]),
+      ]);
+      if (element.dataset.sourceSignature === sourceSignature) continue;
+      element.dataset.sourceSignature = sourceSignature;
+      element.dataset.presentation = "";
+      getLabelCache(element).signature = sourceSignature;
+      getLabelCache(element).measuredSignature = "";
+      labelMetrics.contentBuilds++;
+      labelLayoutDirty = true;
       element.style.cssText = `position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;transform:translate(-50%,-50%);text-align:left;color:#243b49;font-family:inherit;padding:7px 9px;border:1px solid #ffffff;border-top:3px solid ${color};border-radius:8px;background:rgba(255,255,255,.97);box-shadow:0 3px 12px #173c4d26;min-width:108px;`;
       element.replaceChildren();
       const title = document.createElement("span");
@@ -1375,9 +1538,6 @@ export async function createCityScene({
       numeral.textContent = String(index + 1).padStart(2, "0");
       numeral.style.cssText = `display:inline-grid;place-items:center;min-width:19px;height:19px;color:white;background:${color};border-radius:5px;font-size:10px;`;
       title.append(numeral, document.createTextNode(stage.name));
-      const deals = (state.deals || []).filter(
-        (deal) => deal.stageId === stage.id,
-      );
       const subtitle = document.createElement("span");
       subtitle.textContent = `${deals.length} ${deals.length === 1 ? "deal" : "deals"} · ${deals.every((deal) => typeof deal.amount === "number" && Number.isFinite(deal.amount)) ? euro.format(deals.reduce((sum, deal) => sum + deal.amount, 0)) : "Sin importe"}`;
       subtitle.style.cssText =
@@ -1392,9 +1552,16 @@ export async function createCityScene({
       labelContainer.append(clients);
       stageLabels.set("clients", clients);
     }
+    const clientsText = `Clientes activos · ${(state?.accounts || []).length} empresas`;
+    if (clients.textContent === clientsText) return;
+    getLabelCache(clients).signature = clientsText;
+    getLabelCache(clients).measuredSignature = "";
+    clients.dataset.presentation = "";
+    labelLayoutDirty = true;
+    labelMetrics.contentBuilds++;
     clients.style.cssText =
       "position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;text-align:center;padding:8px 13px;border:1px solid white;border-top:3px solid #178f8c;border-radius:8px;background:rgba(255,255,255,.98);box-shadow:0 3px 12px #173c4d26;color:#235353;font-family:inherit;font-weight:800;font-size:11px;letter-spacing:.02em;";
-    clients.textContent = `Clientes activos · ${(state?.accounts || []).length} empresas`;
+    clients.textContent = clientsText;
   }
   function updateMarkers() {
     let p = 0,
@@ -1429,7 +1596,52 @@ export async function createCityScene({
     activityMesh.instanceMatrix.needsUpdate = true;
     activityMesh.computeBoundingSphere();
   }
-  function badge(map, id, className, title, subtitle, color, onClick) {
+  const communicationIcons = {
+    email: ["M3 5h18v14H3z", "m3 6 9 7 9-7"],
+    call: ["M7 3 3 5c0 8 8 16 16 16l2-4-5-3-2 2c-3-1-5-3-6-6l2-2z"],
+    message: [
+      "M21 11a9 9 0 0 1-9 9H5l-3 2 1-6a9 9 0 1 1 18-5Z",
+      "M8 11h.01M12 11h.01M16 11h.01",
+    ],
+    meeting: [
+      "M3 9h13v7a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z",
+      "M16 10h2a3 3 0 0 1 0 6h-2M6 3v3M10 2v4M14 3v3M2 23h16",
+    ],
+  };
+  function getLabelCache(element) {
+    let cache = labelCache.get(element);
+    if (!cache) {
+      cache = {
+        signature: "",
+        measuredSignature: "",
+        width: 0,
+        height: 0,
+        dx: 0,
+        dy: 0,
+        occluded: false,
+        hidden: element.hidden,
+      };
+      labelCache.set(element, cache);
+    }
+    return cache;
+  }
+  function setLabelHidden(element, hidden) {
+    const cache = getLabelCache(element);
+    if (cache.hidden !== hidden) {
+      element.hidden = hidden;
+      cache.hidden = hidden;
+    }
+  }
+  function badge(
+    map,
+    id,
+    className,
+    title,
+    subtitle,
+    color,
+    onClick,
+    communication = null,
+  ) {
     let element = map.get(id);
     if (!element) {
       element = document.createElement(onClick ? "button" : "div");
@@ -1446,15 +1658,59 @@ export async function createCityScene({
       map.set(id, element);
     }
     const compact = w() < 650;
-    element.style.cssText = `position:absolute;left:0;top:0;white-space:nowrap;pointer-events:${onClick ? "auto" : "none"};font-family:inherit;text-align:left;border:1px solid white;border-top:3px solid ${color};border-radius:8px;background:rgba(255,255,255,.97);box-shadow:0 3px 12px #173c4d26;color:#243b49;padding:${compact ? "5px 7px" : "7px 9px"};`;
-    element.replaceChildren();
+    const signature = JSON.stringify([
+      title,
+      subtitle,
+      color,
+      compact,
+      communication,
+    ]);
+    const cache = getLabelCache(element);
+    if (cache.signature === signature) return element;
+    cache.signature = signature;
+    labelMetrics.contentBuilds++;
+    element.style.cssText = `position:absolute;left:0;top:0;white-space:nowrap;pointer-events:${onClick ? "auto" : "none"};font-family:inherit;text-align:left;border:1px solid white;border-top:3px solid ${color};border-radius:8px;background:rgba(255,255,255,.97);box-shadow:0 3px 12px #173c4d26;color:#243b49;padding:${compact ? "5px 7px" : "7px 9px"};will-change:transform;`;
     const heading = document.createElement("b");
     heading.textContent = title;
     heading.style.cssText = `display:block;font-size:${compact ? 9 : 11}px;font-weight:800;`;
     const sub = document.createElement("span");
     sub.textContent = subtitle;
     sub.style.cssText = `display:block;font-size:${compact ? 8 : 10}px;margin-top:3px;color:#526a76;font-weight:600;`;
-    element.append(heading, sub);
+    if (communication) {
+      const row = document.createElement("span"),
+        icon = document.createElementNS("http://www.w3.org/2000/svg", "svg"),
+        number = document.createElement("strong");
+      row.style.cssText =
+        "display:flex;align-items:center;gap:7px;margin-bottom:4px;";
+      icon.setAttribute("viewBox", "0 0 24 24");
+      icon.setAttribute("width", compact ? "22" : "26");
+      icon.setAttribute("height", compact ? "22" : "26");
+      icon.setAttribute("fill", "none");
+      icon.setAttribute("stroke", color);
+      icon.setAttribute("stroke-width", "1.8");
+      icon.setAttribute("stroke-linecap", "round");
+      icon.setAttribute("stroke-linejoin", "round");
+      icon.setAttribute("aria-hidden", "true");
+      for (const d of communicationIcons[communication.kind] ||
+        communicationIcons.message) {
+        const path = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "path",
+        );
+        path.setAttribute("d", d);
+        icon.append(path);
+      }
+      number.textContent =
+        communication.available === false ? "—" : String(communication.count);
+      number.style.cssText = `font-size:${compact ? 22 : 27}px;line-height:1;font-weight:800;color:${color};`;
+      row.append(icon, number);
+      element.replaceChildren(row, heading, sub);
+      element.setAttribute(
+        "aria-label",
+        `${title}: ${communication.available === false ? "sin datos" : communication.count} completadas hoy. ${subtitle}`,
+      );
+    } else element.replaceChildren(heading, sub);
+    labelLayoutDirty = true;
     return element;
   }
   function ownerBadge(owner) {
@@ -1474,155 +1730,79 @@ export async function createCityScene({
       labelContainer.append(element);
       ownerLabels.set(owner.ownerId, element);
     }
-    const atWork = owner.attendingConstruction;
-    const deal = state?.deals?.find((entry) => entry.id === owner.dealId);
-    const stage = state?.stages?.find((entry) => entry.id === deal?.stageId);
+    const atWork = owner.attendingConstruction,
+      deal = state?.deals?.find((entry) => entry.id === owner.dealId),
+      stage = state?.stages?.find((entry) => entry.id === deal?.stageId);
     const text = atWork
       ? `${owner.initials} · ${owner.name.split(" ")[0]} · ${stage?.name || "En obra"}`
       : owner.initials;
+    const signature = [text, atWork, owner.color, owner.name, w() < 650].join(
+      "|",
+    );
+    const cache = getLabelCache(element);
+    if (cache.signature === signature) return element;
+    cache.signature = signature;
+    labelMetrics.contentBuilds++;
     element.textContent = text;
     element.title = `${owner.name}${atWork ? ` · ${stage?.name || "Acompañando la obra"}` : " · Ver comercial"}`;
     element.setAttribute("aria-label", element.title);
-    element.style.cssText = `position:absolute;left:0;top:0;height:27px;min-width:28px;white-space:nowrap;padding:${atWork ? "0 7px" : "0 4px"};border:2px solid #fff;border-radius:${atWork ? "8px" : "50%"};background:${owner.color || "#237cc1"};box-shadow:0 2px 8px #12384e44;color:white;font:800 ${w() < 650 ? 9 : 10}px DM Sans,sans-serif;pointer-events:auto;text-align:center;`;
-    const line = document.createElement("span");
+    element.style.cssText = `position:absolute;left:0;top:0;height:27px;min-width:28px;white-space:nowrap;padding:${atWork ? "0 7px" : "0 4px"};border:2px solid #fff;border-radius:${atWork ? "8px" : "50%"};background:${owner.color || "#237cc1"};box-shadow:0 2px 8px #12384e44;color:white;font:800 ${w() < 650 ? 9 : 10}px DM Sans,sans-serif;pointer-events:auto;text-align:center;will-change:transform;`;
+    const line = document.createElement("span"),
+      dot = document.createElement("span");
     line.setAttribute("aria-hidden", "true");
     line.style.cssText = `position:absolute;left:calc(50% - .5px);top:100%;width:1px;height:16px;background:${owner.color || "#237cc1"};box-shadow:0 0 0 1px #ffffff99;pointer-events:none;`;
-    const dot = document.createElement("span");
     dot.style.cssText = `position:absolute;left:-2px;bottom:-2px;width:5px;height:5px;border-radius:50%;background:${owner.color || "#237cc1"};border:1px solid white;`;
     line.append(dot);
     element.append(line);
+    labelLayoutDirty = true;
     return element;
   }
-  function updateLabels() {
+  // Content and box measurements have a small independent budget. Animation
+  // only projects cached anchors; it never rebuilds or measures moving badges.
+  function refreshLabelContent() {
     if (!labelContainer || !state) return;
-    const width = w(),
-      height = h(),
-      mobile = width < 650,
-      max = mobile ? 2 : 4,
-      occupied = [],
-      rect = renderer.domElement.getBoundingClientRect();
-    let count = 0;
-    function position(
-      el,
-      point,
-      labelWidth = 90,
-      priority = false,
-      district = false,
-    ) {
-      if (!el) return;
-      // Measure the real box even after changing districts hid it last frame.
-      el.hidden = false;
-      labelWidth = el.offsetWidth || labelWidth;
-      const labelHeight = el.offsetHeight || (district ? 54 : 32);
-      const worldPoint = point.clone();
-      point.project(camera);
-      let x = (point.x * 0.5 + 0.5) * width,
-        y = (-point.y * 0.5 + 0.5) * height;
-      const valid =
-        layers.labels &&
-        point.z > -1 &&
-        point.z < 1 &&
-        x > 30 &&
-        x < width - 30 &&
-        y > 18 &&
-        y < height - 35 &&
-        (district || count < max);
-      const collides = (px, py) =>
-        occupied.some(
-          (rectangle) =>
-            Math.abs(px - rectangle.x) < (rectangle.w + labelWidth) / 2 + 6 &&
-            Math.abs(py - rectangle.y) < (rectangle.h + labelHeight) / 2 + 6,
-        );
-      if (valid && district) {
-        const halfWidth = labelWidth / 2,
-          halfHeight = labelHeight / 2;
-        const minX = halfWidth + 8,
-          maxX = width - halfWidth - 8;
-        const minY =
-          (portraitTV() ? 208 : tvPresentation ? 128 : 8) + halfHeight;
-        const maxY =
-          height - halfHeight - (portraitTV() ? 120 : tvPresentation ? 86 : 92);
-        const anchorX = clamp(x, minX, maxX),
-          anchorY = clamp(y, minY, Math.max(minY, maxY));
-        const yStep = labelHeight + 8;
-        const candidates = [];
-        // Resolve with actual rendered rectangles. Vertical alternatives keep
-        // each plaque next to its own stage; small lateral shifts handle a
-        // narrow/mobile view or the first frame after leaving fullscreen.
-        for (const dx of [0, -40, 40, -80, 80]) {
-          for (const step of [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5]) {
-            const px = clamp(anchorX + dx, minX, maxX);
-            const py = clamp(
-              anchorY + step * yStep,
-              minY,
-              Math.max(minY, maxY),
-            );
-            candidates.push({
-              x: px,
-              y: py,
-              distance: (px - anchorX) ** 2 + (py - anchorY) ** 2,
-            });
-          }
-        }
-        candidates.sort((a, b) => a.distance - b.distance);
-        const clear = candidates.find(
-          (candidate) => !collides(candidate.x, candidate.y),
-        );
-        if (clear) {
-          x = clear.x;
-          y = clear.y;
-        } else {
-          x = anchorX;
-          y = anchorY;
-        }
-      }
-      const overlap = collides(x, y);
-      let occluded = false;
-      if (valid && !priority && !district) {
-        ray.setFromCamera(new THREE.Vector2(point.x, point.y), camera);
-        const distance = ray.ray.origin.distanceTo(worldPoint);
-        const hit = ray.intersectObjects(
-          architecture.meshes.filter(
-            (m) => m.visible && m.name === "city-kit-mass",
-          ),
-          false,
-        )[0];
-        occluded = !!(hit && hit.distance < distance - 0.35);
-      }
-      el.hidden = !valid || (!priority && !district && (overlap || occluded));
-      if (!el.hidden) {
-        el.style.transform = `translate(${Math.round(x)}px,${Math.round(y)}px) translate(-50%,-50%)`;
-        occupied.push({ x, y, w: labelWidth, h: labelHeight });
-        el.dataset.labelX = String(Math.round(x));
-        el.dataset.labelY = String(Math.round(y));
-        if (!district) count++;
-      }
+    const mobile = w() < 650,
+      showingSales = district === "sales",
+      showingPeople = showingSales || district === "all";
+    const specs = [],
+      present = new Set();
+    function add(element, point, options = {}) {
+      if (!element) return;
+      specs.push({
+        element,
+        point,
+        district: false,
+        owner: false,
+        marker: false,
+        priority: false,
+        ...options,
+      });
+      present.add(element);
     }
-    const showingSales = district === "sales";
-    const showingPeople = district === "sales" || district === "all";
-    const activeOwners = new Set();
     if (layers.activity && showingPeople)
       for (const owner of (people.getOwnerLabels?.() || []).slice(0, 4)) {
-        const element = ownerBadge(owner);
-        position(
-          element,
-          owner.position.clone().add(new THREE.Vector3(0, 2.2, 0)),
-          30,
-          true,
-          "owner",
+        add(
+          ownerBadge(owner),
+          () =>
+            people
+              .getOwnerPosition(owner.ownerId)
+              ?.add(new THREE.Vector3(0, 2.2, 0)),
+          { owner: true, priority: true },
         );
-        activeOwners.add(owner.ownerId);
       }
-    for (const [id, element] of ownerLabels)
-      if (!activeOwners.has(id)) element.hidden = true;
-    for (const map of [placeLabels, industryLabels, sectorLabels])
-      for (const element of map.values()) element.hidden = true;
     if (district === "communications")
       for (const place of communications.getPlaces()) {
         const text =
           place.sourceAvailable === false
             ? "Canal no disponible"
             : `${place.todayCompleted || 0} hoy · ${place.pendingCount || 0} pendientes`;
+        const kind = /mail|correo|email/.test(place.id)
+          ? "email"
+          : /call|llamada|phone/.test(place.id)
+            ? "call"
+            : /meet|cafe|reuni/.test(place.id)
+              ? "meeting"
+              : "message";
         const element = badge(
           placeLabels,
           place.id,
@@ -1636,8 +1816,13 @@ export async function createCityScene({
               focusPlace(place.id);
             }
           },
+          {
+            kind,
+            count: place.todayCompleted || 0,
+            available: place.sourceAvailable,
+          },
         );
-        position(element, place.position.clone(), 150, false, true);
+        add(element, place.position, { district: true });
       }
     if (district === "industry")
       for (const place of industry.getPlaces()) {
@@ -1655,7 +1840,7 @@ export async function createCityScene({
             }
           },
         );
-        position(element, place.position.clone(), 140, false, true);
+        add(element, place.position, { district: true });
       }
     if (district === "all") {
       const sectors = [
@@ -1681,160 +1866,298 @@ export async function createCityScene({
           point: new THREE.Vector3(0, 10, -60),
         },
       ];
-      for (const sector of sectors) {
-        const element = badge(
-          sectorLabels,
-          sector.id,
-          "city-sector-label",
-          sector.name,
-          sector.sub,
-          sector.color,
-          () => setDistrict(sector.id),
+      for (const sector of sectors)
+        add(
+          badge(
+            sectorLabels,
+            sector.id,
+            "city-sector-label",
+            sector.name,
+            sector.sub,
+            sector.color,
+            () => setDistrict(sector.id),
+          ),
+          sector.point,
+          { district: true },
         );
-        position(element, sector.point, 190, false, true);
-      }
     }
-    // Stage titles belong to their coloured front edge; they have their own
-    // budget, so an alert or selected deal cannot silently remove a district.
-    for (const stage of cityStages()) {
-      const element = stageLabels.get(stage.id);
-      if (!element) continue;
-      if (!showingSales) {
-        element.hidden = true;
-        continue;
+    if (showingSales)
+      for (const stage of cityStages()) {
+        const element = stageLabels.get(stage.id),
+          anchor = districtAnchors.get(stage.id);
+        if (!element || !anchor) continue;
+        const compact = portraitTV(),
+          signature = `${compact}|${mobile}`;
+        if (element.dataset.presentation !== signature) {
+          element.dataset.presentation = signature;
+          element.style.minWidth = compact ? "88px" : mobile ? "80px" : "108px";
+          element.style.padding = compact
+            ? "4px 6px"
+            : mobile
+              ? "5px 6px"
+              : "7px 9px";
+          element.style.fontSize = compact ? "8px" : mobile ? "9px" : "11px";
+          const title = element.firstElementChild,
+            subtitle = element.lastElementChild,
+            numeral = title?.firstElementChild;
+          if (title) {
+            title.style.fontSize = compact ? "8px" : "11px";
+            title.style.gap = compact ? "4px" : "6px";
+          }
+          if (subtitle) {
+            subtitle.style.fontSize = compact ? "8px" : "10px";
+            subtitle.style.paddingLeft = compact ? "0" : "25px";
+            subtitle.style.marginTop = compact ? "2px" : "4px";
+          }
+          if (numeral) {
+            numeral.style.minWidth = compact ? "15px" : "19px";
+            numeral.style.height = compact ? "15px" : "19px";
+            numeral.style.fontSize = compact ? "8px" : "10px";
+          }
+          getLabelCache(element).measuredSignature = "";
+          labelLayoutDirty = true;
+        }
+        add(element, anchor, { district: true });
       }
-      const compact = portraitTV();
-      element.style.minWidth = compact ? "88px" : mobile ? "80px" : "108px";
-      element.style.padding = compact
-        ? "4px 6px"
-        : mobile
-          ? "5px 6px"
-          : "7px 9px";
-      element.style.fontSize = compact ? "8px" : mobile ? "9px" : "11px";
-      const title = element.firstElementChild;
-      const subtitle = element.lastElementChild;
-      const numeral = title?.firstElementChild;
-      if (title) {
-        title.style.fontSize = compact ? "8px" : "11px";
-        title.style.gap = compact ? "4px" : "6px";
+    const clients = stageLabels.get("clients");
+    if (clients && showingSales && districtAnchors.has("clients")) {
+      const signature = String(portraitTV());
+      if (clients.dataset.presentation !== signature) {
+        clients.dataset.presentation = signature;
+        clients.style.fontSize = portraitTV() ? "8px" : "11px";
+        clients.style.padding = portraitTV() ? "6px 8px" : "8px 13px";
+        getLabelCache(clients).measuredSignature = "";
+        labelLayoutDirty = true;
       }
-      if (subtitle) {
-        subtitle.style.fontSize = compact ? "8px" : "10px";
-        subtitle.style.paddingLeft = compact ? "0" : "25px";
-        subtitle.style.marginTop = compact ? "2px" : "4px";
-      }
-      if (numeral) {
-        numeral.style.minWidth = compact ? "15px" : "19px";
-        numeral.style.height = compact ? "15px" : "19px";
-        numeral.style.fontSize = compact ? "8px" : "10px";
-      }
-      const anchor = districtAnchors.get(stage.id);
-      if (anchor)
-        position(element, anchor.clone(), mobile ? 112 : 145, false, true);
+      add(clients, districtAnchors.get("clients"), { district: true });
     }
-    const clientElement = stageLabels.get("clients");
-    if (clientElement) {
-      clientElement.style.fontSize = portraitTV() ? "8px" : "11px";
-      clientElement.style.padding = portraitTV() ? "6px 8px" : "8px 13px";
-    }
-    if (clientElement && !showingSales) clientElement.hidden = true;
-    if (clientElement && showingSales && districtAnchors.has("clients"))
-      position(
-        clientElement,
-        districtAnchors.get("clients").clone(),
-        mobile ? 185 : 215,
-        false,
-        true,
-      );
-    const selected = architecture.entities.get(selectedId);
     const priorities = [];
-    if (selected && !tvPresentation && showingSales)
+    if (
+      architecture.entities.get(selectedId) &&
+      !tvPresentation &&
+      showingSales
+    )
       priorities.push(selectedId);
-    for (const [id, e] of architecture.entities)
+    for (const [id, entity] of architecture.entities)
       if (
         showingSales &&
-        e.visible &&
+        entity.visible &&
         needsAttention(entityData.get(id) || {}) &&
         !priorities.includes(id)
       )
         priorities.push(id);
-    const visibleIds = new Set();
+    const namedIds = new Set();
     for (const id of priorities.slice(0, tvPresentation ? 0 : mobile ? 2 : 4)) {
-      const e = architecture.entities.get(id),
-        d = entityData.get(id);
-      if (!e?.visible) continue;
-      let el = entityLabels.get(id);
-      if (!el) {
-        el = document.createElement("button");
-        el.type = "button";
-        el.className = "city-entity-label";
-        el.style.cssText =
-          "position:absolute;top:0;left:0;min-height:30px;border:1px solid #c6d1c4;border-radius:7px;background:rgba(255,255,247,.96);box-shadow:0 3px 9px #455a4415;padding:5px 8px;color:#38584f;font-family:DM Sans,sans-serif;font-size:10px;font-weight:600;pointer-events:auto;white-space:nowrap;";
-        el.onclick = () => {
+      const entity = architecture.entities.get(id),
+        data = entityData.get(id);
+      if (!entity?.visible) continue;
+      let element = entityLabels.get(id);
+      if (!element) {
+        element = document.createElement("button");
+        element.type = "button";
+        element.className = "city-entity-label";
+        element.style.cssText =
+          "position:absolute;top:0;left:0;min-height:30px;border:1px solid #c6d1c4;border-radius:7px;background:rgba(255,255,247,.96);box-shadow:0 3px 9px #455a4415;padding:5px 8px;color:#38584f;font-family:DM Sans,sans-serif;font-size:10px;font-weight:600;pointer-events:auto;white-space:nowrap;will-change:transform;";
+        element.onclick = () => {
           select(id);
           onSelect(id);
         };
-        labelContainer.append(el);
-        entityLabels.set(id, el);
+        labelContainer.append(element);
+        entityLabels.set(id, element);
       }
-      el.replaceChildren();
-      if (needsAttention(d) && layers.activity) {
-        const badge = document.createElement("span");
-        badge.textContent = "!";
-        badge.style.cssText =
-          "display:inline-grid;place-items:center;width:13px;height:13px;margin-right:5px;border-radius:50%;background:#b95046;color:white;font:700 9px sans-serif;";
-        el.append(badge);
+      const attention = needsAttention(data) && layers.activity,
+        text = data.name || data.company || id,
+        cache = getLabelCache(element),
+        signature = `${attention}|${text}`;
+      if (cache.signature !== signature) {
+        cache.signature = signature;
+        labelMetrics.contentBuilds++;
+        element.replaceChildren();
+        if (attention) {
+          const warning = document.createElement("span");
+          warning.textContent = "!";
+          warning.style.cssText =
+            "display:inline-grid;place-items:center;width:13px;height:13px;margin-right:5px;border-radius:50%;background:#b95046;color:white;font:700 9px sans-serif;";
+          element.append(warning);
+        }
+        element.append(document.createTextNode(text));
+        labelLayoutDirty = true;
       }
-      el.append(document.createTextNode(d.name || d.company || id));
-      const point = e.group.position
-        .clone()
-        .add(new THREE.Vector3(0, e.model.height + 0.7, 0));
-      position(el, point, 120, id === selectedId);
-      visibleIds.add(id);
-    }
-    for (const [id, el] of entityLabels)
-      if (!visibleIds.has(id)) el.hidden = true;
-    // A red exclamation is the non-colour counterpart of the 3D incident marker.
-    const attentionIds = new Set();
-    for (const [id, e] of architecture.entities) {
-      if (!e.visible || !needsAttention(entityData.get(id) || {})) continue;
-      attentionIds.add(id);
-      let el = markerLabels.get(id);
-      if (!el) {
-        el = document.createElement("span");
-        el.className = "city-alert-marker";
-        el.textContent = "!";
-        el.title = "Tarea vencida";
-        el.style.cssText =
-          "position:absolute;top:0;left:0;font:bold 10px sans-serif;color:#fff;background:#b95046;border:2px solid #fff8ed;border-radius:50%;width:16px;height:16px;line-height:12px;text-align:center;pointer-events:none;";
-        labelContainer.append(el);
-        markerLabels.set(id, el);
-      }
-      const point = e.group.position
-        .clone()
-        .add(new THREE.Vector3(0, e.model.height + 0.3, 0))
-        .project(camera);
-      const markerX = (point.x * 0.5 + 0.5) * width;
-      const markerY = (-point.y * 0.5 + 0.5) * height;
-      const blockedByLabel = occupied.some(
-        (rectangle) =>
-          Math.abs(markerX - rectangle.x) < rectangle.w / 2 + 10 &&
-          Math.abs(markerY - rectangle.y) < rectangle.h / 2 + 10,
+      add(
+        element,
+        () =>
+          entity.group.position
+            .clone()
+            .add(new THREE.Vector3(0, entity.model.height + 0.7, 0)),
+        { priority: id === selectedId },
       );
-      el.hidden =
-        !layers.activity ||
-        !showingSales ||
-        blockedByLabel ||
-        tvPresentation ||
-        (entityLabels.has(id) && !entityLabels.get(id).hidden) ||
-        point.z > 1 ||
-        point.z < -1 ||
-        Math.abs(point.x) > 1 ||
-        Math.abs(point.y) > 1;
-      el.style.transform = `translate(${Math.round((point.x * 0.5 + 0.5) * width)}px,${Math.round((-point.y * 0.5 + 0.5) * height)}px) translate(-50%,-50%)`;
+      namedIds.add(id);
     }
-    for (const [id, el] of markerLabels)
-      if (!attentionIds.has(id)) el.hidden = true;
+    if (showingSales && layers.activity && !tvPresentation)
+      for (const [id, entity] of architecture.entities) {
+        if (
+          !entity.visible ||
+          !needsAttention(entityData.get(id) || {}) ||
+          namedIds.has(id)
+        )
+          continue;
+        let element = markerLabels.get(id);
+        if (!element) {
+          element = document.createElement("span");
+          element.className = "city-alert-marker";
+          element.textContent = "!";
+          element.title = "Tarea vencida";
+          element.style.cssText =
+            "position:absolute;top:0;left:0;font:bold 10px sans-serif;color:#fff;background:#b95046;border:2px solid #fff8ed;border-radius:50%;width:16px;height:16px;line-height:12px;text-align:center;pointer-events:none;will-change:transform;";
+          labelContainer.append(element);
+          markerLabels.set(id, element);
+        }
+        add(
+          element,
+          () =>
+            entity.group.position
+              .clone()
+              .add(new THREE.Vector3(0, entity.model.height + 0.3, 0)),
+          { marker: true },
+        );
+      }
+    for (const map of [
+      ownerLabels,
+      placeLabels,
+      industryLabels,
+      sectorLabels,
+      stageLabels,
+      entityLabels,
+      markerLabels,
+    ])
+      for (const element of map.values())
+        if (!present.has(element)) setLabelHidden(element, true);
+    // Batch writes first, then measure only new/changed content. No reads occur
+    // while animating; hidden nodes are only exposed when their content changes.
+    for (const spec of specs) {
+      const cache = getLabelCache(spec.element),
+        signature = `${cache.signature}|${spec.element.dataset.presentation || ""}|${w()}|${h()}`;
+      if (cache.measuredSignature !== signature || !cache.width) {
+        spec.element.hidden = false;
+        cache.hidden = false;
+        cache.width = spec.element.offsetWidth || (spec.owner ? 30 : 120);
+        cache.height = spec.element.offsetHeight || 32;
+        cache.measuredSignature = signature;
+        labelMetrics.measurements++;
+        labelLayoutDirty = true;
+      }
+    }
+    labelSpecs = specs;
+  }
+  function projectLabels(allowLayout = false) {
+    if (!labelContainer || !state) return;
+    const width = w(),
+      height = h(),
+      occupied = [],
+      max = width < 650 ? 2 : 4;
+    let count = 0;
+    const moving =
+      !!flight || pointerDown || elapsed - lastCameraMotionAt < 0.18;
+    const layout =
+      allowLayout &&
+      (labelLayoutDirty ||
+        (!moving && lastLayoutCameraSignature !== lastCameraSignature));
+    if (layout) labelMetrics.layoutPasses++;
+    labelMetrics.projectionFrames++;
+    for (const spec of labelSpecs) {
+      const element = spec.element,
+        cache = getLabelCache(element),
+        point =
+          typeof spec.point === "function" ? spec.point() : spec.point?.clone();
+      if (!point) {
+        setLabelHidden(element, true);
+        continue;
+      }
+      const worldPoint = point.clone();
+      point.project(camera);
+      let x = (point.x * 0.5 + 0.5) * width,
+        y = (-point.y * 0.5 + 0.5) * height;
+      const valid =
+        layers.labels &&
+        point.z > -1 &&
+        point.z < 1 &&
+        x > 12 &&
+        x < width - 12 &&
+        y > 10 &&
+        y < height - 20 &&
+        (spec.district || spec.owner || spec.marker || count < max);
+      const collide = (px, py) =>
+        occupied.some(
+          (box) =>
+            Math.abs(px - box.x) < (box.w + cache.width) / 2 + 6 &&
+            Math.abs(py - box.y) < (box.h + cache.height) / 2 + 6,
+        );
+      if (spec.district && valid) {
+        const minX = cache.width / 2 + 8,
+          maxX = width - cache.width / 2 - 8,
+          minY =
+            (portraitTV() ? 208 : tvPresentation ? 128 : 8) + cache.height / 2,
+          maxY = Math.max(
+            minY,
+            height -
+              cache.height / 2 -
+              (portraitTV() ? 120 : tvPresentation ? 86 : 92),
+          );
+        const ax = clamp(x, minX, maxX),
+          ay = clamp(y, minY, maxY);
+        if (layout) {
+          let best = null;
+          for (const dx of [0, -40, 40, -80, 80])
+            for (const step of [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5]) {
+              const px = clamp(ax + dx, minX, maxX),
+                py = clamp(ay + step * (cache.height + 8), minY, maxY),
+                distance = (px - ax) ** 2 + (py - ay) ** 2;
+              if ((!best || distance < best.distance) && !collide(px, py))
+                best = { x: px, y: py, distance };
+            }
+          cache.dx = best ? best.x - ax : 0;
+          cache.dy = best ? best.y - ay : 0;
+        }
+        x = clamp(ax + cache.dx, minX, maxX);
+        y = clamp(ay + cache.dy, minY, maxY);
+      }
+      if (
+        layout &&
+        valid &&
+        !spec.priority &&
+        !spec.district &&
+        !spec.owner &&
+        !spec.marker
+      ) {
+        pointer.set(point.x, point.y);
+        ray.setFromCamera(pointer, camera);
+        const hit = ray.intersectObjects(
+          architecture.meshes.filter(
+            (mesh) => mesh.visible && mesh.name === "city-kit-mass",
+          ),
+          false,
+        )[0];
+        cache.occluded = !!(
+          hit && hit.distance < ray.ray.origin.distanceTo(worldPoint) - 0.35
+        );
+        labelMetrics.occlusionTests++;
+      }
+      let hidden = !valid;
+      if (!spec.priority && !spec.district && !spec.owner)
+        hidden ||= cache.occluded || collide(x, y);
+      setLabelHidden(element, hidden);
+      if (!hidden) {
+        element.style.transform = `translate3d(${x.toFixed(3)}px,${y.toFixed(3)}px,0) translate(-50%,-50%)`;
+        element.dataset.labelX = x.toFixed(3);
+        element.dataset.labelY = y.toFixed(3);
+        occupied.push({ x, y, w: cache.width, h: cache.height });
+        if (!spec.district && !spec.owner && !spec.marker) count++;
+      }
+    }
+    if (layout) {
+      labelLayoutDirty = false;
+      lastLayoutCameraSignature = lastCameraSignature;
+    }
   }
   function updateTransitions() {
     let particleCount = 0;
@@ -1939,12 +2262,20 @@ export async function createCityScene({
     lastTime = now;
     elapsed += realDelta;
     const start = performance.now();
+    updateTVTour();
     if (flight) {
       const k = clamp((elapsed - flight.start) / flight.duration, 0, 1),
         ease = k * k * (3 - 2 * k);
       controls.target.lerpVectors(flight.fromTarget, flight.toTarget, ease);
       camera.position.lerpVectors(flight.fromPos, flight.toPos, ease);
       camera.zoom = lerp(flight.fromZoom, flight.toZoom, ease);
+      if (flight.fromFrustum && flight.toFrustum)
+        for (const key of ["left", "right", "top", "bottom"])
+          camera[key] = lerp(
+            flight.fromFrustum[key],
+            flight.toFrustum[key],
+            ease,
+          );
       camera.updateProjectionMatrix();
       if (k >= 1) flight = null;
     }
@@ -1982,11 +2313,27 @@ export async function createCityScene({
       }
     }
     if (!reducedMotion) traffic.update?.(delta, elapsed);
-    if (elapsed - lastLabel > 0.12 || !lastLabel) {
-      updateLabels();
-      lastLabel = elapsed;
+    camera.updateMatrixWorld();
+    const cameraSignature = [
+      ...camera.position.toArray(),
+      ...controls.target.toArray(),
+      camera.zoom,
+      camera.left,
+      camera.top,
+    ]
+      .map((value) => value.toFixed(3))
+      .join("|");
+    if (cameraSignature !== lastCameraSignature) {
+      lastCameraMotionAt = elapsed;
+      lastCameraSignature = cameraSignature;
     }
+    if (elapsed - lastLabel > 0.12 || !lastLabel) {
+      refreshLabelContent();
+      projectLabels(true);
+      lastLabel = elapsed;
+    } else projectLabels(false);
     architecture.setDetail(quality !== "light" && camera.zoom > 0.8);
+    emphasis.update(delta, reducedMotion);
     renderer.render(scene, camera);
     submitTimes.push(performance.now() - start);
     if (submitTimes.length > 240) submitTimes.shift();
@@ -2016,6 +2363,9 @@ export async function createCityScene({
       trafficRunning: layers.traffic && !reducedMotion && quality !== "light",
       mode,
       tvPresentation,
+      tvTour: getTVTourState(),
+      labels: { ...labelMetrics, cachedCount: labelSpecs.length },
+      emphasis: emphasis.debug(),
       portraitTV: portraitTV(),
       cameraMoving: !!flight,
       landMinZ,
@@ -2117,6 +2467,9 @@ export async function createCityScene({
     ])
       el.remove();
   }
+  emphasis.install(scene);
+  emphasis.setDistrict(district);
+  emphasis.update(0, true);
   resize();
   setQuality("auto");
   setLayers(layers);
@@ -2131,6 +2484,8 @@ export async function createCityScene({
     setLayers,
     setMode,
     setTVPresentation,
+    setTVTour,
+    pauseTVTour,
     focusOwner,
     projectOwner,
     focusDistrict,
@@ -2161,6 +2516,9 @@ export async function createCityScene({
       communications,
       industry,
       getDistrict,
+      setTVTour,
+      pauseTVTour,
+      getTVTourState,
       projectPlace,
       projectIndustry,
       construction,
