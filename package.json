@@ -7,11 +7,12 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "test": "node --test tests/*model.test.mjs tests/city-traffic.test.mjs tests/city-construction.test.mjs tests/city-people.test.mjs tests/city-communications.test.mjs tests/city-architecture.test.mjs tests/city-industry-visual.test.mjs tests/city-celebrations.test.mjs",
+    "test": "node --test tests/*model.test.mjs tests/city-traffic.test.mjs tests/city-construction.test.mjs tests/city-people.test.mjs tests/city-communications.test.mjs tests/city-architecture.test.mjs tests/city-industry-visual.test.mjs tests/city-celebrations.test.mjs tests/city-assistant-panel.test.mjs",
     "test:e2e": "node tests/city-browser.mjs",
     "test:city-v2": "node tests/city-v2-browser.mjs",
     "test:city-v3": "node tests/city-v3-browser.mjs",
     "test:city-v4": "node tests/city-v4-browser.mjs",
+    "test:city-v5": "node tests/city-v5-browser.mjs",
     "test:luma": "node tests/luma-browser.mjs",
     "test:classic": "node tests/smoke.mjs",
     "test:operations": "node tests/operations-browser.mjs"

@@ -60,6 +60,8 @@ import {
 import { createCityScene } from "./scene.js";
 import { createCelebrations } from "./celebrations.js";
 import { nextProductionAction } from "./production-demo.js";
+import { createCityAssistant } from "./assistant-panel.js";
+import { requestCityAnswer } from "./assistant-client.js";
 import { communicationsSummary } from "./communications-model.js";
 import {
   createIndustryProvider,
@@ -69,6 +71,8 @@ import {
 import "./style.css";
 import "./expansion.css";
 import "./celebrations.css";
+import "./assistant-panel.css";
+import "./map-layout.css";
 
 const icons = {
   Building2,
@@ -199,7 +203,7 @@ root.innerHTML = `<div id="city-app" class="c-shell">
   <div class="c-heading"><div><div class="c-eyebrow">TU EMPRESA, EN PERSPECTIVA</div><h1>Tu empresa, en movimiento<span>.</span></h1></div><p>Ventas, conversaciones y operaciones conectadas.</p></div>
   <section id="city-metrics" class="c-metrics" aria-label="Indicadores del negocio"></section>
   <nav id="city-district-nav" class="c-district-nav" aria-label="Distritos de la empresa"><span>EXPLORA TU EMPRESA</span><div><button data-district="sales" class="active" aria-pressed="true">${i("building-2")}Ventas</button><button data-district="communications" aria-pressed="false">${i("message-circle")}Comunicaciones</button><button data-district="industry" aria-pressed="false">${i("box")}Industria</button><button data-district="all" aria-pressed="false">${i("layout-grid")}Empresa</button></div><small>Una ciudad. Todos tus procesos.</small></nav>
-  <section class="c-workbench" aria-label="Ciudad CRM interactiva"><div class="c-toolbar"><div class="c-view-tabs" role="group" aria-label="Representación"><button class="active" data-action="view-city">${i("building-2")}<span>Ciudad</span></button><button data-action="view-table">${i("table-2")}<span>Tabla</span></button></div><div class="c-mode-tabs" role="group" aria-label="Modo de exploración"><button class="active" data-action="explore" title="Navegación libre">${i("compass")}<span>Explore</span></button><button data-action="replay" title="Reproducir el historial de eventos">${i("rotate-ccw")}<span>Replay</span></button><button data-action="tv" title="Presentación automática sin modificar datos">${i("monitor-play")}<span>TV</span></button></div><div class="c-toolbar-spacer"></div><button class="c-win-button" data-action="simulate-win">${i("sparkles")}<span>Simular una venta</span></button><button data-action="layers" class="c-icon-button" aria-label="Capas de la ciudad" aria-expanded="false">${i("layers")}</button></div>
+  <section class="c-workbench" aria-label="Ciudad CRM interactiva"><div class="c-toolbar"><div class="c-view-tabs" role="group" aria-label="Representación"><button class="active" data-action="view-city">${i("building-2")}<span>Ciudad</span></button><button data-action="view-table">${i("table-2")}<span>Tabla</span></button></div><div class="c-mode-tabs" role="group" aria-label="Modo de exploración"><button class="active" data-action="explore" title="Vista fija: desplazar y acercar">${i("compass")}<span>Explore</span></button><button data-action="replay" title="Reproducir el historial de eventos">${i("rotate-ccw")}<span>Replay</span></button><button data-action="tv" title="Presentación automática sin modificar datos">${i("monitor-play")}<span>TV</span></button></div><div class="c-toolbar-spacer"></div><button class="c-win-button" data-action="simulate-win">${i("sparkles")}<span>Simular una venta</span></button><button data-action="layers" class="c-icon-button" aria-label="Capas de la ciudad" aria-expanded="false">${i("layers")}</button></div>
   <div class="c-search-row"><label class="c-search">${i("search")}<input id="city-search" type="search" placeholder="Buscar una oportunidad, empresa o responsable…" aria-label="Buscar oportunidades"></label><button class="c-filter-toggle" data-action="filters" aria-expanded="false">${i("sliders-horizontal")}<span>Filtros</span><span id="city-filter-count" hidden></span></button><span class="c-search-caption" id="city-result-count"></span></div>
   <div class="c-filter-row" id="city-filters" hidden><label>Etapa<select id="filter-stage" aria-label="Filtrar etapa"></select></label><label>Responsable<select id="filter-owner" aria-label="Filtrar responsable"></select></label><label class="c-check"><input id="filter-attention" type="checkbox">Necesita atención</label><label class="c-check"><input id="filter-lost" type="checkbox">Incluir perdidas</label><button data-action="clear-filters">Limpiar filtros</button></div>
   <div id="city-world" class="c-world"><div id="city-canvas"></div><div id="city-labels" aria-label="Identificación de la ciudad"></div><div class="c-world-title"><span class="c-eyebrow">ATLAS DISTRICT / 01</span><h2>Un negocio.<br><span>Muchas posibilidades.</span></h2><p>De la primera conversación a la próxima gran relación.</p></div><div class="c-north" aria-hidden="true"><span>N</span><div>↗</div></div>
@@ -211,7 +215,11 @@ root.innerHTML = `<div id="city-app" class="c-shell">
   <div class="c-gesture-hint">${i("compass")}<span>Arrastra para explorar · Pulsa un edificio para descubrir</span></div>
   <div id="city-table" class="c-table-view" hidden></div><aside id="city-inspector" class="c-inspector" aria-label="Ficha del registro" hidden></aside><aside id="city-drawer" class="c-drawer" hidden></aside>
   <div id="city-layer-panel" class="c-layer-panel" hidden><div><b>Capas de la ciudad</b><button data-action="layers" aria-label="Cerrar capas">${i("x")}</button></div>${[
-    ["labels", "Etiquetas", "Nombres y barrios"],
+    [
+      "labels",
+      "Iniciales del equipo",
+      "Identificación discreta de los comerciales",
+    ],
     ["connections", "Conexiones", "Relaciones y transiciones"],
     ["activity", "Actividad", "Tareas y próximos pasos"],
     [
@@ -233,6 +241,113 @@ root.innerHTML = `<div id="city-app" class="c-shell">
   <footer class="c-footer"><span>Menos tablas. Más perspectiva.</span><span>Datos ficticios · Tráfico ambiental · Las obras y los recorridos comerciales son simulados</span><button data-action="sources">Cómo se conectará a tu CRM ${i("arrow-up-right")}</button></footer></main>
   </div><div id="city-modal-root"></div><div id="city-toast" role="status" aria-live="polite"></div>`;
 const $ = (s) => document.querySelector(s);
+const mapSummary = document.createElement("section");
+mapSummary.id = "city-map-summary";
+mapSummary.className = "c-map-summary";
+mapSummary.setAttribute("aria-label", "Resumen de la ciudad fuera del mapa");
+mapSummary.innerHTML = `<div class="c-map-context"><div><b id="city-map-caption">Pipeline comercial</b><span id="city-map-detail">Acerca el cursor o pulsa un edificio para consultar sus datos.</span></div><small>Vista fija · arrastra para desplazar · rueda para zoom</small></div>`;
+mapSummary.append($("#city-stage-cards"));
+$("#city-world").after(mapSummary);
+const assistantHost = document.createElement("div");
+assistantHost.id = "city-assistant-host";
+$(".c-workbench").after(assistantHost);
+const assistant = createCityAssistant({
+  container: assistantHost,
+  getContext: () => ({
+    state: getState(),
+    industryState: industryProvider.getState(),
+    people: peopleSnapshots(),
+  }),
+  answerQuestion: requestCityAnswer,
+  onAction: handleAssistantAction,
+});
+let contextSignature = "";
+function setMapContext(title = null, detail = null) {
+  const caption =
+    title ||
+    {
+      sales: "Pipeline comercial",
+      communications: "Actividad y conversaciones",
+      industry: "Del producto a la entrega",
+      all: "Toda tu empresa, de un vistazo",
+    }[ui.district];
+  const description =
+    detail ||
+    (ui.district === "sales"
+      ? "Cada color identifica una etapa. Pulsa un edificio o una etapa para consultar sus datos."
+      : "Pulsa un edificio, un camión o una tarjeta para consultar sus registros.");
+  const signature = `${caption}|${description}`;
+  if (signature === contextSignature) return;
+  contextSignature = signature;
+  $("#city-map-caption").textContent = caption;
+  $("#city-map-detail").textContent = description;
+}
+function handleAssistantAction(action) {
+  if (ui.mode === "tv" || ui.mode === "replay") return false;
+  if (action.type === "focus-owner") {
+    const owner = getState().owners.find((o) => o.id === action.id);
+    if (!owner) return false;
+    if (noWebGL) focusOwner(owner.id);
+    else {
+      setDistrict("sales");
+      ui.selectedOwnerId = owner.id;
+      scene?.focusOwner?.(owner.id, { panelWidth: 0 });
+      setMapContext(
+        owner.name,
+        `${owner.initials} · ${ownerActivity(owner.id)} · Posición simulada`,
+      );
+    }
+    return true;
+  }
+  if (action.type === "focus-entity") {
+    const industrial = industryProvider.getState();
+    if (industrial.vehicles.some((v) => v.id === action.id)) {
+      showIndustry(action.id, "vehicle");
+      return true;
+    }
+    if (industrial.batches.some((b) => b.id === action.id)) {
+      showIndustry(action.id, "batch");
+      return true;
+    }
+    if (
+      !getState().deals.some((d) => d.id === action.id) &&
+      !getState().accounts.some((a) => a.id === action.id)
+    )
+      return false;
+    setDistrict("sales");
+    select(action.id);
+    return true;
+  }
+  if (action.type === "district" && Object.hasOwn(districtNames, action.id)) {
+    setDistrict(action.id);
+    return true;
+  }
+  if (action.type === "attention") {
+    setDistrict("sales");
+    ui.filters.attentionOnly = true;
+    updateFilters();
+    return true;
+  }
+  return false;
+}
+const mapPan = document.createElement("div");
+mapPan.className = "c-pan-controls";
+mapPan.setAttribute("role", "group");
+mapPan.setAttribute("aria-label", "Desplazar el mapa");
+for (const [direction, label, symbol] of [
+  ["up", "Desplazar mapa hacia arriba", "↑"],
+  ["left", "Desplazar mapa a la izquierda", "←"],
+  ["right", "Desplazar mapa a la derecha", "→"],
+  ["down", "Desplazar mapa hacia abajo", "↓"],
+]) {
+  const button = document.createElement("button");
+  button.dataset.action = `pan-${direction}`;
+  button.setAttribute("aria-label", label);
+  button.title = label;
+  button.textContent = symbol;
+  mapPan.append(button);
+}
+$(".c-map-controls").before(mapPan);
 const celebrations = createCelebrations({
   container: $("#city-world"),
   reducedMotion: () => reduced.matches,
@@ -366,6 +481,7 @@ function renderDistrict() {
   const isIndustry = ui.district === "industry";
   const isCommunications = ui.district === "communications";
   $("#city-app").dataset.district = ui.district;
+  setMapContext();
   document.querySelectorAll("button[data-district]").forEach((button) => {
     button.classList.toggle("active", button.dataset.district === ui.district);
     button.setAttribute(
@@ -465,7 +581,43 @@ function renderDistrict() {
     $("#city-stage-cards").innerHTML = places
       .map(
         (p) =>
-          `<button data-place="${p.id}" style="--stage:${p.color}"><div><b>${esc(p.name)}</b></div><strong>${units(p.todayCompleted)} <small>hoy</small></strong><span class="c-stage-line"></span></button>`,
+          `<button data-place="${p.id}" style="--stage:${p.color}"><div>${i(p.id === "email" ? "mail" : p.id === "call" ? "phone" : p.id === "meeting" ? "calendar" : "message-circle")}<b>${esc(p.name)}</b></div><strong>${units(p.todayCompleted)} <small>hoy · ${units(p.pendingCount)} pendientes</small></strong><span class="c-stage-line"></span></button>`,
+      )
+      .join("");
+  } else if (ui.district === "all") {
+    const m = metrics(getState()),
+      industrial = industryMetrics(industryProvider.getState());
+    const completed = communicationsSummary(getState()).reduce(
+      (sum, p) => sum + (p.todayCompleted || 0),
+      0,
+    );
+    $("#city-stage-cards").style.setProperty("--stage-count", 3);
+    $("#city-stage-cards").innerHTML = [
+      [
+        "sales",
+        "Ventas",
+        `${m.openCount} abiertas · ${getState().accounts.length} clientes`,
+        "#278de0",
+        "building-2",
+      ],
+      [
+        "communications",
+        "Comunicaciones",
+        `${units(completed)} actividades realizadas hoy`,
+        "#20a895",
+        "message-circle",
+      ],
+      [
+        "industry",
+        "Industria",
+        `${units(industrial.totalUnits)} unidades · ${units(industrial.inTransit)} en reparto`,
+        "#ea9c26",
+        "box",
+      ],
+    ]
+      .map(
+        ([id, name, value, color, icon]) =>
+          `<button data-district="${id}" style="--stage:${color}"><div>${i(icon)}<b>${name}</b></div><strong class="c-map-overview-value">${value}</strong><span class="c-stage-line"></span></button>`,
       )
       .join("");
   }
@@ -1021,12 +1173,14 @@ function render(event) {
     : "Tu pipeline está listo para explorar";
   const replay = ui.mode === "replay";
   $(".c-win-button").disabled = replay;
+  assistant.update({ mode: ui.mode, district: ui.district });
   refreshIcons();
 }
 function setView(view) {
   ui.view = view;
   $("#city-table").hidden = view !== "table";
   $("#city-world").classList.toggle("c-is-table", view === "table");
+  mapSummary.hidden = view === "table";
   scene?.setActive?.(view === "city" && !noWebGL);
   document
     .querySelectorAll('[data-action="view-city"]')
@@ -1325,7 +1479,7 @@ function showModal(type) {
   const copy = {
     help: [
       "Una ciudad para entender tu negocio",
-      `<p>Cada barrio representa una etapa configurable de tu CRM. Cada edificio es una oportunidad: su acento indica la etapa y su altura acotada, el importe. Pulsa uno para ver el valor exacto, la persona responsable y el siguiente paso.</p><ul><li><b>Explore:</b> arrastra para orbitar; botón derecho o dos dedos para desplazar; rueda o pellizco para zoom.</li><li><b>Replay:</b> recorre las etapas históricas con pausa, velocidad y avance. Clientes y actividades conservan su instantánea. Al salir, restaura la vista anterior.</li><li><b>Simular una venta:</b> crea un evento ficticio: las grúas desmontan el edificio, un camión lleva los materiales y se construye en Ventas ganadas. Conserva la misma oportunidad y su cuenta cliente.</li><li><b>TV:</b> muestra la ciudad a pantalla completa con las cifras arriba y el equipo comercial abajo. Sal con la X o Escape.</li><li><b>Comerciales:</b> representan a los responsables de las oportunidades; sus paseos y visitas son simulados. El recuento de ventas procede de los registros.</li><li><b>Rojo + !:</b> una tarea vencida requiere atención.</li></ul><p>Las grúas y el camión son una metáfora del cambio de etapa; no son obras ni repartos reales. El tráfico, los árboles y el mobiliario son ambientales. No representan actividad comercial. Los coches se desactivan desde Capas.</p><p>En móvil puedes ajustar la ficha a tres alturas. Todas las funciones principales también están disponibles en la tabla.</p>`,
+      `<p>Cada barrio representa una etapa configurable de tu CRM. Cada edificio es una oportunidad: su acento indica la etapa y su altura acotada, el importe. Pulsa uno para ver el valor exacto, la persona responsable y el siguiente paso.</p><ul><li><b>Explore:</b> perspectiva fija; arrastra con el ratón o un dedo para desplazar, y usa la rueda o el pellizco para acercar. Las flechas desplazan el mapa sin girarlo.</li><li><b>Replay:</b> recorre las etapas históricas con pausa, velocidad y avance. Clientes y actividades conservan su instantánea. Al salir, restaura la vista anterior.</li><li><b>Simular una venta:</b> crea un evento ficticio: las grúas desmontan el edificio, un camión lleva los materiales y se construye en Ventas ganadas. Conserva la misma oportunidad y su cuenta cliente.</li><li><b>TV:</b> muestra la ciudad a pantalla completa con las cifras arriba y el equipo comercial abajo. Sal con la X o Escape.</li><li><b>Comerciales:</b> representan a los responsables de las oportunidades; sus paseos y visitas son simulados. El recuento de ventas procede de los registros.</li><li><b>Asistente:</b> pregunta «Dónde está Lucía» o consulta ventas y stock. Los consejos se basan en registros y se pueden silenciar. Las etiquetas y las respuestas están fuera del mapa.</li><li><b>Rojo + !:</b> una tarea vencida requiere atención.</li></ul><p>Las grúas y el camión son una metáfora del cambio de etapa; no son obras ni repartos reales. El tráfico, los árboles y el mobiliario son ambientales. No representan actividad comercial. Los coches se desactivan desde Capas.</p><p>En móvil puedes ajustar la ficha a tres alturas. Todas las funciones principales también están disponibles en la tabla.</p>`,
     ],
     sources: [
       "Los datos ponen la ciudad en movimiento",
@@ -1438,7 +1592,15 @@ function onClick(e) {
     scene?.overview();
   } else if (a === "zoom-in" || a === "zoom-out")
     scene?.zoomBy?.(a === "zoom-in" ? 1.2 : 1 / 1.2);
-  else if (a === "layers") {
+  else if (a?.startsWith("pan-")) {
+    const offsets = {
+      "pan-up": [0, 90],
+      "pan-down": [0, -90],
+      "pan-left": [-90, 0],
+      "pan-right": [90, 0],
+    };
+    if (offsets[a]) scene?.panBy?.(...offsets[a]);
+  } else if (a === "layers") {
     const panel = $("#city-layer-panel");
     panel.hidden = !panel.hidden;
     document
@@ -1701,13 +1863,14 @@ async function boot() {
       },
       onHover: (entity, data, point) => {
         const el = $("#city-hover");
+        el.hidden = true;
         if (
           !entity ||
           ui.mode === "tv" ||
           ui.view !== "city" ||
           matchMedia("(pointer: coarse)").matches
         ) {
-          el.hidden = true;
+          setMapContext();
           return;
         }
         const id = typeof entity === "string" ? entity : entity.id,
@@ -1717,13 +1880,12 @@ async function boot() {
           el.hidden = true;
           return;
         }
-        el.hidden = false;
-        el.innerHTML = `<b>${esc((d || a).name)}</b><span>${d ? `${esc(stageFor(d.stageId).name)} · ${eur(d.amount)}` : "Cliente activo · Ver relación"}</span>`;
-        const rect = $("#city-world").getBoundingClientRect(),
-          x = point?.x ?? rect.width / 2,
-          y = point?.y ?? rect.height / 2;
-        el.style.left = `${Math.max(8, Math.min(rect.width - 240, x - rect.left + 14))}px`;
-        el.style.top = `${Math.max(8, Math.min(rect.height - 90, y - rect.top - 35))}px`;
+        setMapContext(
+          (d || a).name,
+          d
+            ? `${stageFor(d.stageId).name} · ${eur(d.amount)} · ${ownerName(d.ownerId)}`
+            : "Cliente activo · Pulsa para ver su relación",
+        );
       },
       onNavigate: () => {
         if (ui.mode === "tv") ui.tvNavigationAt = performance.now();
@@ -1786,6 +1948,9 @@ window.__ATLAS_CITY__ = {
   get celebrations() {
     return celebrations;
   },
+  get assistant() {
+    return assistant;
+  },
   focusOwner,
   select,
   simulateWin,
@@ -1797,6 +1962,7 @@ window.__ATLAS_CITY__ = {
   reset: () => {
     stopProduction(false);
     celebrations.reset();
+    assistant.reset();
     setMode("explore");
     provider.reset();
     industryProvider.reset();
@@ -1808,7 +1974,10 @@ boot();
 window.addEventListener("pagehide", (event) => {
   stopProduction(false);
   celebrations.reset();
-  if (!event.persisted) scene?.dispose();
+  if (!event.persisted) {
+    assistant.dispose();
+    scene?.dispose();
+  }
 });
 
 document.addEventListener("fullscreenchange", () => {

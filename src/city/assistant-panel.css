@@ -1,0 +1,386 @@
+#city-assistant-host {
+  flex: 0 0 auto;
+  min-width: 0;
+  margin-top: 8px;
+}
+#city-assistant-host:has(> .c-assistant[hidden]) {
+  display: none;
+}
+.c-assistant {
+  flex: 0 0 auto;
+  min-width: 0;
+  width: 100%;
+  border: 1px solid var(--line, #e2e8e2);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fbfcf9;
+  color: var(--ink, #253b3b);
+}
+.c-assistant-composer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 7px 14px;
+  min-height: 54px;
+}
+.c-assistant-expand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  color: #326e61;
+  font-size: 11px;
+  font-weight: 700;
+  min-height: 38px;
+  padding: 0;
+}
+.c-assistant-expand svg {
+  width: 19px;
+  height: 19px;
+}
+.c-assistant-form {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 8px;
+  padding: 2px 4px 2px 12px;
+  background: #f0f4ee;
+  border: 1px solid #e3ebe1;
+  border-radius: 10px;
+}
+.c-assistant-form:focus-within {
+  border-color: #85b5a3;
+  background: #fff;
+}
+.c-assistant-input {
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  height: 32px;
+  border: 0;
+  background: transparent;
+  font-size: 12px;
+  color: #284840;
+  outline: none;
+}
+.c-assistant-input::placeholder {
+  color: #819289;
+}
+.c-assistant-input:focus-visible {
+  outline: none;
+}
+.c-assistant-send {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: #326e61;
+  color: white;
+}
+.c-assistant-send:hover {
+  background: #24574b;
+}
+.c-assistant-send svg {
+  width: 16px;
+  height: 16px;
+}
+.c-assistant-meta {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 3px;
+  align-items: flex-end;
+  font-size: 9px;
+}
+.c-assistant-source {
+  color: #839288;
+  white-space: nowrap;
+}
+.c-assistant-preference {
+  padding: 0;
+  font-size: 9px;
+  min-height: 20px;
+  color: #5f7d70;
+  text-decoration: underline;
+  text-decoration-color: #cbd8cc;
+  text-underline-offset: 3px;
+}
+.c-assistant-conversation {
+  border-bottom: 1px solid #e7ece4;
+  padding: 0 15px;
+}
+.c-assistant-conversation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 40px;
+}
+.c-assistant-conversation-header > b {
+  font-size: 11px;
+  font-weight: 600;
+}
+.c-assistant-icon-button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  color: #7a8e80;
+}
+.c-assistant-icon-button:hover {
+  background: #e8eee4;
+}
+.c-assistant-icon-button svg {
+  width: 14px;
+  height: 14px;
+}
+.c-assistant-messages {
+  max-height: 140px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0 2px 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #cedbcc transparent;
+}
+.c-assistant-welcome {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #839287;
+  margin: 6px 0 12px;
+}
+.c-assistant-message {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  column-gap: 9px;
+  padding: 8px 0;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.c-assistant-message + .c-assistant-message {
+  border-top: 1px solid #edf0e9;
+}
+.c-assistant-message > b {
+  font-size: 10px;
+  color: #3f7965;
+  padding-top: 2px;
+}
+.c-assistant-message.is-user > b {
+  color: #8a968c;
+}
+.c-assistant-message > p {
+  margin: 0;
+  white-space: pre-line;
+}
+.c-assistant-message > small {
+  grid-column: 2;
+  margin-top: 4px;
+  font-size: 9px;
+  color: #8b988e;
+}
+.c-assistant-examples {
+  display: flex;
+  gap: 6px;
+  padding: 0 14px 9px;
+  flex-wrap: wrap;
+}
+.c-assistant-example {
+  border: 1px solid #e1e9dd;
+  border-radius: 6px;
+  background: #f4f7f0;
+  padding: 5px 8px;
+  font-size: 10px;
+  color: #62816d;
+}
+.c-assistant-example:hover {
+  border-color: #a7c4ab;
+  background: #eaf1e5;
+}
+.c-assistant-tip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px 12px;
+  background: #f1f6ec;
+  border-bottom: 1px solid #e0e8d9;
+}
+.c-assistant-tip[data-tone="warning"] {
+  background: #faf5e9;
+  border-color: #eee4cc;
+}
+.c-assistant-tip-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border-radius: 9px;
+  background: #e1ecd7;
+  color: #69854c;
+}
+.c-assistant-tip[data-tone="warning"] .c-assistant-tip-icon {
+  background: #f3e9cd;
+  color: #a18136;
+}
+.c-assistant-tip-icon svg {
+  width: 17px;
+  height: 17px;
+}
+.c-assistant-tip-body {
+  flex: 1;
+  min-width: 0;
+}
+.c-assistant-tip-body b {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+}
+.c-assistant-tip-body p {
+  font-size: 11px;
+  line-height: 1.45;
+  margin: 3px 0;
+  overflow-wrap: anywhere;
+}
+.c-assistant-tip-body small {
+  display: block;
+  color: #9b9b81;
+  font-size: 9px;
+}
+.c-assistant-tip-view {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 6px 9px;
+  border-radius: 7px;
+  border: 1px solid #d5dfc8;
+  background: #fff9;
+  color: #5d7850;
+  font-size: 10px;
+  font-weight: 500;
+}
+.c-assistant-tip-view:hover {
+  background: #fff;
+}
+.c-assistant-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 1000px) {
+  .c-assistant-meta {
+    max-width: 114px;
+  }
+  .c-assistant-source {
+    font-size: 8px;
+  }
+  .c-assistant-composer {
+    gap: 10px;
+    padding: 7px 10px;
+  }
+}
+@media (max-width: 640px) {
+  .c-assistant {
+    border-radius: 10px;
+  }
+  .c-assistant-composer {
+    display: grid;
+    grid-template-columns: 25px minmax(0, 1fr);
+    gap: 3px 8px;
+    padding: 7px 10px 5px;
+  }
+  .c-assistant-expand span {
+    display: none;
+  }
+  .c-assistant-expand {
+    justify-content: center;
+    min-height: 36px;
+  }
+  .c-assistant-meta {
+    max-width: none;
+    grid-column: 2;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+  }
+  .c-assistant-source {
+    font-size: 8px;
+  }
+  .c-assistant-preference {
+    font-size: 8px;
+    min-height: 18px;
+  }
+  .c-assistant-input {
+    font-size: 16px;
+    height: 30px;
+  }
+  .c-assistant-input::placeholder {
+    font-size: 12px;
+  }
+  .c-assistant-conversation {
+    padding: 0 10px;
+  }
+  .c-assistant-messages {
+    max-height: 134px;
+  }
+  .c-assistant-message {
+    grid-template-columns: 31px 1fr;
+    gap: 7px;
+    font-size: 11px;
+  }
+  .c-assistant-tip {
+    display: grid;
+    grid-template-columns: 25px minmax(0, 1fr) 28px;
+    gap: 5px 8px;
+    padding: 8px 10px;
+  }
+  .c-assistant-tip-icon {
+    width: 25px;
+    height: 27px;
+  }
+  .c-assistant-tip-body {
+    grid-column: 2;
+  }
+  .c-assistant-tip-body p {
+    font-size: 10px;
+  }
+  .c-assistant-tip-view {
+    grid-column: 2;
+    justify-self: start;
+    padding: 2px 8px;
+    min-height: 26px;
+    font-size: 9px;
+  }
+  .c-assistant-tip > .c-assistant-icon-button {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+    width: 28px;
+    height: 28px;
+  }
+  .c-assistant-examples {
+    padding: 0 10px 8px;
+    gap: 4px;
+  }
+  .c-assistant-example {
+    font-size: 9px;
+    padding: 5px 6px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c-assistant *,
+  .c-assistant *::before,
+  .c-assistant *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

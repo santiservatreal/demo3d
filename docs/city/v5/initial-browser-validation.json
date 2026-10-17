@@ -1,0 +1,3553 @@
+{
+  "generatedAt": "2026-10-17T21:44:04.483Z",
+  "startedAt": "2026-10-17T21:42:20.062Z",
+  "builtAssets": [
+    {
+      "url": "/assets/index-BLPVWiy8.js",
+      "status": 200,
+      "sha256": "2372824c1609dbccf013f78746eba15350c37945e51dcbbca97a72886ec7d638"
+    }
+  ],
+  "error": "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0.01\nReceived:   0\n    at captureRawStack (/workspace/demo3d/node_modules/playwright-core/lib/coreBundle.js:9282:17)\n    at callMatcherAsStep (/workspace/demo3d/node_modules/playwright/lib/matchers/expect.js:13316:57)\n    at Object.toBeGreaterThan (/workspace/demo3d/node_modules/playwright/lib/matchers/expect.js:13308:23)\n    at /workspace/demo3d/tests/city-v5-browser.mjs:569:62",
+  "errors": [],
+  "results": [
+    {
+      "name": "fixed-bearing-mouse-pan-and-zoom-preserve-perspective-without-writing-crm",
+      "passed": true,
+      "detail": {
+        "fixed": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.31627355645048966,
+            0.09173665429375545,
+            0.9068451556072201
+          ],
+          "position": [
+            54,
+            60.24999999999999,
+            68
+          ],
+          "target": [
+            0,
+            5.25,
+            0
+          ],
+          "zoom": 1
+        },
+        "navigation": [
+          {
+            "button": "left",
+            "before": {
+              "quaternion": [
+                -0.26303476481420407,
+                0.31627355645048966,
+                0.09173665429375545,
+                0.9068451556072201
+              ],
+              "position": [
+                54,
+                60.24999999999999,
+                68
+              ],
+              "target": [
+                0,
+                5.25,
+                0
+              ],
+              "zoom": 1
+            },
+            "after": {
+              "quaternion": [
+                -0.26303476481420407,
+                0.31627355645048966,
+                0.09173665429375545,
+                0.9068451556072201
+              ],
+              "position": [
+                48.79576832119344,
+                62.123661677281724,
+                70.61731056478028
+              ],
+              "target": [
+                -5.204231678806556,
+                7.123661677281729,
+                2.617310564780281
+              ],
+              "zoom": 1
+            }
+          },
+          {
+            "button": "right",
+            "before": {
+              "quaternion": [
+                -0.26303476481420407,
+                0.31627355645048966,
+                0.09173665429375545,
+                0.9068451556072201
+              ],
+              "position": [
+                48.79576832119344,
+                62.123661677281724,
+                70.61731056478028
+              ],
+              "target": [
+                -5.204231678806556,
+                7.123661677281729,
+                2.617310564780281
+              ],
+              "zoom": 1
+            },
+            "after": {
+              "quaternion": [
+                -0.26303476481420407,
+                0.3162735564504897,
+                0.09173665429375548,
+                0.9068451556072201
+              ],
+              "position": [
+                49.251962430448295,
+                61.834356908387846,
+                70.48903527638913
+              ],
+              "target": [
+                -4.748037569551707,
+                6.834356908387857,
+                2.4890352763891244
+              ],
+              "zoom": 1
+            }
+          }
+        ],
+        "beforeZoom": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.3162735564504897,
+            0.09173665429375548,
+            0.9068451556072201
+          ],
+          "position": [
+            49.251962430448295,
+            61.834356908387846,
+            70.48903527638913
+          ],
+          "target": [
+            -4.748037569551707,
+            6.834356908387857,
+            2.4890352763891244
+          ],
+          "zoom": 1
+        },
+        "afterZoomIn": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.31627355645048966,
+            0.09173665429375544,
+            0.9068451556072201
+          ],
+          "position": [
+            50.07335557112149,
+            61.48532928506999,
+            70.11905424236159
+          ],
+          "target": [
+            -3.926644428878494,
+            6.485329285070016,
+            2.119054242361592
+          ],
+          "zoom": 1.2
+        },
+        "afterZoomOut": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.31627355645048966,
+            0.09173665429375544,
+            0.9068451556072201
+          ],
+          "position": [
+            50.4386504880026,
+            61.330107613088884,
+            69.95451404305837
+          ],
+          "target": [
+            -3.5613495119973817,
+            6.330107613088916,
+            1.9545140430583632
+          ],
+          "zoom": 1
+        },
+        "directional": [
+          {
+            "action": "pan-up",
+            "before": {
+              "quaternion": [
+                -0.26303476481420407,
+                0.31627355645048966,
+                0.09173665429375544,
+                0.9068451556072201
+              ],
+              "position": [
+                50.4386504880026,
+                61.330107613088884,
+                69.95451404305837
+              ],
+              "target": [
+                -3.5613495119973817,
+                6.330107613088916,
+                1.9545140430583632
+              ],
+              "zoom": 1
+            },
+            "after": {
+              "quaternion": [
+                -0.26303476481420407,
+                0.31627355645048966,
+                0.09173665429375544,
+                0.9068451556072201
+              ],
+              "position": [
+                43.79503554868044,
+                78.80155488097299,
+                61.099008263496195
+              ],
+              "target": [
+                -10.204964451319547,
+                23.80155488097301,
+                -6.900991736503808
+              ],
+              "zoom": 1
+            }
+          },
+          {
+            "action": "pan-down",
+            "before": {
+              "quaternion": [
+                -0.26303476481420407,
+                0.31627355645048966,
+                0.09173665429375544,
+                0.9068451556072201
+              ],
+              "position": [
+                43.79503554868044,
+                78.80155488097299,
+                61.099008263496195
+              ],
+              "target": [
+                -10.204964451319547,
+                23.80155488097301,
+                -6.900991736503808
+              ],
+              "zoom": 1
+            },
+            "after": {
+              "quaternion": [
+                -0.26303476481420407,
+                0.31627355645048966,
+                0.09173665429375544,
+                0.9068451556072201
+              ],
+              "position": [
+                50.904276640087886,
+                61.13225303996236,
+                69.7447815329018
+              ],
+              "target": [
+                -3.095723359912099,
+                6.1322530399623885,
+                1.7447815329018037
+              ],
+              "zoom": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "large-building-labels-removed-and-initials-clear-the-walking-avatar",
+      "passed": true,
+      "detail": {
+        "diagnostics": {
+          "contentBuilds": 4,
+          "measurements": 4,
+          "projectionFrames": 47,
+          "layoutPasses": 1,
+          "occlusionTests": 0,
+          "cachedCount": 4,
+          "presentation": "owner-initials-only",
+          "summaries": "outside-canvas"
+        },
+        "badges": [
+          {
+            "ownerId": "owner-ana",
+            "text": "AT",
+            "anchorMode": "behind-ground",
+            "children": 0,
+            "left": 568.7230224609375,
+            "top": 170.531005859375,
+            "width": 23,
+            "height": 20,
+            "personX": 561.723,
+            "personY": 187.7,
+            "avatarHalfWidth": 3
+          },
+          {
+            "ownerId": "owner-marcos",
+            "text": "MV",
+            "anchorMode": "behind-ground",
+            "children": 0,
+            "left": 703.1289672851562,
+            "top": 225.79998779296875,
+            "width": 23.828125,
+            "height": 20,
+            "personX": 696.043,
+            "personY": 242.969,
+            "avatarHalfWidth": 3
+          },
+          {
+            "ownerId": "owner-lucia",
+            "text": "LF",
+            "anchorMode": "behind-ground",
+            "children": 0,
+            "left": 632.0830078125,
+            "top": 200.4229736328125,
+            "width": 23,
+            "height": 20,
+            "personX": 625.083,
+            "personY": 217.591,
+            "avatarHalfWidth": 3
+          },
+          {
+            "ownerId": "owner-david",
+            "text": "DS",
+            "anchorMode": "behind-ground",
+            "children": 0,
+            "left": 661.458984375,
+            "top": 197.260009765625,
+            "width": 23,
+            "height": 20,
+            "personX": 654.459,
+            "personY": 214.429,
+            "avatarHalfWidth": 3
+          }
+        ],
+        "largeLabels": 0,
+        "rails": [
+          {
+            "district": "sales",
+            "insideWorld": false,
+            "text": "Pipeline comercialCada color identifica una etapa. Pulsa un edificio o una etapa para consultar sus datos.Vista fija · arrastra para desplazar · rueda para zoom01Nuevos leads731.500 €02Cualificados525.000 €03Propuestas633.000 €04Negociación630.500 €05Ventas ganadas430.000 €",
+            "cards": 5,
+            "rail": {
+              "x": 91,
+              "y": 671.0625,
+              "right": 1413,
+              "bottom": 792.0625
+            },
+            "canvas": {
+              "x": 91,
+              "y": 359.4375,
+              "right": 1413,
+              "bottom": 671.0625
+            }
+          },
+          {
+            "district": "communications",
+            "insideWorld": false,
+            "text": "Actividad y conversacionesPulsa un edificio, un camión o una tarjeta para consultar sus registros.Vista fija · arrastra para desplazar · rueda para zoomCorreos6 hoy · 0 pendientesCentral de llamadas12 hoy · 0 pendientesCasa de mensajes6 hoy · 11 pendientesCafetería reuniones1 hoy · 2 pendientes",
+            "cards": 4,
+            "rail": {
+              "x": 91,
+              "y": 671.0625,
+              "right": 1413,
+              "bottom": 792.0625
+            },
+            "canvas": {
+              "x": 91,
+              "y": 320.4375,
+              "right": 1413,
+              "bottom": 671.0625
+            }
+          },
+          {
+            "district": "industry",
+            "insideWorld": false,
+            "text": "Del producto a la entregaPulsa un edificio, un camión o una tarjeta para consultar sus registros.Vista fija · arrastra para desplazar · rueda para zoom01Fabricación240 uds02Empacado120 uds03Almacén480 uds04En transporte160 uds05Entregado320 uds",
+            "cards": 5,
+            "rail": {
+              "x": 91,
+              "y": 671.0625,
+              "right": 1413,
+              "bottom": 792.0625
+            },
+            "canvas": {
+              "x": 91,
+              "y": 320.4375,
+              "right": 1413,
+              "bottom": 671.0625
+            }
+          },
+          {
+            "district": "all",
+            "insideWorld": false,
+            "text": "Toda tu empresa, de un vistazoPulsa un edificio, un camión o una tarjeta para consultar sus registros.Vista fija · arrastra para desplazar · rueda para zoomVentas24 abiertas · 18 clientesComunicaciones25 actividades realizadas hoyIndustria1320 unidades · 160 en reparto",
+            "cards": 3,
+            "rail": {
+              "x": 91,
+              "y": 671.0625,
+              "right": 1413,
+              "bottom": 792.0625
+            },
+            "canvas": {
+              "x": 91,
+              "y": 359.4375,
+              "right": 1413,
+              "bottom": 671.0625
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "chat-reads-current-crm-distinguishes-invoices-and-focuses-lucia-without-writes",
+      "passed": true,
+      "detail": {
+        "invoiceAnswer": "Atlas\n\nNo hay datos de facturas, cobros ni beneficios en esta conexión de demostración, así que no puedo calcular la facturación total. Como dato distinto: Hay 4 ventas ganadas este mes por 30.000 €; una venta ganada no acredita una factura ni un cobro.\n\nCRM simulado · 16/10/26, 10:15",
+        "winAnswer": "Atlas\n\nHay 24 oportunidades abiertas por 120.000 €. Hay 4 ventas ganadas este mes por 30.000 €. En Ventas ganadas: 4 oportunidades por 30.000 €. Los importes ganados son ventas comerciales, no cobros.\n\nCRM simulado · 16/10/26, 10:15",
+        "luciaAnswer": "Atlas\n\nLucía Ferrer. En la simulación: Revisando propuesta con el cliente. Tiene 6 oportunidades abiertas por 31.000 €. La posición del personaje es ilustrativa; no es una geolocalización real.\n\nCRM simulado · 16/10/26, 10:15",
+        "luciaUi": {
+          "view": "city",
+          "selectedId": null,
+          "filters": {
+            "query": "",
+            "stageId": "",
+            "ownerId": "",
+            "attentionOnly": false,
+            "includeLost": false
+          },
+          "layers": {
+            "labels": true,
+            "connections": true,
+            "activity": true,
+            "traffic": true
+          },
+          "mode": "explore",
+          "sheet": "half",
+          "quality": "auto",
+          "replay": {
+            "playing": false,
+            "speed": 1,
+            "index": 0
+          },
+          "drawer": null,
+          "tvIndex": 0,
+          "tvSavedUi": null,
+          "tvNativeFullscreen": false,
+          "selectedOwnerId": "owner-lucia",
+          "district": "sales",
+          "selectedPlaceId": null,
+          "selectedIndustryId": null,
+          "selectedIndustryKind": "place",
+          "tvNavigationAt": 0,
+          "tvTourAll": false,
+          "productionPlaying": false,
+          "productionBatchId": null
+        },
+        "beforeLucia": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.31627355645048966,
+            0.09173665429375548,
+            0.9068451556072201
+          ],
+          "position": [
+            54.00177584565475,
+            60.249245404961925,
+            67.99920010384908
+          ],
+          "target": [
+            0.001775845654751509,
+            5.249245404961929,
+            -0.0007998961509220317
+          ],
+          "zoom": 1
+        },
+        "luciaCamera": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.3162735564504896,
+            0.09173665429375544,
+            0.9068451556072201
+          ],
+          "position": [
+            33.29743344749451,
+            49.779423834033175,
+            77.56400822378995
+          ],
+          "target": [
+            -13.985184933328288,
+            1.621201409121068,
+            18.022933225716795
+          ],
+          "zoom": 3.8
+        }
+      }
+    },
+    {
+      "name": "chat-renders-untrusted-text-as-text-and-keeps-crm-read-only",
+      "passed": true,
+      "detail": {
+        "executed": false,
+        "executableElements": 0,
+        "userText": "Tú<img src=x onerror=\"window.__assistantInjection=1\">",
+        "debug": {
+          "mode": "explore",
+          "district": "sales",
+          "disposed": false,
+          "expanded": true,
+          "hidden": false,
+          "paused": false,
+          "muted": false,
+          "timerActive": true,
+          "visibleTip": {
+            "id": "overdue:deal-013",
+            "title": "Azul Digital necesita atención",
+            "text": "1 tarea vencida registrada en «Acuerdo de distribución». Revisa el próximo paso con su responsable.",
+            "action": {
+              "type": "focus-entity",
+              "id": "deal-013"
+            },
+            "sourceLabel": "CRM simulado · 16/10/26, 10:15",
+            "tone": "warning"
+          },
+          "tipCount": 2,
+          "askCount": 4,
+          "pending": false,
+          "answerMode": "local",
+          "dismissed": [],
+          "history": [
+            {
+              "role": "user",
+              "text": "¿Cuál es la facturación total?",
+              "source": ""
+            },
+            {
+              "role": "assistant",
+              "text": "No hay datos de facturas, cobros ni beneficios en esta conexión de demostración, así que no puedo calcular la facturación total. Como dato distinto: Hay 4 ventas ganadas este mes por 30.000 €; una venta ganada no acredita una factura ni un cobro.",
+              "source": "CRM simulado · 16/10/26, 10:15"
+            },
+            {
+              "role": "user",
+              "text": "¿Cuántas ventas ganadas hay?",
+              "source": ""
+            },
+            {
+              "role": "assistant",
+              "text": "Hay 24 oportunidades abiertas por 120.000 €. Hay 4 ventas ganadas este mes por 30.000 €. En Ventas ganadas: 4 oportunidades por 30.000 €. Los importes ganados son ventas comerciales, no cobros.",
+              "source": "CRM simulado · 16/10/26, 10:15"
+            },
+            {
+              "role": "user",
+              "text": "¿Dónde está Lucía?",
+              "source": ""
+            },
+            {
+              "role": "assistant",
+              "text": "Lucía Ferrer. En la simulación: Revisando propuesta con el cliente. Tiene 6 oportunidades abiertas por 31.000 €. La posición del personaje es ilustrativa; no es una geolocalización real.",
+              "source": "CRM simulado · 16/10/26, 10:15"
+            },
+            {
+              "role": "user",
+              "text": "<img src=x onerror=\"window.__assistantInjection=1\">",
+              "source": ""
+            },
+            {
+              "role": "assistant",
+              "text": "Puedes preguntarme dónde está Lucía, cuántas oportunidades hay, las ventas ganadas del mes, las tareas pendientes, los mensajes o el stock. También puedo mostrarte Comercial, Comunicaciones o Industria. Este asistente de demostración interpreta consultas locales; no utiliza un modelo de IA conectado.",
+              "source": "CRM simulado · 16/10/26, 10:15"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "recommendations-use-recorded-due-tasks-and-support-view-dismiss-and-mute",
+      "passed": true,
+      "detail": {
+        "recommendation": {
+          "tip": {
+            "id": "overdue:deal-003",
+            "title": "Brisa Market necesita atención",
+            "text": "1 tarea vencida registrada en «Expansión de equipo». Revisa el próximo paso con su responsable.",
+            "action": {
+              "type": "focus-entity",
+              "id": "deal-003"
+            },
+            "sourceLabel": "CRM simulado · 16/10/26, 10:15",
+            "tone": "warning"
+          },
+          "dealId": "deal-003",
+          "now": "2026-10-16T10:15:00+02:00",
+          "pending": [
+            {
+              "id": "activity-task-01",
+              "dueAt": "2026-10-14T17:00:00+02:00"
+            }
+          ],
+          "visibleText": "Brisa Market necesita atención1 tarea vencida registrada en «Expansión de equipo». Revisa el próximo paso con su responsable.CRM simulado · 16/10/26, 10:15Ver en la ciudad"
+        },
+        "dismissed": {
+          "mode": "explore",
+          "district": "sales",
+          "disposed": false,
+          "expanded": false,
+          "hidden": false,
+          "paused": false,
+          "muted": false,
+          "timerActive": true,
+          "visibleTip": null,
+          "tipCount": 1,
+          "askCount": 0,
+          "pending": false,
+          "answerMode": "local",
+          "dismissed": [
+            "overdue:deal-003"
+          ],
+          "history": []
+        },
+        "muted": {
+          "mode": "explore",
+          "district": "sales",
+          "disposed": false,
+          "expanded": false,
+          "hidden": false,
+          "paused": false,
+          "muted": true,
+          "timerActive": false,
+          "visibleTip": null,
+          "tipCount": 1,
+          "askCount": 0,
+          "pending": false,
+          "answerMode": "local",
+          "dismissed": [
+            "overdue:deal-003"
+          ],
+          "history": []
+        }
+      }
+    },
+    {
+      "name": "tv-tour-keeps-fixed-bearing-and-hides-assistant-in-tv-and-replay",
+      "passed": true,
+      "detail": {
+        "enteredTv": {
+          "assistant": {
+            "mode": "tv",
+            "district": "all",
+            "disposed": false,
+            "expanded": false,
+            "hidden": true,
+            "paused": true,
+            "muted": false,
+            "timerActive": false,
+            "visibleTip": null,
+            "tipCount": 1,
+            "askCount": 0,
+            "pending": false,
+            "answerMode": "local",
+            "dismissed": [
+              "overdue:deal-003"
+            ],
+            "history": []
+          },
+          "scene": {
+            "renderer": "WebGL2",
+            "trafficRunning": false,
+            "mode": "tv",
+            "tvPresentation": true,
+            "tvTour": {
+              "elapsed": 61.84720000000002,
+              "nextAt": 70.0473,
+              "pausedUntil": 0,
+              "enabled": true,
+              "running": true,
+              "paused": false,
+              "step": 0,
+              "district": "all",
+              "sequence": [
+                "all",
+                "sales",
+                "all",
+                "communications",
+                "all",
+                "industry"
+              ],
+              "nextIn": 8.200099999999985,
+              "pausedFor": 0,
+              "transitionDuration": 7,
+              "holdDuration": 9
+            },
+            "labels": {
+              "contentBuilds": 4,
+              "measurements": 4,
+              "projectionFrames": 140,
+              "layoutPasses": 11,
+              "occlusionTests": 0,
+              "cachedCount": 4,
+              "presentation": "owner-initials-only",
+              "summaries": "outside-canvas"
+            },
+            "mapView": {
+              "type": "fixed-isometric",
+              "rotate": false,
+              "pan": true,
+              "zoom": true,
+              "direction": [
+                0.5253624264535866,
+                0.5350913602768012,
+                0.6615674999785905
+              ],
+              "quaternion": [
+                -0.26303476481420407,
+                0.31627355645048966,
+                0.09173665429375545,
+                0.9068451556072201
+              ],
+              "polar": 1.0061804383542055,
+              "azimuth": 0.6711438354360088
+            },
+            "emphasis": {
+              "materialCount": 128,
+              "weights": [
+                0.9999999959959929,
+                0.8750298091741677,
+                0.8750298116483123
+              ],
+              "target": [
+                1,
+                1,
+                1
+              ],
+              "passes": 1
+            },
+            "portraitTV": false,
+            "cameraMoving": true,
+            "landMinZ": -80,
+            "district": "all",
+            "viewBounds": {
+              "minX": -38.5,
+              "maxX": 38.5,
+              "minY": -1.5,
+              "maxY": 14,
+              "minZ": -80,
+              "maxZ": 26.5
+            },
+            "communications": {
+              "enabled": true,
+              "disposed": false,
+              "reducedMotion": false,
+              "count": 4,
+              "drawCalls": 4,
+              "places": [
+                {
+                  "id": "email",
+                  "name": "Correos",
+                  "color": "#218dec",
+                  "x": -27,
+                  "icon": "mail",
+                  "sourceAvailable": true,
+                  "todayCompleted": 6,
+                  "pendingCount": 0,
+                  "totalCount": 6,
+                  "channels": {
+                    "email": {
+                      "sourceAvailable": true,
+                      "todayCompleted": 6,
+                      "pendingCount": 0,
+                      "totalCount": 6
+                    }
+                  },
+                  "timeZone": "Europe/Madrid",
+                  "asOf": "2026-10-16T10:15:00+02:00",
+                  "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+                  "recordIds": [
+                    "activity-email-01",
+                    "activity-email-02",
+                    "activity-email-03",
+                    "activity-email-04",
+                    "activity-email-05",
+                    "activity-email-06"
+                  ],
+                  "position": [
+                    -27,
+                    6.3,
+                    -35
+                  ],
+                  "groundPosition": [
+                    -27,
+                    0.1,
+                    -35
+                  ]
+                },
+                {
+                  "id": "call",
+                  "name": "Central de llamadas",
+                  "color": "#f09a2e",
+                  "x": -9,
+                  "icon": "phone",
+                  "sourceAvailable": true,
+                  "todayCompleted": 12,
+                  "pendingCount": 0,
+                  "totalCount": 12,
+                  "channels": {
+                    "call": {
+                      "sourceAvailable": true,
+                      "todayCompleted": 12,
+                      "pendingCount": 0,
+                      "totalCount": 12
+                    }
+                  },
+                  "timeZone": "Europe/Madrid",
+                  "asOf": "2026-10-16T10:15:00+02:00",
+                  "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+                  "recordIds": [
+                    "activity-call-01",
+                    "activity-call-02",
+                    "activity-call-03",
+                    "activity-call-04",
+                    "activity-call-05",
+                    "activity-call-06",
+                    "activity-call-07",
+                    "activity-call-08",
+                    "activity-call-09",
+                    "activity-call-10",
+                    "activity-call-11",
+                    "activity-call-12"
+                  ],
+                  "position": [
+                    -9,
+                    6.3,
+                    -35
+                  ],
+                  "groundPosition": [
+                    -9,
+                    0.1,
+                    -35
+                  ]
+                },
+                {
+                  "id": "messages",
+                  "name": "Casa de mensajes",
+                  "color": "#21b77a",
+                  "x": 9,
+                  "icon": "message",
+                  "sourceAvailable": true,
+                  "todayCompleted": 6,
+                  "pendingCount": 11,
+                  "totalCount": 17,
+                  "channels": {
+                    "whatsapp": {
+                      "sourceAvailable": true,
+                      "todayCompleted": 6,
+                      "pendingCount": 2,
+                      "totalCount": 8
+                    },
+                    "message": {
+                      "sourceAvailable": false,
+                      "todayCompleted": null,
+                      "pendingCount": null,
+                      "totalCount": null
+                    },
+                    "conversation": {
+                      "sourceAvailable": true,
+                      "todayCompleted": 0,
+                      "pendingCount": 9,
+                      "totalCount": 9
+                    }
+                  },
+                  "timeZone": "Europe/Madrid",
+                  "asOf": "2026-10-16T10:15:00+02:00",
+                  "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+                  "recordIds": [
+                    "activity-conversation-01",
+                    "activity-conversation-02",
+                    "activity-conversation-03",
+                    "activity-conversation-04",
+                    "activity-conversation-05",
+                    "activity-conversation-06",
+                    "activity-conversation-07",
+                    "activity-conversation-08",
+                    "activity-conversation-09",
+                    "activity-whatsapp-01",
+                    "activity-whatsapp-02",
+                    "activity-whatsapp-03",
+                    "activity-whatsapp-04",
+                    "activity-whatsapp-05",
+                    "activity-whatsapp-06",
+                    "activity-whatsapp-07",
+                    "activity-whatsapp-08"
+                  ],
+                  "position": [
+                    9,
+                    6.3,
+                    -35
+                  ],
+                  "groundPosition": [
+                    9,
+                    0.1,
+                    -35
+                  ]
+                },
+                {
+                  "id": "meeting",
+                  "name": "Cafetería reuniones",
+                  "color": "#da657c",
+                  "x": 27,
+                  "icon": "coffee",
+                  "sourceAvailable": true,
+                  "todayCompleted": 1,
+                  "pendingCount": 2,
+                  "totalCount": 3,
+                  "channels": {
+                    "meeting": {
+                      "sourceAvailable": true,
+                      "todayCompleted": 1,
+                      "pendingCount": 2,
+                      "totalCount": 3
+                    }
+                  },
+                  "timeZone": "Europe/Madrid",
+                  "asOf": "2026-10-16T10:15:00+02:00",
+                  "basis": "Actividades registradas en el CRM; hoy según la zona horaria de la empresa",
+                  "recordIds": [
+                    "activity-meeting-01",
+                    "activity-meeting-02",
+                    "activity-meeting-03"
+                  ],
+                  "position": [
+                    27,
+                    6.3,
+                    -35
+                  ],
+                  "groundPosition": [
+                    27,
+                    0.1,
+                    -35
+                  ]
+                }
+              ]
+            },
+            "industry": {
+              "enabled": true,
+              "simulated": true,
+              "gps": false,
+              "routeBasis": "Ruta estimada · animación ilustrativa",
+              "visualRouteSeconds": 90,
+              "businessMutation": false,
+              "pipelineBusy": false,
+              "transitions": {
+                "active": [],
+                "queued": [],
+                "completed": [],
+                "duration": 8,
+                "maxActive": 2,
+                "queueLimit": 64,
+                "busy": false
+              },
+              "surfaces": {
+                "islandPavementTop": 0.19,
+                "ground": 0.3,
+                "road": 0.34,
+                "roadPaint": 0.375,
+                "plot": 0.415,
+                "parkingPaint": 0.45,
+                "plotAccent": 0.485
+              },
+              "groundSurfaces": [
+                {
+                  "layer": "ground",
+                  "x": 0,
+                  "z": -61,
+                  "width": 77,
+                  "depth": 34,
+                  "top": 0.3
+                },
+                {
+                  "layer": "road",
+                  "x": 0,
+                  "z": -72,
+                  "width": 75.4,
+                  "depth": 4.7,
+                  "top": 0.34
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -33,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -30,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -27,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -24,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -21,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -18,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -15,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -12,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -9,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -6,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -3,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 0,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 3,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 6,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 9,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 12,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 15,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 18,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 21,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 24,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 27,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 30,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 33,
+                  "z": -72,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "road",
+                  "x": 0,
+                  "z": -53,
+                  "width": 75.4,
+                  "depth": 4.7,
+                  "top": 0.34
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -33,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -30,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -24,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -21,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -18,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -12,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -9,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -6,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -3,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 3,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 6,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 9,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 12,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 18,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 21,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 24,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 30,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 33,
+                  "z": -53,
+                  "width": 1.25,
+                  "depth": 0.08,
+                  "top": 0.375
+                },
+                {
+                  "layer": "road",
+                  "x": -36,
+                  "z": -62.5,
+                  "width": 3.4,
+                  "depth": 14.3,
+                  "top": 0.34
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -36,
+                  "z": -69,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -36,
+                  "z": -66.3,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -36,
+                  "z": -63.599999999999994,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -36,
+                  "z": -60.89999999999999,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -36,
+                  "z": -58.19999999999999,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -36,
+                  "z": -55.499999999999986,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "road",
+                  "x": 36,
+                  "z": -62.5,
+                  "width": 3.4,
+                  "depth": 14.3,
+                  "top": 0.34
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 36,
+                  "z": -69,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 36,
+                  "z": -66.3,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 36,
+                  "z": -63.599999999999994,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 36,
+                  "z": -60.89999999999999,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 36,
+                  "z": -58.19999999999999,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 36,
+                  "z": -55.499999999999986,
+                  "width": 0.08,
+                  "depth": 1.15,
+                  "top": 0.375
+                },
+                {
+                  "layer": "plot",
+                  "x": -28,
+                  "z": -62.5,
+                  "width": 12.6,
+                  "depth": 13.9,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": -28,
+                  "z": -69.1,
+                  "width": 12.2,
+                  "depth": 0.14,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": -34.08,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": -21.92,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": -28,
+                  "z": -49.1,
+                  "width": 12.5,
+                  "depth": 2.45,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": -28,
+                  "z": -49.9,
+                  "width": 11.6,
+                  "depth": 0.18,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": -28,
+                  "z": -55.45,
+                  "width": 3.1,
+                  "depth": 0.2,
+                  "top": 0.415
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -29,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -28.6,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -28.2,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -27.8,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -27.4,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -27,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "plot",
+                  "x": -14,
+                  "z": -62.5,
+                  "width": 12.6,
+                  "depth": 13.9,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": -14,
+                  "z": -69.1,
+                  "width": 12.2,
+                  "depth": 0.14,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": -20.08,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": -7.92,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": -14,
+                  "z": -49.1,
+                  "width": 12.5,
+                  "depth": 2.45,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": -14,
+                  "z": -49.9,
+                  "width": 11.6,
+                  "depth": 0.18,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": -14,
+                  "z": -55.45,
+                  "width": 3.1,
+                  "depth": 0.2,
+                  "top": 0.415
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -15,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -14.6,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -14.2,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -13.8,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -13.4,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -13,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "plot",
+                  "x": 0,
+                  "z": -62.5,
+                  "width": 12.6,
+                  "depth": 13.9,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 0,
+                  "z": -69.1,
+                  "width": 12.2,
+                  "depth": 0.14,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": -6.08,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 6.08,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": 0,
+                  "z": -49.1,
+                  "width": 12.5,
+                  "depth": 2.45,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 0,
+                  "z": -49.9,
+                  "width": 11.6,
+                  "depth": 0.18,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": 0,
+                  "z": -55.45,
+                  "width": 3.1,
+                  "depth": 0.2,
+                  "top": 0.415
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -1,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -0.6,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": -0.19999999999999996,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 0.20000000000000007,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 0.6000000000000001,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 1,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "plot",
+                  "x": 14,
+                  "z": -62.5,
+                  "width": 12.6,
+                  "depth": 13.9,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 14,
+                  "z": -69.1,
+                  "width": 12.2,
+                  "depth": 0.14,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 7.92,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 20.08,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": 14,
+                  "z": -49.1,
+                  "width": 12.5,
+                  "depth": 2.45,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 14,
+                  "z": -49.9,
+                  "width": 11.6,
+                  "depth": 0.18,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": 14,
+                  "z": -55.45,
+                  "width": 3.1,
+                  "depth": 0.2,
+                  "top": 0.415
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 13,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 13.4,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 13.8,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 14.2,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 14.6,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 15,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "plot",
+                  "x": 28,
+                  "z": -62.5,
+                  "width": 12.6,
+                  "depth": 13.9,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 28,
+                  "z": -69.1,
+                  "width": 12.2,
+                  "depth": 0.14,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 21.92,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 34.08,
+                  "z": -62.45,
+                  "width": 0.14,
+                  "depth": 12.8,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": 28,
+                  "z": -49.1,
+                  "width": 12.5,
+                  "depth": 2.45,
+                  "top": 0.415
+                },
+                {
+                  "layer": "plotAccent",
+                  "x": 28,
+                  "z": -49.9,
+                  "width": 11.6,
+                  "depth": 0.18,
+                  "top": 0.485
+                },
+                {
+                  "layer": "plot",
+                  "x": 28,
+                  "z": -55.45,
+                  "width": 3.1,
+                  "depth": 0.2,
+                  "top": 0.415
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 27,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 27.4,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 27.8,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 28.2,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 28.6,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "roadPaint",
+                  "x": 29,
+                  "z": -53,
+                  "width": 0.22,
+                  "depth": 3.6,
+                  "top": 0.375
+                },
+                {
+                  "layer": "parkingPaint",
+                  "x": 13.74,
+                  "z": -63,
+                  "width": 0.065,
+                  "depth": 5.84,
+                  "top": 0.45
+                },
+                {
+                  "layer": "parkingPaint",
+                  "x": 15.459999999999999,
+                  "z": -63,
+                  "width": 0.065,
+                  "depth": 5.84,
+                  "top": 0.45
+                },
+                {
+                  "layer": "parkingPaint",
+                  "x": 14.6,
+                  "z": -66,
+                  "width": 1.72,
+                  "depth": 0.08,
+                  "top": 0.45
+                },
+                {
+                  "layer": "parkingPaint",
+                  "x": 15.79,
+                  "z": -63,
+                  "width": 0.065,
+                  "depth": 5.84,
+                  "top": 0.45
+                },
+                {
+                  "layer": "parkingPaint",
+                  "x": 17.509999999999998,
+                  "z": -63,
+                  "width": 0.065,
+                  "depth": 5.84,
+                  "top": 0.45
+                },
+                {
+                  "layer": "parkingPaint",
+                  "x": 16.65,
+                  "z": -66,
+                  "width": 1.72,
+                  "depth": 0.08,
+                  "top": 0.45
+                },
+                {
+                  "layer": "parkingPaint",
+                  "x": 17.84,
+                  "z": -63,
+                  "width": 0.065,
+                  "depth": 5.84,
+                  "top": 0.45
+                },
+                {
+                  "layer": "parkingPaint",
+                  "x": 19.56,
+                  "z": -63,
+                  "width": 0.065,
+                  "depth": 5.84,
+                  "top": 0.45
+                },
+                {
+                  "layer": "parkingPaint",
+                  "x": 18.7,
+                  "z": -66,
+                  "width": 1.72,
+                  "depth": 0.08,
+                  "top": 0.45
+                }
+              ],
+              "machinery": {
+                "animated": true,
+                "time": 61.84720000000002,
+                "addedDrawCalls": 3,
+                "geometryUUIDs": [
+                  "f3a9e4c8-306b-4763-b146-b0106a22ac31",
+                  "f3a9e4c8-306b-4763-b146-b0106a22ac31",
+                  "a8949d2b-74d1-412b-bd1e-7cd25f7c0a95"
+                ]
+              },
+              "boxLimitPerBatch": 25,
+              "batchLimit": 64,
+              "places": [
+                {
+                  "id": "manufacturing",
+                  "name": "Fabricación",
+                  "color": "#f28b26",
+                  "position": [
+                    -28,
+                    0.55,
+                    -50.5
+                  ],
+                  "count": 240,
+                  "unit": "uds"
+                },
+                {
+                  "id": "packing",
+                  "name": "Empacado",
+                  "color": "#efbb26",
+                  "position": [
+                    -14,
+                    0.55,
+                    -50.5
+                  ],
+                  "count": 120,
+                  "unit": "uds"
+                },
+                {
+                  "id": "warehouse",
+                  "name": "Almacén",
+                  "color": "#2496d8",
+                  "position": [
+                    0,
+                    0.55,
+                    -50.5
+                  ],
+                  "count": 480,
+                  "unit": "uds"
+                },
+                {
+                  "id": "transit",
+                  "name": "En transporte",
+                  "color": "#9863df",
+                  "position": [
+                    14,
+                    0.55,
+                    -50.5
+                  ],
+                  "count": 160,
+                  "unit": "uds"
+                },
+                {
+                  "id": "delivered",
+                  "name": "Entregado",
+                  "color": "#24b66b",
+                  "position": [
+                    28,
+                    0.55,
+                    -50.5
+                  ],
+                  "count": 320,
+                  "unit": "uds"
+                }
+              ],
+              "batches": [
+                {
+                  "id": "batch-001",
+                  "stageId": "manufacturing",
+                  "quantity": 120,
+                  "representativeBoxes": 6,
+                  "position": [
+                    -31.05,
+                    1.395,
+                    -57.85
+                  ]
+                },
+                {
+                  "id": "batch-002",
+                  "stageId": "manufacturing",
+                  "quantity": 120,
+                  "representativeBoxes": 6,
+                  "position": [
+                    -28,
+                    1.395,
+                    -57.85
+                  ]
+                },
+                {
+                  "id": "batch-003",
+                  "stageId": "packing",
+                  "quantity": 120,
+                  "representativeBoxes": 6,
+                  "position": [
+                    -17.05,
+                    1.395,
+                    -57.85
+                  ]
+                },
+                {
+                  "id": "batch-004",
+                  "stageId": "warehouse",
+                  "quantity": 160,
+                  "representativeBoxes": 8,
+                  "position": [
+                    -3.05,
+                    1.395,
+                    -57.85
+                  ]
+                },
+                {
+                  "id": "batch-005",
+                  "stageId": "warehouse",
+                  "quantity": 160,
+                  "representativeBoxes": 8,
+                  "position": [
+                    0,
+                    1.395,
+                    -57.85
+                  ]
+                },
+                {
+                  "id": "batch-006",
+                  "stageId": "warehouse",
+                  "quantity": 160,
+                  "representativeBoxes": 8,
+                  "position": [
+                    3.05,
+                    1.395,
+                    -57.85
+                  ]
+                },
+                {
+                  "id": "batch-009",
+                  "stageId": "delivered",
+                  "quantity": 160,
+                  "representativeBoxes": 8,
+                  "position": [
+                    24.95,
+                    1.395,
+                    -57.85
+                  ]
+                },
+                {
+                  "id": "batch-010",
+                  "stageId": "delivered",
+                  "quantity": 160,
+                  "representativeBoxes": 8,
+                  "position": [
+                    28,
+                    1.395,
+                    -57.85
+                  ]
+                },
+                {
+                  "id": "batch-007",
+                  "stageId": "transit",
+                  "quantity": 80,
+                  "representativeBoxes": 4,
+                  "position": [
+                    24.6,
+                    1.7149999999999999,
+                    -58.1
+                  ],
+                  "vehicleId": "truck-01"
+                },
+                {
+                  "id": "batch-008",
+                  "stageId": "transit",
+                  "quantity": 80,
+                  "representativeBoxes": 4,
+                  "position": [
+                    28,
+                    1.7149999999999999,
+                    -58.1
+                  ],
+                  "vehicleId": "truck-02"
+                }
+              ],
+              "vehicles": [
+                {
+                  "id": "truck-01",
+                  "status": "outbound",
+                  "driverName": "Felipe Martín",
+                  "cargoBatchId": "batch-007",
+                  "cargoRepresentativeBoxes": 4,
+                  "sourceCargoRepresentativeBoxes": 4,
+                  "cargoVisible": true,
+                  "progress": 1,
+                  "handoff": null,
+                  "sourceProgress": 0.75,
+                  "awaitingConfirmation": true,
+                  "position": [
+                    24.6,
+                    0.31499999999999995,
+                    -58.1
+                  ],
+                  "uuid": "03d0b3ef-516f-41dc-9cbb-b0f250d6994d",
+                  "routeEstimated": true
+                },
+                {
+                  "id": "truck-02",
+                  "status": "outbound",
+                  "driverName": "Sara Costa",
+                  "cargoBatchId": "batch-008",
+                  "cargoRepresentativeBoxes": 4,
+                  "sourceCargoRepresentativeBoxes": 4,
+                  "cargoVisible": true,
+                  "progress": 1,
+                  "handoff": null,
+                  "sourceProgress": 0.6,
+                  "awaitingConfirmation": true,
+                  "position": [
+                    28,
+                    0.31499999999999995,
+                    -58.1
+                  ],
+                  "uuid": "42101522-d5d1-4a90-9b6c-818d54cc61d8",
+                  "routeEstimated": true
+                },
+                {
+                  "id": "truck-03",
+                  "status": "available",
+                  "driverName": "Pablo Ríos",
+                  "cargoBatchId": null,
+                  "cargoRepresentativeBoxes": 0,
+                  "sourceCargoRepresentativeBoxes": 0,
+                  "cargoVisible": true,
+                  "progress": 0,
+                  "handoff": null,
+                  "sourceProgress": 0,
+                  "awaitingConfirmation": false,
+                  "position": [
+                    18.7,
+                    0.31499999999999995,
+                    -63.2
+                  ],
+                  "uuid": "e6298e0c-bbe9-4d21-ab6c-0d20f5660061",
+                  "routeEstimated": true
+                }
+              ]
+            },
+            "preset": "light",
+            "qualitySetting": "auto",
+            "dpr": 1,
+            "calls": 157,
+            "triangles": 219666,
+            "geometries": 109,
+            "textures": 9,
+            "cssWidth": 1440,
+            "cssHeight": 1000,
+            "internalWidth": 1440,
+            "internalHeight": 1000,
+            "frameSamples": 129,
+            "frameMs": {
+              "median": 450,
+              "p95": 1183.2999999999956
+            },
+            "submitMs": {
+              "median": 2.899999976158142,
+              "p95": 8.300000011920929
+            },
+            "entityCount": 49,
+            "transitionCount": 0,
+            "construction": {
+              "active": [],
+              "queued": [],
+              "completed": [],
+              "count": 0,
+              "queueCount": 0,
+              "reducedMotion": false,
+              "rigCount": 2,
+              "visibleRigs": 0
+            },
+            "people": {
+              "enabled": true,
+              "elapsed": 61.84720000000002,
+              "source": "simulated-crm-role",
+              "reducedMotion": false,
+              "owners": [
+                {
+                  "ownerId": "owner-ana",
+                  "initials": "AT",
+                  "name": "Ana Torres",
+                  "color": "#007fd6",
+                  "activity": "Revisando propuesta con el cliente",
+                  "phase": "walking",
+                  "dealId": "deal-021",
+                  "accountId": "account-003",
+                  "targetEntityId": "account-003",
+                  "position": [
+                    0.9576822337610514,
+                    0.20735892520137353,
+                    17.53603758234337
+                  ],
+                  "moving": true,
+                  "routeLength": 3,
+                  "routeIndex": 2,
+                  "distance": 135.6830088090755,
+                  "win": false,
+                  "winStep": null,
+                  "attendingConstruction": false,
+                  "constructionStageId": null,
+                  "constructionStep": null,
+                  "sourceVisited": false,
+                  "queuedConstructionDeals": [],
+                  "movementSource": "illustrative-pedestrian-route"
+                },
+                {
+                  "ownerId": "owner-marcos",
+                  "initials": "MV",
+                  "name": "Marcos Vidal",
+                  "color": "#ee7c22",
+                  "activity": "Revisando propuesta con el cliente",
+                  "phase": "meeting",
+                  "dealId": "deal-018",
+                  "accountId": "account-018",
+                  "targetEntityId": "account-018",
+                  "position": [
+                    31.8,
+                    0.2,
+                    23.85
+                  ],
+                  "moving": false,
+                  "routeLength": 4,
+                  "routeIndex": 4,
+                  "distance": 156.38556984765125,
+                  "win": false,
+                  "winStep": null,
+                  "attendingConstruction": false,
+                  "constructionStageId": null,
+                  "constructionStep": null,
+                  "sourceVisited": false,
+                  "queuedConstructionDeals": [],
+                  "movementSource": "illustrative-pedestrian-route"
+                },
+                {
+                  "ownerId": "owner-lucia",
+                  "initials": "LF",
+                  "name": "Lucía Ferrer",
+                  "color": "#a24ed3",
+                  "activity": "Paseando entre visitas",
+                  "phase": "patrol",
+                  "dealId": null,
+                  "accountId": null,
+                  "targetEntityId": null,
+                  "position": [
+                    3.5,
+                    0.2,
+                    12
+                  ],
+                  "moving": false,
+                  "routeLength": 3,
+                  "routeIndex": 3,
+                  "distance": 138.49380815256802,
+                  "win": false,
+                  "winStep": null,
+                  "attendingConstruction": false,
+                  "constructionStageId": null,
+                  "constructionStep": null,
+                  "sourceVisited": false,
+                  "queuedConstructionDeals": [],
+                  "movementSource": "illustrative-pedestrian-route"
+                },
+                {
+                  "ownerId": "owner-david",
+                  "initials": "DS",
+                  "name": "David Soler",
+                  "color": "#d43667",
+                  "activity": "Paseando entre visitas",
+                  "phase": "walking",
+                  "dealId": null,
+                  "accountId": null,
+                  "targetEntityId": null,
+                  "position": [
+                    3.687172725519537,
+                    0.220214690220024,
+                    15.688500006952404
+                  ],
+                  "moving": true,
+                  "routeLength": 4,
+                  "routeIndex": 1,
+                  "distance": 123.95278753637703,
+                  "win": false,
+                  "winStep": null,
+                  "attendingConstruction": false,
+                  "constructionStageId": null,
+                  "constructionStep": null,
+                  "sourceVisited": false,
+                  "queuedConstructionDeals": [],
+                  "movementSource": "illustrative-pedestrian-route"
+                }
+              ]
+            },
+            "districts": [
+              {
+                "id": "lead",
+                "name": "Nuevos leads",
+                "count": 7,
+                "color": "rgb(35,139,236)",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "anchor": [
+                  -31.25,
+                  0.4,
+                  -12.25
+                ]
+              },
+              {
+                "id": "qualified",
+                "name": "Cualificados",
+                "count": 5,
+                "color": "rgb(12,185,176)",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "anchor": [
+                  -15.5,
+                  0.4,
+                  -12.25
+                ]
+              },
+              {
+                "id": "proposal",
+                "name": "Propuestas",
+                "count": 6,
+                "color": "rgb(243,171,34)",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "anchor": [
+                  0,
+                  0.4,
+                  -12.25
+                ]
+              },
+              {
+                "id": "negotiation",
+                "name": "Negociación",
+                "count": 6,
+                "color": "rgb(162,89,223)",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "anchor": [
+                  15.5,
+                  0.4,
+                  -12.25
+                ]
+              },
+              {
+                "id": "won",
+                "name": "Ventas ganadas",
+                "count": 4,
+                "color": "rgb(36,182,107)",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "anchor": [
+                  31.25,
+                  0.4,
+                  -12.25
+                ]
+              },
+              {
+                "id": "clients",
+                "name": "Clientes activos",
+                "count": 18,
+                "color": "#178f8c",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "anchor": [
+                  -1,
+                  0.5,
+                  25.2
+                ]
+              }
+            ],
+            "ownerBadges": [
+              {
+                "id": "owner-ana",
+                "visible": true,
+                "text": "AT"
+              },
+              {
+                "id": "owner-marcos",
+                "visible": true,
+                "text": "MV"
+              },
+              {
+                "id": "owner-lucia",
+                "visible": true,
+                "text": "LF"
+              },
+              {
+                "id": "owner-david",
+                "visible": true,
+                "text": "DS"
+              }
+            ],
+            "placeLabels": [
+              {
+                "id": "email",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "text": "Correos · 6 hoy"
+              },
+              {
+                "id": "call",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "text": "Central de llamadas · 12 hoy"
+              },
+              {
+                "id": "messages",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "text": "Casa de mensajes · 6 hoy"
+              },
+              {
+                "id": "meeting",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "text": "Cafetería reuniones · 1 hoy"
+              }
+            ],
+            "industryLabels": [
+              {
+                "id": "manufacturing",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "text": "Fabricación · 240 uds"
+              },
+              {
+                "id": "packing",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "text": "Empacado · 120 uds"
+              },
+              {
+                "id": "warehouse",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "text": "Almacén · 480 uds"
+              },
+              {
+                "id": "transit",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "text": "En transporte · 160 uds"
+              },
+              {
+                "id": "delivered",
+                "visible": false,
+                "presentation": "outside-canvas",
+                "text": "Entregado · 320 uds"
+              }
+            ],
+            "connectionCount": 0,
+            "traffic": {
+              "enabled": false,
+              "elapsed": 9.550000000000054,
+              "laneLength": 124.27964473723102,
+              "minimumClearance": 7.080599415252122,
+              "vehicles": [
+                {
+                  "id": "ambient-1",
+                  "kind": "car",
+                  "s": 25.991666666662383,
+                  "length": 1.94,
+                  "speed": 2.5,
+                  "cruise": 2.5,
+                  "distance": 21.791666666666735,
+                  "brake": false,
+                  "x": 4.34166666666238,
+                  "z": -8.05,
+                  "tx": 1,
+                  "tz": 0,
+                  "curvature": 0,
+                  "segment": "north-eastbound"
+                },
+                {
+                  "id": "ambient-2",
+                  "kind": "car",
+                  "s": 41.518682748580716,
+                  "length": 1.94,
+                  "speed": 2.72,
+                  "cruise": 2.72,
+                  "distance": 23.509833333333177,
+                  "brake": false,
+                  "x": 19.868682748580714,
+                  "z": -8.05,
+                  "tx": 1,
+                  "tz": 0,
+                  "curvature": 0,
+                  "segment": "north-eastbound"
+                },
+                {
+                  "id": "ambient-3",
+                  "kind": "car",
+                  "s": 54.95725883049846,
+                  "length": 1.94,
+                  "speed": 2.94,
+                  "cruise": 2.94,
+                  "distance": 23.139559999999886,
+                  "brake": false,
+                  "x": 24.05,
+                  "z": 2.2373476461907043,
+                  "tx": 0,
+                  "tz": 1,
+                  "curvature": 0,
+                  "segment": "east-southbound"
+                },
+                {
+                  "id": "ambient-4",
+                  "kind": "car",
+                  "s": 65.38238157907563,
+                  "length": 1.94,
+                  "speed": 2.5,
+                  "cruise": 2.5,
+                  "distance": 19.755833333333367,
+                  "brake": false,
+                  "x": 18.40744078953988,
+                  "z": 8.05,
+                  "tx": -1,
+                  "tz": 0,
+                  "curvature": 0,
+                  "segment": "south-westbound"
+                },
+                {
+                  "id": "ambient-5",
+                  "kind": "car",
+                  "s": 82.51141085141441,
+                  "length": 1.94,
+                  "speed": 2.72,
+                  "cruise": 2.72,
+                  "distance": 23.076013190423172,
+                  "brake": false,
+                  "x": 1.2784115172010964,
+                  "z": 8.05,
+                  "tx": -1,
+                  "tz": 0,
+                  "curvature": 0,
+                  "segment": "south-westbound"
+                },
+                {
+                  "id": "ambient-6",
+                  "kind": "car",
+                  "s": 98.4399970762424,
+                  "length": 1.94,
+                  "speed": 2.94,
+                  "cruise": 2.94,
+                  "distance": 25.195749999999848,
+                  "brake": false,
+                  "x": -14.650174707626899,
+                  "z": 8.05,
+                  "tx": -1,
+                  "tz": 0,
+                  "curvature": 0,
+                  "segment": "south-westbound"
+                },
+                {
+                  "id": "ambient-7",
+                  "kind": "car",
+                  "s": 107.46059649149453,
+                  "length": 1.94,
+                  "speed": 1.6500000000000001,
+                  "cruise": 2.5,
+                  "distance": 20.40749999999993,
+                  "brake": false,
+                  "x": -23.440326499525035,
+                  "z": 7.248352597238309,
+                  "tx": -0.6659802488492952,
+                  "tz": -0.7459693748020966,
+                  "curvature": 0.4166666666666667,
+                  "segment": "south-west-corner"
+                },
+                {
+                  "id": "ambient-8",
+                  "kind": "car",
+                  "s": 121.51053257340203,
+                  "length": 1.94,
+                  "speed": 1.7952000000000001,
+                  "cruise": 2.72,
+                  "distance": 20.64858666666663,
+                  "brake": false,
+                  "x": -23.844339862979478,
+                  "z": -6.622045557440196,
+                  "tx": 0.40501898226674826,
+                  "tz": -0.9143082762414477,
+                  "curvature": 0.4166666666666667,
+                  "segment": "north-west-corner"
+                },
+                {
+                  "id": "ambient-9",
+                  "kind": "motorcycle",
+                  "s": 13.973067251422691,
+                  "length": 1.24,
+                  "speed": 3,
+                  "cruise": 3,
+                  "distance": 23.58191666666686,
+                  "brake": false,
+                  "x": -7.676932748577311,
+                  "z": -8.05,
+                  "tx": 1,
+                  "tz": 0,
+                  "curvature": 0,
+                  "segment": "north-eastbound"
+                }
+              ],
+              "signals": [
+                {
+                  "id": "north-crossing",
+                  "s": 18.85,
+                  "offset": 0,
+                  "x": -0.9,
+                  "z": -6.35,
+                  "rotation": -1.5707963267948966,
+                  "state": "green"
+                },
+                {
+                  "id": "south-crossing",
+                  "s": 80.9898223686155,
+                  "offset": 2.5,
+                  "x": 0.9,
+                  "z": 6.35,
+                  "rotation": 1.5707963267948966,
+                  "state": "red"
+                }
+              ],
+              "source": "ambient-demo",
+              "quality": "light",
+              "meshes": 9,
+              "type": "ambient-traffic",
+              "businessData": false
+            },
+            "visibleLabelCount": 4,
+            "heightScale": {
+              "min": 1.8,
+              "max": 8.8,
+              "referenceAmount": 10000,
+              "referenceHeight": 6,
+              "unknownHeight": 4
+            },
+            "reducedMotion": false,
+            "active": true
+          }
+        },
+        "tourFrames": [
+          {
+            "quaternion": [
+              -0.26303476481420407,
+              0.31627355645048966,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "moving": true,
+            "tour": {
+              "elapsed": 70.94690000000003,
+              "nextAt": 86.13030000000002,
+              "pausedUntil": 0,
+              "enabled": true,
+              "running": true,
+              "paused": false,
+              "step": 1,
+              "district": "sales",
+              "sequence": [
+                "all",
+                "sales",
+                "all",
+                "communications",
+                "all",
+                "industry"
+              ],
+              "nextIn": 15.183399999999992,
+              "pausedFor": 0,
+              "transitionDuration": 7,
+              "holdDuration": 9
+            }
+          },
+          {
+            "quaternion": [
+              -0.26303476481420407,
+              0.3162735564504897,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "moving": true,
+            "tour": {
+              "elapsed": 71.81360000000002,
+              "nextAt": 86.13030000000002,
+              "pausedUntil": 0,
+              "enabled": true,
+              "running": true,
+              "paused": false,
+              "step": 1,
+              "district": "sales",
+              "sequence": [
+                "all",
+                "sales",
+                "all",
+                "communications",
+                "all",
+                "industry"
+              ],
+              "nextIn": 14.316699999999997,
+              "pausedFor": 0,
+              "transitionDuration": 7,
+              "holdDuration": 9
+            }
+          },
+          {
+            "quaternion": [
+              -0.26303476481420407,
+              0.31627355645048966,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "moving": true,
+            "tour": {
+              "elapsed": 72.74680000000002,
+              "nextAt": 86.13030000000002,
+              "pausedUntil": 0,
+              "enabled": true,
+              "running": true,
+              "paused": false,
+              "step": 1,
+              "district": "sales",
+              "sequence": [
+                "all",
+                "sales",
+                "all",
+                "communications",
+                "all",
+                "industry"
+              ],
+              "nextIn": 13.383499999999998,
+              "pausedFor": 0,
+              "transitionDuration": 7,
+              "holdDuration": 9
+            }
+          }
+        ],
+        "replay": {
+          "assistant": {
+            "mode": "replay",
+            "district": "sales",
+            "disposed": false,
+            "expanded": false,
+            "hidden": true,
+            "paused": true,
+            "muted": false,
+            "timerActive": false,
+            "visibleTip": null,
+            "tipCount": 1,
+            "askCount": 0,
+            "pending": false,
+            "answerMode": "local",
+            "dismissed": [
+              "overdue:deal-003"
+            ],
+            "history": []
+          },
+          "source": "{\"stages\":[{\"id\":\"lead\",\"name\":\"Nuevos leads\",\"color\":\"#238bec\",\"order\":0,\"kind\":\"open\"},{\"id\":\"qualified\",\"name\":\"Cualificados\",\"color\":\"#0cb9b0\",\"order\":1,\"kind\":\"open\"},{\"id\":\"proposal\",\"name\":\"Propuestas\",\"color\":\"#f3ab22\",\"order\":2,\"kind\":\"open\"},{\"id\":\"negotiation\",\"name\":\"Negociación\",\"color\":\"#a259df\",\"order\":3,\"kind\":\"open\"},{\"id\":\"won\",\"name\":\"Ventas ganadas\",\"color\":\"#24b66b\",\"order\":4,\"kind\":\"won\"}],\"deals\":[{\"id\":\"deal-001\",\"name\":\"Nueva sede\",\"accountId\":\"account-001\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":1500,\"ownerId\":\"owner-ana\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T09:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T09:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":1200},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":300}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"eventId\":\"history-deal-001-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":0},{\"id\":\"deal-002\",\"name\":\"Programa anual\",\"accountId\":\"account-002\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":2500,\"ownerId\":\"owner-marcos\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T10:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T10:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":2000},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":500}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"eventId\":\"history-deal-002-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":1},{\"id\":\"deal-003\",\"name\":\"Expansión de equipo\",\"accountId\":\"account-003\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":3500,\"ownerId\":\"owner-lucia\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T11:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T11:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":2800},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":700}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"eventId\":\"history-deal-003-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":2},{\"id\":\"deal-004\",\"name\":\"Colección otoño\",\"accountId\":\"account-004\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":4500,\"ownerId\":\"owner-david\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T12:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T12:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":3600},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":900}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"eventId\":\"history-deal-004-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":3},{\"id\":\"deal-005\",\"name\":\"Renovación de espacios\",\"accountId\":\"account-005\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":5500,\"ownerId\":\"owner-ana\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T13:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T13:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":4400},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1100}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"eventId\":\"history-deal-005-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":4},{\"id\":\"deal-006\",\"name\":\"Proyecto conexión\",\"accountId\":\"account-006\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":6500,\"ownerId\":\"owner-marcos\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T14:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T14:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":5200},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1300}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"eventId\":\"history-deal-006-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":5},{\"id\":\"deal-007\",\"name\":\"Plan de crecimiento\",\"accountId\":\"account-007\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":7500,\"ownerId\":\"owner-lucia\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T09:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T09:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":6000},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1500}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"eventId\":\"history-deal-007-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":6},{\"id\":\"deal-008\",\"name\":\"Experiencia cliente\",\"accountId\":\"account-008\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":3000,\"ownerId\":\"owner-david\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T10:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T10:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":2400},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":600}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"eventId\":\"history-deal-008-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":7},{\"id\":\"deal-009\",\"name\":\"Servicio integral\",\"accountId\":\"account-009\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":4000,\"ownerId\":\"owner-ana\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T11:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T11:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":3200},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":800}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"eventId\":\"history-deal-009-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":8},{\"id\":\"deal-010\",\"name\":\"Lanzamiento de marca\",\"accountId\":\"account-010\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":5000,\"ownerId\":\"owner-marcos\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T12:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T12:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":4000},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1000}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"eventId\":\"history-deal-010-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":9},{\"id\":\"deal-011\",\"name\":\"Nueva línea\",\"accountId\":\"account-011\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":6000,\"ownerId\":\"owner-lucia\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T13:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T13:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":4800},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1200}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"eventId\":\"history-deal-011-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":10},{\"id\":\"deal-012\",\"name\":\"Transformación digital\",\"accountId\":\"account-012\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":7000,\"ownerId\":\"owner-david\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T14:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T14:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":5600},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1400}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"eventId\":\"history-deal-012-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":11},{\"id\":\"deal-013\",\"name\":\"Acuerdo de distribución\",\"accountId\":\"account-013\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":3000,\"ownerId\":\"owner-ana\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T09:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T09:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":2400},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":600}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"eventId\":\"history-deal-013-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":12},{\"id\":\"deal-014\",\"name\":\"Programa de fidelización\",\"accountId\":\"account-014\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":4000,\"ownerId\":\"owner-marcos\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T10:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T10:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":3200},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":800}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"eventId\":\"history-deal-014-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":13},{\"id\":\"deal-015\",\"name\":\"Red de oficinas\",\"accountId\":\"account-015\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":5000,\"ownerId\":\"owner-lucia\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T11:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T11:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":4000},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1000}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"eventId\":\"history-deal-015-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":14},{\"id\":\"deal-016\",\"name\":\"Contrato regional\",\"accountId\":\"account-016\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":6000,\"ownerId\":\"owner-david\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T12:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T12:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":4800},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1200}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"eventId\":\"history-deal-016-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":15},{\"id\":\"deal-017\",\"name\":\"Implementación central\",\"accountId\":\"account-017\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":7000,\"ownerId\":\"owner-ana\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T13:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T13:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":5600},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1400}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"eventId\":\"history-deal-017-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":16},{\"id\":\"deal-018\",\"name\":\"Colección premium\",\"accountId\":\"account-018\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":8000,\"ownerId\":\"owner-marcos\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T14:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T14:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":6400},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1600}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"eventId\":\"history-deal-018-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":17},{\"id\":\"deal-019\",\"name\":\"Acuerdo estratégico\",\"accountId\":\"account-001\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":2000,\"ownerId\":\"owner-lucia\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T09:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T09:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":1600},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":400}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"eventId\":\"history-deal-019-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":18},{\"id\":\"deal-020\",\"name\":\"Apertura de mercado\",\"accountId\":\"account-002\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":3000,\"ownerId\":\"owner-david\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T10:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T10:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":2400},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":600}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"eventId\":\"history-deal-020-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":19},{\"id\":\"deal-021\",\"name\":\"Servicio corporativo\",\"accountId\":\"account-003\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":4000,\"ownerId\":\"owner-ana\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T11:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T11:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":3200},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":800}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"eventId\":\"history-deal-021-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":20},{\"id\":\"deal-022\",\"name\":\"Contrato de soporte\",\"accountId\":\"account-004\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":5000,\"ownerId\":\"owner-marcos\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T12:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T12:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":4000},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1000}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"eventId\":\"history-deal-022-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":21},{\"id\":\"deal-023\",\"name\":\"Proyecto horizonte\",\"accountId\":\"account-005\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":7000,\"ownerId\":\"owner-lucia\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T13:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T13:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":5600},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1400}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"eventId\":\"history-deal-023-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":22},{\"id\":\"deal-024\",\"name\":\"Plan de expansión\",\"accountId\":\"account-006\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":9500,\"ownerId\":\"owner-david\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T14:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T14:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":7600},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1900}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"eventId\":\"history-deal-024-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":23},{\"id\":\"deal-025\",\"name\":\"Alianza anual\",\"accountId\":\"account-007\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":4500,\"ownerId\":\"owner-ana\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T09:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T09:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":3600},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":900}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"eventId\":\"history-deal-025-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":24},{\"id\":\"deal-026\",\"name\":\"Instalación completa\",\"accountId\":\"account-008\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":6500,\"ownerId\":\"owner-marcos\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T10:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T10:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":5200},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1300}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"eventId\":\"history-deal-026-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":25},{\"id\":\"deal-027\",\"name\":\"Programa equipo\",\"accountId\":\"account-009\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":8500,\"ownerId\":\"owner-lucia\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T11:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T11:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":6800},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1700}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"eventId\":\"history-deal-027-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":26},{\"id\":\"deal-028\",\"name\":\"Acuerdo nacional\",\"accountId\":\"account-010\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":10500,\"ownerId\":\"owner-david\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T12:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T12:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":8400},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":2100}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"eventId\":\"history-deal-028-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":27},{\"id\":\"deal-029\",\"name\":\"Piloto logístico\",\"accountId\":\"account-011\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":3500,\"ownerId\":\"owner-ana\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T13:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T13:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":2800},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":700}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"eventId\":\"history-deal-029-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":28},{\"id\":\"deal-030\",\"name\":\"Sede experimental\",\"accountId\":\"account-012\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":6000,\"ownerId\":\"owner-marcos\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-03T14:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-03T14:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":4800},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1200}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"eventId\":\"history-deal-030-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":29},{\"id\":\"deal-031\",\"name\":\"Proyecto temporada\",\"accountId\":\"account-013\",\"stageId\":\"lead\",\"status\":\"open\",\"amount\":9000,\"ownerId\":\"owner-lucia\",\"probability\":null,\"nextStep\":null,\"lastActivityAt\":\"2026-10-02T09:00:00+02:00\",\"expectedCloseAt\":null,\"closedAt\":null,\"lastStageChangedAt\":\"2026-10-02T09:00:00+02:00\",\"products\":[{\"id\":\"product-service\",\"name\":\"Servicio principal\",\"quantity\":1,\"unitPrice\":7200},{\"id\":\"product-support\",\"name\":\"Acompañamiento\",\"quantity\":1,\"unitPrice\":1800}],\"history\":[{\"stageId\":\"lead\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"eventId\":\"history-deal-031-0\",\"type\":\"deal.created\"}],\"crmUrl\":null,\"plotIndex\":30}],\"accounts\":[{\"id\":\"account-001\",\"name\":\"Norte Studio\",\"ownerId\":\"owner-ana\",\"status\":\"active\",\"renewalDate\":\"2026-11-05\",\"upsellAmount\":1500,\"crmUrl\":null},{\"id\":\"account-002\",\"name\":\"Oliva Hotels\",\"ownerId\":\"owner-marcos\",\"status\":\"active\",\"renewalDate\":\"2026-11-06\",\"upsellAmount\":2500,\"crmUrl\":null},{\"id\":\"account-003\",\"name\":\"Brisa Market\",\"ownerId\":\"owner-lucia\",\"status\":\"active\",\"renewalDate\":\"2026-11-07\",\"upsellAmount\":4000,\"crmUrl\":null},{\"id\":\"account-004\",\"name\":\"Lumen Labs\",\"ownerId\":\"owner-david\",\"status\":\"active\",\"renewalDate\":\"2026-11-08\",\"upsellAmount\":null,\"crmUrl\":null},{\"id\":\"account-005\",\"name\":\"Casa Aurora\",\"ownerId\":\"owner-ana\",\"status\":\"active\",\"renewalDate\":\"2026-11-09\",\"upsellAmount\":1500,\"crmUrl\":null},{\"id\":\"account-006\",\"name\":\"Taller Forma\",\"ownerId\":\"owner-marcos\",\"status\":\"active\",\"renewalDate\":\"2026-11-10\",\"upsellAmount\":2500,\"crmUrl\":null},{\"id\":\"account-007\",\"name\":\"Marea Foods\",\"ownerId\":\"owner-lucia\",\"status\":\"active\",\"renewalDate\":\"2026-11-11\",\"upsellAmount\":4000,\"crmUrl\":null},{\"id\":\"account-008\",\"name\":\"Terra Supply\",\"ownerId\":\"owner-david\",\"status\":\"active\",\"renewalDate\":\"2026-11-12\",\"upsellAmount\":null,\"crmUrl\":null},{\"id\":\"account-009\",\"name\":\"Roca Design\",\"ownerId\":\"owner-ana\",\"status\":\"active\",\"renewalDate\":\"2026-11-13\",\"upsellAmount\":1500,\"crmUrl\":null},{\"id\":\"account-010\",\"name\":\"Delta Health\",\"ownerId\":\"owner-marcos\",\"status\":\"active\",\"renewalDate\":\"2026-12-14\",\"upsellAmount\":2500,\"crmUrl\":null},{\"id\":\"account-011\",\"name\":\"Bosque Retail\",\"ownerId\":\"owner-lucia\",\"status\":\"active\",\"renewalDate\":\"2026-12-15\",\"upsellAmount\":4000,\"crmUrl\":null},{\"id\":\"account-012\",\"name\":\"Punto Verde\",\"ownerId\":\"owner-david\",\"status\":\"active\",\"renewalDate\":\"2026-12-16\",\"upsellAmount\":null,\"crmUrl\":null},{\"id\":\"account-013\",\"name\":\"Azul Digital\",\"ownerId\":\"owner-ana\",\"status\":\"active\",\"renewalDate\":\"2026-12-17\",\"upsellAmount\":1500,\"crmUrl\":null},{\"id\":\"account-014\",\"name\":\"Sur Services\",\"ownerId\":\"owner-marcos\",\"status\":\"active\",\"renewalDate\":\"2026-12-18\",\"upsellAmount\":2500,\"crmUrl\":null},{\"id\":\"account-015\",\"name\":\"Nido Spaces\",\"ownerId\":\"owner-lucia\",\"status\":\"active\",\"renewalDate\":\"2026-12-19\",\"upsellAmount\":4000,\"crmUrl\":null},{\"id\":\"account-016\",\"name\":\"Cobalto Tech\",\"ownerId\":\"owner-david\",\"status\":\"active\",\"renewalDate\":\"2026-12-20\",\"upsellAmount\":null,\"crmUrl\":null},{\"id\":\"account-017\",\"name\":\"Alba Partners\",\"ownerId\":\"owner-ana\",\"status\":\"active\",\"renewalDate\":\"2026-12-21\",\"upsellAmount\":1500,\"crmUrl\":null},{\"id\":\"account-018\",\"name\":\"Horizonte Group\",\"ownerId\":\"owner-marcos\",\"status\":\"active\",\"renewalDate\":\"2026-12-22\",\"upsellAmount\":2500,\"crmUrl\":null}],\"owners\":[{\"id\":\"owner-ana\",\"name\":\"Ana Torres\",\"initials\":\"AT\"},{\"id\":\"owner-marcos\",\"name\":\"Marcos Vidal\",\"initials\":\"MV\"},{\"id\":\"owner-lucia\",\"name\":\"Lucía Ferrer\",\"initials\":\"LF\"},{\"id\":\"owner-david\",\"name\":\"David Soler\",\"initials\":\"DS\"}],\"activities\":[{\"id\":\"activity-contact-01\",\"type\":\"contact\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-001\",\"occurredAt\":\"2026-10-15T10:00:00+02:00\",\"dueAt\":\"2026-10-17T12:00:00+02:00\",\"subject\":\"Contactar con la persona responsable\"},{\"id\":\"activity-contact-02\",\"type\":\"contact\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-002\",\"occurredAt\":\"2026-10-15T10:00:00+02:00\",\"dueAt\":\"2026-10-17T12:00:00+02:00\",\"subject\":\"Contactar con la persona responsable\"},{\"id\":\"activity-contact-03\",\"type\":\"contact\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-003\",\"occurredAt\":\"2026-10-15T10:00:00+02:00\",\"dueAt\":\"2026-10-17T12:00:00+02:00\",\"subject\":\"Contactar con la persona responsable\"},{\"id\":\"activity-contact-04\",\"type\":\"contact\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-004\",\"occurredAt\":\"2026-10-15T10:00:00+02:00\",\"dueAt\":\"2026-10-17T12:00:00+02:00\",\"subject\":\"Contactar con la persona responsable\"},{\"id\":\"activity-contact-05\",\"type\":\"contact\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-005\",\"occurredAt\":\"2026-10-15T10:00:00+02:00\",\"dueAt\":\"2026-10-17T12:00:00+02:00\",\"subject\":\"Contactar con la persona responsable\"},{\"id\":\"activity-contact-06\",\"type\":\"contact\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-006\",\"occurredAt\":\"2026-10-15T10:00:00+02:00\",\"dueAt\":\"2026-10-17T12:00:00+02:00\",\"subject\":\"Contactar con la persona responsable\"},{\"id\":\"activity-contact-07\",\"type\":\"contact\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-007\",\"occurredAt\":\"2026-10-15T10:00:00+02:00\",\"dueAt\":\"2026-10-17T12:00:00+02:00\",\"subject\":\"Contactar con la persona responsable\"},{\"id\":\"activity-conversation-01\",\"type\":\"conversation\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-004\",\"occurredAt\":\"2026-10-16T08:00:00+02:00\",\"dueAt\":\"2026-10-17T10:00:00+02:00\",\"subject\":\"Responder a la consulta del cliente\"},{\"id\":\"activity-conversation-02\",\"type\":\"conversation\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-005\",\"occurredAt\":\"2026-10-16T08:00:00+02:00\",\"dueAt\":\"2026-10-17T10:00:00+02:00\",\"subject\":\"Responder a la consulta del cliente\"},{\"id\":\"activity-conversation-03\",\"type\":\"conversation\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-006\",\"occurredAt\":\"2026-10-16T08:00:00+02:00\",\"dueAt\":\"2026-10-17T10:00:00+02:00\",\"subject\":\"Responder a la consulta del cliente\"},{\"id\":\"activity-conversation-04\",\"type\":\"conversation\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-007\",\"occurredAt\":\"2026-10-16T08:00:00+02:00\",\"dueAt\":\"2026-10-17T10:00:00+02:00\",\"subject\":\"Responder a la consulta del cliente\"},{\"id\":\"activity-conversation-05\",\"type\":\"conversation\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-008\",\"occurredAt\":\"2026-10-16T08:00:00+02:00\",\"dueAt\":\"2026-10-17T10:00:00+02:00\",\"subject\":\"Responder a la consulta del cliente\"},{\"id\":\"activity-conversation-06\",\"type\":\"conversation\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-009\",\"occurredAt\":\"2026-10-16T08:00:00+02:00\",\"dueAt\":\"2026-10-17T10:00:00+02:00\",\"subject\":\"Responder a la consulta del cliente\"},{\"id\":\"activity-conversation-07\",\"type\":\"conversation\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-010\",\"occurredAt\":\"2026-10-16T08:00:00+02:00\",\"dueAt\":\"2026-10-17T10:00:00+02:00\",\"subject\":\"Responder a la consulta del cliente\"},{\"id\":\"activity-conversation-08\",\"type\":\"conversation\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-011\",\"occurredAt\":\"2026-10-16T08:00:00+02:00\",\"dueAt\":\"2026-10-17T10:00:00+02:00\",\"subject\":\"Responder a la consulta del cliente\"},{\"id\":\"activity-conversation-09\",\"type\":\"conversation\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-012\",\"occurredAt\":\"2026-10-16T08:00:00+02:00\",\"dueAt\":\"2026-10-17T10:00:00+02:00\",\"subject\":\"Responder a la consulta del cliente\"},{\"id\":\"activity-call-01\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-001\",\"occurredAt\":\"2026-10-16T09:02:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-02\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-002\",\"occurredAt\":\"2026-10-16T09:05:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-03\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-003\",\"occurredAt\":\"2026-10-16T09:08:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-04\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-004\",\"occurredAt\":\"2026-10-16T09:11:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-05\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-005\",\"occurredAt\":\"2026-10-16T09:14:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-06\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-006\",\"occurredAt\":\"2026-10-16T09:17:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-07\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-007\",\"occurredAt\":\"2026-10-16T09:20:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-08\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-008\",\"occurredAt\":\"2026-10-16T09:23:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-09\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-009\",\"occurredAt\":\"2026-10-16T09:26:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-10\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-010\",\"occurredAt\":\"2026-10-16T09:29:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-11\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-011\",\"occurredAt\":\"2026-10-16T09:32:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-call-12\",\"type\":\"call\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-012\",\"occurredAt\":\"2026-10-16T09:35:00+02:00\",\"dueAt\":null,\"subject\":\"Llamada de seguimiento registrada\"},{\"id\":\"activity-task-01\",\"type\":\"task\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-003\",\"occurredAt\":\"2026-10-13T09:00:00+02:00\",\"dueAt\":\"2026-10-14T17:00:00+02:00\",\"subject\":\"Enviar propuesta revisada\"},{\"id\":\"activity-task-02\",\"type\":\"task\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-008\",\"occurredAt\":\"2026-10-13T09:00:00+02:00\",\"dueAt\":\"2026-10-15T17:00:00+02:00\",\"subject\":\"Confirmar presupuesto\"},{\"id\":\"activity-task-03\",\"type\":\"task\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-013\",\"occurredAt\":\"2026-10-13T09:00:00+02:00\",\"dueAt\":\"2026-10-14T17:00:00+02:00\",\"subject\":\"Preparar reunión\"},{\"id\":\"activity-task-04\",\"type\":\"task\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-018\",\"occurredAt\":\"2026-10-13T09:00:00+02:00\",\"dueAt\":\"2026-10-15T17:00:00+02:00\",\"subject\":\"Revisar condiciones\"},{\"id\":\"activity-task-05\",\"type\":\"task\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"dealId\":\"deal-023\",\"occurredAt\":\"2026-10-13T09:00:00+02:00\",\"dueAt\":\"2026-10-14T17:00:00+02:00\",\"subject\":\"Solicitar aprobación\"},{\"id\":\"activity-email-01\",\"type\":\"email\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-013\",\"occurredAt\":\"2026-10-16T09:00:00+02:00\",\"dueAt\":null,\"subject\":\"Correo de seguimiento enviado\"},{\"id\":\"activity-email-02\",\"type\":\"email\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-014\",\"occurredAt\":\"2026-10-16T09:00:00+02:00\",\"dueAt\":null,\"subject\":\"Correo de seguimiento enviado\"},{\"id\":\"activity-email-03\",\"type\":\"email\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-015\",\"occurredAt\":\"2026-10-16T09:00:00+02:00\",\"dueAt\":null,\"subject\":\"Correo de seguimiento enviado\"},{\"id\":\"activity-email-04\",\"type\":\"email\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-016\",\"occurredAt\":\"2026-10-16T09:00:00+02:00\",\"dueAt\":null,\"subject\":\"Correo de seguimiento enviado\"},{\"id\":\"activity-email-05\",\"type\":\"email\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-017\",\"occurredAt\":\"2026-10-16T09:00:00+02:00\",\"dueAt\":null,\"subject\":\"Correo de seguimiento enviado\"},{\"id\":\"activity-email-06\",\"type\":\"email\",\"source\":\"atlas-demo\",\"status\":\"done\",\"dealId\":\"deal-018\",\"occurredAt\":\"2026-10-16T09:00:00+02:00\",\"dueAt\":null,\"subject\":\"Correo de seguimiento enviado\"},{\"id\":\"activity-meeting-01\",\"type\":\"meeting\",\"source\":\"atlas-demo\",\"status\":\"done\",\"accountId\":\"account-001\",\"occurredAt\":\"2026-10-16T09:00:00+02:00\",\"dueAt\":\"2026-10-16T09:00:00+02:00\",\"subject\":\"Reunión de cuenta\"},{\"id\":\"activity-meeting-02\",\"type\":\"meeting\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"accountId\":\"account-002\",\"occurredAt\":\"2026-10-16T12:00:00+02:00\",\"dueAt\":\"2026-10-16T12:00:00+02:00\",\"subject\":\"Reunión de cuenta\"},{\"id\":\"activity-meeting-03\",\"type\":\"meeting\",\"source\":\"atlas-demo\",\"status\":\"pending\",\"accountId\":\"account-003\",\"occurredAt\":\"2026-10-16T15:00:00+02:00\",\"dueAt\":\"2026-10-16T15:00:00+02:00\",\"subject\":\"Reunión de cuenta\"},{\"id\":\"activity-whatsapp-01\",\"type\":\"message\",\"channel\":\"whatsapp\",\"source\":\"atlas-demo\",\"subject\":\"WhatsApp: confirmación de requisitos\",\"status\":\"done\",\"occurredAt\":\"2026-10-16T06:22:00.000Z\",\"dueAt\":null,\"dealId\":\"deal-001\",\"accountId\":\"account-001\",\"ownerId\":\"owner-ana\"},{\"id\":\"activity-whatsapp-02\",\"type\":\"message\",\"channel\":\"whatsapp\",\"source\":\"atlas-demo\",\"subject\":\"WhatsApp: horario de entrega\",\"status\":\"done\",\"occurredAt\":\"2026-10-16T06:34:00.000Z\",\"dueAt\":null,\"dealId\":\"deal-004\",\"accountId\":\"account-004\",\"ownerId\":\"owner-david\"},{\"id\":\"activity-whatsapp-03\",\"type\":\"message\",\"channel\":\"whatsapp\",\"source\":\"atlas-demo\",\"subject\":\"WhatsApp: propuesta recibida\",\"status\":\"done\",\"occurredAt\":\"2026-10-16T06:46:00.000Z\",\"dueAt\":null,\"dealId\":\"deal-007\",\"accountId\":\"account-007\",\"ownerId\":\"owner-lucia\"},{\"id\":\"activity-whatsapp-04\",\"type\":\"message\",\"channel\":\"whatsapp\",\"source\":\"atlas-demo\",\"subject\":\"WhatsApp: dudas del presupuesto\",\"status\":\"done\",\"occurredAt\":\"2026-10-16T06:58:00.000Z\",\"dueAt\":null,\"dealId\":\"deal-010\",\"accountId\":\"account-010\",\"ownerId\":\"owner-marcos\"},{\"id\":\"activity-whatsapp-05\",\"type\":\"message\",\"channel\":\"whatsapp\",\"source\":\"atlas-demo\",\"subject\":\"WhatsApp: documentación compartida\",\"status\":\"done\",\"occurredAt\":\"2026-10-16T07:10:00.000Z\",\"dueAt\":null,\"dealId\":\"deal-013\",\"accountId\":\"account-013\",\"ownerId\":\"owner-ana\"},{\"id\":\"activity-whatsapp-06\",\"type\":\"message\",\"channel\":\"whatsapp\",\"source\":\"atlas-demo\",\"subject\":\"WhatsApp: seguimiento del acuerdo\",\"status\":\"done\",\"occurredAt\":\"2026-10-16T07:22:00.000Z\",\"dueAt\":null,\"dealId\":\"deal-016\",\"accountId\":\"account-016\",\"ownerId\":\"owner-david\"},{\"id\":\"activity-whatsapp-07\",\"type\":\"message\",\"channel\":\"whatsapp\",\"source\":\"atlas-demo\",\"subject\":\"WhatsApp: respuesta pendiente del cliente\",\"status\":\"pending\",\"occurredAt\":\"2026-10-16T07:34:00.000Z\",\"dueAt\":\"2026-10-16T09:15:00.000Z\",\"dealId\":\"deal-019\",\"accountId\":\"account-001\",\"ownerId\":\"owner-lucia\"},{\"id\":\"activity-whatsapp-08\",\"type\":\"message\",\"channel\":\"whatsapp\",\"source\":\"atlas-demo\",\"subject\":\"WhatsApp: confirmar disponibilidad\",\"status\":\"pending\",\"occurredAt\":\"2026-10-16T07:46:00.000Z\",\"dueAt\":\"2026-10-16T10:15:00.000Z\",\"dealId\":\"deal-022\",\"accountId\":\"account-004\",\"ownerId\":\"owner-marcos\"}],\"events\":[{\"id\":\"history-deal-001-0\",\"entityId\":\"deal-001\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-007-0\",\"entityId\":\"deal-007\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-013-0\",\"entityId\":\"deal-013\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-019-0\",\"entityId\":\"deal-019\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-025-0\",\"entityId\":\"deal-025\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-031-0\",\"entityId\":\"deal-031\",\"timestamp\":\"2026-10-02T09:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-003-0\",\"entityId\":\"deal-003\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-009-0\",\"entityId\":\"deal-009\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-015-0\",\"entityId\":\"deal-015\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-021-0\",\"entityId\":\"deal-021\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-027-0\",\"entityId\":\"deal-027\",\"timestamp\":\"2026-10-02T11:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-005-0\",\"entityId\":\"deal-005\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-011-0\",\"entityId\":\"deal-011\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-017-0\",\"entityId\":\"deal-017\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-023-0\",\"entityId\":\"deal-023\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-029-0\",\"entityId\":\"deal-029\",\"timestamp\":\"2026-10-02T13:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-002-0\",\"entityId\":\"deal-002\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-008-0\",\"entityId\":\"deal-008\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-014-0\",\"entityId\":\"deal-014\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-020-0\",\"entityId\":\"deal-020\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-026-0\",\"entityId\":\"deal-026\",\"timestamp\":\"2026-10-03T10:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-004-0\",\"entityId\":\"deal-004\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-010-0\",\"entityId\":\"deal-010\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-016-0\",\"entityId\":\"deal-016\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-022-0\",\"entityId\":\"deal-022\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-028-0\",\"entityId\":\"deal-028\",\"timestamp\":\"2026-10-03T12:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-006-0\",\"entityId\":\"deal-006\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-012-0\",\"entityId\":\"deal-012\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-018-0\",\"entityId\":\"deal-018\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-024-0\",\"entityId\":\"deal-024\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}},{\"id\":\"history-deal-030-0\",\"entityId\":\"deal-030\",\"timestamp\":\"2026-10-03T14:00:00+02:00\",\"type\":\"deal.created\",\"source\":\"atlas-demo\",\"payload\":{\"stageId\":\"lead\",\"fromStageId\":null}}],\"appliedEventIds\":[\"history-deal-001-0\",\"history-deal-007-0\",\"history-deal-013-0\",\"history-deal-019-0\",\"history-deal-025-0\",\"history-deal-031-0\",\"history-deal-003-0\",\"history-deal-009-0\",\"history-deal-015-0\",\"history-deal-021-0\",\"history-deal-027-0\",\"history-deal-005-0\",\"history-deal-011-0\",\"history-deal-017-0\",\"history-deal-023-0\",\"history-deal-029-0\",\"history-deal-002-0\",\"history-deal-008-0\",\"history-deal-014-0\",\"history-deal-020-0\",\"history-deal-026-0\",\"history-deal-004-0\",\"history-deal-010-0\",\"history-deal-016-0\",\"history-deal-022-0\",\"history-deal-028-0\",\"history-deal-006-0\",\"history-deal-012-0\",\"history-deal-018-0\",\"history-deal-024-0\",\"history-deal-030-0\"],\"source\":{\"id\":\"atlas-demo\",\"type\":\"simulated\",\"label\":\"Datos simulados\",\"lastSyncedAt\":\"2026-10-16T10:15:00+02:00\",\"permissions\":{\"read\":true,\"simulate\":true}},\"now\":\"2026-10-03T14:00:00+02:00\",\"timeZone\":\"Europe/Madrid\",\"historyCoverage\":{\"closedDealsComplete\":true,\"from\":\"2026-10-01T00:00:00+02:00\",\"to\":\"2026-10-16T10:15:00+02:00\",\"description\":\"Historial completo de cierres del mes en esta demo ficticia\"},\"replay\":{\"scope\":\"deal_stages\",\"snapshotAt\":\"2026-10-16T10:15:00+02:00\"}}",
+          "rejectedAsk": null
+        }
+      }
+    },
+    {
+      "name": "fixed-map-retains-industrial-mesh-selection-and-conserved-visual-transfer",
+      "passed": true,
+      "detail": {
+        "selected": {
+          "x": 575.2179659707998,
+          "y": 443.9069623400205,
+          "hit": {
+            "kind": "industry",
+            "industryKind": "place",
+            "id": "manufacturing",
+            "distance": 114.68922681797959
+          }
+        },
+        "handoff": {
+          "accepted": true,
+          "job": {
+            "id": "industrial-transfer-1-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "manufacturing",
+            "toStage": "packing",
+            "quantity": 120,
+            "status": "active",
+            "phase": "pickup",
+            "progress": 0,
+            "startedAt": 86.51260000000003,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -31.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              -31.05,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-1-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "mid": {
+            "id": "industrial-transfer-1-batch-001",
+            "batchId": "batch-001",
+            "fromStage": "manufacturing",
+            "toStage": "packing",
+            "quantity": 120,
+            "status": "active",
+            "phase": "transfer",
+            "progress": 0.5,
+            "startedAt": 86.51260000000003,
+            "duration": 8,
+            "rigIndex": 0,
+            "source": [
+              -31.05,
+              0.415,
+              -57.85
+            ],
+            "destination": [
+              -17.05,
+              0.415,
+              -57.85
+            ],
+            "position": [
+              -24.049999999999997,
+              0.415,
+              -57.85
+            ],
+            "sourceEventId": "industry-demo-1-batch.stage_changed-batch-001",
+            "representativeOnly": true
+          },
+          "unchanged": true,
+          "state": {
+            "stages": [
+              {
+                "id": "manufacturing",
+                "name": "Fabricación",
+                "color": "#f28b26",
+                "order": 0
+              },
+              {
+                "id": "packing",
+                "name": "Empacado",
+                "color": "#efbb26",
+                "order": 1
+              },
+              {
+                "id": "warehouse",
+                "name": "Almacén",
+                "color": "#2496d8",
+                "order": 2
+              },
+              {
+                "id": "transit",
+                "name": "En transporte",
+                "color": "#9863df",
+                "order": 3
+              },
+              {
+                "id": "delivered",
+                "name": "Entregado",
+                "color": "#24b66b",
+                "order": 4
+              }
+            ],
+            "products": [
+              {
+                "id": "product-kit-atlas",
+                "sku": "KIT-ATLAS",
+                "name": "Kit Atlas",
+                "unit": "unidades"
+              }
+            ],
+            "batches": [
+              {
+                "id": "batch-001",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 120,
+                "stageId": "packing",
+                "accountId": "account-001",
+                "accountName": "Norte Studio",
+                "sourceOrderId": "ERP-PED-1001",
+                "assignedTruckId": null,
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T08:16:00.000Z",
+                "stageEnteredAt": "2026-10-16T08:16:00.000Z",
+                "delivery": null,
+                "history": [
+                  {
+                    "stageId": "manufacturing",
+                    "timestamp": "2026-10-16T10:15:00+02:00",
+                    "eventId": "snapshot-batch-001",
+                    "type": "batch.snapshot"
+                  },
+                  {
+                    "stageId": "packing",
+                    "timestamp": "2026-10-16T08:16:00.000Z",
+                    "eventId": "industry-demo-1-batch.stage_changed-batch-001",
+                    "type": "batch.stage_changed"
+                  }
+                ]
+              },
+              {
+                "id": "batch-002",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 120,
+                "stageId": "manufacturing",
+                "accountId": "account-005",
+                "accountName": "Casa Aurora",
+                "sourceOrderId": "ERP-PED-1002",
+                "assignedTruckId": null,
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+                "delivery": null,
+                "history": [
+                  {
+                    "stageId": "manufacturing",
+                    "timestamp": "2026-10-16T10:15:00+02:00",
+                    "eventId": "snapshot-batch-002",
+                    "type": "batch.snapshot"
+                  }
+                ]
+              },
+              {
+                "id": "batch-003",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 120,
+                "stageId": "packing",
+                "accountId": "account-002",
+                "accountName": "Oliva Hotels",
+                "sourceOrderId": "ERP-PED-1003",
+                "assignedTruckId": null,
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+                "delivery": null,
+                "history": [
+                  {
+                    "stageId": "packing",
+                    "timestamp": "2026-10-16T10:15:00+02:00",
+                    "eventId": "snapshot-batch-003",
+                    "type": "batch.snapshot"
+                  }
+                ]
+              },
+              {
+                "id": "batch-004",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 160,
+                "stageId": "warehouse",
+                "accountId": "account-003",
+                "accountName": "Brisa Market",
+                "sourceOrderId": "ERP-PED-1004",
+                "assignedTruckId": null,
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+                "delivery": null,
+                "history": [
+                  {
+                    "stageId": "warehouse",
+                    "timestamp": "2026-10-16T10:15:00+02:00",
+                    "eventId": "snapshot-batch-004",
+                    "type": "batch.snapshot"
+                  }
+                ]
+              },
+              {
+                "id": "batch-005",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 160,
+                "stageId": "warehouse",
+                "accountId": "account-006",
+                "accountName": "Taller Forma",
+                "sourceOrderId": "ERP-PED-1005",
+                "assignedTruckId": null,
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+                "delivery": null,
+                "history": [
+                  {
+                    "stageId": "warehouse",
+                    "timestamp": "2026-10-16T10:15:00+02:00",
+                    "eventId": "snapshot-batch-005",
+                    "type": "batch.snapshot"
+                  }
+                ]
+              },
+              {
+                "id": "batch-006",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 160,
+                "stageId": "warehouse",
+                "accountId": "account-008",
+                "accountName": "Terra Supply",
+                "sourceOrderId": "ERP-PED-1006",
+                "assignedTruckId": null,
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+                "delivery": null,
+                "history": [
+                  {
+                    "stageId": "warehouse",
+                    "timestamp": "2026-10-16T10:15:00+02:00",
+                    "eventId": "snapshot-batch-006",
+                    "type": "batch.snapshot"
+                  }
+                ]
+              },
+              {
+                "id": "batch-007",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 80,
+                "stageId": "transit",
+                "accountId": "account-004",
+                "accountName": "Lumen Labs",
+                "sourceOrderId": "ERP-PED-1007",
+                "assignedTruckId": "truck-01",
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+                "delivery": null,
+                "history": [
+                  {
+                    "stageId": "transit",
+                    "timestamp": "2026-10-16T10:15:00+02:00",
+                    "eventId": "snapshot-batch-007",
+                    "type": "batch.snapshot"
+                  }
+                ]
+              },
+              {
+                "id": "batch-008",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 80,
+                "stageId": "transit",
+                "accountId": "account-007",
+                "accountName": "Marea Foods",
+                "sourceOrderId": "ERP-PED-1008",
+                "assignedTruckId": "truck-02",
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "stageEnteredAt": "2026-10-16T10:15:00+02:00",
+                "delivery": null,
+                "history": [
+                  {
+                    "stageId": "transit",
+                    "timestamp": "2026-10-16T10:15:00+02:00",
+                    "eventId": "snapshot-batch-008",
+                    "type": "batch.snapshot"
+                  }
+                ]
+              },
+              {
+                "id": "batch-009",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 160,
+                "stageId": "delivered",
+                "accountId": "account-009",
+                "accountName": "Roca Design",
+                "sourceOrderId": "ERP-PED-1009",
+                "assignedTruckId": null,
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T09:20:00+02:00",
+                "stageEnteredAt": "2026-10-16T09:20:00+02:00",
+                "delivery": {
+                  "id": "delivery-initial-batch-009",
+                  "recordedAt": "2026-10-16T09:20:00+02:00",
+                  "sourceOrderId": "ERP-PED-1009",
+                  "accountId": "account-009",
+                  "quantity": 160,
+                  "source": "atlas-industry-demo"
+                },
+                "history": [
+                  {
+                    "stageId": "delivered",
+                    "timestamp": "2026-10-16T09:20:00+02:00",
+                    "eventId": "snapshot-batch-009",
+                    "type": "batch.snapshot"
+                  }
+                ]
+              },
+              {
+                "id": "batch-010",
+                "productId": "product-kit-atlas",
+                "productName": "Kit Atlas",
+                "quantity": 160,
+                "stageId": "delivered",
+                "accountId": "account-010",
+                "accountName": "Delta Health",
+                "sourceOrderId": "ERP-PED-1010",
+                "assignedTruckId": null,
+                "createdAt": "2026-10-16T06:00:00+02:00",
+                "updatedAt": "2026-10-16T09:40:00+02:00",
+                "stageEnteredAt": "2026-10-16T09:40:00+02:00",
+                "delivery": {
+                  "id": "delivery-initial-batch-010",
+                  "recordedAt": "2026-10-16T09:40:00+02:00",
+                  "sourceOrderId": "ERP-PED-1010",
+                  "accountId": "account-010",
+                  "quantity": 160,
+                  "source": "atlas-industry-demo"
+                },
+                "history": [
+                  {
+                    "stageId": "delivered",
+                    "timestamp": "2026-10-16T09:40:00+02:00",
+                    "eventId": "snapshot-batch-010",
+                    "type": "batch.snapshot"
+                  }
+                ]
+              }
+            ],
+            "vehicles": [
+              {
+                "id": "truck-01",
+                "name": "Camión 01",
+                "plate": "AT-101",
+                "driverName": "Felipe Martín",
+                "cargoBatchId": "batch-007",
+                "capacity": 200,
+                "status": "outbound",
+                "location": "route",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "route": {
+                  "origin": {
+                    "id": "atlas-warehouse",
+                    "name": "Almacén Atlas"
+                  },
+                  "destination": {
+                    "id": "account-004",
+                    "accountId": "account-004",
+                    "name": "Lumen Labs"
+                  },
+                  "startedAt": "2026-10-16T08:00:00+02:00",
+                  "durationMinutes": 180,
+                  "estimateBasis": "Duración prevista del ERP; sin GPS"
+                },
+                "lastCustomer": {
+                  "id": "account-004",
+                  "accountId": "account-004",
+                  "name": "Lumen Labs"
+                }
+              },
+              {
+                "id": "truck-02",
+                "name": "Camión 02",
+                "plate": "AT-102",
+                "driverName": "Sara Costa",
+                "cargoBatchId": "batch-008",
+                "capacity": 200,
+                "status": "outbound",
+                "location": "route",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "route": {
+                  "origin": {
+                    "id": "atlas-warehouse",
+                    "name": "Almacén Atlas"
+                  },
+                  "destination": {
+                    "id": "account-007",
+                    "accountId": "account-007",
+                    "name": "Marea Foods"
+                  },
+                  "startedAt": "2026-10-16T08:45:00+02:00",
+                  "durationMinutes": 150,
+                  "estimateBasis": "Duración prevista del ERP; sin GPS"
+                },
+                "lastCustomer": {
+                  "id": "account-007",
+                  "accountId": "account-007",
+                  "name": "Marea Foods"
+                }
+              },
+              {
+                "id": "truck-03",
+                "name": "Camión 03",
+                "plate": "AT-103",
+                "driverName": "Pablo Ríos",
+                "cargoBatchId": null,
+                "capacity": 200,
+                "status": "available",
+                "location": "warehouse",
+                "updatedAt": "2026-10-16T10:15:00+02:00",
+                "route": null,
+                "lastCustomer": null
+              }
+            ],
+            "events": [
+              {
+                "id": "snapshot-batch-009",
+                "entityId": "batch-009",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T09:20:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "delivered",
+                  "quantity": 160
+                }
+              },
+              {
+                "id": "snapshot-batch-010",
+                "entityId": "batch-010",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T09:40:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "delivered",
+                  "quantity": 160
+                }
+              },
+              {
+                "id": "snapshot-batch-001",
+                "entityId": "batch-001",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "manufacturing",
+                  "quantity": 120
+                }
+              },
+              {
+                "id": "snapshot-batch-002",
+                "entityId": "batch-002",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "manufacturing",
+                  "quantity": 120
+                }
+              },
+              {
+                "id": "snapshot-batch-003",
+                "entityId": "batch-003",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "packing",
+                  "quantity": 120
+                }
+              },
+              {
+                "id": "snapshot-batch-004",
+                "entityId": "batch-004",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "warehouse",
+                  "quantity": 160
+                }
+              },
+              {
+                "id": "snapshot-batch-005",
+                "entityId": "batch-005",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "warehouse",
+                  "quantity": 160
+                }
+              },
+              {
+                "id": "snapshot-batch-006",
+                "entityId": "batch-006",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "warehouse",
+                  "quantity": 160
+                }
+              },
+              {
+                "id": "snapshot-batch-007",
+                "entityId": "batch-007",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "transit",
+                  "quantity": 80
+                }
+              },
+              {
+                "id": "snapshot-batch-008",
+                "entityId": "batch-008",
+                "type": "batch.snapshot",
+                "timestamp": "2026-10-16T10:15:00+02:00",
+                "source": "atlas-industry-demo",
+                "payload": {
+                  "stageId": "transit",
+                  "quantity": 80
+                }
+              },
+              {
+                "id": "industry-demo-1-batch.stage_changed-batch-001",
+                "type": "batch.stage_changed",
+                "entityId": "batch-001",
+                "payload": {
+                  "stageId": "packing",
+                  "fromStageId": "manufacturing"
+                },
+                "source": "atlas-industry-demo",
+                "timestamp": "2026-10-16T08:16:00.000Z"
+              }
+            ],
+            "appliedEventIds": [
+              "snapshot-batch-001",
+              "snapshot-batch-002",
+              "snapshot-batch-003",
+              "snapshot-batch-004",
+              "snapshot-batch-005",
+              "snapshot-batch-006",
+              "snapshot-batch-007",
+              "snapshot-batch-008",
+              "snapshot-batch-009",
+              "snapshot-batch-010",
+              "industry-demo-1-batch.stage_changed-batch-001"
+            ],
+            "now": "2026-10-16T08:16:00.000Z",
+            "source": {
+              "type": "simulated",
+              "system": "atlas-industry-demo",
+              "name": "ERP industrial simulado",
+              "description": "Lotes y entregas ficticios; independientes de las oportunidades comerciales",
+              "recordedAt": "2026-10-16T10:15:00+02:00"
+            },
+            "coverage": {
+              "batchesComplete": true,
+              "productsComplete": true,
+              "vehiclesComplete": true,
+              "totalUnits": 1320,
+              "productTotals": {
+                "product-kit-atlas": 1320
+              },
+              "unit": "unidades",
+              "from": "2026-10-16T00:00:00+02:00",
+              "to": "2026-10-16T08:16:00.000Z",
+              "scope": "Lotes registrados de Kit Atlas; no incluye materias primas"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "sourceSha256": {
+    "src/city/app.js": "6223fc9c78255304d01a603666aef6cd7bca95cc082df823f82874f7abd916fa",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "6e40b4687bb20e1d7af5c3d81b17d0070adb2858633bb8fcefd11725d1913e36",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "bdf9e0bae48ade3280f28a7b424de7bd9909e807b06d1cc0fb6046dde54a83e5",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "f722d6b0545fe8092085710760892ddd49a03dbd3d8e99ea57f34725c18bb25b",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020"
+  },
+  "workingTreeSourceSha256AtCompletion": {
+    "src/city/app.js": "6223fc9c78255304d01a603666aef6cd7bca95cc082df823f82874f7abd916fa",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "6e40b4687bb20e1d7af5c3d81b17d0070adb2858633bb8fcefd11725d1913e36",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "bdf9e0bae48ade3280f28a7b424de7bd9909e807b06d1cc0fb6046dde54a83e5",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "f722d6b0545fe8092085710760892ddd49a03dbd3d8e99ea57f34725c18bb25b",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020"
+  },
+  "scope": "Initial full run on app-CWdD7YBL: seven desktop groups passed; mobile failed on a single synthetic touchMove before target change, pending gesture instrumentation."
+}

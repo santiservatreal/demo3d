@@ -1,0 +1,116 @@
+{
+  "bounds": {
+    "x": 11,
+    "y": 361,
+    "width": 368,
+    "height": 260
+  },
+  "before": {
+    "quaternion": [
+      -0.26303476481420407,
+      0.31627355645048966,
+      0.09173665429375545,
+      0.9068451556072201
+    ],
+    "position": [
+      54,
+      60.24999999999999,
+      68
+    ],
+    "target": [
+      0,
+      5.25,
+      0
+    ],
+    "zoom": 1
+  },
+  "after": {
+    "quaternion": [
+      -0.26303476481420407,
+      0.3162735564504897,
+      0.09173665429375548,
+      0.9068451556072201
+    ],
+    "position": [
+      45.9439995979323,
+      63.17353395728185,
+      72.03278903031108
+    ],
+    "target": [
+      -8.056000402067705,
+      8.173533957281865,
+      4.0327890303110845
+    ],
+    "zoom": 1
+  },
+  "events": [
+    {
+      "type": "pointerdown",
+      "pointerType": "touch",
+      "pointerId": 2,
+      "trusted": true,
+      "x": 195,
+      "y": 439,
+      "target": "CANVAS"
+    },
+    {
+      "type": "pointermove",
+      "pointerType": "touch",
+      "pointerId": 2,
+      "trusted": true,
+      "x": 211.55999755859375,
+      "y": 445.5,
+      "target": "CANVAS"
+    },
+    {
+      "type": "pointermove",
+      "pointerType": "touch",
+      "pointerId": 2,
+      "trusted": true,
+      "x": 228.1199951171875,
+      "y": 452,
+      "target": "CANVAS"
+    },
+    {
+      "type": "pointermove",
+      "pointerType": "touch",
+      "pointerId": 2,
+      "trusted": true,
+      "x": 244.67999267578125,
+      "y": 458.5,
+      "target": "CANVAS"
+    },
+    {
+      "type": "pointermove",
+      "pointerType": "touch",
+      "pointerId": 2,
+      "trusted": true,
+      "x": 261.239990234375,
+      "y": 465,
+      "target": "CANVAS"
+    },
+    {
+      "type": "pointerup",
+      "pointerType": "touch",
+      "pointerId": 2,
+      "trusted": true,
+      "x": 261.239990234375,
+      "y": 465,
+      "target": "CANVAS"
+    }
+  ],
+  "controls": {
+    "enabled": true,
+    "enablePan": true,
+    "touches": {
+      "ONE": 1,
+      "TWO": 2
+    }
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "scale": 1
+  },
+  "scrollTop": 0
+}

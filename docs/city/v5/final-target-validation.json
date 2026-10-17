@@ -1,0 +1,354 @@
+{
+  "generatedAt": "2026-10-17T21:47:15.301Z",
+  "startedAt": "2026-10-17T21:46:24.466Z",
+  "browser": "154.0.8037.57",
+  "builtAssets": [
+    {
+      "url": "/assets/index-DBhfHRFt.js",
+      "status": 200,
+      "sha256": "289f4e20596b4d3a81d5bef08e6d07909cb116be3d60d67fff3bd1857733c899"
+    }
+  ],
+  "loadedAssets": [
+    {
+      "url": "/assets/index-DBhfHRFt.js",
+      "status": 200,
+      "sha256": "289f4e20596b4d3a81d5bef08e6d07909cb116be3d60d67fff3bd1857733c899"
+    },
+    {
+      "url": "/assets/latin-500-Bm95e5Vc.css",
+      "status": 200,
+      "sha256": "6e2a44748c74c5767e11bdaae6a3381a9245ba8d7eac8cddbbf14402e773c072"
+    },
+    {
+      "url": "/assets/app-BtU1d9e3.css",
+      "status": 200,
+      "sha256": "2bc725410f04ef2624603fb74c9f9332530f5d81095715b6d07b396705a38f8a"
+    },
+    {
+      "url": "/assets/sparkles-CWcxvvnS.js",
+      "status": 200,
+      "sha256": "356548c0b6463da991974ea592a37e4438d06b4e92d9dbac7e085b19db39648f"
+    },
+    {
+      "url": "/assets/sliders-horizontal-Uiiy_cVC.js",
+      "status": 200,
+      "sha256": "8b71bc0b81c9a30aacb8714fc6de2cb2726ba70eb8c191ddeddfa079a00c426a"
+    },
+    {
+      "url": "/assets/RGBELoader-ptE74597.js",
+      "status": 200,
+      "sha256": "493b8485036a7ee0cfff1616221e1a9fd616884e08d88b411431d1ac219c1650"
+    },
+    {
+      "url": "/assets/app-DzrhWP4l.js",
+      "status": 200,
+      "sha256": "64023857b6295996adb0db1e15b4693cb1e366fe29bcf9ca7559ca9338d6737e"
+    },
+    {
+      "url": "/assets/info-CnJiReZA.js",
+      "status": 200,
+      "sha256": "0a9769f1ad9f655bb8db7f532421dae1d2f1d07570e29dced3cc0d8a9ef64736"
+    },
+    {
+      "url": "/assets/users-Du-LrvV8.js",
+      "status": 200,
+      "sha256": "fd358edd55954e41398b8d05fc96bead08f016ae420042b95b40ba04d27ea8fa"
+    },
+    {
+      "url": "/assets/latin-500-Cyqtgt1y.js",
+      "status": 200,
+      "sha256": "a3d72ad38210b9b839315ea5f95e8a17841233ea2b66c51b7ad40934ce5c3f40"
+    }
+  ],
+  "sourceSha256": {
+    "src/city/app.js": "6223fc9c78255304d01a603666aef6cd7bca95cc082df823f82874f7abd916fa",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "67c48c76549b95b9e1e83d93521a7ac78d6b970d6fd9521125bcc5a74a5dbd26",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "58760d5cd57e5dbbb6f2c86bd2c6458c843e69a78260da956e51775e077a365a",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "f722d6b0545fe8092085710760892ddd49a03dbd3d8e99ea57f34725c18bb25b",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020"
+  },
+  "workingTreeSourceSha256AtCompletion": {
+    "src/city/app.js": "6223fc9c78255304d01a603666aef6cd7bca95cc082df823f82874f7abd916fa",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "67c48c76549b95b9e1e83d93521a7ac78d6b970d6fd9521125bcc5a74a5dbd26",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "58760d5cd57e5dbbb6f2c86bd2c6458c843e69a78260da956e51775e077a365a",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "f722d6b0545fe8092085710760892ddd49a03dbd3d8e99ea57f34725c18bb25b",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020"
+  },
+  "errors": [],
+  "results": [
+    {
+      "name": "final-layout-keeps-summary-outside-four-fixed-views-and-reveals-chat-composer",
+      "passed": true,
+      "detail": {
+        "rails": [
+          {
+            "district": "sales",
+            "insideWorld": false,
+            "text": "Pipeline comercialCada color identifica una etapa. Pulsa un edificio o una etapa para consultar sus datos.Vista fija · arrastra para desplazar · rueda para zoom01Nuevos leads731.500 €02Cualificados525.000 €03Propuestas633.000 €04Negociación630.500 €05Ventas ganadas430.000 €",
+            "cards": 5,
+            "rail": {
+              "x": 91,
+              "y": 780.3125,
+              "right": 1413,
+              "bottom": 891
+            },
+            "canvas": {
+              "x": 91,
+              "y": 286.6875,
+              "right": 1413,
+              "bottom": 780.3125
+            }
+          },
+          {
+            "district": "communications",
+            "insideWorld": false,
+            "text": "Actividad y conversacionesPulsa un edificio, un camión o una tarjeta para consultar sus registros.Vista fija · arrastra para desplazar · rueda para zoomCorreos6 hoy · 0 pendientesCentral de llamadas12 hoy · 0 pendientesCasa de mensajes6 hoy · 11 pendientesCafetería reuniones1 hoy · 2 pendientes",
+            "cards": 4,
+            "rail": {
+              "x": 91,
+              "y": 711.765625,
+              "right": 1413,
+              "bottom": 822.0625
+            },
+            "canvas": {
+              "x": 91,
+              "y": 247.6875,
+              "right": 1413,
+              "bottom": 711.765625
+            }
+          },
+          {
+            "district": "industry",
+            "insideWorld": false,
+            "text": "Del producto a la entregaPulsa un edificio, un camión o una tarjeta para consultar sus registros.Vista fija · arrastra para desplazar · rueda para zoom01Fabricación240 uds02Empacado120 uds03Almacén480 uds04En transporte160 uds05Entregado320 uds",
+            "cards": 5,
+            "rail": {
+              "x": 91,
+              "y": 711.375,
+              "right": 1413,
+              "bottom": 822.0625
+            },
+            "canvas": {
+              "x": 91,
+              "y": 247.6875,
+              "right": 1413,
+              "bottom": 711.375
+            }
+          },
+          {
+            "district": "all",
+            "insideWorld": false,
+            "text": "Toda tu empresa, de un vistazoPulsa un edificio, un camión o una tarjeta para consultar sus registros.Vista fija · arrastra para desplazar · rueda para zoomVentas24 abiertas · 18 clientesComunicaciones25 actividades realizadas hoyIndustria1320 unidades · 160 en reparto",
+            "cards": 3,
+            "rail": {
+              "x": 91,
+              "y": 711.765625,
+              "right": 1413,
+              "bottom": 822.0625
+            },
+            "canvas": {
+              "x": 91,
+              "y": 286.6875,
+              "right": 1413,
+              "bottom": 711.765625
+            }
+          }
+        ],
+        "answer": "Atlas\n\nLucía Ferrer. En la simulación: Revisando propuesta con el cliente. Tiene 6 oportunidades abiertas por 31.000 €. La posición del personaje es ilustrativa; no es una geolocalización real.\n\nCRM simulado · 16/10/26, 10:15",
+        "composer": {
+          "x": 231.140625,
+          "y": 950.125,
+          "width": 1024.875,
+          "height": 38
+        }
+      }
+    },
+    {
+      "name": "mobile-one-finger-pan-and-two-finger-pinch-retain-bearing-and-chat-fits-390px",
+      "passed": true,
+      "detail": {
+        "mobileFixed": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.31627355645048966,
+            0.09173665429375545,
+            0.9068451556072201
+          ],
+          "position": [
+            54,
+            60.24999999999999,
+            68
+          ],
+          "target": [
+            0,
+            5.25,
+            0
+          ],
+          "zoom": 1
+        },
+        "afterTouchPan": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.3162735564504897,
+            0.09173665429375548,
+            0.9068451556072201
+          ],
+          "position": [
+            45.9439995979323,
+            63.17353395728185,
+            72.03278903031108
+          ],
+          "target": [
+            -8.056000402067705,
+            8.173533957281865,
+            4.0327890303110845
+          ],
+          "zoom": 1
+        },
+        "afterPinch": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.31627355645048966,
+            0.09173665429375544,
+            0.9068451556072201
+          ],
+          "position": [
+            42.0385540252837,
+            64.65641953119771,
+            73.93477953557066
+          ],
+          "target": [
+            -11.961445974716288,
+            9.656419531197745,
+            5.9347795355706525
+          ],
+          "zoom": 2.0557232687246128
+        },
+        "mobileAnswer": "Atlas\n\nLucía Ferrer. En la simulación: Revisando propuesta con el cliente. Tiene 6 oportunidades abiertas por 31.000 €. La posición del personaje es ilustrativa; no es una geolocalización real.\n\nCRM simulado · 16/10/26, 10:15",
+        "responsive": {
+          "documentWidth": 390,
+          "mainScrollWidth": 390,
+          "mainClientWidth": 390,
+          "viewport": 390,
+          "assistant": {
+            "x": 10,
+            "y": 456,
+            "right": 380,
+            "bottom": 845,
+            "width": 370,
+            "height": 389
+          },
+          "input": {
+            "x": 67,
+            "y": 752,
+            "right": 324,
+            "bottom": 782,
+            "width": 257,
+            "height": 30
+          },
+          "canvas": {
+            "x": 11,
+            "y": 53,
+            "right": 379,
+            "bottom": 313,
+            "width": 368,
+            "height": 260
+          },
+          "ui": {
+            "view": "city",
+            "selectedId": null,
+            "filters": {
+              "query": "",
+              "stageId": "",
+              "ownerId": "",
+              "attentionOnly": false,
+              "includeLost": false
+            },
+            "layers": {
+              "labels": true,
+              "connections": true,
+              "activity": true,
+              "traffic": true
+            },
+            "mode": "explore",
+            "sheet": "half",
+            "quality": "auto",
+            "replay": {
+              "playing": false,
+              "speed": 1,
+              "index": 0
+            },
+            "drawer": null,
+            "tvIndex": 0,
+            "tvSavedUi": null,
+            "tvNativeFullscreen": false,
+            "selectedOwnerId": "owner-lucia",
+            "district": "sales",
+            "selectedPlaceId": null,
+            "selectedIndustryId": null,
+            "selectedIndustryKind": "place",
+            "tvNavigationAt": 0,
+            "tvTourAll": false,
+            "productionPlaying": false,
+            "productionBatchId": null
+          }
+        },
+        "mobileRail": {
+          "district": "sales",
+          "insideWorld": false,
+          "text": "Lucía FerrerLF · Revisando propuesta con el cliente · Posición simuladaVista fija · arrastra para desplazar · rueda para zoom01Nuevos leads731.500 €02Cualificados525.000 €03Propuestas633.000 €04Negociación630.500 €05Ventas ganadas430.000 €",
+          "cards": 5,
+          "rail": {
+            "x": 11,
+            "y": 313,
+            "right": 379,
+            "bottom": 426.296875
+          },
+          "canvas": {
+            "x": 11,
+            "y": 53,
+            "right": 379,
+            "bottom": 313
+          }
+        }
+      }
+    }
+  ]
+}

@@ -16,6 +16,12 @@ import { createCommunicationsDistrict } from "./communications.js";
 import { createIndustryDistrict } from "./industry.js";
 import { stageKind, needsAttention as modelNeedsAttention } from "./model.js";
 import { createSectorEmphasis } from "./sector-emphasis.js";
+import {
+  configureMapControls,
+  fitMapBounds,
+  fixedMapOffset,
+  ownerBadgeAnchor,
+} from "./map-camera.js";
 
 const COLORS = ["#338ee0", "#00a99a", "#f1ab29", "#9468d2", "#31ab64"];
 const tmp = new THREE.Object3D(),
@@ -24,11 +30,6 @@ const tmp = new THREE.Object3D(),
   pointer = new THREE.Vector2();
 const clamp = THREE.MathUtils.clamp,
   lerp = THREE.MathUtils.lerp;
-const euro = new Intl.NumberFormat("es-ES", {
-  style: "currency",
-  currency: "EUR",
-  maximumFractionDigits: 0,
-});
 const median = (a) => {
   const s = [...a].sort((x, y) => x - y);
   return s[Math.floor(s.length * 0.5)] || 0;
@@ -103,20 +104,12 @@ export async function createCityScene({
     entityGroups = new Map(),
     entityData = new Map(),
     positions = new Map(),
-    stageLabels = new Map(),
-    entityLabels = new Map(),
     ownerLabels = new Map(),
-    placeLabels = new Map(),
-    industryLabels = new Map(),
-    sectorLabels = new Map(),
     identity = new Map();
   const w = () => Math.max(1, container.clientWidth),
     h = () => Math.max(1, container.clientHeight);
   let labelSpecs = [],
-    labelLayoutDirty = true,
-    lastCameraSignature = "",
-    lastLayoutCameraSignature = "",
-    lastCameraMotionAt = -1;
+    labelLayoutDirty = true;
   const labelCache = new WeakMap();
   const labelMetrics = {
     contentBuilds: 0,
@@ -130,7 +123,7 @@ export async function createCityScene({
   scene.background = new THREE.Color("#e3eef2");
   scene.fog = new THREE.Fog("#e3eef2", 145, 265);
   const camera = new THREE.OrthographicCamera(-50, 50, 30, -30, 0.1, 350);
-  camera.position.set(54, 55, 68);
+  camera.position.copy(new THREE.Vector3(0, 1, 0).add(fixedMapOffset()));
   camera.lookAt(0, 1, 0);
   let renderer;
   try {
@@ -158,15 +151,12 @@ export async function createCityScene({
   controls.target.set(0, 1, 0);
   controls.enableDamping = true;
   controls.dampingFactor = 0.075;
-  controls.minPolarAngle = 0.28;
-  controls.maxPolarAngle = Math.PI * 0.455;
+  configureMapControls(controls);
   controls.minZoom = 0.65;
   controls.maxZoom = 5.4;
   controls.maxTargetRadius = 120;
   controls.zoomSpeed = 0.75;
   controls.panSpeed = 0.7;
-  controls.touches.ONE = THREE.TOUCH.ROTATE;
-  controls.touches.TWO = THREE.TOUCH.DOLLY_PAN;
   controls.addEventListener("start", () => {
     flight = null;
     followFocus = null;
@@ -287,7 +277,6 @@ export async function createCityScene({
   celebrationMesh.count = 0;
   celebrationMesh.frustumCulled = false;
   scene.add(celebrationMesh);
-  const markerLabels = new Map();
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(container);
   let initialReady = false,
@@ -332,14 +321,7 @@ export async function createCityScene({
     };
   }
   function viewDirection() {
-    if (!portraitTV())
-      return district === "industry"
-        ? new THREE.Vector3(25, 65, 90)
-        : new THREE.Vector3(54, 55, 68);
-    const bounds = viewBounds();
-    return bounds.maxZ - bounds.minZ > bounds.maxX - bounds.minX
-      ? new THREE.Vector3(5, 70, 90)
-      : new THREE.Vector3(90, 70, 5);
+    return fixedMapOffset();
   }
   function setDistrict(next, { tour = false, duration } = {}) {
     if (!["sales", "communications", "industry", "all"].includes(next))
@@ -391,32 +373,10 @@ export async function createCityScene({
     return tvPresentation && w() < 650 && h() > w();
   }
   function projectedFit(width, height) {
-    const bounds = viewBounds(),
-      direction = viewDirection().normalize();
-    const right = new THREE.Vector3(direction.z, 0, -direction.x).normalize();
-    const up = new THREE.Vector3().crossVectors(direction, right).normalize();
-    let minX = Infinity,
-      maxX = -Infinity,
-      minY = Infinity,
-      maxY = -Infinity;
-    for (const x of [bounds.minX, bounds.maxX])
-      for (const y of [bounds.minY, bounds.maxY])
-        for (const z of [bounds.minZ, bounds.maxZ]) {
-          const point = new THREE.Vector3(x, y, z),
-            px = point.dot(right),
-            py = point.dot(up);
-          minX = Math.min(minX, px);
-          maxX = Math.max(maxX, px);
-          minY = Math.min(minY, py);
-          maxY = Math.max(maxY, py);
-        }
-    const top = portraitTV() ? 210 : tvPresentation ? 132 : 20;
-    const bottom = portraitTV() ? 120 : tvPresentation ? 96 : 100;
-    const scale = Math.min(
-      Math.max(100, width - 32) / (maxX - minX),
-      Math.max(100, height - top - bottom) / (maxY - minY),
-    );
-    return { vertical: height / scale, center: (top - bottom) / (2 * scale) };
+    return fitMapBounds(viewBounds(), width, height, {
+      top: portraitTV() ? 210 : tvPresentation ? 132 : 16,
+      bottom: portraitTV() ? 120 : tvPresentation ? 96 : 40,
+    });
   }
   function resize({ preserveFlight = true } = {}) {
     const interruptedFlight =
@@ -426,20 +386,13 @@ export async function createCityScene({
     const width = w(),
       height = h(),
       aspect = width / height;
-    const extra = Math.max(0, -26.5 - viewBounds().minZ);
     const portrait = portraitTV();
-    const fit =
-      portrait || district !== "sales" ? projectedFit(width, height) : null;
-    const vertical = fit
-      ? fit.vertical
-      : width < 600
-        ? Math.max(67 + extra * 0.5, (96 + extra * 0.65) / aspect)
-        : Math.max(54 + extra * 0.5, (88 + extra * 0.65) / aspect);
+    const fit = projectedFit(width, height);
+    const vertical = fit.vertical;
     camera.left = (-vertical * aspect) / 2;
     camera.right = (vertical * aspect) / 2;
-    const footerOffset = tvPresentation ? -1.7 : width < 600 ? 0 : 3.6;
-    camera.top = vertical / 2 + (fit ? fit.center : -footerOffset);
-    camera.bottom = -vertical / 2 + (fit ? fit.center : -footerOffset);
+    camera.top = vertical / 2 + fit.center;
+    camera.bottom = -vertical / 2 + fit.center;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false);
     renderer.setPixelRatio(pixelRatio());
@@ -767,7 +720,6 @@ export async function createCityScene({
     if (!architecture.meshes.length) architecture.build();
     updateLand();
     updateDistricts();
-    makeStageLabels();
     people.sync(state, { entityPositions: positions, construction });
     updateMarkers();
     if (selectedId) select(selectedId);
@@ -931,7 +883,7 @@ export async function createCityScene({
     districtAnchors.set("clients", new THREE.Vector3(-1, 0.5, 25.2));
   }
   function districtDiagnostics() {
-    return [...stageLabels].map(([id, element]) => ({
+    return [...cityStages().map((stage) => stage.id), "clients"].map((id) => ({
       id,
       name:
         id === "clients"
@@ -942,9 +894,8 @@ export async function createCityScene({
           ? state?.accounts?.length || 0
           : state?.deals?.filter((deal) => deal.stageId === id).length || 0,
       color: id === "clients" ? "#178f8c" : stageColor(id),
-      visible: !element.hidden,
-      labelX: Number(element.dataset.labelX || 0),
-      labelY: Number(element.dataset.labelY || 0),
+      visible: false,
+      presentation: "outside-canvas",
       anchor: districtAnchors.get(id)?.toArray(),
     }));
   }
@@ -1031,11 +982,7 @@ export async function createCityScene({
     const target = e.group.position.clone();
     target.y = 2;
     const desiredZoom = mobile ? 2.8 : 2.5;
-    const offset = camera.position
-      .clone()
-      .sub(controls.target)
-      .normalize()
-      .multiplyScalar(90);
+    const offset = fixedMapOffset(90);
     const right = new THREE.Vector3().setFromMatrixColumn(
       camera.matrixWorld,
       0,
@@ -1072,11 +1019,7 @@ export async function createCityScene({
     followFocus = `owner:${ownerId}`;
     followAnchor = point.clone();
     const target = point.clone().add(new THREE.Vector3(0, 1.4, 0));
-    const offset = camera.position
-      .clone()
-      .sub(controls.target)
-      .normalize()
-      .multiplyScalar(90);
+    const offset = fixedMapOffset(90);
     flight = {
       fromPos: camera.position.clone(),
       fromTarget: controls.target.clone(),
@@ -1136,11 +1079,7 @@ export async function createCityScene({
     if (!point) return;
     followFocus = null;
     const target = point.clone();
-    const offset = camera.position
-      .clone()
-      .sub(controls.target)
-      .normalize()
-      .multiplyScalar(100);
+    const offset = fixedMapOffset(100);
     if (w() > 650) {
       const right = new THREE.Vector3().setFromMatrixColumn(
         camera.matrixWorld,
@@ -1194,9 +1133,7 @@ export async function createCityScene({
     followFocus = null;
     point.y = 1;
     if (stageId !== "clients") point.z = -8;
-    const offset = new THREE.Vector3(54, 55, 68)
-      .normalize()
-      .multiplyScalar(100);
+    const offset = fixedMapOffset(100);
     flight = {
       fromPos: camera.position.clone(),
       fromTarget: controls.target.clone(),
@@ -1212,11 +1149,10 @@ export async function createCityScene({
   function overview({ tour = false, duration } = {}) {
     if (!tour) pauseTVTour();
     followFocus = null;
-    const portrait = portraitTV();
     const bounds = viewBounds();
     const target = new THREE.Vector3(
-      0,
-      portrait || district !== "sales" ? (bounds.minY + bounds.maxY) / 2 : 1,
+      (bounds.minX + bounds.maxX) / 2,
+      (bounds.minY + bounds.maxY) / 2,
       (bounds.minZ + bounds.maxZ) / 2,
     );
     const position = target.clone().add(viewDirection());
@@ -1226,7 +1162,7 @@ export async function createCityScene({
       fromZoom: camera.zoom,
       toTarget: target,
       toPos: position,
-      toZoom: portrait || district !== "sales" ? 1 : tvPresentation ? 0.92 : 1,
+      toZoom: 1,
       start: elapsed,
       duration: reducedMotion ? 0.01 : (duration ?? 1.1),
     };
@@ -1243,6 +1179,31 @@ export async function createCityScene({
     camera.updateProjectionMatrix();
     controls.update();
     pauseTVTour();
+    onNavigate();
+    schedule();
+  }
+  function panBy(dx, dy) {
+    flight = null;
+    followFocus = null;
+    pauseTVTour();
+    camera.updateMatrixWorld();
+    const right = new THREE.Vector3().setFromMatrixColumn(
+      camera.matrixWorld,
+      0,
+    );
+    const up = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 1);
+    const shift = right
+      .multiplyScalar(
+        (Number(dx || 0) * (camera.right - camera.left)) / camera.zoom / w(),
+      )
+      .add(
+        up.multiplyScalar(
+          (Number(dy || 0) * (camera.top - camera.bottom)) / camera.zoom / h(),
+        ),
+      );
+    camera.position.add(shift);
+    controls.target.add(shift);
+    controls.update();
     onNavigate();
     schedule();
   }
@@ -1494,75 +1455,6 @@ export async function createCityScene({
         Math.abs(point.y) < 1,
     };
   }
-  function makeStageLabels() {
-    if (!labelContainer) return;
-    const currentStages = cityStages();
-    for (const [id, element] of stageLabels) {
-      if (id !== "clients" && !currentStages.some((stage) => stage.id === id)) {
-        element.remove();
-        stageLabels.delete(id);
-      }
-    }
-    for (const [index, stage] of currentStages.entries()) {
-      let element = stageLabels.get(stage.id);
-      if (!element) {
-        element = document.createElement("div");
-        element.className = "city-district-label";
-        element.dataset.districtId = stage.id;
-        labelContainer.append(element);
-        stageLabels.set(stage.id, element);
-      }
-      const color = stageColor(stage.id);
-      const deals = (state.deals || []).filter(
-        (deal) => deal.stageId === stage.id,
-      );
-      const sourceSignature = JSON.stringify([
-        index,
-        stage.name,
-        color,
-        deals.map((deal) => [deal.id, deal.amount]),
-      ]);
-      if (element.dataset.sourceSignature === sourceSignature) continue;
-      element.dataset.sourceSignature = sourceSignature;
-      element.dataset.presentation = "";
-      getLabelCache(element).signature = sourceSignature;
-      getLabelCache(element).measuredSignature = "";
-      labelMetrics.contentBuilds++;
-      labelLayoutDirty = true;
-      element.style.cssText = `position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;transform:translate(-50%,-50%);text-align:left;color:#243b49;font-family:inherit;padding:7px 9px;border:1px solid #ffffff;border-top:3px solid ${color};border-radius:8px;background:rgba(255,255,255,.97);box-shadow:0 3px 12px #173c4d26;min-width:108px;`;
-      element.replaceChildren();
-      const title = document.createElement("span");
-      title.style.cssText =
-        "display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0;font-weight:800;";
-      const numeral = document.createElement("b");
-      numeral.textContent = String(index + 1).padStart(2, "0");
-      numeral.style.cssText = `display:inline-grid;place-items:center;min-width:19px;height:19px;color:white;background:${color};border-radius:5px;font-size:10px;`;
-      title.append(numeral, document.createTextNode(stage.name));
-      const subtitle = document.createElement("span");
-      subtitle.textContent = `${deals.length} ${deals.length === 1 ? "deal" : "deals"} · ${deals.every((deal) => typeof deal.amount === "number" && Number.isFinite(deal.amount)) ? euro.format(deals.reduce((sum, deal) => sum + deal.amount, 0)) : "Sin importe"}`;
-      subtitle.style.cssText =
-        "display:block;margin-top:4px;padding-left:25px;font-size:10px;color:#506572;font-weight:600;";
-      element.append(title, subtitle);
-    }
-    let clients = stageLabels.get("clients");
-    if (!clients) {
-      clients = document.createElement("div");
-      clients.className = "city-district-label city-clients-label";
-      clients.dataset.districtId = "clients";
-      labelContainer.append(clients);
-      stageLabels.set("clients", clients);
-    }
-    const clientsText = `Clientes activos · ${(state?.accounts || []).length} empresas`;
-    if (clients.textContent === clientsText) return;
-    getLabelCache(clients).signature = clientsText;
-    getLabelCache(clients).measuredSignature = "";
-    clients.dataset.presentation = "";
-    labelLayoutDirty = true;
-    labelMetrics.contentBuilds++;
-    clients.style.cssText =
-      "position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;text-align:center;padding:8px 13px;border:1px solid white;border-top:3px solid #178f8c;border-radius:8px;background:rgba(255,255,255,.98);box-shadow:0 3px 12px #173c4d26;color:#235353;font-family:inherit;font-weight:800;font-size:11px;letter-spacing:.02em;";
-    clients.textContent = clientsText;
-  }
   function updateMarkers() {
     let p = 0,
       a = 0;
@@ -1596,18 +1488,6 @@ export async function createCityScene({
     activityMesh.instanceMatrix.needsUpdate = true;
     activityMesh.computeBoundingSphere();
   }
-  const communicationIcons = {
-    email: ["M3 5h18v14H3z", "m3 6 9 7 9-7"],
-    call: ["M7 3 3 5c0 8 8 16 16 16l2-4-5-3-2 2c-3-1-5-3-6-6l2-2z"],
-    message: [
-      "M21 11a9 9 0 0 1-9 9H5l-3 2 1-6a9 9 0 1 1 18-5Z",
-      "M8 11h.01M12 11h.01M16 11h.01",
-    ],
-    meeting: [
-      "M3 9h13v7a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z",
-      "M16 10h2a3 3 0 0 1 0 6h-2M6 3v3M10 2v4M14 3v3M2 23h16",
-    ],
-  };
   function getLabelCache(element) {
     let cache = labelCache.get(element);
     if (!cache) {
@@ -1616,9 +1496,6 @@ export async function createCityScene({
         measuredSignature: "",
         width: 0,
         height: 0,
-        dx: 0,
-        dy: 0,
-        occluded: false,
         hidden: element.hidden,
       };
       labelCache.set(element, cache);
@@ -1632,87 +1509,6 @@ export async function createCityScene({
       cache.hidden = hidden;
     }
   }
-  function badge(
-    map,
-    id,
-    className,
-    title,
-    subtitle,
-    color,
-    onClick,
-    communication = null,
-  ) {
-    let element = map.get(id);
-    if (!element) {
-      element = document.createElement(onClick ? "button" : "div");
-      if (onClick) {
-        element.type = "button";
-        element.onclick = (event) => {
-          event.stopPropagation();
-          onClick();
-        };
-      }
-      element.className = className;
-      element.dataset.placeId = id;
-      labelContainer.append(element);
-      map.set(id, element);
-    }
-    const compact = w() < 650;
-    const signature = JSON.stringify([
-      title,
-      subtitle,
-      color,
-      compact,
-      communication,
-    ]);
-    const cache = getLabelCache(element);
-    if (cache.signature === signature) return element;
-    cache.signature = signature;
-    labelMetrics.contentBuilds++;
-    element.style.cssText = `position:absolute;left:0;top:0;white-space:nowrap;pointer-events:${onClick ? "auto" : "none"};font-family:inherit;text-align:left;border:1px solid white;border-top:3px solid ${color};border-radius:8px;background:rgba(255,255,255,.97);box-shadow:0 3px 12px #173c4d26;color:#243b49;padding:${compact ? "5px 7px" : "7px 9px"};will-change:transform;`;
-    const heading = document.createElement("b");
-    heading.textContent = title;
-    heading.style.cssText = `display:block;font-size:${compact ? 9 : 11}px;font-weight:800;`;
-    const sub = document.createElement("span");
-    sub.textContent = subtitle;
-    sub.style.cssText = `display:block;font-size:${compact ? 8 : 10}px;margin-top:3px;color:#526a76;font-weight:600;`;
-    if (communication) {
-      const row = document.createElement("span"),
-        icon = document.createElementNS("http://www.w3.org/2000/svg", "svg"),
-        number = document.createElement("strong");
-      row.style.cssText =
-        "display:flex;align-items:center;gap:7px;margin-bottom:4px;";
-      icon.setAttribute("viewBox", "0 0 24 24");
-      icon.setAttribute("width", compact ? "22" : "26");
-      icon.setAttribute("height", compact ? "22" : "26");
-      icon.setAttribute("fill", "none");
-      icon.setAttribute("stroke", color);
-      icon.setAttribute("stroke-width", "1.8");
-      icon.setAttribute("stroke-linecap", "round");
-      icon.setAttribute("stroke-linejoin", "round");
-      icon.setAttribute("aria-hidden", "true");
-      for (const d of communicationIcons[communication.kind] ||
-        communicationIcons.message) {
-        const path = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "path",
-        );
-        path.setAttribute("d", d);
-        icon.append(path);
-      }
-      number.textContent =
-        communication.available === false ? "—" : String(communication.count);
-      number.style.cssText = `font-size:${compact ? 22 : 27}px;line-height:1;font-weight:800;color:${color};`;
-      row.append(icon, number);
-      element.replaceChildren(row, heading, sub);
-      element.setAttribute(
-        "aria-label",
-        `${title}: ${communication.available === false ? "sin datos" : communication.count} completadas hoy. ${subtitle}`,
-      );
-    } else element.replaceChildren(heading, sub);
-    labelLayoutDirty = true;
-    return element;
-  }
   function ownerBadge(owner) {
     let element = ownerLabels.get(owner.ownerId);
     if (!element) {
@@ -1720,6 +1516,7 @@ export async function createCityScene({
       element.type = "button";
       element.className = "city-owner-label";
       element.dataset.ownerId = owner.ownerId;
+      element.dataset.anchorMode = "behind-ground";
       element.onclick = (event) => {
         event.stopPropagation();
         if (!tvPresentation) {
@@ -1730,321 +1527,44 @@ export async function createCityScene({
       labelContainer.append(element);
       ownerLabels.set(owner.ownerId, element);
     }
-    const atWork = owner.attendingConstruction,
-      deal = state?.deals?.find((entry) => entry.id === owner.dealId),
-      stage = state?.stages?.find((entry) => entry.id === deal?.stageId);
-    const text = atWork
-      ? `${owner.initials} · ${owner.name.split(" ")[0]} · ${stage?.name || "En obra"}`
-      : owner.initials;
-    const signature = [text, atWork, owner.color, owner.name, w() < 650].join(
-      "|",
-    );
+    const signature = [owner.initials, owner.color, owner.name].join("|");
     const cache = getLabelCache(element);
     if (cache.signature === signature) return element;
     cache.signature = signature;
     labelMetrics.contentBuilds++;
-    element.textContent = text;
-    element.title = `${owner.name}${atWork ? ` · ${stage?.name || "Acompañando la obra"}` : " · Ver comercial"}`;
+    element.textContent = owner.initials;
+    element.title = `${owner.name} · Ver comercial`;
     element.setAttribute("aria-label", element.title);
-    element.style.cssText = `position:absolute;left:0;top:0;height:27px;min-width:28px;white-space:nowrap;padding:${atWork ? "0 7px" : "0 4px"};border:2px solid #fff;border-radius:${atWork ? "8px" : "50%"};background:${owner.color || "#237cc1"};box-shadow:0 2px 8px #12384e44;color:white;font:800 ${w() < 650 ? 9 : 10}px DM Sans,sans-serif;pointer-events:auto;text-align:center;will-change:transform;`;
-    const line = document.createElement("span"),
-      dot = document.createElement("span");
-    line.setAttribute("aria-hidden", "true");
-    line.style.cssText = `position:absolute;left:calc(50% - .5px);top:100%;width:1px;height:16px;background:${owner.color || "#237cc1"};box-shadow:0 0 0 1px #ffffff99;pointer-events:none;`;
-    dot.style.cssText = `position:absolute;left:-2px;bottom:-2px;width:5px;height:5px;border-radius:50%;background:${owner.color || "#237cc1"};border:1px solid white;`;
-    line.append(dot);
-    element.append(line);
+    // Only initials stay in the scene. Detail and deal status belong to the
+    // fixed CRM panel, so a change of activity never enlarges the moving badge.
+    element.style.cssText = `position:absolute;left:0;top:0;height:20px;min-width:23px;white-space:nowrap;padding:0 4px;border:1.5px solid #fff;border-radius:6px;background:${owner.color || "#237cc1"};box-shadow:0 1px 4px #12384e33;color:white;font:800 9px DM Sans,sans-serif;pointer-events:auto;text-align:center;will-change:transform;line-height:17px;`;
     labelLayoutDirty = true;
     return element;
   }
-  // Content and box measurements have a small independent budget. Animation
-  // only projects cached anchors; it never rebuilds or measures moving badges.
+  // The city is a quiet map: building and district summaries live in the fixed
+  // app panel. Only small initial badges follow people, with cached DOM content.
   function refreshLabelContent() {
     if (!labelContainer || !state) return;
-    const mobile = w() < 650,
-      showingSales = district === "sales",
-      showingPeople = showingSales || district === "all";
+    const showingPeople = district === "sales" || district === "all";
     const specs = [],
       present = new Set();
-    function add(element, point, options = {}) {
-      if (!element) return;
-      specs.push({
-        element,
-        point,
-        district: false,
-        owner: false,
-        marker: false,
-        priority: false,
-        ...options,
-      });
-      present.add(element);
-    }
     if (layers.activity && showingPeople)
-      for (const owner of (people.getOwnerLabels?.() || []).slice(0, 4)) {
-        add(
-          ownerBadge(owner),
-          () =>
-            people
-              .getOwnerPosition(owner.ownerId)
-              ?.add(new THREE.Vector3(0, 2.2, 0)),
-          { owner: true, priority: true },
-        );
+      for (const owner of people.getOwnerLabels?.() || []) {
+        const element = ownerBadge(owner);
+        specs.push({ element, ownerId: owner.ownerId });
+        present.add(element);
       }
-    if (district === "communications")
-      for (const place of communications.getPlaces()) {
-        const text =
-          place.sourceAvailable === false
-            ? "Canal no disponible"
-            : `${place.todayCompleted || 0} hoy · ${place.pendingCount || 0} pendientes`;
-        const kind = /mail|correo|email/.test(place.id)
-          ? "email"
-          : /call|llamada|phone/.test(place.id)
-            ? "call"
-            : /meet|cafe|reuni/.test(place.id)
-              ? "meeting"
-              : "message";
-        const element = badge(
-          placeLabels,
-          place.id,
-          "city-place-label",
-          place.name,
-          text,
-          place.color,
-          () => {
-            if (!tvPresentation) {
-              onSelectPlace(place.id);
-              focusPlace(place.id);
-            }
-          },
-          {
-            kind,
-            count: place.todayCompleted || 0,
-            available: place.sourceAvailable,
-          },
-        );
-        add(element, place.position, { district: true });
-      }
-    if (district === "industry")
-      for (const place of industry.getPlaces()) {
-        const element = badge(
-          industryLabels,
-          place.id,
-          "city-industry-label",
-          place.name,
-          `${place.count ?? 0} ${place.unit || "uds"}`,
-          place.color,
-          () => {
-            if (!tvPresentation) {
-              onSelectIndustry(place.id, "place");
-              focusIndustry(place.id);
-            }
-          },
-        );
-        add(element, place.position, { district: true });
-      }
-    if (district === "all") {
-      const sectors = [
-        {
-          id: "sales",
-          name: "Ciudad comercial",
-          sub: `${state.deals?.length || 0} oportunidades · ${state.accounts?.length || 0} clientes`,
-          color: "#238bec",
-          point: new THREE.Vector3(0, 1, 23),
-        },
-        {
-          id: "communications",
-          name: "Barrio de comunicación",
-          sub: `${communications.getPlaces().reduce((sum, place) => sum + (place.todayCompleted || 0), 0)} actividades completadas hoy`,
-          color: "#179ca9",
-          point: new THREE.Vector3(0, 7, -35),
-        },
-        {
-          id: "industry",
-          name: "Distrito industrial",
-          sub: "Materiales · producción · distribución",
-          color: "#dc9b2e",
-          point: new THREE.Vector3(0, 10, -60),
-        },
-      ];
-      for (const sector of sectors)
-        add(
-          badge(
-            sectorLabels,
-            sector.id,
-            "city-sector-label",
-            sector.name,
-            sector.sub,
-            sector.color,
-            () => setDistrict(sector.id),
-          ),
-          sector.point,
-          { district: true },
-        );
-    }
-    if (showingSales)
-      for (const stage of cityStages()) {
-        const element = stageLabels.get(stage.id),
-          anchor = districtAnchors.get(stage.id);
-        if (!element || !anchor) continue;
-        const compact = portraitTV(),
-          signature = `${compact}|${mobile}`;
-        if (element.dataset.presentation !== signature) {
-          element.dataset.presentation = signature;
-          element.style.minWidth = compact ? "88px" : mobile ? "80px" : "108px";
-          element.style.padding = compact
-            ? "4px 6px"
-            : mobile
-              ? "5px 6px"
-              : "7px 9px";
-          element.style.fontSize = compact ? "8px" : mobile ? "9px" : "11px";
-          const title = element.firstElementChild,
-            subtitle = element.lastElementChild,
-            numeral = title?.firstElementChild;
-          if (title) {
-            title.style.fontSize = compact ? "8px" : "11px";
-            title.style.gap = compact ? "4px" : "6px";
-          }
-          if (subtitle) {
-            subtitle.style.fontSize = compact ? "8px" : "10px";
-            subtitle.style.paddingLeft = compact ? "0" : "25px";
-            subtitle.style.marginTop = compact ? "2px" : "4px";
-          }
-          if (numeral) {
-            numeral.style.minWidth = compact ? "15px" : "19px";
-            numeral.style.height = compact ? "15px" : "19px";
-            numeral.style.fontSize = compact ? "8px" : "10px";
-          }
-          getLabelCache(element).measuredSignature = "";
-          labelLayoutDirty = true;
-        }
-        add(element, anchor, { district: true });
-      }
-    const clients = stageLabels.get("clients");
-    if (clients && showingSales && districtAnchors.has("clients")) {
-      const signature = String(portraitTV());
-      if (clients.dataset.presentation !== signature) {
-        clients.dataset.presentation = signature;
-        clients.style.fontSize = portraitTV() ? "8px" : "11px";
-        clients.style.padding = portraitTV() ? "6px 8px" : "8px 13px";
-        getLabelCache(clients).measuredSignature = "";
-        labelLayoutDirty = true;
-      }
-      add(clients, districtAnchors.get("clients"), { district: true });
-    }
-    const priorities = [];
-    if (
-      architecture.entities.get(selectedId) &&
-      !tvPresentation &&
-      showingSales
-    )
-      priorities.push(selectedId);
-    for (const [id, entity] of architecture.entities)
-      if (
-        showingSales &&
-        entity.visible &&
-        needsAttention(entityData.get(id) || {}) &&
-        !priorities.includes(id)
-      )
-        priorities.push(id);
-    const namedIds = new Set();
-    for (const id of priorities.slice(0, tvPresentation ? 0 : mobile ? 2 : 4)) {
-      const entity = architecture.entities.get(id),
-        data = entityData.get(id);
-      if (!entity?.visible) continue;
-      let element = entityLabels.get(id);
-      if (!element) {
-        element = document.createElement("button");
-        element.type = "button";
-        element.className = "city-entity-label";
-        element.style.cssText =
-          "position:absolute;top:0;left:0;min-height:30px;border:1px solid #c6d1c4;border-radius:7px;background:rgba(255,255,247,.96);box-shadow:0 3px 9px #455a4415;padding:5px 8px;color:#38584f;font-family:DM Sans,sans-serif;font-size:10px;font-weight:600;pointer-events:auto;white-space:nowrap;will-change:transform;";
-        element.onclick = () => {
-          select(id);
-          onSelect(id);
-        };
-        labelContainer.append(element);
-        entityLabels.set(id, element);
-      }
-      const attention = needsAttention(data) && layers.activity,
-        text = data.name || data.company || id,
-        cache = getLabelCache(element),
-        signature = `${attention}|${text}`;
-      if (cache.signature !== signature) {
-        cache.signature = signature;
-        labelMetrics.contentBuilds++;
-        element.replaceChildren();
-        if (attention) {
-          const warning = document.createElement("span");
-          warning.textContent = "!";
-          warning.style.cssText =
-            "display:inline-grid;place-items:center;width:13px;height:13px;margin-right:5px;border-radius:50%;background:#b95046;color:white;font:700 9px sans-serif;";
-          element.append(warning);
-        }
-        element.append(document.createTextNode(text));
-        labelLayoutDirty = true;
-      }
-      add(
-        element,
-        () =>
-          entity.group.position
-            .clone()
-            .add(new THREE.Vector3(0, entity.model.height + 0.7, 0)),
-        { priority: id === selectedId },
-      );
-      namedIds.add(id);
-    }
-    if (showingSales && layers.activity && !tvPresentation)
-      for (const [id, entity] of architecture.entities) {
-        if (
-          !entity.visible ||
-          !needsAttention(entityData.get(id) || {}) ||
-          namedIds.has(id)
-        )
-          continue;
-        let element = markerLabels.get(id);
-        if (!element) {
-          element = document.createElement("span");
-          element.className = "city-alert-marker";
-          element.textContent = "!";
-          element.title = "Tarea vencida";
-          element.style.cssText =
-            "position:absolute;top:0;left:0;font:bold 10px sans-serif;color:#fff;background:#b95046;border:2px solid #fff8ed;border-radius:50%;width:16px;height:16px;line-height:12px;text-align:center;pointer-events:none;will-change:transform;";
-          labelContainer.append(element);
-          markerLabels.set(id, element);
-        }
-        add(
-          element,
-          () =>
-            entity.group.position
-              .clone()
-              .add(new THREE.Vector3(0, entity.model.height + 0.3, 0)),
-          { marker: true },
-        );
-      }
-    for (const map of [
-      ownerLabels,
-      placeLabels,
-      industryLabels,
-      sectorLabels,
-      stageLabels,
-      entityLabels,
-      markerLabels,
-    ])
-      for (const element of map.values())
-        if (!present.has(element)) setLabelHidden(element, true);
-    // Batch writes first, then measure only new/changed content. No reads occur
-    // while animating; hidden nodes are only exposed when their content changes.
+    for (const element of ownerLabels.values())
+      if (!present.has(element)) setLabelHidden(element, true);
     for (const spec of specs) {
-      const cache = getLabelCache(spec.element),
-        signature = `${cache.signature}|${spec.element.dataset.presentation || ""}|${w()}|${h()}`;
-      if (cache.measuredSignature !== signature || !cache.width) {
+      const cache = getLabelCache(spec.element);
+      if (cache.measuredSignature !== cache.signature || !cache.width) {
         spec.element.hidden = false;
         cache.hidden = false;
-        cache.width = spec.element.offsetWidth || (spec.owner ? 30 : 120);
-        cache.height = spec.element.offsetHeight || 32;
-        cache.measuredSignature = signature;
+        cache.width = spec.element.offsetWidth || 23;
+        cache.height = spec.element.offsetHeight || 20;
+        cache.measuredSignature = cache.signature;
         labelMetrics.measurements++;
-        labelLayoutDirty = true;
       }
     }
     labelSpecs = specs;
@@ -2052,111 +1572,50 @@ export async function createCityScene({
   function projectLabels(allowLayout = false) {
     if (!labelContainer || !state) return;
     const width = w(),
-      height = h(),
-      occupied = [],
-      max = width < 650 ? 2 : 4;
-    let count = 0;
-    const moving =
-      !!flight || pointerDown || elapsed - lastCameraMotionAt < 0.18;
-    const layout =
-      allowLayout &&
-      (labelLayoutDirty ||
-        (!moving && lastLayoutCameraSignature !== lastCameraSignature));
-    if (layout) labelMetrics.layoutPasses++;
+      height = h();
+    if (allowLayout && labelLayoutDirty) labelMetrics.layoutPasses++;
     labelMetrics.projectionFrames++;
     for (const spec of labelSpecs) {
       const element = spec.element,
-        cache = getLabelCache(element),
-        point =
-          typeof spec.point === "function" ? spec.point() : spec.point?.clone();
-      if (!point) {
+        cache = getLabelCache(element);
+      const person = people.getOwnerPosition(spec.ownerId);
+      if (!person) {
         setLabelHidden(element, true);
         continue;
       }
-      const worldPoint = point.clone();
-      point.project(camera);
-      let x = (point.x * 0.5 + 0.5) * width,
-        y = (-point.y * 0.5 + 0.5) * height;
-      const valid =
-        layers.labels &&
-        point.z > -1 &&
-        point.z < 1 &&
-        x > 12 &&
-        x < width - 12 &&
-        y > 10 &&
-        y < height - 20 &&
-        (spec.district || spec.owner || spec.marker || count < max);
-      const collide = (px, py) =>
-        occupied.some(
-          (box) =>
-            Math.abs(px - box.x) < (box.w + cache.width) / 2 + 6 &&
-            Math.abs(py - box.y) < (box.h + cache.height) / 2 + 6,
-        );
-      if (spec.district && valid) {
-        const minX = cache.width / 2 + 8,
-          maxX = width - cache.width / 2 - 8,
-          minY =
-            (portraitTV() ? 208 : tvPresentation ? 128 : 8) + cache.height / 2,
-          maxY = Math.max(
-            minY,
-            height -
-              cache.height / 2 -
-              (portraitTV() ? 120 : tvPresentation ? 86 : 92),
-          );
-        const ax = clamp(x, minX, maxX),
-          ay = clamp(y, minY, maxY);
-        if (layout) {
-          let best = null;
-          for (const dx of [0, -40, 40, -80, 80])
-            for (const step of [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5]) {
-              const px = clamp(ax + dx, minX, maxX),
-                py = clamp(ay + step * (cache.height + 8), minY, maxY),
-                distance = (px - ax) ** 2 + (py - ay) ** 2;
-              if ((!best || distance < best.distance) && !collide(px, py))
-                best = { x: px, y: py, distance };
-            }
-          cache.dx = best ? best.x - ax : 0;
-          cache.dy = best ? best.y - ay : 0;
-        }
-        x = clamp(ax + cache.dx, minX, maxX);
-        y = clamp(ay + cache.dy, minY, maxY);
-      }
-      if (
-        layout &&
-        valid &&
-        !spec.priority &&
-        !spec.district &&
-        !spec.owner &&
-        !spec.marker
-      ) {
-        pointer.set(point.x, point.y);
-        ray.setFromCamera(pointer, camera);
-        const hit = ray.intersectObjects(
-          architecture.meshes.filter(
-            (mesh) => mesh.visible && mesh.name === "city-kit-mass",
-          ),
-          false,
-        )[0];
-        cache.occluded = !!(
-          hit && hit.distance < ray.ray.origin.distanceTo(worldPoint) - 0.35
-        );
-        labelMetrics.occlusionTests++;
-      }
-      let hidden = !valid;
-      if (!spec.priority && !spec.district && !spec.owner)
-        hidden ||= cache.occluded || collide(x, y);
+      const point = ownerBadgeAnchor(person).project(camera);
+      const feet = person.clone().project(camera);
+      const personX = (feet.x * 0.5 + 0.5) * width;
+      const personY = (-feet.y * 0.5 + 0.5) * height;
+      let x = (point.x * 0.5 + 0.5) * width;
+      const y = (-point.y * 0.5 + 0.5) * height;
+      // A small minimum screen gap keeps the badge clear of the avatar even
+      // when zoomed out. There is no collision solver or overhead tether.
+      const avatarHalfWidth = Math.max(
+        3,
+        (0.45 * camera.zoom * width) / (camera.right - camera.left),
+      );
+      x = Math.max(x, personX + avatarHalfWidth + cache.width / 2 + 4);
+      const hidden =
+        !layers.labels ||
+        point.z <= -1 ||
+        point.z >= 1 ||
+        x < cache.width / 2 + 5 ||
+        x > width - cache.width / 2 - 5 ||
+        y < cache.height / 2 + 5 ||
+        y > height - cache.height / 2 - 5;
       setLabelHidden(element, hidden);
       if (!hidden) {
         element.style.transform = `translate3d(${x.toFixed(3)}px,${y.toFixed(3)}px,0) translate(-50%,-50%)`;
         element.dataset.labelX = x.toFixed(3);
         element.dataset.labelY = y.toFixed(3);
-        occupied.push({ x, y, w: cache.width, h: cache.height });
-        if (!spec.district && !spec.owner && !spec.marker) count++;
+        element.dataset.personX = personX.toFixed(3);
+        element.dataset.personY = personY.toFixed(3);
+        element.dataset.avatarHalfWidth = avatarHalfWidth.toFixed(3);
       }
     }
-    if (layout) {
+    if (allowLayout) {
       labelLayoutDirty = false;
-      lastLayoutCameraSignature = lastCameraSignature;
     }
   }
   function updateTransitions() {
@@ -2314,19 +1773,6 @@ export async function createCityScene({
     }
     if (!reducedMotion) traffic.update?.(delta, elapsed);
     camera.updateMatrixWorld();
-    const cameraSignature = [
-      ...camera.position.toArray(),
-      ...controls.target.toArray(),
-      camera.zoom,
-      camera.left,
-      camera.top,
-    ]
-      .map((value) => value.toFixed(3))
-      .join("|");
-    if (cameraSignature !== lastCameraSignature) {
-      lastCameraMotionAt = elapsed;
-      lastCameraSignature = cameraSignature;
-    }
     if (elapsed - lastLabel > 0.12 || !lastLabel) {
       refreshLabelContent();
       projectLabels(true);
@@ -2364,7 +1810,22 @@ export async function createCityScene({
       mode,
       tvPresentation,
       tvTour: getTVTourState(),
-      labels: { ...labelMetrics, cachedCount: labelSpecs.length },
+      labels: {
+        ...labelMetrics,
+        cachedCount: labelSpecs.length,
+        presentation: "owner-initials-only",
+        summaries: "outside-canvas",
+      },
+      mapView: {
+        type: "fixed-isometric",
+        rotate: controls.enableRotate,
+        pan: controls.enablePan,
+        zoom: controls.enableZoom,
+        direction: fixedMapOffset().normalize().toArray(),
+        quaternion: camera.quaternion.toArray(),
+        polar: controls.getPolarAngle(),
+        azimuth: controls.getAzimuthalAngle(),
+      },
       emphasis: emphasis.debug(),
       portraitTV: portraitTV(),
       cameraMoving: !!flight,
@@ -2398,15 +1859,17 @@ export async function createCityScene({
         visible: !element.hidden,
         text: element.textContent,
       })),
-      placeLabels: [...placeLabels].map(([id, element]) => ({
-        id,
-        visible: !element.hidden,
-        text: element.textContent,
+      placeLabels: communications.getPlaces().map((place) => ({
+        id: place.id,
+        visible: false,
+        presentation: "outside-canvas",
+        text: `${place.name} · ${place.todayCompleted || 0} hoy`,
       })),
-      industryLabels: [...industryLabels].map(([id, element]) => ({
-        id,
-        visible: !element.hidden,
-        text: element.textContent,
+      industryLabels: industry.getPlaces().map((place) => ({
+        id: place.id,
+        visible: false,
+        presentation: "outside-canvas",
+        text: `${place.name} · ${place.count ?? 0} ${place.unit || "uds"}`,
       })),
       connectionCount: connections.length,
       traffic: traffic.debug?.() || null,
@@ -2456,16 +1919,7 @@ export async function createCityScene({
     env.dispose();
     renderer.dispose();
     renderer.domElement.remove();
-    for (const el of [
-      ...stageLabels.values(),
-      ...entityLabels.values(),
-      ...markerLabels.values(),
-      ...ownerLabels.values(),
-      ...placeLabels.values(),
-      ...industryLabels.values(),
-      ...sectorLabels.values(),
-    ])
-      el.remove();
+    for (const el of ownerLabels.values()) el.remove();
   }
   emphasis.install(scene);
   emphasis.setDistrict(district);
@@ -2480,6 +1934,7 @@ export async function createCityScene({
     focus,
     overview,
     zoomBy,
+    panBy,
     setQuality,
     setLayers,
     setMode,

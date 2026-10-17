@@ -1,0 +1,218 @@
+/* Context stays in document flow so it cannot obscure the map or follow actors. */
+.c-main {
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+}
+.c-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.c-footer {
+  display: none;
+}
+@media (min-width: 701px) {
+  .c-header {
+    height: 58px;
+  }
+}
+.c-workbench {
+  flex: 1 0 530px;
+}
+.c-world {
+  min-height: 300px;
+}
+.c-world-title,
+.c-north,
+.c-legend,
+.c-gesture-hint {
+  display: none !important;
+}
+.c-map-summary {
+  flex: 0 0 auto;
+  padding: 8px 14px 9px;
+  background: #fcfefe;
+  border-top: 1px solid #e2edf2;
+}
+.c-map-context {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  min-height: 27px;
+  margin-bottom: 6px;
+}
+.c-map-context > div {
+  min-width: 0;
+}
+.c-map-context b,
+.c-map-context span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.c-map-context b {
+  color: #244f63;
+  font-size: 10px;
+}
+.c-map-context span,
+.c-map-context > small {
+  color: #7c95a2;
+  font-size: 9px;
+  line-height: 1.7;
+}
+.c-map-context > small {
+  flex-shrink: 0;
+}
+.c-map-summary .c-stage-cards {
+  position: static;
+  inset: auto;
+  gap: 7px;
+  padding: 0;
+  margin: 0;
+  z-index: auto;
+}
+.c-map-summary .c-stage-cards > button {
+  padding: 8px 10px 7px;
+  min-height: 58px;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.c-map-summary .c-stage-cards > button:hover {
+  transform: none;
+  background: #f3f9fd;
+}
+.c-map-summary .c-stage-cards > button > div {
+  font-size: 10px;
+}
+.c-map-summary .c-stage-cards svg {
+  width: 13px;
+  height: 13px;
+  color: var(--stage);
+}
+.c-map-summary .c-stage-cards strong {
+  font-size: 16px;
+  margin-top: 3px;
+}
+.c-map-summary .c-stage-cards .c-map-overview-value {
+  font:
+    500 11px/1.5 "DM Sans",
+    sans-serif;
+  letter-spacing: 0;
+}
+.c-map-summary .c-stage-cards strong small {
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.c-map-controls {
+  bottom: 16px;
+  right: 14px;
+}
+.c-pan-controls {
+  position: absolute;
+  left: 14px;
+  bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 32px);
+  grid-template-rows: repeat(2, 32px);
+  gap: 3px;
+  z-index: 3;
+  padding: 5px;
+  border: 1px solid #dbe7ed;
+  border-radius: 12px;
+  background: #ffffffed;
+}
+.c-pan-controls button {
+  border-radius: 7px;
+  color: #4f8ba6;
+  font-size: 20px;
+  line-height: 1;
+}
+.c-pan-controls button:hover {
+  background: #eaf5fc;
+}
+.c-pan-controls button:first-child {
+  grid-column: 2;
+}
+.c-pan-controls button:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+.c-pan-controls button:nth-child(3) {
+  grid-column: 3;
+  grid-row: 2;
+}
+.c-pan-controls button:last-child {
+  grid-column: 2;
+  grid-row: 2;
+}
+.c-is-table .c-pan-controls {
+  display: none;
+}
+.c-tv-mode .c-map-summary,
+.c-tv-mode .c-pan-controls,
+.c-tv-mode #city-assistant-host {
+  display: none !important;
+}
+.c-tv-mode .c-main {
+  overflow: hidden;
+}
+.c-tv-mode .c-workbench {
+  flex-basis: auto;
+  min-height: 0;
+}
+.c-tv-mode .c-world {
+  min-height: 0;
+}
+@media (max-width: 700px) {
+  .c-workbench {
+    flex-basis: 490px;
+  }
+  .c-world {
+    min-height: 260px;
+  }
+  .c-map-summary {
+    padding: 8px;
+  }
+  .c-map-context {
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .c-map-context > small {
+    display: none;
+  }
+  .c-map-summary .c-stage-cards {
+    display: flex;
+    overflow-x: auto;
+  }
+  .c-map-summary .c-stage-cards > button {
+    flex: 0 0 126px;
+    min-height: 62px;
+  }
+  .c-pan-controls {
+    grid-template-columns: repeat(3, 36px);
+    grid-template-rows: repeat(2, 36px);
+    left: 9px;
+    bottom: 10px;
+  }
+  .c-map-controls {
+    right: 9px;
+    bottom: 10px;
+  }
+}
+@media (max-height: 600px) and (min-width: 701px) {
+  .c-workbench {
+    flex-basis: 440px;
+  }
+  .c-world {
+    min-height: 240px;
+  }
+}
