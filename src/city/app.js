@@ -58,7 +58,14 @@ import {
   ownerPerformance,
 } from "./model.js";
 import { createCityScene } from "./scene.js";
+import { communicationsSummary } from "./communications-model.js";
+import {
+  createIndustryProvider,
+  INDUSTRY_STAGES,
+  industryMetrics,
+} from "./industry-model.js";
 import "./style.css";
+import "./expansion.css";
 
 const icons = {
   Building2,
@@ -140,6 +147,7 @@ const time = (t) =>
       }).format(new Date(t))
     : "No disponible";
 const provider = createDemoProvider();
+const industryProvider = createIndustryProvider();
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 let scene = null,
   sceneReady = false,
@@ -172,18 +180,23 @@ const ui = {
   tvSavedUi: null,
   tvNativeFullscreen: false,
   selectedOwnerId: null,
+  district: "sales",
+  selectedPlaceId: null,
+  selectedIndustryId: null,
+  selectedIndustryKind: "place",
   tvNavigationAt: 0,
 };
 const root = document.querySelector("#app");
 root.innerHTML = `<div id="city-app" class="c-shell">
   <aside class="c-rail" aria-label="Navegación principal"><a href="./" class="c-logo" aria-label="Atlas inicio">a<span>•</span></a><button class="active" data-action="view-city" aria-label="Ciudad CRM" title="Ciudad CRM">${i("building-2")}</button><button data-action="view-table" aria-label="Tabla de oportunidades" title="Tabla">${i("table-2")}</button><button data-action="clients" aria-label="Clientes activos" title="Clientes">${i("users")}</button><button data-action="feed" aria-label="Feed de eventos" title="Eventos">${i("activity")}</button><button data-action="team" aria-label="Equipo comercial" title="Equipo comercial">${i("users")}</button><span class="c-rail-line"></span><a href="?experience=luma" aria-label="Abrir la fábrica Luma" title="Luma Works · experiencia industrial">${i("box")}</a><div class="c-rail-bottom"><button data-action="sources" aria-label="Datos y conexión" title="Datos y conexión">${i("radio")}</button><button data-action="help" aria-label="Ayuda" title="Ayuda">${i("info")}</button><span class="c-avatar" aria-label="Usuario demo">SC</span></div></aside>
-  <main class="c-main"><header class="c-header"><div class="c-wordmark">atlas<span>.</span><small>UNA NUEVA PERSPECTIVA</small></div><div class="c-workspace"><span class="c-workspace-icon">${i("building-2")}</span><div><b>Mi ciudad comercial</b><small>Workspace de demostración</small></div></div><div class="c-header-right"><button class="c-demo" data-action="sources"><span></span>Datos simulados</button><button class="c-header-help" data-action="help" aria-label="Cómo funciona">${i("info")}</button><span class="c-avatar">SC</span></div></header>
-  <div class="c-heading"><div><div class="c-eyebrow">TU PIPELINE, EN PERSPECTIVA</div><h1>Cada oportunidad tiene su lugar<span>.</span></h1></div><p>Explora tu negocio. Descubre el siguiente paso.</p></div>
+  <main class="c-main"><header class="c-header"><div class="c-wordmark">atlas<span>.</span><small>UNA NUEVA PERSPECTIVA</small></div><div class="c-workspace"><span class="c-workspace-icon">${i("building-2")}</span><div><b>Mi ciudad de empresa</b><small>Workspace de demostración</small></div></div><div class="c-header-right"><button class="c-demo" data-action="sources"><span></span>Datos simulados</button><button class="c-header-help" data-action="help" aria-label="Cómo funciona">${i("info")}</button><span class="c-avatar">SC</span></div></header>
+  <div class="c-heading"><div><div class="c-eyebrow">TU EMPRESA, EN PERSPECTIVA</div><h1>Tu empresa, en movimiento<span>.</span></h1></div><p>Ventas, conversaciones y operaciones conectadas.</p></div>
   <section id="city-metrics" class="c-metrics" aria-label="Indicadores del negocio"></section>
+  <nav id="city-district-nav" class="c-district-nav" aria-label="Distritos de la empresa"><span>EXPLORA TU EMPRESA</span><div><button data-district="sales" class="active" aria-pressed="true">${i("building-2")}Ventas</button><button data-district="communications" aria-pressed="false">${i("message-circle")}Comunicaciones</button><button data-district="industry" aria-pressed="false">${i("box")}Industria</button><button data-district="all" aria-pressed="false">${i("layout-grid")}Empresa</button></div><small>Una ciudad. Todos tus procesos.</small></nav>
   <section class="c-workbench" aria-label="Ciudad CRM interactiva"><div class="c-toolbar"><div class="c-view-tabs" role="group" aria-label="Representación"><button class="active" data-action="view-city">${i("building-2")}<span>Ciudad</span></button><button data-action="view-table">${i("table-2")}<span>Tabla</span></button></div><div class="c-mode-tabs" role="group" aria-label="Modo de exploración"><button class="active" data-action="explore" title="Navegación libre">${i("compass")}<span>Explore</span></button><button data-action="replay" title="Reproducir el historial de eventos">${i("rotate-ccw")}<span>Replay</span></button><button data-action="tv" title="Presentación automática sin modificar datos">${i("monitor-play")}<span>TV</span></button></div><div class="c-toolbar-spacer"></div><button class="c-win-button" data-action="simulate-win">${i("sparkles")}<span>Simular una venta</span></button><button data-action="layers" class="c-icon-button" aria-label="Capas de la ciudad" aria-expanded="false">${i("layers")}</button></div>
   <div class="c-search-row"><label class="c-search">${i("search")}<input id="city-search" type="search" placeholder="Buscar una oportunidad, empresa o responsable…" aria-label="Buscar oportunidades"></label><button class="c-filter-toggle" data-action="filters" aria-expanded="false">${i("sliders-horizontal")}<span>Filtros</span><span id="city-filter-count" hidden></span></button><span class="c-search-caption" id="city-result-count"></span></div>
   <div class="c-filter-row" id="city-filters" hidden><label>Etapa<select id="filter-stage" aria-label="Filtrar etapa"></select></label><label>Responsable<select id="filter-owner" aria-label="Filtrar responsable"></select></label><label class="c-check"><input id="filter-attention" type="checkbox">Necesita atención</label><label class="c-check"><input id="filter-lost" type="checkbox">Incluir perdidas</label><button data-action="clear-filters">Limpiar filtros</button></div>
-  <div id="city-world" class="c-world"><div id="city-canvas"></div><div id="city-labels" aria-hidden="true"></div><div class="c-world-title"><span class="c-eyebrow">ATLAS DISTRICT / 01</span><h2>Un negocio.<br><span>Muchas posibilidades.</span></h2><p>De la primera conversación a la próxima gran relación.</p></div><div class="c-north" aria-hidden="true"><span>N</span><div>↗</div></div>
+  <div id="city-world" class="c-world"><div id="city-canvas"></div><div id="city-labels" aria-label="Identificación de la ciudad"></div><div class="c-world-title"><span class="c-eyebrow">ATLAS DISTRICT / 01</span><h2>Un negocio.<br><span>Muchas posibilidades.</span></h2><p>De la primera conversación a la próxima gran relación.</p></div><div class="c-north" aria-hidden="true"><span>N</span><div>↗</div></div>
   <div id="city-loader" role="status"><span class="c-loader-mark">a<span>•</span></span><b>Tu ciudad está tomando forma</b><small>Arquitectura · relaciones · oportunidades</small><div class="c-load-line"></div></div>
   <div id="city-fallback" class="c-fallback" hidden>${i("table-2")}<div><b>Seguimos en la vista de tabla</b><p>El navegador no ha podido iniciar el 3D. Puedes consultar y simular los mismos registros aquí.</p></div></div>
   <div class="c-map-controls"><button data-action="zoom-in" aria-label="Acercar">${i("plus")}</button><button data-action="zoom-out" aria-label="Alejar">${i("minus")}</button><span></span><button data-action="overview" aria-label="Vista general" title="Vista general">${i("locate-fixed")}</button></div>
@@ -306,8 +319,11 @@ function renderMetrics() {
         `<button class="c-metric ${key === "attention" ? "c-metric-attention" : ""}" data-action="${key === "attention" ? "attention" : "metric-info"}" data-key="${key}"><div><span>${label}</span>${i(ico)}</div><b data-metric="${key}" data-value="${num ?? ""}">${value}</b><small>${detail}</small></button>`,
     )
     .join("");
+  const communicationCounts = Object.fromEntries(
+    communicationsSummary(getState()).map((p) => [p.id, p]),
+  );
   $("#city-today").innerHTML =
-    `<button data-action="today">${i("phone")}<b>${m.callsToday}</b><span>llamadas</span></button><button data-action="today">${i("mail")}<b>${m.emailsToday ?? "—"}</b><span>correos</span></button><button data-action="today">${i("calendar")}<b>${m.meetingsToday ?? "—"}</b><span>reuniones</span></button><button data-action="today">${i("message-circle")}<b>${m.pendingConversations}</b><span>por responder</span></button>`;
+    `<button data-place="call">${i("phone")}<b>${units(communicationCounts.call.todayCompleted)}</b><span>llamadas hoy</span></button><button data-place="email">${i("mail")}<b>${units(communicationCounts.email.todayCompleted)}</b><span>correos hoy</span></button><button data-place="meeting">${i("calendar")}<b>${units(communicationCounts.meeting.todayCompleted)}</b><span>reuniones realizadas</span></button><button data-place="messages">${i("message-circle")}<b>${units(communicationCounts.messages.pendingCount)}</b><span>por responder</span></button>`;
   $("#city-stage-cards").style.setProperty(
     "--stage-count",
     m.stages.filter((x) => stageKind(getState(), x.id) !== "lost").length,
@@ -319,6 +335,275 @@ function renderMetrics() {
         `<button data-stage="${esc(s.id)}" data-count="${s.count}" data-amount="${s.amount}" style="--stage:${s.color}" class="${ui.filters.stageId === s.id ? "active" : ""}"><div><span class="c-stage-number">0${idx + 1}</span><b>${esc(s.name)}</b><span class="c-stage-count">${s.count}</span></div><strong>${eur(s.amount)}</strong><span class="c-stage-line"></span></button>`,
     )
     .join("");
+}
+
+const units = (n) =>
+  Number.isFinite(n) ? new Intl.NumberFormat("es-ES").format(n) : "—";
+const districtNames = {
+  sales: "Ventas",
+  communications: "Comunicaciones",
+  industry: "Industria",
+  all: "Toda la empresa",
+};
+function renderDistrict() {
+  const isIndustry = ui.district === "industry";
+  const isCommunications = ui.district === "communications";
+  $("#city-app").dataset.district = ui.district;
+  document.querySelectorAll("button[data-district]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.district === ui.district);
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.district === ui.district),
+    );
+  });
+  $(".c-search-row").hidden = isIndustry || isCommunications;
+  if (isIndustry || isCommunications) $("#city-filters").hidden = true;
+  $("#city-legend").hidden = isIndustry || isCommunications;
+  const title = $(".c-world-title");
+  title.innerHTML = isIndustry
+    ? '<span class="c-eyebrow">ATLAS / DISTRITO INDUSTRIAL</span><h2>De la fábrica.<br><span>A las manos del cliente.</span></h2><p>Cada unidad tiene una etapa. Cada entrega, un destino.</p>'
+    : isCommunications
+      ? '<span class="c-eyebrow">ATLAS / CONVERSACIONES</span><h2>Las relaciones.<br><span>Hacen ciudad.</span></h2><p>Correos, llamadas, mensajes y reuniones registrados.</p>'
+      : '<span class="c-eyebrow">ATLAS / CIUDAD DE EMPRESA</span><h2>Un negocio.<br><span>Muchas posibilidades.</span></h2><p>Ventas, conversaciones y operaciones conectadas.</p>';
+  const winButton = $(".c-win-button");
+  winButton.innerHTML = `${i("sparkles")}<span>${isIndustry ? "Avanzar un lote" : "Simular una venta"}</span>`;
+  winButton.hidden = isCommunications;
+  $("#city-stage-cards").classList.toggle(
+    "c-unit-cards",
+    isIndustry || isCommunications,
+  );
+  if (isIndustry) {
+    const m = industryMetrics(industryProvider.getState());
+    $("#city-metrics").innerHTML = [
+      [
+        "En fabricación y empacado",
+        Number.isFinite(m.inProduction) && Number.isFinite(m.packed)
+          ? m.inProduction + m.packed
+          : null,
+        "Unidades en proceso",
+        "manufacturing",
+        "#ed9234",
+      ],
+      [
+        "Stock disponible",
+        m.stock,
+        "Unidades en el almacén",
+        "warehouse",
+        "#368ce4",
+      ],
+      [
+        "En reparto",
+        m.inTransit,
+        "Unidades a bordo · rutas estimadas",
+        "transit",
+        "#9c67db",
+      ],
+      [
+        "Entregadas",
+        m.delivered,
+        "Unidades con entrega confirmada",
+        "delivered",
+        "#20ad76",
+      ],
+    ]
+      .map(
+        ([label, count, detail, id, color]) =>
+          `<button class="c-metric" data-industry="${id}" data-kind="place" style="--sector:${color}"><div><span>${label}</span>${i("box")}</div><b data-industry-metric="${id}">${units(count)} <em>uds</em></b><small>${detail}</small></button>`,
+      )
+      .join("");
+    $("#city-stage-cards").style.setProperty(
+      "--stage-count",
+      INDUSTRY_STAGES.length,
+    );
+    $("#city-stage-cards").innerHTML = INDUSTRY_STAGES.map(
+      (s, idx) =>
+        `<button data-industry="${s.id}" data-kind="place" style="--stage:${s.color}"><div><span class="c-stage-number">0${idx + 1}</span><b>${esc(s.name)}</b></div><strong>${units(m.byStage[s.id])} <small>uds</small></strong><span class="c-stage-line"></span></button>`,
+    ).join("");
+    $("#city-today").innerHTML =
+      `<button data-action="industry-records">${i("box")}<b>${units(m.totalUnits)}</b><span>unidades trazadas</span></button><button data-action="industry-records">${i("activity")}<b>${units(m.activeTrucks)}</b><span>camiones activos</span></button>`;
+  } else if (isCommunications) {
+    const places = communicationsSummary(getState());
+    $("#city-metrics").innerHTML = places
+      .map(
+        (p) =>
+          `<button class="c-metric" data-place="${p.id}" style="--sector:${p.color}"><div><span>${esc(p.name)}</span>${i(p.id === "meeting" ? "calendar" : p.id === "call" ? "phone" : p.id === "email" ? "mail" : "message-circle")}</div><b data-communication-metric="${p.id}">${units(p.todayCompleted)}</b><small>Realizadas hoy · ${units(p.pendingCount)} pendientes</small></button>`,
+      )
+      .join("");
+    $("#city-stage-cards").style.setProperty("--stage-count", places.length);
+    $("#city-stage-cards").innerHTML = places
+      .map(
+        (p) =>
+          `<button data-place="${p.id}" style="--stage:${p.color}"><div><b>${esc(p.name)}</b></div><strong>${units(p.todayCompleted)} <small>hoy</small></strong><span class="c-stage-line"></span></button>`,
+      )
+      .join("");
+  }
+}
+
+function setDistrict(id, { closePanels = true } = {}) {
+  if (!Object.hasOwn(districtNames, id)) return;
+  if (ui.mode === "replay" && id !== "sales") setMode("explore");
+  ui.district = id;
+  if (closePanels) {
+    ui.drawer = null;
+    ui.selectedId = null;
+    scene?.select(null);
+  }
+  if (!noWebGL) setView("city");
+  scene?.setDistrict?.(id);
+  render();
+}
+
+function showCommunications(id = null) {
+  if (ui.mode === "tv") {
+    scene?.focusPlace?.(id || "email");
+    ui.tvNavigationAt = performance.now();
+    return;
+  }
+  setDistrict("communications");
+  ui.drawer = "communications";
+  ui.selectedPlaceId = id;
+  if (id) scene?.focusPlace?.(id);
+  renderDrawer();
+  refreshIcons();
+}
+function communicationDrawerHTML() {
+  const places = communicationsSummary(getState());
+  const selected = places.find((p) => p.id === ui.selectedPlaceId);
+  const records = (
+    selected ? selected.records : places.flatMap((p) => p.records)
+  )
+    .slice()
+    .sort(
+      (a, b) => Date.parse(b.occurredAt || 0) - Date.parse(a.occurredAt || 0),
+    );
+  const channelName = {
+    email: "Correo",
+    call: "Llamada",
+    whatsapp: "WhatsApp",
+    conversation: "Conversación",
+    message: "Mensaje",
+    meeting: "Reunión",
+  };
+  return `<div class="c-drawer-header"><div><span class="c-eyebrow">ACTIVIDAD REGISTRADA EN EL CRM</span><h2>${esc(selected?.name || "El barrio de las conversaciones")}</h2></div><button data-action="close-drawer" aria-label="Cerrar comunicaciones">${i("x")}</button></div><div class="c-drawer-body" id="city-communications-panel"><div class="c-place-grid">${places.map((p) => `<button data-place="${p.id}" class="${selected?.id === p.id ? "active" : ""}" style="--place:${p.color}"><b>${esc(p.name)}</b><strong>${units(p.todayCompleted)}</strong><small>realizadas hoy · ${units(p.pendingCount)} pendientes</small></button>`).join("")}</div>${
+    selected?.id === "messages"
+      ? `<div class="c-channel-summary">${Object.entries(selected.channels)
+          .map(
+            ([channel, c]) =>
+              `<span><b>${esc(channelName[channel])}</b>${c.sourceAvailable ? `${units(c.todayCompleted)} hoy · ${units(c.pendingCount)} pendientes` : "Canal sin datos"}</span>`,
+          )
+          .join("")}</div>`
+      : ""
+  }<p class="c-data-note">Realizadas hoy cuenta registros completados hasta ${time(getState().now)}, hora de la empresa. Las reuniones previstas y las respuestas pendientes se muestran por separado.</p><h3 class="c-sector-list-title">${selected ? "Registros del local" : "Todos los registros"} <span>${records.length}</span></h3><div class="c-communication-records">${
+    records.length
+      ? records
+          .map((r) => {
+            const entity = r.dealId || r.accountId;
+            const account = getState().accounts.find(
+              (a) => a.id === r.accountId,
+            );
+            const done = ["done", "completed"].includes(r.status);
+            return `<article class="c-communication-record"><div><span class="c-channel-tag" data-channel="${esc(r.channel)}">${esc(channelName[r.channel] || r.channel)}</span><small>${done ? "Realizada" : r.status === "pending" ? "Pendiente" : "Estado no disponible"}</small></div><b>${esc(r.subject)}</b><p>${esc(account?.name || "Sin cuenta asociada")} · ${esc(ownerName(r.ownerId))}</p><footer><span>${date(done ? r.completedAt || r.occurredAt : r.occurredAt)} · ${time(done ? r.completedAt || r.occurredAt : r.occurredAt)}</span>${entity ? `<button data-select="${esc(entity)}">Ver relación ${i("arrow-up-right")}</button>` : ""}</footer><small class="c-record-id">${esc(r.id || "Sin ID")} · ${esc(r.source || "Origen no disponible")}</small></article>`;
+          })
+          .join("")
+      : '<p class="c-team-intro">Este canal no contiene registros disponibles.</p>'
+  }</div></div>`;
+}
+
+function showIndustry(id = null, kind = "place") {
+  if (ui.mode === "tv") {
+    if (id) scene?.focusIndustry?.(id);
+    ui.tvNavigationAt = performance.now();
+    return;
+  }
+  setDistrict("industry");
+  ui.drawer = "industry";
+  ui.selectedIndustryId = id;
+  ui.selectedIndustryKind = kind;
+  if (id) scene?.focusIndustry?.(id);
+  renderDrawer();
+  refreshIcons();
+}
+function industryDrawerHTML() {
+  const s = industryProvider.getState();
+  const m = industryMetrics(s);
+  const selectedBatch = s.batches.find((b) => b.id === ui.selectedIndustryId);
+  const selectedTruck = s.vehicles.find((v) => v.id === ui.selectedIndustryId);
+  const selectedStage = INDUSTRY_STAGES.find(
+    (stage) => stage.id === ui.selectedIndustryId,
+  );
+  const batches = selectedBatch
+    ? [selectedBatch]
+    : selectedTruck
+      ? s.batches.filter(
+          (b) =>
+            b.id === selectedTruck.cargoBatchId ||
+            b.delivery?.truckId === selectedTruck.id,
+        )
+      : s.batches.filter(
+          (b) => !selectedStage || b.stageId === selectedStage.id,
+        );
+  const statusNames = {
+    available: "Disponible en almacén",
+    outbound: "En reparto · con carga",
+    at_customer: "En cliente · vacío",
+    returning: "Regresando · vacío",
+  };
+  const title = selectedBatch
+    ? `${selectedBatch.id} · ${units(selectedBatch.quantity)} uds`
+    : selectedTruck
+      ? selectedTruck.name
+      : selectedStage?.name || "El viaje de tus productos";
+  return `<div class="c-drawer-header"><div><span class="c-eyebrow">OPERACIONES · DATOS ERP SIMULADOS</span><h2>${esc(title)}</h2></div><button data-action="close-drawer" aria-label="Cerrar operaciones">${i("x")}</button></div><div class="c-drawer-body" id="city-industry-panel"><div class="c-industry-ledger"><span><b>${units(m.totalUnits)}</b> unidades trazadas</span><span><b>${units(m.stock)}</b> en stock</span><span><b>${units(m.inTransit)}</b> en reparto</span><span><b>${units(m.delivered)}</b> entregadas</span></div><p class="c-data-note">Kit Atlas · 1 producto. Cada unidad pertenece a una sola etapa. Los cambios de la demo son explícitos; una animación o una ETA no confirma una entrega.</p><div class="c-industry-stage-nav">${INDUSTRY_STAGES.map((stage) => `<button data-industry="${stage.id}" data-kind="place" class="${selectedStage?.id === stage.id ? "active" : ""}" style="--stage:${stage.color}"><span>${esc(stage.name)}</span><b>${units(m.byStage[stage.id])}</b></button>`).join("")}</div><h3 class="c-sector-list-title">${selectedBatch ? "Trazabilidad del lote" : "Lotes y pedidos"} <span>${batches.length}</span></h3><div class="c-batch-list">${
+    batches
+      .map((b) => {
+        const stage = INDUSTRY_STAGES.find((stage) => stage.id === b.stageId);
+          const next = INDUSTRY_STAGES.find(
+            (candidate) => candidate.order === (stage?.order ?? 99) + 1,
+          );
+        const truck = s.vehicles.find((v) => v.id === b.assignedTruckId);
+        return `<article class="c-batch-card" data-batch-id="${b.id}" style="--stage:${stage?.color}"><button class="c-batch-title" data-industry="${b.id}" data-kind="batch"><span><small>${esc(b.sourceOrderId)}</small><b>${esc(b.id)} · ${esc(b.productName)}</b></span><strong>${units(b.quantity)} <small>uds</small></strong></button><span class="c-batch-stage">${esc(stage?.name)}</span><p>${esc(b.accountName)}${truck ? ` · ${esc(truck.driverName)} / ${esc(truck.plate)}` : ""}</p>${b.delivery ? `<small class="c-delivery-proof">${i("check")} Entrega registrada · ${date(b.delivery.recordedAt)} ${time(b.delivery.recordedAt)}</small>` : ""}${next ? `<button class="c-batch-advance" data-advance-batch="${b.id}">Simular → ${esc(next.name)} ${i("arrow-right")}</button>` : ""}${selectedBatch ? `<ol class="c-batch-history">${b.history.map((entry) => `<li>${esc(INDUSTRY_STAGES.find((stage) => stage.id === entry.stageId)?.name || entry.stageId)}<small>${date(entry.timestamp)} · ${time(entry.timestamp)}</small></li>`).join("")}</ol>` : ""}</article>`;
+      })
+      .join("") || '<p class="c-team-intro">No hay lotes en esta etapa.</p>'
+  }</div><h3 class="c-sector-list-title">Flota <span>${s.vehicles.length}</span></h3><div class="c-fleet-list">${s.vehicles
+    .filter((v) => !selectedTruck || v.id === selectedTruck.id)
+    .map((v) => {
+      const load = s.batches.find((b) => b.id === v.cargoBatchId);
+      return `<article class="c-fleet-card"><button data-industry="${v.id}" data-kind="vehicle"><span>${i("box")}<b>${esc(v.plate)} · ${esc(v.driverName)}</b></span>${i("locate-fixed")}</button><p>${esc(statusNames[v.status] || v.status)}</p><strong>${load ? `${units(load.quantity)} uds · ${esc(load.accountName)}` : "0 uds · camión vacío"}</strong>${v.route ? `<small>Ruta estimada · ${esc(v.route.origin.name)} → ${esc(v.route.destination.name)}<br>${units(v.route.durationMinutes)} min previstos · animación ilustrativa, sin GPS</small>` : ""}${v.status === "at_customer" ? `<button class="c-batch-advance" data-return-truck="${v.id}">Simular regreso vacío ${i("arrow-right")}</button>` : v.status === "returning" ? `<button class="c-batch-advance" data-arrive-truck="${v.id}">Confirmar llegada al almacén ${i("check")}</button>` : ""}</article>`;
+    })
+    .join(
+      "",
+    )}</div><p class="c-data-note">Fuente independiente: ${esc(s.source?.system)}. Una venta comercial no fabrica productos, reserva stock ni genera cobros automáticamente.</p></div>`;
+}
+function advanceIndustryBatch(id) {
+  if (ui.mode === "replay") return false;
+  const batch = industryProvider.getState().batches.find((b) => b.id === id);
+  if (!batch) return false;
+  const beforeStage = batch.stageId;
+  const applied = industryProvider.advanceBatch(id);
+  if (!applied) {
+    toast(
+      beforeStage === "warehouse"
+        ? "No hay un camión disponible con capacidad para este lote. Confirma el regreso de uno."
+        : "El lote no puede avanzar desde esta etapa.",
+    );
+    return false;
+  }
+  const next = industryProvider.getState().batches.find((b) => b.id === id);
+  toast(
+    `${id} → ${INDUSTRY_STAGES.find((stage) => stage.id === next.stageId)?.name}. ${next.stageId === "delivered" ? "Entrega registrada; ningún cobro generado." : "Unidades conservadas."}`,
+  );
+  return true;
+}
+function simulateIndustryStep() {
+  const s = industryProvider.getState();
+  const selected = s.batches.find(
+    (b) => b.id === ui.selectedIndustryId && b.stageId !== "delivered",
+  );
+  const batch = selected || s.batches.find((b) => b.stageId !== "delivered");
+  if (!batch) return toast("Todos los lotes están entregados.");
+  ui.selectedIndustryId = batch.id;
+  ui.selectedIndustryKind = "batch";
+  if (advanceIndustryBatch(batch.id)) showIndustry(batch.id, "batch");
 }
 function syncFilterOptions() {
   const state = getState(),
@@ -365,6 +650,7 @@ function updateFilters(event) {
     layers: ui.layers,
     event,
     animateEvents: ui.mode !== "replay",
+    industryState: industryProvider.getState(),
   });
   if (ui.view === "table") renderTable();
   document
@@ -457,6 +743,14 @@ function renderDrawer() {
     return;
   }
   el.hidden = false;
+  if (ui.drawer === "communications") {
+    el.innerHTML = communicationDrawerHTML();
+    return;
+  }
+  if (ui.drawer === "industry") {
+    el.innerHTML = industryDrawerHTML();
+    return;
+  }
   if (ui.drawer === "team") {
     el.innerHTML = teamDrawerHTML();
     return;
@@ -521,6 +815,26 @@ function ownerActivity(id) {
 }
 function renderTeam() {
   const team = ownerPerformance(getState());
+  $("#city-tv-team").style.setProperty(
+    "--tv-owner-count",
+    ui.district === "industry" ? 3 : 4,
+  );
+  if (ui.district === "industry") {
+    const s = industryProvider.getState();
+    $("#city-tv-team").innerHTML = s.vehicles
+      .map((v, index) => {
+        const batch = s.batches.find((b) => b.id === v.cargoBatchId);
+        return `<div class="c-tv-owner" style="--owner:${["#278dd7", "#a164d8", "#e79326"][index % 3]}"><span class="c-owner-avatar">${esc(
+          v.driverName
+            .split(" ")
+            .map((n) => n[0])
+            .slice(0, 2)
+            .join(""),
+        )}</span><span><b>${esc(v.driverName.split(" ")[0])} · ${esc(v.plate)}</b><small>${batch ? "En reparto" : v.status === "returning" ? "Volviendo vacío" : v.status === "at_customer" ? "En cliente" : "Disponible"}</small></span><strong>${units(batch?.quantity || 0)} uds</strong></div>`;
+      })
+      .join("");
+    return;
+  }
   $("#city-tv-team").innerHTML = team
     .map(
       (o) =>
@@ -564,6 +878,7 @@ function focusOwner(id) {
     ui.tvNavigationAt = performance.now();
     return;
   }
+  if (ui.district !== "sales") setDistrict("sales");
   ui.selectedOwnerId = id;
   ui.selectedId = null;
   ui.drawer = "team";
@@ -605,6 +920,7 @@ function refreshTeamActivity() {
 }
 function render(event) {
   renderMetrics();
+  renderDistrict();
   updateFilters(event);
   renderInspector();
   renderDrawer();
@@ -651,6 +967,7 @@ function select(id, { focus = true } = {}) {
   }
   if (!s.deals.some((d) => d.id === id) && !s.accounts.some((a) => a.id === id))
     return;
+  if (ui.district !== "sales") setDistrict("sales");
   ui.selectedId = id;
   ui.drawer = null;
   scene?.select(id);
@@ -760,6 +1077,11 @@ function setMode(mode) {
       ui.filters = { ...saved.filters };
       ui.drawer = saved.drawer;
       ui.selectedOwnerId = saved.selectedOwnerId;
+      ui.district = saved.district || "sales";
+      ui.selectedPlaceId = saved.selectedPlaceId;
+      ui.selectedIndustryId = saved.selectedIndustryId;
+      ui.selectedIndustryKind = saved.selectedIndustryKind;
+      scene?.setDistrict?.(ui.district);
       $("#city-search").value = ui.filters.query;
       setView(saved.view);
     }
@@ -772,6 +1094,8 @@ function setMode(mode) {
       ui.selectedId = ui.replay.savedUi.selectedId;
       ui.filters = { ...ui.replay.savedUi.filters };
       ui.sheet = ui.replay.savedUi.sheet;
+      ui.district = ui.replay.savedUi.district || "sales";
+      scene?.setDistrict?.(ui.district);
       setView(ui.replay.savedUi.view);
       $("#city-search").value = ui.filters.query;
       ui.replay.savedUi = null;
@@ -792,7 +1116,10 @@ function setMode(mode) {
       filters: { ...ui.filters },
       view: ui.view,
       sheet: ui.sheet,
+      district: ui.district,
     };
+    ui.district = "sales";
+    scene?.setDistrict?.("sales");
     ui.replay.saved = structuredClone(getState());
     ui.replay.events = demoReplayEvents(ui.replay.saved);
     ui.replay.index = 0;
@@ -812,6 +1139,10 @@ function setMode(mode) {
       filters: { ...ui.filters },
       drawer: ui.drawer,
       selectedOwnerId: ui.selectedOwnerId,
+      district: ui.district,
+      selectedPlaceId: ui.selectedPlaceId,
+      selectedIndustryId: ui.selectedIndustryId,
+      selectedIndustryKind: ui.selectedIndustryKind,
     };
     ui.selectedId = null;
     ui.drawer = null;
@@ -937,6 +1268,32 @@ root.addEventListener("pointerup", (e) => {
   }
 });
 function onClick(e) {
+  const districtEl = e.target.closest("button[data-district]");
+  if (districtEl) return setDistrict(districtEl.dataset.district);
+  const placeEl = e.target.closest("[data-place]");
+  if (placeEl) return showCommunications(placeEl.dataset.place);
+  const industryEl = e.target.closest("[data-industry]");
+  if (industryEl)
+    return showIndustry(
+      industryEl.dataset.industry,
+      industryEl.dataset.kind || "place",
+    );
+  const advanceEl = e.target.closest("[data-advance-batch]");
+  if (advanceEl) return advanceIndustryBatch(advanceEl.dataset.advanceBatch);
+  const returnEl = e.target.closest("[data-return-truck]");
+  if (returnEl) {
+    if (industryProvider.returnVehicle(returnEl.dataset.returnTruck))
+      toast(
+        "Regreso vacío registrado. La llegada al almacén se confirma por separado.",
+      );
+    return;
+  }
+  const arriveEl = e.target.closest("[data-arrive-truck]");
+  if (arriveEl) {
+    if (industryProvider.arriveVehicle(arriveEl.dataset.arriveTruck))
+      toast("Llegada confirmada. Camión disponible de nuevo.");
+    return;
+  }
   const ownerEl = e.target.closest("[data-owner]");
   if (ownerEl) {
     focusOwner(ownerEl.dataset.owner);
@@ -964,11 +1321,15 @@ function onClick(e) {
       );
       return;
     }
+    if (a === "view-table" && ui.district !== "sales") setDistrict("sales");
     setView(a === "view-city" ? "city" : "table");
   } else if (a === "explore") setMode("explore");
   else if (a === "replay") setMode(ui.mode === "replay" ? "explore" : "replay");
   else if (a === "tv") setMode(ui.mode === "tv" ? "explore" : "tv");
-  else if (a === "simulate-win") simulateWin();
+  else if (a === "simulate-win")
+    ui.district === "industry" ? simulateIndustryStep() : simulateWin();
+  else if (a === "industry-records") showIndustry();
+  else if (a === "communications-records") showCommunications();
   else if (a === "close-inspector") closeInspector();
   else if (a === "focus-selected") {
     setView("city");
@@ -1111,6 +1472,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 provider.subscribe((_state, event) => render(event));
+industryProvider.subscribe((_state, event) => render(event));
 render();
 let lastTick = performance.now(),
   tvLast = 0,
@@ -1137,7 +1499,7 @@ function tick() {
       ui.tvIndex++;
       const stages = getState().stages,
         idx = ui.tvIndex % (stages.length + 1);
-      if (idx === 0) scene?.overview();
+      if (idx === 0 || ui.district !== "sales") scene?.overview();
       else {
         const d = getState().deals.find(
           (d) => d.stageId === stages[idx - 1].id,
@@ -1172,6 +1534,15 @@ async function boot() {
       reducedMotion: reduced.matches,
       onSelect: (id) => (id ? select(id, { focus: false }) : closeInspector()),
       onSelectOwner: (id) => focusOwner(id),
+      onSelectPlace: (id) => showCommunications(id),
+      onSelectIndustry: (id, kind) => showIndustry(id, kind),
+      onDistrictChange: (district) => {
+        ui.district = district;
+        renderMetrics();
+        renderDistrict();
+        renderTeam();
+        refreshIcons();
+      },
       onHover: (entity, data, point) => {
         const el = $("#city-hover");
         if (
@@ -1207,6 +1578,7 @@ async function boot() {
     $("#city-loader").hidden = true;
     scene.setQuality(ui.quality);
     updateFilters();
+    scene.setDistrict?.(ui.district);
     scene.select(ui.selectedId);
     scene.setActive?.(ui.view === "city");
   } catch (error) {
@@ -1226,6 +1598,7 @@ async function boot() {
 }
 window.__ATLAS_CITY__ = {
   provider,
+  industryProvider,
   get scene() {
     return scene;
   },
@@ -1246,6 +1619,12 @@ window.__ATLAS_CITY__ = {
   }),
   metrics: () => metrics(getState()),
   ownerPerformance: () => ownerPerformance(getState()),
+  communicationsSummary: () => communicationsSummary(getState()),
+  industryMetrics: () => industryMetrics(industryProvider.getState()),
+  setDistrict,
+  showCommunications,
+  showIndustry,
+  advanceIndustryBatch,
   focusOwner,
   select,
   simulateWin,
@@ -1257,6 +1636,7 @@ window.__ATLAS_CITY__ = {
   reset: () => {
     setMode("explore");
     provider.reset();
+    industryProvider.reset();
     closeInspector();
   },
   scrubReplay,

@@ -1,3 +1,5 @@
+import { createDemoCommunicationActivities } from "./communications-model.js";
+
 /**
  * Atlas' renderer-independent CRM contract. All records below are fictitious.
  * Money is expressed in whole EUR; absence stays null, never an invented zero.
@@ -249,6 +251,7 @@ export function createDemoState() {
     dueAt: stamp(16, 9 + index * 3),
     subject: "Reunión de cuenta",
   }));
+  activities.push(...createDemoCommunicationActivities({ now: DEMO_NOW, deals }));
   events.sort((a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp) || a.id.localeCompare(b.id));
   return {
     stages,

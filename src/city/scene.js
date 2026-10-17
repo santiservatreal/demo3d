@@ -12,6 +12,8 @@ import {
 import { createTraffic } from "./traffic.js";
 import { createConstructionDirector } from "./construction.js";
 import { createPeople } from "./people.js";
+import { createCommunicationsDistrict } from "./communications.js";
+import { createIndustryDistrict } from "./industry.js";
 import { stageKind, needsAttention as modelNeedsAttention } from "./model.js";
 
 const COLORS = ["#338ee0", "#00a99a", "#f1ab29", "#9468d2", "#31ab64"];
@@ -52,6 +54,9 @@ export async function createCityScene({
   onError = () => {},
   onNavigate = () => {},
   onSelectOwner = () => {},
+  onSelectPlace = () => {},
+  onSelectIndustry = () => {},
+  onDistrictChange = () => {},
   reducedMotion = false,
 }) {
   let disposed = false,
@@ -59,6 +64,8 @@ export async function createCityScene({
     raf = 0,
     state = null,
     selectedId = null,
+    district = "sales",
+    industryState = null,
     quality = "balanced",
     qualitySetting = "auto",
     mode = "explore",
@@ -88,6 +95,10 @@ export async function createCityScene({
     positions = new Map(),
     stageLabels = new Map(),
     entityLabels = new Map(),
+    ownerLabels = new Map(),
+    placeLabels = new Map(),
+    industryLabels = new Map(),
+    sectorLabels = new Map(),
     identity = new Map();
   const w = () => Math.max(1, container.clientWidth),
     h = () => Math.max(1, container.clientHeight);
@@ -173,6 +184,7 @@ export async function createCityScene({
   const architecture = createArchitecture(scene);
   const worldResources = [];
   const world = makeWorld(scene, worldResources);
+  const districtRoads = makeDistrictRoads(scene, worldResources);
   let landMinZ = -26.5;
   const overflowBase = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
@@ -193,6 +205,11 @@ export async function createCityScene({
     reducedMotion,
   });
   const people = createPeople({ scene, reducedMotion, onSelectOwner });
+  construction.setAttendanceResolver?.((id) =>
+    people.getConstructionAttendance?.(id),
+  );
+  const communications = createCommunicationsDistrict({ scene, reducedMotion });
+  const industry = createIndustryDistrict({ scene, reducedMotion });
   const districtRoot = new THREE.Group();
   districtRoot.name = "CRM district parcels and front plaques";
   scene.add(districtRoot);
@@ -263,34 +280,95 @@ export async function createCityScene({
   renderer.domElement.addEventListener("pointercancel", handleCancel);
   document.addEventListener("visibilitychange", handleVisibility);
 
+  function getDistrict() {
+    return district;
+  }
+  function viewBounds() {
+    const salesMin = Math.min(
+      -26.5,
+      ...[...positions.values()]
+        .filter((value) => value.stageId !== "clients")
+        .map((value) => value.target.z - 3),
+    );
+    const ranges = {
+      sales: [salesMin, 26.5],
+      communications: [-44, -27],
+      industry: [-74, -49],
+      all: [landMinZ, 26.5],
+    };
+    const [minZ, maxZ] = ranges[district] || ranges.sales;
+    return {
+      minX: -38.5,
+      maxX: 38.5,
+      minY: -1.5,
+      maxY: district === "industry" ? 8 : district === "all" ? 14 : 12,
+      minZ,
+      maxZ,
+    };
+  }
+  function viewDirection() {
+    if (!portraitTV())
+      return district === "industry"
+        ? new THREE.Vector3(25, 65, 90)
+        : new THREE.Vector3(54, 55, 68);
+    const bounds = viewBounds();
+    return bounds.maxZ - bounds.minZ > bounds.maxX - bounds.minX
+      ? new THREE.Vector3(5, 70, 90)
+      : new THREE.Vector3(90, 70, 5);
+  }
+  function setDistrict(next) {
+    if (!["sales", "communications", "industry", "all"].includes(next))
+      return district;
+    const districtChanged = district !== next;
+    district = next;
+    selectedId = null;
+    ring.visible = false;
+    followFocus = null;
+    for (const c of connections) c.line.visible = false;
+    const bounds = viewBounds(),
+      centerZ = (bounds.minZ + bounds.maxZ) / 2;
+    sun.position.set(-30, 65, 25 + centerZ);
+    sun.target.position.set(0, 0, centerZ);
+    sun.shadow.camera.left = district === "all" ? -68 : -52;
+    sun.shadow.camera.right = district === "all" ? 68 : 52;
+    sun.shadow.camera.top = district === "all" ? 82 : 48;
+    sun.shadow.camera.bottom = district === "all" ? -82 : -48;
+    sun.shadow.camera.far = 220;
+    sun.shadow.camera.updateProjectionMatrix();
+    renderer.shadowMap.needsUpdate = true;
+    resize();
+    overview();
+    lastLabel = 0;
+    if (districtChanged) onDistrictChange(district);
+    return district;
+  }
   function portraitTV() {
     return tvPresentation && w() < 650 && h() > w();
   }
-  function portraitTVFit(width, height) {
-    // Face the long axis of the island in a portrait display. Reserve the
-    // actual TV HUD bands, rather than fitting a 96 m landscape into 390 px.
-    const direction = new THREE.Vector3(90, 70, 5).normalize();
+  function projectedFit(width, height) {
+    const bounds = viewBounds(),
+      direction = viewDirection().normalize();
     const right = new THREE.Vector3(direction.z, 0, -direction.x).normalize();
     const up = new THREE.Vector3().crossVectors(direction, right).normalize();
     let minX = Infinity,
       maxX = -Infinity,
       minY = Infinity,
       maxY = -Infinity;
-    for (const x of [-38.5, 38.5])
-      for (const y of [-1.5, 12])
-        for (const z of [landMinZ, 26.5]) {
-          const corner = new THREE.Vector3(x, y, z);
-          const px = corner.dot(right),
-            py = corner.dot(up);
+    for (const x of [bounds.minX, bounds.maxX])
+      for (const y of [bounds.minY, bounds.maxY])
+        for (const z of [bounds.minZ, bounds.maxZ]) {
+          const point = new THREE.Vector3(x, y, z),
+            px = point.dot(right),
+            py = point.dot(up);
           minX = Math.min(minX, px);
           maxX = Math.max(maxX, px);
           minY = Math.min(minY, py);
           maxY = Math.max(maxY, py);
         }
-    const top = 210,
-      bottom = 120;
+    const top = portraitTV() ? 210 : tvPresentation ? 132 : 20;
+    const bottom = portraitTV() ? 120 : tvPresentation ? 96 : 100;
     const scale = Math.min(
-      (width - 28) / (maxX - minX),
+      Math.max(100, width - 32) / (maxX - minX),
       Math.max(100, height - top - bottom) / (maxY - minY),
     );
     return { vertical: height / scale, center: (top - bottom) / (2 * scale) };
@@ -299,9 +377,10 @@ export async function createCityScene({
     const width = w(),
       height = h(),
       aspect = width / height;
-    const extra = Math.max(0, -26.5 - landMinZ);
+    const extra = Math.max(0, -26.5 - viewBounds().minZ);
     const portrait = portraitTV();
-    const fit = portrait ? portraitTVFit(width, height) : null;
+    const fit =
+      portrait || district !== "sales" ? projectedFit(width, height) : null;
     const vertical = fit
       ? fit.vertical
       : width < 600
@@ -346,6 +425,7 @@ export async function createCityScene({
     architecture.setDetail(next !== "light");
     traffic.setQuality?.(quality);
     people.setQuality?.(quality);
+    industry.setQuality?.(quality);
     traffic.setEnabled?.(
       layers.traffic && !reducedMotion && quality !== "light",
     );
@@ -454,6 +534,7 @@ export async function createCityScene({
       layers: nextLayers,
       event,
       animateEvents = true,
+      industryState: nextIndustryState,
     } = {},
   ) {
     if (disposed) return;
@@ -476,6 +557,9 @@ export async function createCityScene({
       connections = [];
     }
     state = next;
+    if (nextIndustryState !== undefined) industryState = nextIndustryState;
+    communications.sync(state);
+    if (industryState) industry.sync(industryState);
     if (ids !== undefined)
       filteredIds = ids instanceof Set ? ids : new Set(ids || []);
     if (id !== undefined) selectedId = id;
@@ -615,7 +699,7 @@ export async function createCityScene({
   }
   function updateLand() {
     const required = Math.min(
-      -26.5,
+      -80,
       ...[...positions]
         .filter(([id]) => architecture.entities.get(id)?.visible)
         .map(([, p]) => p.target.z - 3),
@@ -631,6 +715,7 @@ export async function createCityScene({
     overflowPavement.scale.set(75, 0.14, depth);
     controls.maxTargetRadius = Math.max(120, -landMinZ + 65);
     sun.shadow.camera.bottom = -Math.max(42, -landMinZ + 4);
+    sun.shadow.camera.far = 220;
     sun.shadow.camera.updateProjectionMatrix();
     resize();
     if (!selectedId) overview();
@@ -850,6 +935,7 @@ export async function createCityScene({
     lastLabel = 0;
   }
   function focus(id, { panelWidth = 350 } = {}) {
+    if (district !== "sales") setDistrict("sales");
     const e = architecture.entities.get(id);
     if (!e) return;
     select(id);
@@ -893,6 +979,7 @@ export async function createCityScene({
     schedule();
   }
   function focusOwner(ownerId) {
+    if (district !== "sales") setDistrict("sales");
     const point = people.getOwnerPosition(ownerId);
     if (!point) return;
     followFocus = `owner:${ownerId}`;
@@ -932,9 +1019,80 @@ export async function createCityScene({
         Math.abs(point.y) < 1,
     };
   }
+  function projectPoint(point, id) {
+    if (!point) return null;
+    point = point.clone().project(camera);
+    const rect = renderer.domElement.getBoundingClientRect();
+    return {
+      id,
+      x: rect.left + (point.x * 0.5 + 0.5) * rect.width,
+      y: rect.top + (-point.y * 0.5 + 0.5) * rect.height,
+      visible:
+        point.z > -1 &&
+        point.z < 1 &&
+        Math.abs(point.x) < 1 &&
+        Math.abs(point.y) < 1,
+    };
+  }
+  function projectPlace(id) {
+    const place = communications.getPlaces().find((entry) => entry.id === id);
+    if (!place) return null;
+    const point = (place.groundPosition || place.position).clone();
+    point.y = 2.5;
+    return projectPoint(point, id);
+  }
+  function projectIndustry(id) {
+    return projectPoint(industry.focusPoint(id), id);
+  }
+  function focusPoint(point, { panelWidth = 350, zoom = 2.25 } = {}) {
+    if (!point) return;
+    followFocus = null;
+    const target = point.clone();
+    const offset = camera.position
+      .clone()
+      .sub(controls.target)
+      .normalize()
+      .multiplyScalar(100);
+    if (w() > 650) {
+      const right = new THREE.Vector3().setFromMatrixColumn(
+        camera.matrixWorld,
+        0,
+      );
+      const worldPerPixel = (camera.right - camera.left) / zoom / w();
+      target.addScaledVector(right, panelWidth * 0.4 * worldPerPixel);
+    }
+    flight = {
+      fromPos: camera.position.clone(),
+      fromTarget: controls.target.clone(),
+      fromZoom: camera.zoom,
+      toTarget: target,
+      toPos: target.clone().add(offset),
+      toZoom: zoom,
+      start: elapsed,
+      duration: reducedMotion ? 0.01 : 0.85,
+    };
+    schedule();
+  }
+  function focusPlace(id) {
+    const place = communications.getPlaces().find((entry) => entry.id === id);
+    if (!place) return;
+    if (district !== "communications") setDistrict("communications");
+    const point = (place.groundPosition || place.position).clone();
+    point.y = 2.5;
+    focusPoint(point);
+  }
+  function focusIndustry(id) {
+    const point = industry.focusPoint(id);
+    if (!point) return;
+    if (district !== "industry") setDistrict("industry");
+    focusPoint(point, { zoom: 2.35 });
+    followFocus = `industry:${id}`;
+    followAnchor = point.clone();
+  }
   function focusDistrict(stageId) {
     // Keep the complete city legible on a portrait TV; there is no room for
     // a zoomed district plus the fixed KPI and salesperson bands.
+    if (district !== "sales") setDistrict("sales");
     if (portraitTV()) {
       overview();
       return;
@@ -965,21 +1123,20 @@ export async function createCityScene({
   function overview() {
     followFocus = null;
     const portrait = portraitTV();
+    const bounds = viewBounds();
     const target = new THREE.Vector3(
       0,
-      portrait ? 5.25 : 1,
-      (landMinZ + 26.5) / 2,
+      portrait || district !== "sales" ? (bounds.minY + bounds.maxY) / 2 : 1,
+      (bounds.minZ + bounds.maxZ) / 2,
     );
-    const position = portrait
-      ? target.clone().add(new THREE.Vector3(90, 70, 5))
-      : new THREE.Vector3(54, 55, 68 + (landMinZ + 26.5) / 2);
+    const position = target.clone().add(viewDirection());
     flight = {
       fromPos: camera.position.clone(),
       fromTarget: controls.target.clone(),
       fromZoom: camera.zoom,
       toTarget: target,
       toPos: position,
-      toZoom: portrait ? 1 : tvPresentation ? 0.92 : 1,
+      toZoom: portrait || district !== "sales" ? 1 : tvPresentation ? 0.92 : 1,
       start: elapsed,
       duration: reducedMotion ? 0.01 : 1.1,
     };
@@ -1006,6 +1163,9 @@ export async function createCityScene({
     for (const c of connections) c.line.visible = layers.connections;
     activityMesh.visible = layers.activity;
     people.setEnabled(layers.activity);
+    construction.setAttendanceResolver?.(
+      layers.activity ? (id) => people.getConstructionAttendance?.(id) : null,
+    );
     lastLabel = 0;
     schedule();
   }
@@ -1069,35 +1229,20 @@ export async function createCityScene({
       maxDrag = 0;
     }
     if (isTap) {
-      const rect = renderer.domElement.getBoundingClientRect();
-      pointer.set(
-        ((e.clientX - rect.left) / rect.width) * 2 - 1,
-        -((e.clientY - rect.top) / rect.height) * 2 + 1,
-      );
-      ray.setFromCamera(pointer, camera);
-      const ownerHit = people.pickHit?.(ray);
-      const ownerId = ownerHit?.ownerId;
-      const facadeHit = ownerHit
-        ? ray.intersectObjects(
-            architecture.meshes.filter(
-              (mesh) => mesh.visible && mesh.name === "city-kit-mass",
-            ),
-            false,
-          )[0]
-        : null;
-      if (
-        ownerId &&
-        !tvPresentation &&
-        (!facadeHit || facadeHit.distance >= ownerHit.distance - 0.05)
-      ) {
-        onSelectOwner(ownerId);
-        focusOwner(ownerId);
-        return;
-      }
-      const hit = pick(e.clientX, e.clientY);
-      if (hit && !tvPresentation) {
-        select(hit);
-        onSelect(hit);
+      const hit = pickWorld(e.clientX, e.clientY);
+      if (tvPresentation) return;
+      if (hit?.kind === "owner") {
+        onSelectOwner(hit.id);
+        focusOwner(hit.id);
+      } else if (hit?.kind === "place") {
+        onSelectPlace(hit.id);
+        focusPlace(hit.id);
+      } else if (hit?.kind === "industry") {
+        onSelectIndustry(hit.id, hit.industryKind);
+        focusIndustry(hit.id);
+      } else if (hit?.kind === "entity") {
+        select(hit.id);
+        onSelect(hit.id);
       } else {
         onSelect(null);
         select(null);
@@ -1120,36 +1265,67 @@ export async function createCityScene({
       return;
     }
     if (e.pointerType === "touch") return;
-    const id = pick(e.clientX, e.clientY);
-    renderer.domElement.style.cursor = id ? "pointer" : "grab";
+    const hit = pickWorld(e.clientX, e.clientY);
+    const id = hit?.kind === "entity" ? hit.id : null;
+    renderer.domElement.style.cursor = hit ? "pointer" : "grab";
     onHover(id, id ? entityData.get(id) : null, { x: e.clientX, y: e.clientY });
   }
   function handleLeave() {
     onHover(null);
     renderer.domElement.style.cursor = "grab";
   }
-  function pick(x, y) {
+  function pickWorld(x, y) {
     const rect = renderer.domElement.getBoundingClientRect();
     pointer.set(
       ((x - rect.left) / rect.width) * 2 - 1,
-      (-(y - rect.top) / rect.height) * 2 + 1,
+      -((y - rect.top) / rect.height) * 2 + 1,
     );
     ray.setFromCamera(pointer, camera);
-    const hits = ray.intersectObjects(
+    const candidates = [];
+    for (const hit of ray.intersectObjects(
       architecture.meshes.filter(
-        (m) =>
-          m.visible &&
+        (mesh) =>
+          mesh.visible &&
           ["city-kit-mass", "city-kit-glass", "city-kit-accent"].includes(
-            m.name,
+            mesh.name,
           ),
       ),
       false,
-    );
-    for (const hit of hits) {
+    )) {
       const id = architecture.entityId(hit);
-      if (id && architecture.entities.get(id)?.visible) return id;
+      if (id && architecture.entities.get(id)?.visible) {
+        candidates.push({ kind: "entity", id, distance: hit.distance });
+        break;
+      }
     }
-    return null;
+    const owner = people.pickHit?.(ray);
+    if (owner && layers.activity)
+      candidates.push({
+        kind: "owner",
+        id: owner.ownerId,
+        distance: owner.distance,
+      });
+    const place = communications.pickHit(ray);
+    if (place)
+      candidates.push({
+        kind: "place",
+        id: place.id,
+        distance: place.distance,
+      });
+    const factory = industry.pickHit(ray);
+    if (factory)
+      candidates.push({
+        kind: "industry",
+        industryKind: factory.kind,
+        id: factory.id,
+        distance: factory.distance,
+      });
+    candidates.sort((a, b) => a.distance - b.distance);
+    return candidates[0] || null;
+  }
+  function pick(x, y) {
+    const hit = pickWorld(x, y);
+    return hit?.kind === "entity" ? hit.id : null;
   }
   function projectEntity(id) {
     const e = architecture.entities.get(id);
@@ -1253,6 +1429,70 @@ export async function createCityScene({
     activityMesh.instanceMatrix.needsUpdate = true;
     activityMesh.computeBoundingSphere();
   }
+  function badge(map, id, className, title, subtitle, color, onClick) {
+    let element = map.get(id);
+    if (!element) {
+      element = document.createElement(onClick ? "button" : "div");
+      if (onClick) {
+        element.type = "button";
+        element.onclick = (event) => {
+          event.stopPropagation();
+          onClick();
+        };
+      }
+      element.className = className;
+      element.dataset.placeId = id;
+      labelContainer.append(element);
+      map.set(id, element);
+    }
+    const compact = w() < 650;
+    element.style.cssText = `position:absolute;left:0;top:0;white-space:nowrap;pointer-events:${onClick ? "auto" : "none"};font-family:inherit;text-align:left;border:1px solid white;border-top:3px solid ${color};border-radius:8px;background:rgba(255,255,255,.97);box-shadow:0 3px 12px #173c4d26;color:#243b49;padding:${compact ? "5px 7px" : "7px 9px"};`;
+    element.replaceChildren();
+    const heading = document.createElement("b");
+    heading.textContent = title;
+    heading.style.cssText = `display:block;font-size:${compact ? 9 : 11}px;font-weight:800;`;
+    const sub = document.createElement("span");
+    sub.textContent = subtitle;
+    sub.style.cssText = `display:block;font-size:${compact ? 8 : 10}px;margin-top:3px;color:#526a76;font-weight:600;`;
+    element.append(heading, sub);
+    return element;
+  }
+  function ownerBadge(owner) {
+    let element = ownerLabels.get(owner.ownerId);
+    if (!element) {
+      element = document.createElement("button");
+      element.type = "button";
+      element.className = "city-owner-label";
+      element.dataset.ownerId = owner.ownerId;
+      element.onclick = (event) => {
+        event.stopPropagation();
+        if (!tvPresentation) {
+          onSelectOwner(owner.ownerId);
+          focusOwner(owner.ownerId);
+        }
+      };
+      labelContainer.append(element);
+      ownerLabels.set(owner.ownerId, element);
+    }
+    const atWork = owner.attendingConstruction;
+    const deal = state?.deals?.find((entry) => entry.id === owner.dealId);
+    const stage = state?.stages?.find((entry) => entry.id === deal?.stageId);
+    const text = atWork
+      ? `${owner.initials} · ${owner.name.split(" ")[0]} · ${stage?.name || "En obra"}`
+      : owner.initials;
+    element.textContent = text;
+    element.title = `${owner.name}${atWork ? ` · ${stage?.name || "Acompañando la obra"}` : " · Ver comercial"}`;
+    element.setAttribute("aria-label", element.title);
+    element.style.cssText = `position:absolute;left:0;top:0;height:27px;min-width:28px;white-space:nowrap;padding:${atWork ? "0 7px" : "0 4px"};border:2px solid #fff;border-radius:${atWork ? "8px" : "50%"};background:${owner.color || "#237cc1"};box-shadow:0 2px 8px #12384e44;color:white;font:800 ${w() < 650 ? 9 : 10}px DM Sans,sans-serif;pointer-events:auto;text-align:center;`;
+    const line = document.createElement("span");
+    line.setAttribute("aria-hidden", "true");
+    line.style.cssText = `position:absolute;left:calc(50% - .5px);top:100%;width:1px;height:16px;background:${owner.color || "#237cc1"};box-shadow:0 0 0 1px #ffffff99;pointer-events:none;`;
+    const dot = document.createElement("span");
+    dot.style.cssText = `position:absolute;left:-2px;bottom:-2px;width:5px;height:5px;border-radius:50%;background:${owner.color || "#237cc1"};border:1px solid white;`;
+    line.append(dot);
+    element.append(line);
+    return element;
+  }
   function updateLabels() {
     if (!labelContainer || !state) return;
     const width = w(),
@@ -1270,6 +1510,8 @@ export async function createCityScene({
       district = false,
     ) {
       if (!el) return;
+      // Measure the real box even after changing districts hid it last frame.
+      el.hidden = false;
       labelWidth = el.offsetWidth || labelWidth;
       const labelHeight = el.offsetHeight || (district ? 54 : 32);
       const worldPoint = point.clone();
@@ -1356,11 +1598,111 @@ export async function createCityScene({
         if (!district) count++;
       }
     }
+    const showingSales = district === "sales";
+    const showingPeople = district === "sales" || district === "all";
+    const activeOwners = new Set();
+    if (layers.activity && showingPeople)
+      for (const owner of (people.getOwnerLabels?.() || []).slice(0, 4)) {
+        const element = ownerBadge(owner);
+        position(
+          element,
+          owner.position.clone().add(new THREE.Vector3(0, 2.2, 0)),
+          30,
+          true,
+          "owner",
+        );
+        activeOwners.add(owner.ownerId);
+      }
+    for (const [id, element] of ownerLabels)
+      if (!activeOwners.has(id)) element.hidden = true;
+    for (const map of [placeLabels, industryLabels, sectorLabels])
+      for (const element of map.values()) element.hidden = true;
+    if (district === "communications")
+      for (const place of communications.getPlaces()) {
+        const text =
+          place.sourceAvailable === false
+            ? "Canal no disponible"
+            : `${place.todayCompleted || 0} hoy · ${place.pendingCount || 0} pendientes`;
+        const element = badge(
+          placeLabels,
+          place.id,
+          "city-place-label",
+          place.name,
+          text,
+          place.color,
+          () => {
+            if (!tvPresentation) {
+              onSelectPlace(place.id);
+              focusPlace(place.id);
+            }
+          },
+        );
+        position(element, place.position.clone(), 150, false, true);
+      }
+    if (district === "industry")
+      for (const place of industry.getPlaces()) {
+        const element = badge(
+          industryLabels,
+          place.id,
+          "city-industry-label",
+          place.name,
+          `${place.count ?? 0} ${place.unit || "uds"}`,
+          place.color,
+          () => {
+            if (!tvPresentation) {
+              onSelectIndustry(place.id, "place");
+              focusIndustry(place.id);
+            }
+          },
+        );
+        position(element, place.position.clone(), 140, false, true);
+      }
+    if (district === "all") {
+      const sectors = [
+        {
+          id: "sales",
+          name: "Ciudad comercial",
+          sub: `${state.deals?.length || 0} oportunidades · ${state.accounts?.length || 0} clientes`,
+          color: "#238bec",
+          point: new THREE.Vector3(0, 1, 23),
+        },
+        {
+          id: "communications",
+          name: "Barrio de comunicación",
+          sub: `${communications.getPlaces().reduce((sum, place) => sum + (place.todayCompleted || 0), 0)} actividades completadas hoy`,
+          color: "#179ca9",
+          point: new THREE.Vector3(0, 7, -35),
+        },
+        {
+          id: "industry",
+          name: "Distrito industrial",
+          sub: "Materiales · producción · distribución",
+          color: "#dc9b2e",
+          point: new THREE.Vector3(0, 10, -60),
+        },
+      ];
+      for (const sector of sectors) {
+        const element = badge(
+          sectorLabels,
+          sector.id,
+          "city-sector-label",
+          sector.name,
+          sector.sub,
+          sector.color,
+          () => setDistrict(sector.id),
+        );
+        position(element, sector.point, 190, false, true);
+      }
+    }
     // Stage titles belong to their coloured front edge; they have their own
     // budget, so an alert or selected deal cannot silently remove a district.
     for (const stage of cityStages()) {
       const element = stageLabels.get(stage.id);
       if (!element) continue;
+      if (!showingSales) {
+        element.hidden = true;
+        continue;
+      }
       const compact = portraitTV();
       element.style.minWidth = compact ? "88px" : mobile ? "80px" : "108px";
       element.style.padding = compact
@@ -1395,7 +1737,8 @@ export async function createCityScene({
       clientElement.style.fontSize = portraitTV() ? "8px" : "11px";
       clientElement.style.padding = portraitTV() ? "6px 8px" : "8px 13px";
     }
-    if (clientElement && districtAnchors.has("clients"))
+    if (clientElement && !showingSales) clientElement.hidden = true;
+    if (clientElement && showingSales && districtAnchors.has("clients"))
       position(
         clientElement,
         districtAnchors.get("clients").clone(),
@@ -1405,9 +1748,11 @@ export async function createCityScene({
       );
     const selected = architecture.entities.get(selectedId);
     const priorities = [];
-    if (selected && !tvPresentation) priorities.push(selectedId);
+    if (selected && !tvPresentation && showingSales)
+      priorities.push(selectedId);
     for (const [id, e] of architecture.entities)
       if (
+        showingSales &&
         e.visible &&
         needsAttention(entityData.get(id) || {}) &&
         !priorities.includes(id)
@@ -1478,6 +1823,7 @@ export async function createCityScene({
       );
       el.hidden =
         !layers.activity ||
+        !showingSales ||
         blockedByLabel ||
         tvPresentation ||
         (entityLabels.has(id) && !entityLabels.get(id).hidden) ||
@@ -1534,7 +1880,11 @@ export async function createCityScene({
       }
     }
     transitionList = transitionList.filter((t) => construction.has(t.id));
-    if (typeof followFocus === "string" && !followFocus.startsWith("owner:")) {
+    if (
+      typeof followFocus === "string" &&
+      !followFocus.startsWith("owner:") &&
+      !followFocus.startsWith("industry:")
+    ) {
       const job = construction.get(followFocus);
       const entity = architecture.entities.get(followFocus);
       const point = construction.has(followFocus)
@@ -1601,8 +1951,24 @@ export async function createCityScene({
     controls.update();
     updateTransitions();
     people.update(delta, elapsed);
+    communications.update(delta, elapsed);
+    industry.update(delta, elapsed);
     if (followFocus?.startsWith("owner:")) {
       const point = people.getOwnerPosition(followFocus.slice(6));
+      if (point && followAnchor) {
+        const shift = point.clone().sub(followAnchor);
+        if (flight) {
+          flight.toTarget.add(shift);
+          flight.toPos.add(shift);
+        } else {
+          camera.position.add(shift);
+          controls.target.add(shift);
+        }
+        followAnchor.copy(point);
+      }
+    }
+    if (followFocus?.startsWith("industry:")) {
+      const point = industry.focusPoint(followFocus.slice(9));
       if (point && followAnchor) {
         const shift = point.clone().sub(followAnchor);
         if (flight) {
@@ -1653,6 +2019,10 @@ export async function createCityScene({
       portraitTV: portraitTV(),
       cameraMoving: !!flight,
       landMinZ,
+      district,
+      viewBounds: viewBounds(),
+      communications: communications.debug(),
+      industry: industry.debug(),
       preset: quality,
       qualitySetting,
       dpr: renderer.getPixelRatio(),
@@ -1673,6 +2043,21 @@ export async function createCityScene({
       construction: construction.debug(),
       people: people.debug(),
       districts: districtDiagnostics(),
+      ownerBadges: [...ownerLabels].map(([id, element]) => ({
+        id,
+        visible: !element.hidden,
+        text: element.textContent,
+      })),
+      placeLabels: [...placeLabels].map(([id, element]) => ({
+        id,
+        visible: !element.hidden,
+        text: element.textContent,
+      })),
+      industryLabels: [...industryLabels].map(([id, element]) => ({
+        id,
+        visible: !element.hidden,
+        text: element.textContent,
+      })),
       connectionCount: connections.length,
       traffic: traffic.debug?.() || null,
       visibleLabelCount: labelContainer?.querySelectorAll("[hidden]")
@@ -1696,6 +2081,8 @@ export async function createCityScene({
     controls.dispose();
     traffic.dispose?.();
     people.dispose?.();
+    communications.dispose?.();
+    industry.dispose?.();
     construction.dispose?.();
     clearDistrictGeometry();
     architecture.dispose();
@@ -1723,6 +2110,10 @@ export async function createCityScene({
       ...stageLabels.values(),
       ...entityLabels.values(),
       ...markerLabels.values(),
+      ...ownerLabels.values(),
+      ...placeLabels.values(),
+      ...industryLabels.values(),
+      ...sectorLabels.values(),
     ])
       el.remove();
   }
@@ -1743,6 +2134,12 @@ export async function createCityScene({
     focusOwner,
     projectOwner,
     focusDistrict,
+    setDistrict,
+    getDistrict,
+    focusPlace,
+    focusIndustry,
+    projectPlace,
+    projectIndustry,
     setActive,
     resize,
     dispose,
@@ -1753,6 +2150,7 @@ export async function createCityScene({
       ready,
       projectEntity,
       pick,
+      pickWorld,
       entityGroups,
       renderer,
       scene,
@@ -1760,6 +2158,11 @@ export async function createCityScene({
       controls,
       traffic,
       people,
+      communications,
+      industry,
+      getDistrict,
+      projectPlace,
+      projectIndustry,
       construction,
       districtRoot,
       projectOwner,
@@ -1925,6 +2328,67 @@ function makeWorld(scene, resources) {
     mesh.castShadow = ["leaf", "trunk", "wood", "metal", "base"].includes(key);
     root.add(mesh);
     resources.push(geometry);
+  }
+  return root;
+}
+
+function makeDistrictRoads(scene, resources) {
+  const root = new THREE.Group();
+  root.name = "Connected avenues to communications and industry";
+  scene.add(root);
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const materials = {
+    asphalt: new THREE.MeshStandardMaterial({
+      color: "#717e83",
+      roughness: 0.95,
+    }),
+    paint: new THREE.MeshStandardMaterial({ color: "#f7f5dd", roughness: 0.8 }),
+    curb: new THREE.MeshStandardMaterial({ color: "#f1eee2", roughness: 0.9 }),
+    lawn: new THREE.MeshStandardMaterial({ color: "#77ad50", roughness: 0.95 }),
+  };
+  resources.push(geometry, ...Object.values(materials));
+  const buckets = new Map();
+  function box(key, x, y, z, sx, sy, sz) {
+    tmp.position.set(x, y, z);
+    tmp.scale.set(sx, sy, sz);
+    tmp.rotation.set(0, 0, 0);
+    tmp.updateMatrix();
+    const copy = geometry.clone().applyMatrix4(tmp.matrix);
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(copy);
+  }
+  // Two slim perimeter accesses clear the existing back-row buildings and
+  // planters. The new avenues then join the industrial district's x ±35 loop.
+  for (const sign of [-1, 1]) {
+    box("asphalt", sign * 25, 0.205, -11.1, 2.4, 0.015, 4.2);
+    box("asphalt", sign * 31.05, 0.205, -13.1, 13.8, 0.015, 1.3);
+    box("asphalt", sign * 37.55, 0.205, -20.05, 1.3, 0.015, 15.2);
+    box("asphalt", sign * 35, 0.205, -39, 2.4, 0.015, 25);
+    box("curb", sign * 33.62, 0.247, -39, 0.16, 0.09, 25);
+    box("curb", sign * 36.38, 0.247, -39, 0.16, 0.09, 25);
+    for (let z = -30; z >= -50; z -= 4)
+      box("paint", sign * 35, 0.219, z, 0.08, 0.012, 1.6);
+  }
+  box("asphalt", 0, 0.205, -27, 76, 0.015, 3);
+  box("curb", 0, 0.247, -28.65, 73, 0.09, 0.18);
+  for (let x = -33; x <= 33; x += 4)
+    box("paint", x, 0.219, -27, 1.6, 0.012, 0.08);
+  // Clear pedestrian paths connect the customer city and the four venues.
+  for (const z of [-29.15, -41.4]) box("curb", 0, 0.234, z, 68, 0.045, 0.8);
+  for (const x of [-18, 0, 18]) box("curb", x, 0.234, -35, 0.8, 0.045, 11.5);
+  for (const x of [-27, -9, 9, 27]) {
+    box("lawn", x, 0.225, -42.8, 13, 0.045, 0.5);
+    for (let stripe = -2; stripe <= 2; stripe++)
+      box("paint", x + stripe * 0.3, 0.222, -27, 0.16, 0.014, 2.7);
+  }
+  for (const [key, parts] of buckets) {
+    const merged = mergeGeometries(parts);
+    parts.forEach((part) => part.dispose());
+    const mesh = new THREE.Mesh(merged, materials[key]);
+    mesh.name = `District connector ${key}`;
+    mesh.receiveShadow = true;
+    root.add(mesh);
+    resources.push(merged);
   }
   return root;
 }

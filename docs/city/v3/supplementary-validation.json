@@ -1,0 +1,247 @@
+{
+  "generatedAt": "2026-10-17T09:55:39.483Z",
+  "browser": "154.0.8037.57",
+  "gpu": "ANGLE SwiftShader",
+  "physicalPhone": false,
+  "sourceSha256": {
+    "src/city/app.js": "5eec5485fd44595482049fcd953b7584e9a006c5f06905217cdc4dcb3b4f19f9",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/expansion.css": "9afcf46b48c49b291d1d7598eec96546c765bd3ff2240b14313c18a2159ac08d",
+    "src/city/scene.js": "6064788c5b14140e7ea969106b2e9b8d46634c034d4a48b2576d80a5e098a78a",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "e9baf2b028ce86f03a5c930602ec5b5336784a6fb06ee79fa6d32af5611db206"
+  },
+  "scope": "Final TV settling and truck parking fixes; route endpoint is a renderer diagnostic",
+  "errors": [],
+  "results": [
+    {
+      "name": "settled-desktop-industry-tv-shows-five-labels-clear-of-metrics",
+      "passed": true,
+      "detail": {
+        "viewport": [
+          1440,
+          1000
+        ],
+        "metrics": {
+          "x": 220,
+          "y": 24,
+          "right": 1348,
+          "bottom": 120.765625
+        },
+        "labels": [
+          {
+            "id": "manufacturing",
+            "x": 158.8125,
+            "y": 563,
+            "right": 239.1875,
+            "bottom": 611
+          },
+          {
+            "id": "packing",
+            "x": 396.25,
+            "y": 601,
+            "right": 471.75,
+            "bottom": 649
+          },
+          {
+            "id": "warehouse",
+            "x": 636.2890625,
+            "y": 638,
+            "right": 701.7109375,
+            "bottom": 686
+          },
+          {
+            "id": "transit",
+            "x": 858.5625,
+            "y": 675,
+            "right": 949.4375,
+            "bottom": 723
+          },
+          {
+            "id": "delivered",
+            "x": 1101.2421875,
+            "y": 712,
+            "right": 1174.7578125,
+            "bottom": 760
+          }
+        ]
+      }
+    },
+    {
+      "name": "settled-mobile-industry-tv-shows-five-labels-clear-of-metrics",
+      "passed": true,
+      "detail": {
+        "viewport": [
+          390,
+          844
+        ],
+        "metrics": {
+          "x": 12,
+          "y": 53,
+          "right": 378,
+          "bottom": 197
+        },
+        "labels": [
+          {
+            "id": "manufacturing",
+            "x": 46.296875,
+            "y": 311.5,
+            "right": 111.703125,
+            "bottom": 350.5
+          },
+          {
+            "id": "packing",
+            "x": 55.296875,
+            "y": 391.5,
+            "right": 116.703125,
+            "bottom": 430.5
+          },
+          {
+            "id": "warehouse",
+            "x": 66.421875,
+            "y": 470.5,
+            "right": 119.578125,
+            "bottom": 509.5
+          },
+          {
+            "id": "transit",
+            "x": 63.0078125,
+            "y": 550.5,
+            "right": 136.9921875,
+            "bottom": 589.5
+          },
+          {
+            "id": "delivered",
+            "x": 78.109375,
+            "y": 629.5,
+            "right": 137.890625,
+            "bottom": 668.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "three-trucks-have-distinct-selectable-diagnostic-endpoints-without-erp-arrival",
+      "passed": true,
+      "detail": {
+        "distances": [
+          {
+            "ids": [
+              "truck-01",
+              "truck-02"
+            ],
+            "distance": 3.3999999999999986
+          },
+          {
+            "ids": [
+              "truck-01",
+              "truck-03"
+            ],
+            "distance": 6.799999999999997
+          },
+          {
+            "ids": [
+              "truck-02",
+              "truck-03"
+            ],
+            "distance": 3.3999999999999986
+          }
+        ],
+        "picks": [
+          {
+            "id": "truck-01",
+            "x": 427.3690724781692,
+            "y": 551.2749762382596,
+            "hit": {
+              "kind": "industry",
+              "industryKind": "vehicle",
+              "id": "truck-01",
+              "distance": 99.2405379811663
+            }
+          },
+          {
+            "id": "truck-02",
+            "x": 562.0789950324668,
+            "y": 602.5949781217596,
+            "hit": {
+              "kind": "industry",
+              "industryKind": "vehicle",
+              "id": "truck-02",
+              "distance": 97.2577274309864
+            }
+          },
+          {
+            "id": "truck-03",
+            "x": 781.6147453538254,
+            "y": 532.419499951548,
+            "hit": {
+              "kind": "industry",
+              "industryKind": "vehicle",
+              "id": "truck-03",
+              "distance": 98.83699595749447
+            }
+          }
+        ],
+        "vehicles": [
+          {
+            "id": "truck-01",
+            "status": "outbound",
+            "driverName": "Felipe Martín",
+            "cargoBatchId": "batch-007",
+            "cargoRepresentativeBoxes": 4,
+            "progress": 1,
+            "sourceProgress": 0.75,
+            "awaitingConfirmation": true,
+            "position": [
+              24.6,
+              0.22,
+              -58.1
+            ],
+            "uuid": "6248f236-9c4b-4d01-9cec-7d99e2fc16ee",
+            "routeEstimated": true
+          },
+          {
+            "id": "truck-02",
+            "status": "outbound",
+            "driverName": "Sara Costa",
+            "cargoBatchId": "batch-008",
+            "cargoRepresentativeBoxes": 4,
+            "progress": 1,
+            "sourceProgress": 0.6,
+            "awaitingConfirmation": true,
+            "position": [
+              28,
+              0.22,
+              -58.1
+            ],
+            "uuid": "272a4523-9e47-441e-92d3-ed2771397279",
+            "routeEstimated": true
+          },
+          {
+            "id": "truck-03",
+            "status": "outbound",
+            "driverName": "Pablo Ríos",
+            "cargoBatchId": "batch-004",
+            "cargoRepresentativeBoxes": 8,
+            "progress": 1,
+            "sourceProgress": 0,
+            "awaitingConfirmation": true,
+            "position": [
+              31.4,
+              0.22,
+              -58.1
+            ],
+            "uuid": "7446f373-d21d-4d4b-b210-1116a51bf5c0",
+            "routeEstimated": true
+          }
+        ],
+        "businessStateUnchanged": true
+      }
+    }
+  ]
+}

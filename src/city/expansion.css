@@ -1,0 +1,500 @@
+/* The additional districts share one map, one visual language and one ledger. */
+.c-district-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 48px;
+  flex-shrink: 0;
+  margin: -4px 0 8px;
+}
+.c-district-nav > span {
+  color: #7293a2;
+  font-size: 8px;
+  letter-spacing: 1.4px;
+}
+.c-district-nav > div {
+  display: flex;
+  padding: 3px;
+  background: #e8f0f3;
+  border: 1px solid #dbe7ed;
+  border-radius: 11px;
+  gap: 3px;
+}
+.c-district-nav button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 13px;
+  border-radius: 8px;
+  color: #77909d;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.c-district-nav button svg {
+  width: 14px;
+  height: 14px;
+}
+.c-district-nav button.active {
+  background: #fff;
+  color: #25617e;
+  box-shadow: 0 2px 7px #25516d0d;
+}
+.c-district-nav button[data-district="industry"].active {
+  color: #bb6d1e;
+}
+.c-district-nav button[data-district="communications"].active {
+  color: #109d71;
+}
+.c-district-nav > small {
+  margin-left: auto;
+  color: #87a0aa;
+  font-size: 10px;
+}
+.c-metric > b > em {
+  font-size: 12px;
+  font-style: normal;
+  letter-spacing: 0;
+  color: #91a7b1;
+}
+.c-metric[style*="--sector"] {
+  border-top: 2px solid var(--sector);
+}
+.c-metric[style*="--sector"] > div > svg {
+  color: var(--sector);
+}
+.c-unit-cards strong > small {
+  font-size: 10px;
+  font-weight: 400;
+  color: #88a1ad;
+}
+.c-place-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+.c-drawer:has(#city-industry-panel),
+.c-drawer:has(#city-communications-panel) {
+  left: auto;
+  right: 14px;
+}
+.c-place-grid > button {
+  text-align: left;
+  background: white;
+  border: 1px solid #e1ebef;
+  border-top: 3px solid var(--place);
+  border-radius: 9px;
+  padding: 10px;
+}
+.c-place-grid > button.active {
+  background: color-mix(in srgb, var(--place) 7%, white);
+  border-color: var(--place);
+}
+.c-place-grid b {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+}
+.c-place-grid strong {
+  display: block;
+  color: var(--place);
+  font:
+    600 25px/1.3 Manrope,
+    sans-serif;
+  margin: 4px 0;
+}
+.c-place-grid small {
+  color: #8297a2;
+  font-size: 8px;
+  display: block;
+  line-height: 1.5;
+}
+.c-channel-summary {
+  display: grid;
+  gap: 8px;
+  background: #edf7f2;
+  border: 1px solid #daeee4;
+  border-radius: 9px;
+  padding: 11px;
+  margin-top: 12px;
+}
+.c-channel-summary > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 9px;
+  color: #6b8f82;
+}
+.c-channel-summary b {
+  color: #327e63;
+  font-weight: 500;
+}
+.c-sector-list-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #456c81;
+  margin: 19px 0 10px;
+  font-weight: 500;
+}
+.c-sector-list-title > span {
+  background: #e7f0f5;
+  color: #5c8ca5;
+  padding: 3px 5px;
+  border-radius: 5px;
+  font-size: 9px;
+}
+.c-communication-record {
+  background: white;
+  padding: 12px;
+  border: 1px solid #e2ebef;
+  border-radius: 9px;
+  margin-bottom: 8px;
+}
+.c-communication-record > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+  gap: 5px;
+}
+.c-communication-record > div > small {
+  font-size: 8px;
+  color: #91a2ac;
+}
+.c-channel-tag {
+  font-size: 8px;
+  padding: 3px 6px;
+  color: #388eb8;
+  background: #eaf4fb;
+  border-radius: 4px;
+}
+.c-channel-tag[data-channel="whatsapp"] {
+  color: #0d9865;
+  background: #e4f6ed;
+}
+.c-channel-tag[data-channel="meeting"] {
+  color: #bd5a72;
+  background: #fceef1;
+}
+.c-communication-record > b {
+  display: block;
+  font-size: 10px;
+  line-height: 1.7;
+  color: #365b6d;
+  font-weight: 500;
+}
+.c-communication-record > p {
+  font-size: 9px;
+  color: #91a2ac;
+  margin: 6px 0 10px;
+  line-height: 1.5;
+}
+.c-communication-record > footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 8px;
+  color: #7e99a7;
+}
+.c-communication-record footer button {
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: #3680a1;
+}
+.c-communication-record footer svg {
+  width: 10px;
+  height: 10px;
+}
+.c-record-id {
+  display: block;
+  font-size: 7px;
+  margin-top: 8px;
+  color: #a2b2ba;
+  overflow-wrap: anywhere;
+}
+.c-industry-ledger {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+.c-industry-ledger > span {
+  border: 1px solid #e1eaf0;
+  border-radius: 8px;
+  padding: 9px;
+  background: white;
+  font-size: 9px;
+  color: #8a9fab;
+}
+.c-industry-ledger b {
+  display: block;
+  font:
+    600 22px/1.5 Manrope,
+    sans-serif;
+  color: #3e7a9b;
+}
+.c-industry-stage-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 12px 0;
+}
+.c-industry-stage-nav button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #e1eaf0;
+  background: white;
+  border-radius: 6px;
+  padding: 7px;
+  font-size: 8px;
+}
+.c-industry-stage-nav button.active {
+  border-color: var(--stage);
+  background: color-mix(in srgb, var(--stage) 6%, white);
+}
+.c-industry-stage-nav b {
+  color: var(--stage);
+  font-size: 9px;
+  font-weight: 600;
+}
+.c-batch-card {
+  background: white;
+  border: 1px solid #e2ebef;
+  border-left: 3px solid var(--stage);
+  border-radius: 9px;
+  padding: 10px;
+  margin-bottom: 9px;
+}
+.c-batch-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  gap: 6px;
+}
+.c-batch-title > span > small {
+  display: block;
+  font-size: 7px;
+  letter-spacing: 0.4px;
+  color: #93a7b2;
+  margin-bottom: 6px;
+}
+.c-batch-title b {
+  font-size: 10px;
+  color: #37627a;
+  font-weight: 500;
+}
+.c-batch-title strong {
+  font:
+    600 21px/1.4 Manrope,
+    sans-serif;
+  color: var(--stage);
+  white-space: nowrap;
+}
+.c-batch-title strong small {
+  font-size: 8px;
+  font-weight: 400;
+}
+.c-batch-stage {
+  display: inline-block;
+  color: var(--stage);
+  background: color-mix(in srgb, var(--stage) 9%, white);
+  border-radius: 4px;
+  padding: 3px 5px;
+  font-size: 8px;
+  margin-top: 9px;
+}
+.c-batch-card > p {
+  font-size: 9px;
+  line-height: 1.6;
+  color: #8a9faa;
+  margin: 7px 0;
+}
+.c-batch-advance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 9px;
+  min-height: 36px;
+  border-radius: 6px;
+  padding: 8px;
+  color: #367da1;
+  border: 1px solid #d8eaf4;
+  background: #f2f8fc;
+  margin-top: 10px;
+}
+.c-batch-advance svg {
+  width: 12px;
+  height: 12px;
+}
+.c-delivery-proof {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 8px;
+  color: #279e73;
+  margin-top: 9px;
+}
+.c-delivery-proof svg {
+  width: 12px;
+  height: 12px;
+}
+.c-batch-history {
+  padding-left: 15px;
+  font-size: 9px;
+  line-height: 1.8;
+  color: #557c90;
+}
+.c-batch-history small {
+  display: block;
+  color: #9bafb9;
+  font-size: 8px;
+}
+.c-fleet-card {
+  border: 1px solid #e1eaf0;
+  border-radius: 9px;
+  padding: 11px;
+  margin-bottom: 8px;
+  background: white;
+}
+.c-fleet-card > button:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+}
+.c-fleet-card > button > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.c-fleet-card b {
+  font-size: 10px;
+  font-weight: 500;
+  color: #486f83;
+}
+.c-fleet-card svg {
+  width: 13px;
+  height: 13px;
+  color: #5c98b5;
+}
+.c-fleet-card > p {
+  font-size: 9px;
+  color: #7e9aab;
+  margin: 9px 0 5px;
+}
+.c-fleet-card > strong {
+  font-size: 10px;
+  font-weight: 500;
+  color: #5b8499;
+  display: block;
+}
+.c-fleet-card > small {
+  font-size: 8px;
+  line-height: 1.7;
+  color: #94a8b3;
+  display: block;
+  margin-top: 7px;
+}
+.c-tv-mode .c-district-nav {
+  display: none !important;
+}
+.c-tv-mode #city-tv-team {
+  grid-template-columns: repeat(var(--tv-owner-count, 4), minmax(0, 1fr));
+}
+[data-district="communications"] .c-world-title,
+[data-district="industry"] .c-world-title {
+  display: none;
+}
+@media (max-width: 1050px) {
+  .c-district-nav > span,
+  .c-district-nav > small {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .c-district-nav {
+    min-height: 40px;
+    margin: 0 0 5px;
+  }
+  .c-district-nav > div {
+    flex: 1;
+    justify-content: space-between;
+    gap: 0;
+  }
+  .c-district-nav button {
+    font-size: 9px;
+    min-height: 36px;
+    padding: 6px 9px;
+  }
+  .c-district-nav button svg {
+    display: none;
+  }
+  .c-drawer:has(#city-industry-panel),
+  .c-drawer:has(#city-communications-panel) {
+    top: 8px;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-height: calc(100% - 16px);
+  }
+  .c-unit-cards {
+    gap: 5px;
+  }
+  .c-unit-cards > button {
+    padding: 9px 7px;
+  }
+  .c-unit-cards > button b {
+    font-size: 8px;
+  }
+  .c-unit-cards strong {
+    font-size: 14px;
+  }
+  .c-tv-mode #city-tv-team {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .c-tv-mode[data-district="industry"] .c-tv-owner:last-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (pointer: coarse) {
+  .c-district-nav button {
+    min-height: 44px;
+  }
+  .c-batch-advance {
+    min-height: 44px;
+  }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  .c-district-nav {
+    position: absolute;
+    z-index: 6;
+    top: 5px;
+    right: 58px;
+    margin: 0;
+    min-height: 32px;
+  }
+  .c-district-nav > div {
+    padding: 1px;
+  }
+  .c-district-nav button {
+    min-height: 27px;
+    padding: 4px 7px;
+    font-size: 8px;
+  }
+  .c-district-nav button svg {
+    display: none;
+  }
+}

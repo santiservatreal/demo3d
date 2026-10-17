@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { createArchitecture } from "../src/city/architecture.js";
 import {
   CONSTRUCTION_DURATION,
+  CONSTRUCTION_OWNER_WAIT_LIMIT,
   phaseAt,
   constructionRoute,
   createConstructionDirector,
@@ -30,7 +31,7 @@ function fixture({ reducedMotion = false, count = 3 } = {}) {
       to: new THREE.Vector3(15 + index * 4.2, 0.1, 2.6),
       startedAt: 0,
       color: "#e2a930",
-      ownerId: "owner-1",
+      ownerId: `owner-${index + 1}`,
       accountId: "account-1",
       ...overrides,
     });
@@ -250,4 +251,140 @@ test("disposing removes reusable construction infrastructure without modifying C
   assert.equal(f.architecture.entities.get(job.id).group.uuid, identity);
   assert.equal(f.start(1), null);
   f.architecture.dispose();
+});
+
+test("optional attendance waits for the assigned representative and preserves the full build duration", () => {
+  const f = fixture(),
+    boundary = CONSTRUCTION_DURATION * 0.68;
+  let arrived = false,
+    observedPhase = null;
+  f.director.setAttendanceResolver((id, job) => {
+    assert.equal(id, "deal-0");
+    observedPhase = job.phase;
+    return { ownerId: "owner-1", readyForBuild: arrived };
+  });
+  const job = f.start(0);
+  f.director.update(5);
+  assert.equal(job.phase, "transport");
+  assert.equal(job.awaitingOwner, false);
+  f.director.update(boundary);
+  assert.equal(observedPhase, "build");
+  assert.equal(job.awaitingOwner, true);
+  assert.equal(job.buildProgress, 0);
+  assert.equal(job.buildStartedAt, null);
+  f.director.update(18);
+  assert.equal(job.phase, "build");
+  assert.equal(job.awaitingOwner, true);
+  assert.equal(visibleMatrices(f.architecture, job.id).length, 0);
+  assert.ok(job.holdSeconds > 9);
+  assert.equal(f.director.debug().active[0].awaitingOwner, true);
+  arrived = true;
+  f.director.update(20);
+  assert.equal(job.awaitingOwner, false);
+  assert.equal(job.attendanceStatus, "ready");
+  assert.equal(job.buildStartedAt, 20);
+  assert.equal(job.buildProgress, 0);
+  f.director.update(21.92);
+  assert.ok(Math.abs(job.buildProgress - 0.5) < 1e-9);
+  assert.equal(job.status, "active");
+  assert.deepEqual(f.director.update(23.841).finished, [job.id]);
+  assert.equal(job.status, "complete");
+  assert.equal(job.attendanceStatus, "ready");
+  f.dispose();
+});
+
+test("missing or mismatched attendance times out explicitly, then assembles without a teleport", () => {
+  const f = fixture(),
+    boundary = CONSTRUCTION_DURATION * 0.68;
+  f.director.setAttendanceResolver(() => ({
+    ownerId: "other-person",
+    readyForBuild: true,
+  }));
+  const job = f.start(0);
+  f.director.update(boundary + CONSTRUCTION_OWNER_WAIT_LIMIT - 0.01);
+  assert.equal(job.awaitingOwner, true);
+  assert.equal(job.buildProgress, 0);
+  const released = boundary + CONSTRUCTION_OWNER_WAIT_LIMIT;
+  f.director.update(released);
+  assert.equal(job.awaitingOwner, false);
+  assert.equal(job.attendanceStatus, "timeout");
+  assert.equal(job.buildStartedAt, released);
+  assert.equal(job.buildProgress, 0);
+  assert.equal(job.status, "active");
+  f.director.update(released + 1);
+  assert.ok(job.buildProgress > 0 && job.buildProgress < 1);
+  assert.deepEqual(f.director.update(released + 3.841).finished, [job.id]);
+  f.dispose();
+});
+
+test("attendance callback failures are contained and remain bounded by the explicit timeout", () => {
+  const f = fixture(),
+    boundary = CONSTRUCTION_DURATION * 0.68;
+  f.director.setAttendanceResolver(() => {
+    throw new Error("Representative unavailable");
+  });
+  const job = f.start(0);
+  assert.doesNotThrow(() => f.director.update(9));
+  assert.equal(job.attendanceStatus, "resolver-error");
+  assert.equal(job.awaitingOwner, true);
+  assert.doesNotThrow(() =>
+    f.director.update(boundary + CONSTRUCTION_OWNER_WAIT_LIMIT),
+  );
+  assert.equal(job.attendanceStatus, "timeout");
+  assert.equal(job.buildProgress, 0);
+  f.dispose();
+});
+
+test("one representative never occupies two active sites and another owner's job bypasses the blocked queue", () => {
+  const f = fixture();
+  f.director.setAttendanceResolver(() => ({ readyForBuild: false }));
+  const first = f.start(0, { ownerId: "same-owner" }),
+    waiting = f.start(1, { ownerId: "same-owner" }),
+    independent = f.start(2, { ownerId: "other-owner" });
+  assert.equal(first.status, "active");
+  assert.equal(waiting.status, "queued");
+  assert.equal(independent.status, "active");
+  assert.equal(f.director.debug().count, 2);
+  assert.equal(f.director.debug().queueCount, 1);
+  assert.equal(f.start(1, { ownerId: "same-owner" }), waiting);
+  f.director.update(10);
+  assert.equal(first.awaitingOwner, true);
+  assert.equal(independent.awaitingOwner, true);
+  f.director.cancel(first.id);
+  assert.equal(first.status, "cancelled");
+  assert.equal(waiting.status, "active");
+  assert.equal(waiting.startedAt, 10);
+  assert.equal(f.director.debug().queueCount, 0);
+  assert.equal(
+    f.director.debug().active.filter((job) => job.ownerId === "same-owner")
+      .length,
+    1,
+  );
+  f.dispose();
+});
+
+test("removing the resolver releases an existing hold, while cancellation and reduced motion never wait", () => {
+  const f = fixture();
+  f.director.setAttendanceResolver(() => null);
+  const job = f.start(0);
+  f.director.update(10);
+  assert.equal(job.awaitingOwner, true);
+  f.director.setAttendanceResolver(null);
+  f.director.update(11);
+  assert.equal(job.attendanceStatus, "resolver-removed");
+  assert.equal(job.awaitingOwner, false);
+  assert.equal(job.buildProgress, 0);
+  f.director.cancel(job.id);
+  assert.equal(job.status, "cancelled");
+  assert.equal(f.architecture.entities.get(job.id).buildProgress, 1);
+  f.dispose();
+  const reduced = fixture({ reducedMotion: true });
+  reduced.director.setAttendanceResolver(() => {
+    throw new Error("Must not run");
+  });
+  const immediate = reduced.start(0);
+  assert.equal(immediate.status, "complete");
+  assert.equal(immediate.awaitingOwner, false);
+  assert.equal(reduced.director.debug().rigCount, 0);
+  reduced.dispose();
 });

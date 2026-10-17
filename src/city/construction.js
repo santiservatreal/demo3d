@@ -1,6 +1,7 @@
 import * as THREE from "three";
 
 export const CONSTRUCTION_DURATION = 12;
+export const CONSTRUCTION_OWNER_WAIT_LIMIT = 40;
 const clamp = (value) => THREE.MathUtils.clamp(value, 0, 1);
 const smooth = (value) => {
   const n = clamp(value);
@@ -377,7 +378,7 @@ function makeRig(scene, index) {
       cable.position.y = -length * 0.5 - 0.2;
       hook.position.y = -length - 0.35;
       lifted.rotation.y = Math.sin(elapsed * 2.2) * 0.13;
-      lifted.visible = !job.completed;
+      lifted.visible = !job.completed && !job.awaitingOwner;
       const k = job.truckProgress,
         position = job.route.getPointAt(k),
         tangent = job.route.getTangentAt(Math.min(0.99999, k));
@@ -420,13 +421,15 @@ export function createConstructionDirector({
     history = new Map(),
     pendingFinished = [];
   let disposed = false,
-    now = 0;
+    now = 0,
+    attendanceResolver = null;
   function finish(job, status = "complete") {
     architecture.updateEntity(job.id, { position: job.to, buildProgress: 1 });
     job.rig?.deactivate();
     active.delete(job.id);
     Object.assign(job, phaseAt(CONSTRUCTION_DURATION));
     job.status = status;
+    job.awaitingOwner = false;
     job.focusPosition.copy(job.to);
     job.rig = null;
     if (status === "complete") pendingFinished.push(job.id);
@@ -444,8 +447,19 @@ export function createConstructionDirector({
     job.rig.draw(job, elapsed);
   }
   function drain(elapsed) {
-    while (queue.length && active.size < capacity)
-      activate(queue.shift(), elapsed);
+    while (queue.length && active.size < capacity) {
+      // A representative cannot attend two construction sites at once. A
+      // blocked owner's next job does not block another representative's work.
+      const index = queue.findIndex(
+        (job) =>
+          !job.ownerId ||
+          ![...active.values()].some(
+            (current) => current.ownerId === job.ownerId,
+          ),
+      );
+      if (index < 0) break;
+      activate(queue.splice(index, 1)[0], elapsed);
+    }
   }
   function cancel(id) {
     const job = history.get(id);
@@ -453,6 +467,7 @@ export function createConstructionDirector({
     const index = queue.indexOf(job);
     if (index >= 0) queue.splice(index, 1);
     finish(job, "cancelled");
+    drain(now);
     return true;
   }
   function start(spec) {
@@ -488,6 +503,12 @@ export function createConstructionDirector({
         buildProgress: 1,
         truckProgress: 0,
         completed: false,
+        attendanceGateEnabled: Boolean(attendanceResolver && spec.ownerId),
+        awaitingOwner: false,
+        attendanceStatus: spec.ownerId ? "not-required" : "unassigned",
+        holdSeconds: 0,
+        waitingSince: null,
+        buildStartedAt: null,
         focusPosition: from.clone(),
         rig: null,
       };
@@ -499,13 +520,60 @@ export function createConstructionDirector({
     }
     return job;
   }
+  function setAttendanceResolver(resolver) {
+    attendanceResolver = typeof resolver === "function" ? resolver : null;
+    if (!attendanceResolver) return;
+    for (const job of [...active.values(), ...queue]) {
+      // Installing a resolver never dismantles a storey that is already built.
+      if (job.ownerId && job.progress < 0.68 && !job.completed)
+        job.attendanceGateEnabled = true;
+    }
+  }
+  function attendedPhase(job, elapsed) {
+    const age = Math.max(0, elapsed - job.startedAt),
+      buildBoundary = job.duration * 0.68;
+    if (!job.attendanceGateEnabled || age < buildBoundary)
+      return phaseAt(age, job.duration);
+    if (job.buildStartedAt === null) {
+      if (job.waitingSince === null)
+        job.waitingSince = job.startedAt + buildBoundary;
+      // Let the attendance provider observe the arriving job's build phase on
+      // this very frame, rather than only the previous transport frame.
+      Object.assign(job, phaseAt(buildBoundary, job.duration));
+      const waited = Math.max(0, elapsed - job.waitingSince);
+      let ready = !attendanceResolver,
+        status = ready ? "resolver-removed" : "waiting";
+      if (attendanceResolver) {
+        try {
+          const attendance = attendanceResolver(job.id, job);
+          ready =
+            attendance?.readyForBuild === true &&
+            (!attendance.ownerId || attendance.ownerId === job.ownerId);
+          if (ready) status = "ready";
+        } catch {
+          // Presentation callbacks cannot break the city render loop or block
+          // a job indefinitely. The explicit timeout remains the fallback.
+          status = "resolver-error";
+        }
+      }
+      job.holdSeconds = waited;
+      job.attendanceStatus = status;
+      job.awaitingOwner = !ready && waited < CONSTRUCTION_OWNER_WAIT_LIMIT;
+      if (job.awaitingOwner) return phaseAt(buildBoundary, job.duration);
+      if (!ready) job.attendanceStatus = "timeout";
+      // Starting from the release frame preserves the full 3.84 s assembly,
+      // even when the representative arrives after the nominal completion.
+      job.buildStartedAt = elapsed;
+    }
+    return phaseAt(
+      buildBoundary + Math.max(0, elapsed - job.buildStartedAt),
+      job.duration,
+    );
+  }
   function update(elapsed) {
     now = elapsed;
     for (const job of [...active.values()]) {
-      Object.assign(
-        job,
-        phaseAt(Math.max(0, elapsed - job.startedAt), job.duration),
-      );
+      Object.assign(job, attendedPhase(job, elapsed));
       if (job.completed) {
         finish(job);
         continue;
@@ -551,6 +619,12 @@ export function createConstructionDirector({
       duration: job.duration,
       ownerId: job.ownerId,
       accountId: job.accountId,
+      awaitingOwner: job.awaitingOwner,
+      attendanceStatus: job.attendanceStatus,
+      holdSeconds: job.holdSeconds,
+      waitingSince: job.waitingSince,
+      buildStartedAt: job.buildStartedAt,
+      waitLimitSeconds: CONSTRUCTION_OWNER_WAIT_LIMIT,
       truckPosition: job.rig?.truck.position.toArray(),
     };
   }
@@ -573,6 +647,7 @@ export function createConstructionDirector({
     update,
     cancel,
     clear,
+    setAttendanceResolver,
     has: (id) => active.has(id) || queue.some((job) => job.id === id),
     get: (id) => history.get(id) || null,
     debug,

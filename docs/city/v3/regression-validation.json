@@ -1,0 +1,239 @@
+{
+  "generatedAt": "2026-10-17T09:51:29.108Z",
+  "base": "http://127.0.0.1:4173",
+  "browser": "154.0.8037.57",
+  "softwareGpu": "ANGLE SwiftShader",
+  "physicalTouchDevice": false,
+  "scope": "full",
+  "errors": [],
+  "results": [
+    {
+      "name": "initial-load",
+      "detail": {
+        "deals": 31,
+        "accounts": 18,
+        "metrics": {
+          "openCount": 24,
+          "openAmount": 120000,
+          "wonCount": 4,
+          "wonAmount": 30000,
+          "lostCount": 3,
+          "winRate": 0.5714285714285714,
+          "winRateHistoryComplete": true,
+          "winRateBasis": "4 ganadas / 7 cierres de este mes; historial completo de la demo",
+          "attentionCount": 5,
+          "activeClients": 18,
+          "pendingContacts": 7,
+          "pendingConversations": 9,
+          "callsToday": 12,
+          "emailsToday": 6,
+          "meetingsToday": 3,
+          "conversationsToday": 9,
+          "overdueTasks": 5,
+          "stages": [
+            {
+              "id": "lead",
+              "name": "Nuevos leads",
+              "color": "#238bec",
+              "order": 0,
+              "kind": "open",
+              "count": 7,
+              "amount": 31500
+            },
+            {
+              "id": "qualified",
+              "name": "Cualificados",
+              "color": "#0cb9b0",
+              "order": 1,
+              "kind": "open",
+              "count": 5,
+              "amount": 25000
+            },
+            {
+              "id": "proposal",
+              "name": "Propuestas",
+              "color": "#f3ab22",
+              "order": 2,
+              "kind": "open",
+              "count": 6,
+              "amount": 33000
+            },
+            {
+              "id": "negotiation",
+              "name": "Negociación",
+              "color": "#a259df",
+              "order": 3,
+              "kind": "open",
+              "count": 6,
+              "amount": 30500
+            },
+            {
+              "id": "won",
+              "name": "Ventas ganadas",
+              "color": "#24b66b",
+              "order": 4,
+              "kind": "won",
+              "count": 4,
+              "amount": 30000
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "real-raycast-selection",
+      "detail": {
+        "id": "deal-001",
+        "screen": {
+          "id": "deal-001",
+          "x": 594.5396118524634,
+          "y": 396.0199792162671,
+          "visible": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "stage-transition-preserves-identity",
+      "detail": {
+        "id": "deal-001",
+        "uuid": "cfc02864-cc3c-4569-abd6-a64de6dad649"
+      },
+      "passed": true
+    },
+    {
+      "name": "win-event-idempotence-and-existing-account",
+      "detail": {
+        "eventId": "demo-0002-92",
+        "metrics": {
+          "openCount": 23,
+          "openAmount": 118500,
+          "wonCount": 5,
+          "wonAmount": 31500,
+          "lostCount": 3,
+          "winRate": 0.625,
+          "winRateHistoryComplete": true,
+          "winRateBasis": "5 ganadas / 8 cierres de este mes; historial completo de la demo",
+          "attentionCount": 5,
+          "activeClients": 18,
+          "pendingContacts": 7,
+          "pendingConversations": 9,
+          "callsToday": 12,
+          "emailsToday": 6,
+          "meetingsToday": 3,
+          "conversationsToday": 9,
+          "overdueTasks": 5,
+          "stages": [
+            {
+              "id": "lead",
+              "name": "Nuevos leads",
+              "color": "#238bec",
+              "order": 0,
+              "kind": "open",
+              "count": 6,
+              "amount": 30000
+            },
+            {
+              "id": "qualified",
+              "name": "Cualificados",
+              "color": "#0cb9b0",
+              "order": 1,
+              "kind": "open",
+              "count": 5,
+              "amount": 25000
+            },
+            {
+              "id": "proposal",
+              "name": "Propuestas",
+              "color": "#f3ab22",
+              "order": 2,
+              "kind": "open",
+              "count": 6,
+              "amount": 33000
+            },
+            {
+              "id": "negotiation",
+              "name": "Negociación",
+              "color": "#a259df",
+              "order": 3,
+              "kind": "open",
+              "count": 6,
+              "amount": 30500
+            },
+            {
+              "id": "won",
+              "name": "Ventas ganadas",
+              "color": "#24b66b",
+              "order": 4,
+              "kind": "won",
+              "count": 5,
+              "amount": 31500
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "synced-table-search-owner-attention",
+      "detail": {
+        "attentionRows": 5
+      },
+      "passed": true
+    },
+    {
+      "name": "tv-immutable-and-replay-pause-speed-restore",
+      "detail": {
+        "pausedIndex": 3
+      },
+      "passed": true
+    },
+    {
+      "name": "ambient-traffic-layer-does-not-change-crm",
+      "detail": {},
+      "passed": true
+    },
+    {
+      "name": "configurable-stages-and-custom-won-id",
+      "detail": {
+        "customStageCount": 6,
+        "wonStageId": "signed"
+      },
+      "passed": true
+    },
+    {
+      "name": "viewport-768x1024",
+      "detail": {
+        "physicalTouchDevice": false
+      },
+      "passed": true
+    },
+    {
+      "name": "viewport-390x844",
+      "detail": {
+        "physicalTouchDevice": false
+      },
+      "passed": true
+    },
+    {
+      "name": "viewport-844x390",
+      "detail": {
+        "physicalTouchDevice": false
+      },
+      "passed": true
+    },
+    {
+      "name": "prefers-reduced-motion-and-emulated-touch-tap-drag",
+      "detail": {
+        "physicalTouchDevice": false
+      },
+      "passed": true
+    },
+    {
+      "name": "no-webgl-functional-table",
+      "detail": {},
+      "passed": true
+    }
+  ]
+}

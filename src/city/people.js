@@ -11,6 +11,10 @@ const distance = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
 const point = (value) => new THREE.Vector3(value.x, GROUND, value.z);
 const publicPoint = (value) => [value.x, value.y, value.z];
 const near = (a, b) => distance(a, b) < 0.04;
+// Construction runs in compressed illustration time. This is never a real
+// employee speed or a location feed; paths remain continuous on the pavement.
+export const CONSTRUCTION_WALK_SPEED = 20;
+export const CONSTRUCTION_OWNER_HOLD = 4;
 
 /** Raised pavement and the painted crossings constitute a walkable graph. */
 export function createPedestrianMap(entityPositions = new Map(), state = {}) {
@@ -471,7 +475,11 @@ export function createPeople({
   let elapsed = 0,
     enabled = true,
     disposed = false,
-    presentation = false;
+    presentation = false,
+    lastSyncTime = null,
+    lastReplayScope = null,
+    lastEventCount = 0;
+  const previousPositions = new Map();
   const starts = [
     [-17, 12],
     [-11, 12],
@@ -487,11 +495,11 @@ export function createPeople({
     [-3.5, 12],
   ];
 
-  function frontOf(id, variant = 0) {
-    const entry = positions.get(id);
-    if (!entry || !map) return null;
-    const center = entry.target;
+  function frontAt(center, variant = 0) {
+    if (!center || !map) return null;
     const candidates = [
+      // Front/right is visible from the default [54,55,68] city camera.
+      [center.x - 0.8 + (variant % 4) * 0.6, center.z + 2.5],
       [center.x + (variant % 2 ? 0.35 : -0.35), center.z + 2.25],
       [center.x, center.z + 2.5],
       [center.x + 2.5, center.z],
@@ -501,6 +509,9 @@ export function createPeople({
     for (const [x, z] of candidates)
       if (map.isWalkable(x, z)) return new THREE.Vector3(x, GROUND, z);
     return null;
+  }
+  function frontOf(id, variant = 0) {
+    return frontAt(positions.get(id)?.target, variant);
   }
   function beginWalk(actor, destination, arrival = "meeting") {
     if (!destination || !map) {
@@ -528,6 +539,8 @@ export function createPeople({
     return true;
   }
   function setAssignment(actor, deal, isWin = false) {
+    actor.attendance = null;
+    if (actor.attendanceQueue.length && startNextConstruction(actor)) return;
     actor.dealId = deal?.id || null;
     actor.accountId = deal?.accountId || null;
     actor.win = isWin;
@@ -537,8 +550,14 @@ export function createPeople({
       ? "Cierre registrado · visitando al cliente"
       : "Revisando propuesta con el cliente";
     beginWalk(actor, frontOf(actor.targetEntityId, actor.index), "meeting");
+    if (reducedMotion && actor.route.length) {
+      actor.avatar.root.position.copy(actor.route.at(-1));
+      actor.phase = "meeting";
+    }
   }
   function patrol(actor) {
+    actor.attendance = null;
+    if (actor.attendanceQueue.length && startNextConstruction(actor)) return;
     actor.dealId = null;
     actor.accountId = null;
     actor.targetEntityId = null;
@@ -549,6 +568,87 @@ export function createPeople({
       patrols[(actor.patrolIndex++ + actor.index) % patrols.length];
     beginWalk(actor, new THREE.Vector3(x, GROUND, z), "patrol");
   }
+  function goToConstruction(actor, step) {
+    const attendance = actor.attendance;
+    if (!attendance) return;
+    attendance.step = step;
+    actor.winStep = step;
+    actor.targetEntityId = attendance.dealId;
+    actor.activity =
+      step === "source"
+        ? `${attendance.stageName} · acompañando el desmontaje`
+        : `${attendance.stageName} · acompañando la reconstrucción`;
+    const destination = frontAt(
+      step === "source" ? attendance.from : attendance.to,
+      actor.index,
+    );
+    attendance[step === "source" ? "sourcePoint" : "destinationPoint"] =
+      destination?.clone() || null;
+    const arrivedPhase = step === "source" ? "meeting" : "waiting-build";
+    if (reducedMotion && destination) {
+      actor.avatar.root.position.copy(destination);
+      actor.route = [destination.clone()];
+      actor.routeIndex = 1;
+      actor.phase = arrivedPhase;
+      actor.phaseSince = elapsed;
+    } else beginWalk(actor, destination, arrivedPhase);
+  }
+  function startNextConstruction(actor) {
+    while (actor.attendanceQueue.length) {
+      const attendance = actor.attendanceQueue.shift();
+      const deal = state.deals.find((entry) => entry.id === attendance.dealId);
+      const job = construction?.get?.(attendance.dealId);
+      if (
+        !deal ||
+        deal.stageId !== attendance.stageId ||
+        !job ||
+        job.status === "cancelled"
+      )
+        continue;
+      actor.attendance = attendance;
+      actor.dealId = attendance.dealId;
+      actor.accountId = deal.accountId;
+      actor.win = attendance.kind === "won";
+      actor.waitingForCrossing = false;
+      const destinationFirst = reducedMotion || job.phase === "complete";
+      goToConstruction(actor, destinationFirst ? "destination" : "source");
+      return true;
+    }
+    return false;
+  }
+  function enqueueConstruction(actor, deal) {
+    const job = construction?.get?.(deal.id);
+    // A real scene job is required. Loading or Replay reconstruction alone must
+    // never invent an attendance job from the snapshot's historical wins.
+    if (!job || job.status === "cancelled" || !job.from || !job.to)
+      return false;
+    const token = `${deal.id}:${deal.stageId}:${deal.lastStageChangedAt || ""}`;
+    if (
+      actor.attendance?.token === token ||
+      actor.attendanceQueue.some((entry) => entry.token === token)
+    )
+      return false;
+    actor.attendanceQueue = actor.attendanceQueue.filter(
+      (entry) => entry.dealId !== deal.id,
+    );
+    if (actor.attendance?.dealId === deal.id) actor.attendance = null;
+    actor.attendanceQueue.push({
+      token,
+      dealId: deal.id,
+      stageId: deal.stageId,
+      stageName:
+        state.stages.find((stage) => stage.id === deal.stageId)?.name ||
+        deal.stageId,
+      kind: stageKind(state, deal.stageId),
+      from: point(job.from || previousPositions.get(deal.id)),
+      to: point(job.to),
+      step: "queued",
+      sourceVisited: false,
+      destinationArrivedAt: null,
+    });
+    if (!actor.attendance) startNextConstruction(actor);
+    return true;
+  }
   function sync(
     next,
     { entityPositions = positions, construction: director = construction } = {},
@@ -557,8 +657,10 @@ export function createPeople({
     const initial = !state;
     const reset =
       state &&
-      (Date.parse(next.now) < Date.parse(state.now) ||
-        next.replay?.scope !== state.replay?.scope);
+      (Date.parse(next.now) < lastSyncTime ||
+        (next.replay?.scope || null) !== lastReplayScope ||
+        (Array.isArray(next.appliedEventIds) &&
+          next.appliedEventIds.length < lastEventCount));
     state = next;
     positions = entityPositions || new Map();
     construction = director;
@@ -567,8 +669,15 @@ export function createPeople({
     // being dismantled. Its source remains a physical obstacle during the work.
     for (const deal of state.deals || []) {
       const job = construction?.get?.(deal.id);
-      if (job?.from && job.phase !== "complete" && job.status !== "complete" && job.status !== "cancelled")
-        navigationPositions.set(`construction-source:${deal.id}`, { target: job.from });
+      if (
+        job?.from &&
+        job.phase !== "complete" &&
+        job.status !== "complete" &&
+        job.status !== "cancelled"
+      )
+        navigationPositions.set(`construction-source:${deal.id}`, {
+          target: job.from,
+        });
     }
     map = createPedestrianMap(navigationPositions, state);
     const ownerIds = new Set((state.owners || []).map((owner) => owner.id));
@@ -600,23 +709,35 @@ export function createPeople({
           activity: "Preparando visitas",
           win: false,
           winStep: null,
+          attendance: null,
+          attendanceQueue: [],
         };
         actors.set(owner.id, actor);
+      }
+      if (reset) {
+        actor.attendance = null;
+        actor.attendanceQueue = [];
+        actor.route = [];
+        actor.waitingForCrossing = false;
       }
       const owned = (state.deals || []).filter(
         (deal) => deal.ownerId === owner.id,
       );
-      const freshWin =
+      const freshTransitions =
         !initial && !reset
-          ? owned.find(
+          ? owned.filter(
               (deal) =>
-                stageKind(state, deal.stageId) === "won" &&
+                stageKind(state, deal.stageId) !== "lost" &&
                 previousStages.has(deal.id) &&
                 previousStages.get(deal.id) !== deal.stageId,
             )
-          : null;
-      if (freshWin) setAssignment(actor, freshWin, true);
-      else if (
+          : [];
+      let assignedConstruction = false;
+      for (const deal of freshTransitions)
+        assignedConstruction =
+          enqueueConstruction(actor, deal) || assignedConstruction;
+      if (assignedConstruction) continue;
+      if (
         initial ||
         reset ||
         (actor.dealId &&
@@ -636,16 +757,21 @@ export function createPeople({
         if (meeting.length)
           setAssignment(actor, meeting[index % meeting.length]);
         else patrol(actor);
-      }
-      else if (actor.phase === "walking" && actor.route.length) {
+      } else if (actor.phase === "walking" && actor.route.length) {
         // Stage updates can create a new footprint in a future path. Replan
         // from the current location instead of continuing through the building.
         beginWalk(actor, actor.route.at(-1), actor.arrival);
       }
     }
     previousStages.clear();
+    previousPositions.clear();
     for (const deal of state.deals || [])
       previousStages.set(deal.id, deal.stageId);
+    for (const [id, entry] of positions)
+      previousPositions.set(id, entry.target.clone());
+    lastSyncTime = Date.parse(next.now);
+    lastReplayScope = next.replay?.scope || null;
+    lastEventCount = next.appliedEventIds?.length || 0;
   }
   function crossingBlocked(actor, next) {
     if (!map) return false;
@@ -665,7 +791,8 @@ export function createPeople({
     return false;
   }
   function move(actor, dt) {
-    let remaining = dt * (actor.win ? 4.2 : 3.4);
+    let remaining =
+      dt * (actor.attendance ? CONSTRUCTION_WALK_SPEED : actor.win ? 4.2 : 3.4);
     let moved = 0;
     while (remaining > 0.00001 && actor.routeIndex < actor.route.length) {
       const target = actor.route[actor.routeIndex],
@@ -675,7 +802,8 @@ export function createPeople({
         actor.routeIndex++;
         continue;
       }
-      const travel = Math.min(remaining, length),
+      // Bounded substeps still test the zebra's stop line on a slow renderer.
+      const travel = Math.min(remaining, length, 0.25),
         k = travel / length;
       const next = current.clone().lerp(target, k);
       // The segment can be smoothed across an avenue, so check its leading point.
@@ -706,15 +834,71 @@ export function createPeople({
   function jobFor(id) {
     return id && construction?.get?.(id);
   }
+  function constructionAttendance(actor) {
+    const attendance = actor.attendance;
+    if (!attendance) return null;
+    const job = jobFor(attendance.dealId);
+    if (!job || job.status === "cancelled") {
+      actor.attendance = null;
+      if (!startNextConstruction(actor)) patrol(actor);
+      return null;
+    }
+    if (attendance.step === "source") {
+      if (actor.phase === "meeting") {
+        attendance.sourceVisited = true;
+        attendance.sourceArrivedAt ??= elapsed;
+      }
+      if (
+        attendance.sourceVisited &&
+        elapsed - attendance.sourceArrivedAt >= 0.5 &&
+        ["transport", "build", "complete"].includes(job.phase)
+      )
+        goToConstruction(actor, "destination");
+    } else if (attendance.step === "destination") {
+      const destination = attendance.destinationPoint;
+      const atDestination =
+        destination && distance(actor.avatar.root.position, destination) < 0.25;
+      if (atDestination && actor.phase !== "walking") {
+        attendance.destinationArrivedAt ??= elapsed;
+        actor.phase = "waiting-build";
+        actor.activity = `${attendance.stageName} · presente en la reconstrucción`;
+        if (job.phase === "complete" || job.status === "complete") {
+          attendance.step = "hold";
+          attendance.completedAt = elapsed;
+          actor.phase = actor.win ? "celebrating" : "construction-ready";
+          actor.activity = actor.win
+            ? "Venta cerrada · nueva sede lista"
+            : `${attendance.stageName} · reconstrucción lista`;
+        }
+      }
+    } else if (
+      attendance.step === "hold" &&
+      elapsed - attendance.completedAt >= CONSTRUCTION_OWNER_HOLD
+    ) {
+      actor.attendance = null;
+      if (!startNextConstruction(actor)) patrol(actor);
+    }
+    return actor.attendance;
+  }
   function update(dt, now) {
     if (disposed || !state || !enabled) return;
+    const before = elapsed;
     if (Number.isFinite(now)) elapsed = now;
     else if (Number.isFinite(dt) && dt > 0) elapsed += dt;
-    if (reducedMotion || !Number.isFinite(dt) || dt <= 0) return;
-    const delta = Math.min(dt, 0.12);
+    if (!Number.isFinite(dt) || dt <= 0) return;
+    // Scene dt is capped for camera stability; elapsed is the real visible
+    // animation time. Consume it here so software rendering cannot strand an
+    // avatar while construction has already advanced several seconds.
+    const delta = Math.min(1, Math.max(dt, elapsed - before, 0));
     for (const actor of actors.values()) {
       let moved = 0;
-      if (actor.phase === "walking") moved = move(actor, delta);
+      if (actor.attendance) {
+        constructionAttendance(actor);
+        if (actor.attendance && actor.phase === "walking" && !reducedMotion)
+          moved = move(actor, delta);
+        if (actor.attendance) constructionAttendance(actor);
+      } else if (reducedMotion) continue;
+      else if (actor.phase === "walking") moved = move(actor, delta);
       else if (
         actor.phase === "meeting" &&
         elapsed - actor.phaseSince > (actor.win ? 1.5 : 3.5)
@@ -765,8 +949,13 @@ export function createPeople({
       actor.avatar.legs[0].rotation.x = swing;
       actor.avatar.legs[1].rotation.x = -swing;
       actor.avatar.arms[0].rotation.x = -swing * 0.65;
-      actor.avatar.arms[1].rotation.x =
-        actor.phase === "meeting" ? -0.7 : swing * 0.45;
+      actor.avatar.arms[1].rotation.x = [
+        "meeting",
+        "waiting-build",
+        "construction-ready",
+      ].includes(actor.phase)
+        ? -0.7
+        : swing * 0.45;
       actor.avatar.arms[1].rotation.z =
         actor.phase === "celebrating" ? -2.3 : 0;
       actor.avatar.root.position.y =
@@ -780,10 +969,79 @@ export function createPeople({
     const hit = raycaster.intersectObject(root, true).find((entry) => {
       if (!entry.object.userData.ownerId) return false;
       let object = entry.object;
-      while (object) { if (!object.visible) return false; object = object.parent; }
+      while (object) {
+        if (!object.visible) return false;
+        object = object.parent;
+      }
       return true;
     });
-    return hit ? { ownerId: hit.object.userData.ownerId, distance: hit.distance } : null;
+    return hit
+      ? { ownerId: hit.object.userData.ownerId, distance: hit.distance }
+      : null;
+  }
+  function initialsFor(owner) {
+    return (
+      owner.initials ||
+      String(owner.name || "Comercial")
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map((part) => [...part][0])
+        .join("")
+        .toUpperCase()
+    );
+  }
+  function getConstructionAttendance(dealId) {
+    for (const actor of actors.values()) {
+      if (actor.attendance?.dealId === dealId) {
+        const attendance = actor.attendance;
+        const source =
+          attendance.sourcePoint || frontAt(attendance.from, actor.index);
+        const destination = attendance.destinationPoint;
+        const atSource = Boolean(
+          source && distance(actor.avatar.root.position, source) < 0.35,
+        );
+        const atDestination = Boolean(
+          destination &&
+          distance(actor.avatar.root.position, destination) < 0.35,
+        );
+        return {
+          ownerId: actor.owner.id,
+          phase: actor.phase,
+          atSource,
+          atDestination,
+          readyForBuild: atDestination,
+          queued: false,
+          sourceVisited: attendance.sourceVisited,
+          position: actor.avatar.root.position.clone(),
+        };
+      }
+      if (actor.attendanceQueue.some((entry) => entry.dealId === dealId))
+        return {
+          ownerId: actor.owner.id,
+          phase: "queued",
+          atSource: false,
+          atDestination: false,
+          readyForBuild: false,
+          queued: true,
+          sourceVisited: false,
+          position: actor.avatar.root.position.clone(),
+        };
+    }
+    return null;
+  }
+  function getOwnerLabels() {
+    if (!enabled || disposed) return [];
+    return [...actors.values()].map((actor) => ({
+      ownerId: actor.owner.id,
+      initials: initialsFor(actor.owner),
+      name: actor.owner.name,
+      color: actor.owner.color,
+      position: actor.avatar.root.position.clone(),
+      dealId: actor.dealId || null,
+      phase: actor.phase,
+      attendingConstruction: Boolean(actor.attendance),
+    }));
   }
   return {
     sync,
@@ -799,6 +1057,8 @@ export function createPeople({
     getOwnerPosition(id) {
       return actors.get(id)?.avatar.root.position.clone() || null;
     },
+    getOwnerLabels,
+    getConstructionAttendance,
     pick(raycaster) {
       return pickHit(raycaster)?.ownerId || null;
     },
@@ -814,6 +1074,7 @@ export function createPeople({
         reducedMotion,
         owners: [...actors.values()].map((actor) => ({
           ownerId: actor.owner.id,
+          initials: initialsFor(actor.owner),
           name: actor.owner.name,
           color: actor.owner.color,
           activity: actor.waitingForCrossing
@@ -830,6 +1091,16 @@ export function createPeople({
           distance: actor.walkDistance || 0,
           win: Boolean(actor.win),
           winStep: actor.winStep || null,
+          attendingConstruction: Boolean(actor.attendance),
+          constructionStageId: actor.attendance?.stageId || null,
+          constructionStep: actor.attendance?.step || null,
+          sourceVisited: Boolean(actor.attendance?.sourceVisited),
+          queuedConstructionDeals: actor.attendanceQueue.map(
+            (entry) => entry.dealId,
+          ),
+          movementSource: actor.attendance
+            ? "compressed-construction-illustration"
+            : "illustrative-pedestrian-route",
         })),
       };
     },
