@@ -119,7 +119,7 @@ test("the real export permits extra arguments but the bridge ignores them instea
     movement_id: "overview", action: "close_deal", target: { kind: "deal", id: "invented" }, duration: 999,
   }));
   assert.equal(result.ok, true);
-  assert.deepEqual(executed, [{ action: "overview", duration: 2.8 }]);
+  assert.deepEqual(executed, [{ action: "overview", duration: 5.5 }]);
 });
 
 test("an entity removed after catalogue creation is rejected by the current snapshot boundary", async () => {

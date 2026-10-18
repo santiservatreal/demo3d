@@ -22,6 +22,14 @@ import {
   fixedMapOffset,
   ownerBadgeAnchor,
 } from "./map-camera.js";
+import {
+  CINEMATIC_FOV,
+  cinematicBoundsShot,
+  cinematicTargetShot,
+  cinematicRouteLift,
+  sampleCinematicPosition,
+  sampleCinematicIdle,
+} from "./presentation-camera.js";
 
 const COLORS = ["#338ee0", "#00a99a", "#f1ab29", "#9468d2", "#31ab64"];
 const tmp = new THREE.Object3D(),
@@ -126,7 +134,13 @@ export async function createCityScene({
   const scene = new THREE.Scene();
   scene.background = new THREE.Color("#e3eef2");
   scene.fog = new THREE.Fog("#e3eef2", 145, 265);
-  const camera = new THREE.OrthographicCamera(-50, 50, 30, -30, 0.1, 350);
+  const mapCamera = new THREE.OrthographicCamera(-50, 50, 30, -30, 0.1, 350);
+  const cinematicCamera = new THREE.PerspectiveCamera(CINEMATIC_FOV, 1, 0.3, 900);
+  let camera = mapCamera;
+  const cinematic = {
+    enabled: false, idle: false, idleAt: 0, idlePosition: new THREE.Vector3(),
+    idleTarget: new THREE.Vector3(), savedMapView: null, shot: null,
+  };
   camera.position.copy(new THREE.Vector3(0, 1, 0).add(fixedMapOffset()));
   camera.lookAt(0, 1, 0);
   let renderer;
@@ -151,7 +165,7 @@ export async function createCityScene({
   renderer.domElement.style.cssText =
     "width:100%;height:100%;display:block;touch-action:none;";
   container.append(renderer.domElement);
-  const controls = new OrbitControls(camera, renderer.domElement);
+  const controls = new OrbitControls(mapCamera, renderer.domElement);
   controls.target.set(0, 1, 0);
   controls.enableDamping = true;
   controls.dampingFactor = 0.075;
@@ -370,7 +384,7 @@ export async function createCityScene({
     renderer.shadowMap.needsUpdate = true;
     resize({ preserveFlight: false });
     overview({ tour, duration });
-    if (tour && flight) {
+    if (tour && flight && !cinematic.enabled) {
       flight.fromFrustum = fromFrustum;
       flight.toFrustum = {
         left: camera.left,
@@ -395,6 +409,31 @@ export async function createCityScene({
     });
   }
   function resize({ preserveFlight = true } = {}) {
+    if (cinematic.enabled) {
+      const aspectChanged = Math.abs(cinematicCamera.aspect - w() / h()) > 0.001;
+      cinematicCamera.aspect = w() / h();
+      cinematicCamera.updateProjectionMatrix();
+      renderer.setSize(w(), h(), false);
+      renderer.setPixelRatio(pixelRatio());
+      if (aspectChanged && cinematic.shot && state) {
+        const resolved = resolvePresentationTarget(cinematic.shot);
+        if (resolved) {
+          const shot = cinematicShotForTarget(cinematic.shot, resolved);
+          if (flight?.cinematic) {
+            flight.toPos.copy(shot.position);
+            flight.toTarget.copy(shot.target);
+            cinematic.idlePosition.copy(shot.position);
+            cinematic.idleTarget.copy(shot.target);
+          } else {
+            const identity = { ...cinematic.shot };
+            flyCinematicShot(shot, { duration: 1.6 });
+            cinematic.shot = identity;
+          }
+        }
+      }
+      lastLabel = 0;
+      return;
+    }
     const interruptedFlight =
       preserveFlight && tvPresentation && flight?.fromFrustum ? flight : null;
     const previousTop = camera.top,
@@ -986,7 +1025,121 @@ export async function createCityScene({
     }
     lastLabel = 0;
   }
+  function cinematicClearance() {
+    let rooftop = 9;
+    for (const entity of architecture.entities.values())
+      if (entity.visible) rooftop = Math.max(rooftop,
+        entity.group.position.y + entity.model.height * entity.scaleY);
+    return rooftop + 5;
+  }
+  function cinematicShotForTarget(target, resolved) {
+    const common = { aspect: w() / h(), clearance: cinematicClearance() };
+    if (target.kind === "district")
+      return cinematicBoundsShot(viewBounds(), { ...common, id: target.id });
+    if (target.kind === "sales-stage") {
+      const clients = target.id === "clients";
+      const x = resolved.point.x;
+      return cinematicBoundsShot({
+        minX: clients ? -37 : x - 7.5, maxX: clients ? 37 : x + 7.5,
+        minY: 0, maxY: clients ? 8 : 13,
+        minZ: clients ? 12 : -25, maxZ: clients ? 25 : 7,
+      }, { ...common, id: "sales" });
+    }
+    const entity = architecture.entities.get(target.id);
+    return cinematicTargetShot(resolved.point, {
+      ...common, kind: target.kind, id: target.id,
+      height: entity ? entity.model.height * entity.scaleY
+        : target.kind === "owner" ? 1.8 : target.kind === "industry-stage" ? 7 : 4,
+      radius: target.kind === "industry-stage" ? 8
+        : target.kind === "communication" ? 5 : entity ? entity.model.width * 0.6 : 3,
+    });
+  }
+  function flyCinematicShot(shot, { duration = 4.8, immediate = false } = {}) {
+    cinematic.shot = { kind: shot.kind, id: shot.id };
+    cinematicCamera.fov = shot.fov;
+    cinematicCamera.zoom = 1;
+    cinematicCamera.updateProjectionMatrix();
+    if (immediate) {
+      flight = null;
+      camera.position.copy(shot.position);
+      controls.target.copy(shot.target);
+      camera.lookAt(controls.target);
+      camera.updateMatrixWorld();
+    } else flight = {
+      cinematic: true,
+      fromPos: camera.position.clone(), fromTarget: controls.target.clone(), fromZoom: 1,
+      toPos: shot.position, toTarget: shot.target, toZoom: 1,
+      lift: cinematicRouteLift(camera.position, shot.position),
+      start: elapsed, duration: reducedMotion ? 0.01 : duration,
+    };
+    cinematic.idlePosition.copy(shot.position);
+    cinematic.idleTarget.copy(shot.target);
+    cinematic.idleAt = elapsed + (immediate ? 0 : duration);
+    schedule();
+  }
+  function setCinematicIdle(enabled) {
+    cinematic.idle = Boolean(enabled && cinematic.enabled && !reducedMotion);
+    cinematic.idleAt = elapsed;
+    cinematic.idlePosition.copy(camera.position);
+    cinematic.idleTarget.copy(controls.target);
+    schedule();
+    return { ok: true, cinematicEnabled: cinematic.enabled, idle: cinematic.idle };
+  }
+  function setCinematicMode(enabled) {
+    const next = Boolean(enabled);
+    if (next === cinematic.enabled) return { ok: true, cinematicEnabled: next };
+    if (next) {
+      const previousView = capturePresentationView();
+      cancelPresentation("camera_changed");
+      cinematic.savedMapView = previousView;
+      cinematic.enabled = true;
+      cinematic.idle = false;
+      camera = cinematicCamera;
+      controls.enabled = false;
+      scene.fog.near = 450;
+      scene.fog.far = 900;
+      tvTour.enabled = false;
+      setDistrict("all", { tour: true });
+      flyCinematicShot(cinematicBoundsShot(viewBounds(), {
+        id: "all", aspect: w() / h(), clearance: cinematicClearance(),
+      }), { immediate: true });
+    } else {
+      cancelPresentation("camera_changed");
+      cinematic.enabled = cinematic.idle = false;
+      camera = mapCamera;
+      controls.enabled = true;
+      scene.fog.near = 145;
+      scene.fog.far = 265;
+      const saved = cinematic.savedMapView;
+      cinematic.savedMapView = null;
+      resize();
+      if (saved) restorePresentationView(saved);
+      else overview();
+    }
+    lastLabel = 0;
+    schedule();
+    return { ok: true, cinematicEnabled: next };
+  }
+  function focusCinematicTarget(target, { duration } = {}) {
+    const resolved = resolvePresentationTarget(target);
+    if (!resolved) return false;
+    setCinematicIdle(false);
+    if (district !== resolved.district) setDistrict(resolved.district, { tour: true });
+    if (target.kind === "deal" || target.kind === "account") select(target.id);
+    const shot = cinematicShotForTarget(target, resolved);
+    flyCinematicShot(shot, { duration: duration ?? 3.8 });
+    cinematic.shot = { ...target };
+    followFocus = target.kind === "owner" ? `owner:${target.id}`
+      : ["batch", "vehicle"].includes(target.kind) ? `industry:${target.id}` : null;
+    followAnchor = followFocus ? resolved.point.clone() : null;
+    return true;
+  }
   function focus(id, { panelWidth = 350 } = {}) {
+    if (cinematic.enabled) {
+      const kind = entityData.get(id)?.entityType;
+      focusCinematicTarget({ kind, id });
+      return;
+    }
     pauseTVTour();
     if (district !== "sales") setDistrict("sales");
     const e = architecture.entities.get(id);
@@ -1028,6 +1181,10 @@ export async function createCityScene({
     schedule();
   }
   function focusOwner(ownerId) {
+    if (cinematic.enabled) {
+      focusCinematicTarget({ kind: "owner", id: ownerId });
+      return;
+    }
     pauseTVTour();
     if (district !== "sales") setDistrict("sales");
     const point = people.getOwnerPosition(ownerId);
@@ -1091,6 +1248,16 @@ export async function createCityScene({
     return projectPoint(industry.focusPoint(id), id);
   }
   function focusPoint(point, { panelWidth = 350, zoom = 2.25 } = {}) {
+    if (cinematic.enabled) {
+      if (point) {
+        setCinematicIdle(false);
+        followFocus = null;
+        flyCinematicShot(cinematicTargetShot(point, {
+          aspect: w() / h(), clearance: cinematicClearance(),
+        }), { duration: 3.8 });
+      }
+      return;
+    }
     pauseTVTour();
     if (!point) return;
     followFocus = null;
@@ -1117,6 +1284,10 @@ export async function createCityScene({
     schedule();
   }
   function focusPlace(id) {
+    if (cinematic.enabled) {
+      focusCinematicTarget({ kind: "communication", id });
+      return;
+    }
     const place = communications.getPlaces().find((entry) => entry.id === id);
     if (!place) return;
     if (district !== "communications") setDistrict("communications");
@@ -1125,6 +1296,12 @@ export async function createCityScene({
     focusPoint(point);
   }
   function focusIndustry(id) {
+    if (cinematic.enabled) {
+      const kind = industryState?.vehicles?.some((entry) => entry.id === id) ? "vehicle"
+        : industryState?.batches?.some((entry) => entry.id === id) ? "batch" : "industry-stage";
+      focusCinematicTarget({ kind, id });
+      return;
+    }
     const point = industry.focusPoint(id);
     if (!point) return;
     if (district !== "industry") setDistrict("industry");
@@ -1133,6 +1310,10 @@ export async function createCityScene({
     followAnchor = point.clone();
   }
   function focusDistrict(stageId) {
+    if (cinematic.enabled) {
+      focusCinematicTarget({ kind: "sales-stage", id: stageId });
+      return;
+    }
     pauseTVTour();
     // Keep the complete city legible on a portrait TV; there is no room for
     // a zoomed district plus the fixed KPI and salesperson bands.
@@ -1163,6 +1344,13 @@ export async function createCityScene({
     schedule();
   }
   function overview({ tour = false, duration } = {}) {
+    if (cinematic.enabled) {
+      followFocus = null;
+      flyCinematicShot(cinematicBoundsShot(viewBounds(), {
+        id: district, aspect: w() / h(), clearance: cinematicClearance(),
+      }), { duration: duration ?? 4.8 });
+      return;
+    }
     if (!tour) pauseTVTour();
     followFocus = null;
     const bounds = viewBounds();
@@ -1186,6 +1374,7 @@ export async function createCityScene({
     schedule();
   }
   function zoomBy(factor) {
+    if (cinematic.enabled) return;
     flight = null;
     camera.zoom = clamp(
       camera.zoom * factor,
@@ -1199,6 +1388,7 @@ export async function createCityScene({
     schedule();
   }
   function panBy(dx, dy) {
+    if (cinematic.enabled) return;
     flight = null;
     followFocus = null;
     pauseTVTour();
@@ -1328,6 +1518,10 @@ export async function createCityScene({
   function capturePresentationView() {
     return {
       version: 1,
+      projection: cinematic.enabled ? "perspective" : "orthographic",
+      aspect: cinematic.enabled ? cinematicCamera.aspect : w() / h(),
+      cinematicIdle: cinematic.idle,
+      shot: cinematic.shot ? { ...cinematic.shot } : null,
       district,
       cameraPosition: camera.position.toArray(),
       target: controls.target.toArray(),
@@ -1357,6 +1551,8 @@ export async function createCityScene({
       !Number.isFinite(snapshot.zoom)
     )
       return presentationFailure("invalid_view");
+    const perspective = snapshot.projection === "perspective";
+    if (perspective !== cinematic.enabled) setCinematicMode(perspective);
     setDistrict(snapshot.district);
     flight = null;
     const target = new THREE.Vector3().fromArray(snapshot.target);
@@ -1366,10 +1562,13 @@ export async function createCityScene({
       300,
     );
     controls.target.copy(target);
-    camera.position.copy(target).add(fixedMapOffset(distance));
-    camera.zoom = clamp(snapshot.zoom, controls.minZoom, controls.maxZoom);
+    if (perspective) camera.position.fromArray(snapshot.cameraPosition);
+    else camera.position.copy(target).add(fixedMapOffset(distance));
+    camera.zoom = perspective ? 1 : clamp(snapshot.zoom, controls.minZoom, controls.maxZoom);
     camera.updateProjectionMatrix();
-    controls.update();
+    if (perspective) camera.lookAt(target);
+    else controls.update();
+    camera.updateMatrixWorld();
     select(
       snapshot.selectedId &&
         architecture.entities.get(snapshot.selectedId)?.visible
@@ -1389,6 +1588,18 @@ export async function createCityScene({
         pausedUntil: snapshot.tvTour.pausedUntil + gap,
       });
     }
+    if (perspective) {
+      cinematic.shot = snapshot.shot ? { ...snapshot.shot } : null;
+      if (Number.isFinite(snapshot.aspect) && Math.abs(snapshot.aspect - w() / h()) > 0.01 && cinematic.shot) {
+        const resolved = resolvePresentationTarget(cinematic.shot);
+        if (resolved) {
+          const identity = { ...cinematic.shot };
+          flyCinematicShot(cinematicShotForTarget(identity, resolved), { immediate: true });
+          cinematic.shot = identity;
+        }
+      }
+      setCinematicIdle(Boolean(snapshot.cinematicIdle));
+    }
     schedule();
     return { ok: true, code: "restored", businessMutation: false };
   }
@@ -1396,12 +1607,14 @@ export async function createCityScene({
     if (disposed || !active || document.hidden)
       return Promise.resolve(presentationFailure("scene_unavailable", target));
     settlePresentationNavigation("superseded");
+    if (cinematic.enabled) setCinematicIdle(false);
     presentationFollowing = true;
     tvTour.enabled = false;
     navigate();
     if (!flight)
       return Promise.resolve(presentationFailure("target_unavailable", target));
-    const seconds = Number.isFinite(duration) ? clamp(duration, 0.15, 12) : 2.8;
+    const seconds = Number.isFinite(duration) ? clamp(duration, 0.15, 12)
+      : cinematic.enabled ? 4.8 : 2.8;
     flight.duration = reducedMotion ? 0.01 : seconds;
     return new Promise((resolve) => {
       presentationNavigation = { flight, action, target, resolve };
@@ -1413,6 +1626,10 @@ export async function createCityScene({
     if (!resolved)
       return Promise.resolve(presentationFailure("target_unavailable", target));
     return navigatePresentation("focus", target, duration, () => {
+      if (cinematic.enabled) {
+        focusCinematicTarget(target, { duration });
+        return;
+      }
       if (target.kind === "district")
         setDistrict(target.id, { tour: true, duration: duration ?? 2.8 });
       else if (target.kind === "deal" || target.kind === "account")
@@ -1553,13 +1770,15 @@ export async function createCityScene({
     };
   }
   const presentation = Object.freeze({
+    setCinematicMode,
+    setCinematicIdle,
     captureView: capturePresentationView,
     restoreView: restorePresentationView,
     focusTarget: ({ duration, ...target } = {}) =>
       focusPresentationTarget(target, { duration }),
     overview: ({ duration } = {}) =>
       navigatePresentation("overview", null, duration, () =>
-        setDistrict("all", { tour: true, duration: duration ?? 2.8 }),
+        setDistrict("all", { tour: true, duration: duration ?? (cinematic.enabled ? 4.8 : 2.8) }),
       ),
     highlightTarget: ({ duration, ...target } = {}) =>
       highlightPresentationTarget(target, { duration }),
@@ -1571,6 +1790,11 @@ export async function createCityScene({
       return () => presentationNavigationListeners.delete(listener);
     },
     getState: () => ({
+      cinematicEnabled: cinematic.enabled,
+      idle: cinematic.idle,
+      shot: cinematic.shot ? { ...cinematic.shot } : null,
+      position: camera.position.toArray(),
+      target: controls.target.toArray(),
       navigating: Boolean(presentationNavigation),
       highlight: presentationHighlight
         ? { ...presentationHighlight.target }
@@ -1682,6 +1906,10 @@ export async function createCityScene({
     } else if (active) schedule();
   }
   function handleDown(e) {
+    if (cinematic.enabled) {
+      setCinematicIdle(false);
+      notifyManualNavigation();
+    }
     activePointers.add(e.pointerId);
     pointerDown = true;
     if (activePointers.size === 1) {
@@ -1746,12 +1974,12 @@ export async function createCityScene({
     if (e.pointerType === "touch") return;
     const hit = pickWorld(e.clientX, e.clientY);
     const id = hit?.kind === "entity" ? hit.id : null;
-    renderer.domElement.style.cursor = hit ? "pointer" : "grab";
+    renderer.domElement.style.cursor = hit ? "pointer" : cinematic.enabled ? "default" : "grab";
     onHover(id, id ? entityData.get(id) : null, { x: e.clientX, y: e.clientY });
   }
   function handleLeave() {
     onHover(null);
-    renderer.domElement.style.cursor = "grab";
+    renderer.domElement.style.cursor = cinematic.enabled ? "default" : "grab";
   }
   function pickWorld(x, y) {
     const rect = renderer.domElement.getBoundingClientRect();
@@ -1964,7 +2192,9 @@ export async function createCityScene({
       // when zoomed out. There is no collision solver or overhead tether.
       const avatarHalfWidth = Math.max(
         3,
-        (0.45 * camera.zoom * width) / (camera.right - camera.left),
+        cinematic.enabled
+          ? (0.45 * height) / (2 * camera.position.distanceTo(person) * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)))
+          : (0.45 * camera.zoom * width) / (camera.right - camera.left),
       );
       x = Math.max(x, personX + avatarHalfWidth + cache.width / 2 + 4);
       const hidden =
@@ -2097,7 +2327,9 @@ export async function createCityScene({
       const k = clamp((elapsed - flight.start) / flight.duration, 0, 1),
         ease = k * k * (3 - 2 * k);
       controls.target.lerpVectors(flight.fromTarget, flight.toTarget, ease);
-      camera.position.lerpVectors(flight.fromPos, flight.toPos, ease);
+      if (flight.cinematic)
+        sampleCinematicPosition(flight.fromPos, flight.toPos, k, flight.lift, camera.position);
+      else camera.position.lerpVectors(flight.fromPos, flight.toPos, ease);
       camera.zoom = lerp(flight.fromZoom, flight.toZoom, ease);
       if (flight.fromFrustum && flight.toFrustum)
         for (const key of ["left", "right", "top", "bottom"])
@@ -2109,7 +2341,7 @@ export async function createCityScene({
       camera.updateProjectionMatrix();
       if (k >= 1) flight = null;
     }
-    controls.update();
+    if (!cinematic.enabled) controls.update();
     updateTransitions();
     people.update(delta, elapsed);
     communications.update(delta, elapsed);
@@ -2143,6 +2375,12 @@ export async function createCityScene({
       }
     }
     if (!reducedMotion) traffic.update?.(delta, elapsed);
+    if (cinematic.enabled) {
+      if (!flight && cinematic.idle) sampleCinematicIdle(
+        cinematic.idlePosition, cinematic.idleTarget,
+        Math.max(0, elapsed - cinematic.idleAt), camera.position);
+      camera.lookAt(controls.target);
+    }
     updatePresentation();
     camera.updateMatrixWorld();
     if (elapsed - lastLabel > 0.12 || !lastLabel) {
@@ -2189,11 +2427,15 @@ export async function createCityScene({
         summaries: "outside-canvas",
       },
       mapView: {
-        type: "fixed-isometric",
+        type: cinematic.enabled ? "cinematic-perspective" : "fixed-isometric",
+        projection: cinematic.enabled ? "perspective" : "orthographic",
+        controlsEnabled: controls.enabled,
         rotate: controls.enableRotate,
         pan: controls.enablePan,
         zoom: controls.enableZoom,
-        direction: fixedMapOffset().normalize().toArray(),
+        direction: cinematic.enabled
+          ? camera.position.clone().sub(controls.target).normalize().toArray()
+          : fixedMapOffset().normalize().toArray(),
         quaternion: camera.quaternion.toArray(),
         polar: controls.getPolarAngle(),
         azimuth: controls.getAzimuthalAngle(),
@@ -2341,7 +2583,8 @@ export async function createCityScene({
       entityGroups,
       renderer,
       scene,
-      camera,
+      get camera() { return camera; },
+      mapCamera,
       controls,
       traffic,
       people,

@@ -32,11 +32,11 @@ Ejemplos válidos en la instantánea inicial:
 
 La ciudad inicial anuncia **82 movimientos, 55 edificios y 57 animaciones**. No incluye edificios de oportunidades perdidas. Los catálogos tienen límites explícitos y señalan `truncated` cuando una instantánea mayor no cabe; sólo se aceptan los IDs incluidos en sus tablas. No se buscan nombres parecidos ni se inventan alias. Si un objeto desaparece después de construir el catálogo, el controlador también lo rechaza al comprobar la instantánea actual.
 
-Las tablas traducen la cámara a `overview` o `focus` con una transición de 2,8 segundos, el resaltado a `highlight` durante 5 segundos y las animaciones a `traffic`, `machinery` o `pulse` durante 5 segundos. Son decisiones de presentación locales. El agente no puede establecer duraciones arbitrarias ni pasar comandos completos como argumentos.
+Las tablas traducen la cámara a `overview` o `focus` con una transición de **5,5 segundos**, el resaltado a `highlight` durante 5 segundos y las animaciones a `traffic`, `machinery` o `pulse` durante 5 segundos. En `/demo`, los movimientos utilizan las tomas de perspectiva de la presentación; seleccionar un objetivo actualiza también su título, cifras y pipeline desde `getPresentationFrame`. La vista normal conserva su cámara ortográfica. Son decisiones de presentación locales; el agente no puede establecer duraciones arbitrarias ni pasar comandos completos como argumentos.
 
 ## Configuración incluida y override opcional
 
-No hace falta configurar `TAVUS_TOOL_CONTRACTS_JSON`. Vacía o ausente, la API devuelve `contractSource: "bundled"` y `contracts: null`; el cliente genera los bindings incluidos cuando la ciudad está lista. El deployment público configurado se obtiene de `TAVUS_DEPLOYMENT_ID`, `VITE_TAVUS_DEPLOYMENT_ID` o del valor de compilación. No se necesita una API key para el widget.
+No hace falta configurar `TAVUS_TOOL_CONTRACTS_JSON`. Vacía o ausente, la API devuelve `contractSource: "bundled"` y `contracts: null`; el cliente genera los bindings incluidos cuando la ciudad está lista. El deployment público configurado se obtiene de `TAVUS_DEPLOYMENT_ID`, `VITE_TAVUS_DEPLOYMENT_ID` o del valor de compilación. El embed oficial utiliza ese mismo ID en todos los dispositivos y no necesita una API key.
 
 Para una integración que cambie deliberadamente las herramientas del PAL, `TAVUS_TOOL_CONTRACTS_JSON` permite sustituir el manifiesto completo. Debe contener:
 
@@ -59,14 +59,14 @@ AJV 8 valida el manifiesto al cargarlo y de nuevo al crear el puente. Los argume
 
 Se permiten referencias locales `#` y `#/…`; se rechazan referencias remotas, `$dynamicRef`, `$recursiveRef` y vocabularios o formatos que esta instalación no pueda validar. Límites: manifiesto de 128 KiB, argumentos de 16 KiB, profundidad de 32, 4.096 nodos y 256 elementos por array. Sólo se admiten los tres nombres exactos.
 
-El evento de entrada del SDK 0.19.3 es `tavus:tool-call`, con `detail` que contiene `name`, `arguments` como JSON string y, opcionalmente, `tool_call_id`, `seq` y `turn_idx`. La sesión deduplica y responde con `conversation.tool_result` cuando hay un ID de correlación. La copia del evento en `tavus:protocol-message` no vuelve a ejecutar la acción.
+El evento de entrada de `@tavus/embed` 0.19.3 es `tavus:tool-call`, con `detail` que contiene `name`, `arguments` como JSON string y, opcionalmente, `tool_call_id`, `seq` y `turn_idx`. La sesión deduplica y responde con `conversation.tool_result` cuando hay un ID de correlación. La copia del evento en `tavus:protocol-message` no vuelve a ejecutar la acción.
 
 El resultado indica `businessMutation: false`. El puente sólo accede a cámara y efectos: no cierra ventas, fabrica unidades, avanza lotes, confirma entregas ni registra cobros. El movimiento de tráfico o maquinaria es visual. El agente debe esperar el resultado antes de afirmar que una acción se ha completado.
 
 ## Comprobación
 
 ```sh
-node --test tests/demo-existing-agent-tools-model.test.mjs tests/demo-tool-contracts-model.test.mjs tests/demo-tavus-config-model.test.mjs
+node --test tests/demo-existing-agent-tools-model.test.mjs tests/demo-tool-contracts-model.test.mjs tests/demo-tavus-config-model.test.mjs tests/demo-presentation-state-model.test.mjs tests/demo-cinematic-camera-model.test.mjs
 ```
 
-Las pruebas contrastan los exports reales, recorren todos los IDs anunciados, comprueban tipos, destinos desconocidos, límites y ausencia de cambios en CRM/ERP. También prueban overrides inválidos y ausencia de credenciales en la configuración pública. Las pruebas de navegador con dobles del SDK inyectan eventos para comprobar el puente y la escena WebGL; no acreditan una conversación de voz real con Tavus. Resultados y límites: [VALIDATION.md](VALIDATION.md).
+Las pruebas contrastan los exports reales, recorren todos los IDs anunciados, comprueban tipos, destinos desconocidos, límites y ausencia de cambios en CRM/ERP. También prueban los datos contextuales, las tomas de cámara, los overrides inválidos y la ausencia de credenciales en la configuración pública. Las pruebas de navegador usan un elemento inerte que hace de doble del embed e inyectan eventos para comprobar el puente y la escena WebGL; no crean avatar, medios ni conversación real con Tavus. Resultados y límites: [VALIDATION.md](VALIDATION.md).

@@ -151,8 +151,8 @@ export function createExistingAgentContracts(snapshot) {
       trigger_3d_camera_movement: { command: {
         pointer: "/movement_id",
         map: table(catalogue.movements, (entry) => entry.id === "overview"
-          ? { action: "overview", duration: 2.8 }
-          : { action: "focus", target: { ...entry.target }, duration: 2.8 }),
+          ? { action: "overview", duration: 5.5 }
+          : { action: "focus", target: { ...entry.target }, duration: 5.5 }),
       } },
       highlight_building: { command: {
         pointer: "/building_id",
