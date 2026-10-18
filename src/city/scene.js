@@ -14,6 +14,7 @@ import { createConstructionDirector } from "./construction.js";
 import { createPeople } from "./people.js";
 import { createCommunicationsDistrict } from "./communications.js";
 import { createIndustryDistrict } from "./industry.js";
+import { createPresentationEffects } from "./presentation-effects.js";
 import { stageKind, needsAttention as modelNeedsAttention } from "./model.js";
 import { createSectorEmphasis } from "./sector-emphasis.js";
 import {
@@ -246,6 +247,27 @@ export async function createCityScene({
   const districtRoot = new THREE.Group();
   districtRoot.name = "CRM district parcels and front plaques";
   scene.add(districtRoot);
+  let storyFrame = null, storyCameraKey = null, storyCameraFrom = null;
+  const storyEffects = createPresentationEffects({
+    scene, architecture, reducedMotion,
+    getRoots: () => [world, districtRoads, districtRoot, overflowBase, overflowPavement, priorityMesh, activityMesh, celebrationMesh,
+      ...scene.children.filter((object) => object.name === "crm-communications-district" ||
+        object.name.startsWith("Distrito industrial") || object.name === "ambient-city-traffic" ||
+        object.name === "Equipo comercial · recorridos ilustrativos")],
+    getSaleSites: () => {
+      const stages = cityStages();
+      const originStage = stages.find((stage) => stageKind(state, stage.id) === "negotiation" || /negocia/i.test(stage.name || stage.id)) || stages.at(-2);
+      const wonStage = stages.find((stage) => stageKind(state, stage.id) === "won") || stages.at(-1);
+      if (!originStage || !wonStage) return null;
+      const deal = state?.deals?.find((entry) => entry.stageId === originStage.id);
+      const from = deal && positions.get(deal.id) ? positions.get(deal.id).target.clone() : plotFor(originStage.id, 0);
+      const occupied = new Set([...positions.values()].filter((entry) => entry.stageId === wonStage.id).map((entry) => entry.slot));
+      let slot = 0; while (occupied.has(slot)) slot++;
+      return { from, to: plotFor(wonStage.id, slot), sourceId: deal?.id || null };
+    },
+    getIndustrySites: () => ["manufacturing", "packing", "warehouse", "transit", "delivered"]
+      .map((id) => industry.focusPoint(id)?.setZ(-57.5)).filter(Boolean),
+  });
   const districtResources = [];
   const districtAnchors = new Map();
   let districtSignature = "";
@@ -415,6 +437,12 @@ export async function createCityScene({
       cinematicCamera.updateProjectionMatrix();
       renderer.setSize(w(), h(), false);
       renderer.setPixelRatio(pixelRatio());
+      if (aspectChanged && storyFrame && preserveFlight) {
+        // Reframe the sampled story instantly, including while it is paused.
+        sampleStory({ ...storyFrame, seeking: true });
+        lastLabel = 0;
+        return;
+      }
       if (aspectChanged && cinematic.shot && state) {
         const resolved = resolvePresentationTarget(cinematic.shot);
         if (resolved) {
@@ -1086,6 +1114,7 @@ export async function createCityScene({
     return { ok: true, cinematicEnabled: cinematic.enabled, idle: cinematic.idle };
   }
   function setCinematicMode(enabled) {
+    if (!enabled) clearStoryEffects();
     const next = Boolean(enabled);
     if (next === cinematic.enabled) return { ok: true, cinematicEnabled: next };
     if (next) {
@@ -1769,9 +1798,82 @@ export async function createCityScene({
       animation: typeof kind === "string" ? kind : null,
     };
   }
+  function clearStoryEffects() {
+    storyFrame = storyCameraKey = storyCameraFrom = null;
+    storyEffects.clear();
+    renderer.shadowMap.needsUpdate = true;
+    labelLayoutDirty = true;
+    schedule();
+    return { ok: true, code: "story_cleared", businessMutation: false };
+  }
+  function storyShotFor(target) {
+    const resolved = resolvePresentationTarget(target);
+    if (!resolved) return null;
+    if (target.kind === "district") {
+      const id = target.id;
+      const ranges = { all: [landMinZ, 26.5], sales: [-26.5, 26.5], communications: [-44, -27], industry: [-74, -49] };
+      const [minZ, maxZ] = ranges[id] || ranges.all;
+      return cinematicBoundsShot({ minX: -38.5, maxX: 38.5, minY: 0, maxY: id === "all" ? 13 : 9, minZ, maxZ }, { id, aspect: w() / h(), clearance: 18 });
+    }
+    if (target.kind === "sales-stage") {
+      const stages = cityStages();
+      const stage = stages.find((entry) => entry.id === target.id);
+      const firstDeal = state?.deals?.find((entry) => entry.stageId === stage?.id);
+      if (firstDeal && positions.has(firstDeal.id)) resolved.point.copy(positions.get(firstDeal.id).target);
+      resolved.point.y = 0.5;
+    }
+    const entity = architecture.entities.get(target.id);
+    return cinematicTargetShot(resolved.point, { kind: target.kind === "sales-stage" ? "deal" : target.kind,
+      id: target.id, height: entity?.model.height || 6, radius: target.kind === "industry-stage" ? 4 : 2.8,
+      aspect: w() / h(), clearance: 13 });
+  }
+  function sampleStory(frame = {}) {
+    if (disposed || !state || !cinematic.enabled) return { ok: false, code: "cinematic_unavailable", businessMutation: false };
+    const target = frame.target || { kind: "district", id: "all" };
+    const resolved = resolvePresentationTarget(target);
+    const section = resolved?.district || (frame.section === "commercial" ? "sales" : frame.section === "industrial" ? "industry" : frame.section);
+    if (["all", "sales", "communications", "industry"].includes(section) && district !== section) setDistrict(section, { tour: true });
+    flight = null; followFocus = null; presentationFollowing = false; cinematic.idle = false;
+    cancelPresentation("story_sample");
+    const progress = frame.progress ?? frame.effectStageProgress ?? frame.effectProgress ?? 0;
+    const result = storyEffects.sample({ ...frame, progress });
+    storyFrame = { ...frame, progress };
+    if (frame.camera !== false) {
+      const key = frame.shotId || `${frame.chapterId || ""}:${frame.beatId || ""}:${target.kind}:${target.id}`;
+      if (key !== storyCameraKey || frame.seeking === true) {
+        const previous = frame.seeking === true ? storyShotFor(frame.fromTarget) : null;
+        storyCameraFrom = { position: previous?.position || camera.position.clone(), target: previous?.target || controls.target.clone() };
+        storyCameraKey = key;
+      }
+      let shot = storyShotFor(target);
+      const effect = storyEffects.getState();
+      if (effect.effect === "sale" || effect.effect === "industry") {
+        const point = storyEffects.getFocus().clone();
+        const victory = effect.effect === "sale" ? clamp((effect.progress - 0.79) / 0.12, 0, 1) : 0;
+        const lift = victory * victory * (3 - 2 * victory);
+        point.y = effect.effect === "sale" ? lerp(2.8, 6, lift) : 1.5;
+        shot = cinematicTargetShot(point, { kind: "presentation", height: effect.effect === "sale" ? 7 : 5,
+          radius: lerp(3.2, 6.8, lift), aspect: w() / h(), clearance: 13 });
+      }
+      if (shot) {
+        const p = reducedMotion ? 1 : clamp(Number(frame.cameraProgress ?? progress) || 0, 0, 1);
+        const ease = p * p * p * (p * (p * 6 - 15) + 10);
+        sampleCinematicPosition(storyCameraFrom.position, shot.position, p,
+          cinematicRouteLift(storyCameraFrom.position, shot.position), camera.position);
+        controls.target.lerpVectors(storyCameraFrom.target, shot.target, ease);
+        cinematic.shot = { ...target };
+        camera.lookAt(controls.target); camera.updateMatrixWorld();
+      }
+    }
+    if (storyEffects.consumeShadowUpdate()) renderer.shadowMap.needsUpdate = true;
+    schedule();
+    return result;
+  }
   const presentation = Object.freeze({
     setCinematicMode,
     setCinematicIdle,
+    sampleStory,
+    clearStoryEffects,
     captureView: capturePresentationView,
     restoreView: restorePresentationView,
     focusTarget: ({ duration, ...target } = {}) =>
@@ -1792,6 +1894,7 @@ export async function createCityScene({
     getState: () => ({
       cinematicEnabled: cinematic.enabled,
       idle: cinematic.idle,
+      story: { ...storyEffects.getState(), beatId: storyFrame?.beatId || null, cameraProgress: storyFrame?.cameraProgress ?? null },
       shot: cinematic.shot ? { ...cinematic.shot } : null,
       position: camera.position.toArray(),
       target: controls.target.toArray(),
@@ -2514,6 +2617,7 @@ export async function createCityScene({
     communications.dispose?.();
     industry.dispose?.();
     construction.dispose?.();
+    storyEffects.dispose();
     clearDistrictGeometry();
     architecture.dispose();
     for (const r of worldResources) r.dispose?.();
@@ -2597,6 +2701,7 @@ export async function createCityScene({
       projectPlace,
       projectIndustry,
       construction,
+      storyEffects,
       districtRoot,
       projectOwner,
       architecture,

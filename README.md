@@ -20,7 +20,7 @@ npm run preview -- --port 4173
 
 **Vercel:** preset **Vite**, directorio raíz `./`, build `npm run build`, salida `dist`. Todos los assets necesarios están incluidos. El push a `main` puede activar un despliegue si el proyecto Vercel está enlazado. El estado de Vercel no se verifica desde esta aplicación.
 
-**Presentación Bird View con Tavus:** entra en `/demo`. La ciudad ocupa toda la pantalla, con planos en perspectiva, cifras y pipeline que cambian según el lugar mostrado. El guía usa el embed oficial en un dock inferior derecho en todos los dispositivos; sólo se inicia tras pulsar **Iniciar demo con IA**. Antes de hablar puedes explorar o dejar que cambien los planos lentamente. El Deployment ID y los tres esquemas reales están incluidos; las herramientas sólo navegan y resaltan. La voz real y los permisos del dominio final siguen pendientes de comprobación. [Configuración y escenarios](docs/demo/SETUP.md) · [Pruebas y capturas](docs/demo/VALIDATION.md).
+**Presentación simulada de Bird View:** entra en `/demo` y pulsa **Comenzar presentación**. La ciudad se construye por piezas y la cámara entra en sus barrios. Elige comercial, industria o comunicaciones; sigue una venta con grúas, camión, reconstrucción y confeti, o el recorrido de un producto hasta su entrega. Incluye subtítulos, voz opcional del navegador y controles de pausa, avance, retroceso y repetición. No carga Tavus ni consume minutos. El agente original se conserva en `/demo?mode=live`. [Uso y escenarios](docs/demo/SETUP.md) · [Pruebas y capturas](docs/demo/VALIDATION.md).
 
 ## Qué explorar
 

@@ -1,0 +1,1096 @@
+/* The presentation is a film over the city. UI stays at the edges of the frame. */
+.bird-story {
+  --story-ink: #092b35;
+  --story-paper: #fffdf5;
+  --story-muted: #d5e5e0;
+  --story-mint: #9bf3cc;
+  --story-gold: #f2d493;
+  --story-edge: clamp(22px, 3.15vw, 54px);
+  position: fixed;
+  inset: 0;
+  z-index: 24;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--story-paper);
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  pointer-events: none;
+}
+.bird-story::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #092b359c 0%, #092b353b 24%, #092b3500 48%),
+    linear-gradient(180deg, #082c3594 0, #082c3521 170px, #082c3500 34%),
+    linear-gradient(0deg, #082c35bc 0, #082c3540 135px, #082c3500 270px);
+  transition: opacity 800ms ease;
+}
+.bird-story.is-idle::before,
+.bird-story.is-choice::before {
+  background:
+    linear-gradient(90deg, #072c35df 0%, #072c3591 26%, #072c351c 65%, #072c3500 90%),
+    linear-gradient(180deg, #072c3599 0, #072c3500 220px),
+    linear-gradient(0deg, #072c35b8 0, #072c3500 270px);
+}
+.bird-story [hidden] {
+  display: none !important;
+}
+.bird-story *,
+.bird-story *::before,
+.bird-story *::after {
+  box-sizing: border-box;
+}
+.is-story-presentation:has(.bird-story[data-effect="assemble"]) #city-labels {
+  visibility: hidden;
+}
+.bird-story button,
+.bird-story a,
+.bird-story input,
+.bird-story summary {
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+.bird-story button,
+.bird-story a {
+  box-sizing: border-box;
+  min-height: 44px;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.bird-story button {
+  border-radius: 0;
+  background: transparent;
+}
+.bird-story button:focus-visible,
+.bird-story a:focus-visible,
+.bird-story input:focus-visible,
+.bird-story summary:focus-visible {
+  outline: 2px solid var(--story-mint);
+  outline-offset: 5px;
+}
+.bird-story button:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}
+.bird-story button svg,
+.bird-story a svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.bird-story-header {
+  position: absolute;
+  top: max(22px, env(safe-area-inset-top));
+  right: max(var(--story-edge), env(safe-area-inset-right));
+  left: max(var(--story-edge), env(safe-area-inset-left));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  height: 46px;
+}
+.bird-story-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  color: var(--story-paper);
+  font: 600 22px/1 "Manrope", sans-serif;
+  letter-spacing: -1px;
+}
+.bird-story-brand > svg {
+  width: 30px;
+  height: 30px;
+  color: var(--story-mint);
+}
+.bird-story-brand > span {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.bird-story-brand > .bird-story-monogram {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 35px;
+  color: var(--story-paper);
+  font: 500 44px/1 "Manrope", sans-serif;
+  letter-spacing: -5px;
+}
+.bird-story-monogram > span {
+  color: var(--story-mint);
+}
+.bird-story-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 12px;
+  color: #e0f0e3;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 1.7px;
+  white-space: nowrap;
+}
+.bird-story-mode > i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--story-mint);
+  box-shadow: 0 0 12px #9bf3cc59;
+}
+.bird-story-corner {
+  position: absolute;
+  top: 47%;
+  right: var(--story-edge);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #f2fcf182;
+  font-size: 8px;
+  line-height: 1.2;
+  letter-spacing: 2.1px;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 450ms ease;
+}
+.bird-story.is-idle .bird-story-corner {
+  opacity: 1;
+}
+.bird-story-brand small {
+  color: #d4e9e0;
+  font: 500 8px/1 "DM Sans", sans-serif;
+  letter-spacing: 2.3px;
+  text-transform: uppercase;
+}
+.bird-story-header-actions,
+.bird-story-header > nav,
+.bird-story-header > div:last-child:not(.bird-story-brand) {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.bird-story-header-actions > a,
+.bird-story-header-actions > button,
+.bird-story-header > nav > a,
+.bird-story-header > nav > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 44px;
+  padding: 0 14px;
+  border: 1px solid #edfcef30;
+  border-radius: 30px;
+  background: #07303c38;
+  font-size: 11px;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+.bird-story-header-actions > :hover,
+.bird-story-header > nav > :hover {
+  border-color: #e3f9ec80;
+  background: #07303c8a;
+}
+.bird-story-header-actions > [data-story-action="fullscreen"] {
+  width: 44px;
+  padding: 0;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.bird-story-copy {
+  position: absolute;
+  top: 128px;
+  left: var(--story-edge);
+  width: min(370px, calc(100vw - 2 * var(--story-edge)));
+  text-shadow: 0 2px 26px #092b354d;
+  transition: top 700ms ease, width 700ms ease;
+}
+#bird-story-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 16px;
+  color: var(--story-mint);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+}
+#bird-story-eyebrow::before {
+  width: 21px;
+  height: 1px;
+  content: "";
+  background: currentColor;
+}
+#bird-story-title {
+  margin: 0;
+  color: var(--story-paper);
+  font: 500 clamp(32px, 3.2vw, 49px)/1.08 "Manrope", sans-serif;
+  letter-spacing: -1.8px;
+  text-wrap: balance;
+  white-space: pre-line;
+}
+#bird-story-narration {
+  max-width: 350px;
+  margin: 16px 0 0;
+  color: #eef6ed;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+.bird-story-data-caption,
+.bird-story-data,
+.bird-story-copy > small {
+  display: block;
+  margin-top: 13px;
+  color: #d1e8d8;
+  font-size: 9px;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+}
+.bird-story-copy [data-story-action="start"],
+.bird-story-start {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  min-height: 54px;
+  margin-top: 27px;
+  padding: 0 24px;
+  border: 1px solid var(--story-mint);
+  border-radius: 34px;
+  background: var(--story-mint);
+  box-shadow: 0 8px 40px #012e2e1f;
+  color: var(--story-ink);
+  font-size: 12px;
+  font-weight: 700;
+  text-shadow: none;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+.bird-story-copy [data-story-action="start"]:hover,
+.bird-story-start:hover {
+  background: #c3f8d9;
+  box-shadow: 0 10px 42px #012e2e3b;
+}
+.bird-story.is-idle .bird-story-copy {
+  top: clamp(155px, 25vh, 285px);
+  width: min(650px, 62vw);
+}
+.bird-story.is-idle #bird-story-title {
+  font-size: clamp(56px, 6.7vw, 102px);
+  line-height: 1.02;
+  letter-spacing: -5px;
+}
+.bird-story.is-idle #bird-story-narration {
+  max-width: 410px;
+  margin-top: 24px;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.bird-story.is-choice .bird-story-copy {
+  top: 27%;
+  width: min(520px, 45vw);
+}
+.bird-story.is-choice #bird-story-title {
+  font-size: clamp(35px, 4vw, 62px);
+  line-height: 1.09;
+  letter-spacing: -2.5px;
+}
+.bird-story.is-intro:not(.is-idle):not(.is-choice) .bird-story-copy {
+  top: 24%;
+  width: min(490px, 42vw);
+}
+.bird-story.is-intro:not(.is-idle):not(.is-choice) #bird-story-title {
+  font-size: clamp(37px, 4.3vw, 65px);
+  line-height: 1.05;
+  letter-spacing: -2.6px;
+}
+
+#bird-story-kpis {
+  position: absolute;
+  top: 103px;
+  right: var(--story-edge);
+  display: flex;
+  gap: 26px;
+  align-items: flex-start;
+  padding: 12px 0 13px 18px;
+  text-align: right;
+  text-shadow: 0 2px 18px #092b3580;
+}
+.bird-story-kpi,
+#bird-story-kpis > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 75px;
+}
+.bird-story-kpi + .bird-story-kpi,
+#bird-story-kpis > div + div {
+  padding-left: 23px;
+  border-left: 1px solid #e6f6e631;
+}
+.bird-story-kpi > span,
+.bird-story-kpi .label,
+#bird-story-kpis > div > small {
+  color: #e2f1e8;
+  font-size: 9px;
+  line-height: 1.4;
+}
+.bird-story-kpi > b,
+.bird-story-kpi > strong,
+.bird-story-kpi .value,
+#bird-story-kpis > div > b {
+  color: var(--story-paper);
+  font: 500 29px/1 "Manrope", sans-serif;
+  letter-spacing: -1.2px;
+}
+.bird-story-kpi > small,
+.bird-story-kpi .note {
+  color: var(--story-mint);
+  font-size: 8px;
+  line-height: 1.4;
+}
+.bird-story.is-idle #bird-story-kpis {
+  opacity: 0.8;
+}
+
+.bird-story-choices {
+  position: absolute;
+  top: 27%;
+  right: var(--story-edge);
+  display: grid;
+  gap: 11px;
+  width: min(345px, 30vw);
+  pointer-events: auto;
+}
+.bird-story-choice-label {
+  padding: 0 3px 4px;
+  color: #e1f2e5;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 1.6px;
+}
+.bird-story-choices > button {
+  position: relative;
+  display: grid;
+  grid-template-columns: 29px minmax(0, 1fr) 23px;
+  align-items: center;
+  gap: 12px;
+  min-height: 104px;
+  padding: 18px 20px;
+  overflow: hidden;
+  border: 1px solid #effff337;
+  border-radius: 16px;
+  background: #0a2f3ae6;
+  box-shadow: 0 10px 34px #0a252c0d;
+  text-align: left;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.bird-story-choices > button::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  content: "";
+  background: var(--story-mint);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.bird-story-choices > button:hover {
+  border-color: #c5f8d985;
+  background: #10414a;
+  transform: translateX(-5px);
+}
+.bird-story-choices > button:hover::before {
+  opacity: 1;
+}
+.bird-story-choices > button > small,
+.bird-story-choices > button > span:first-child:not(:last-child) {
+  color: var(--story-mint);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.bird-story-choices > button > span:has(b),
+.bird-story-choices > button > span:has(strong) {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.bird-story-choices b,
+.bird-story-choices strong {
+  display: block;
+  color: var(--story-paper);
+  font: 500 17px/1.2 "Manrope", sans-serif;
+  letter-spacing: -0.4px;
+}
+.bird-story-choices em {
+  display: block;
+  color: #cddfd7;
+  font-size: 10px;
+  font-style: normal;
+  line-height: 1.5;
+}
+.bird-story-choices i {
+  color: var(--story-mint);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  text-align: right;
+}
+
+.bird-story-stages {
+  position: absolute;
+  right: 330px;
+  bottom: 118px;
+  left: var(--story-edge);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  max-width: calc(100vw - var(--story-edge) - 360px);
+  padding: 0;
+}
+.bird-story-stage,
+#bird-story-stages > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 76px;
+  padding: 10px 14px 12px;
+  border: 1px solid #e5f8e422;
+  border-radius: 9px;
+  background: #082d356e;
+  color: #dfede5;
+  text-shadow: 0 1px 15px #072b354d;
+  transition: background-color 350ms ease, border-color 350ms ease, color 350ms ease;
+}
+.bird-story-stage > span,
+.bird-story-stage > small,
+#bird-story-stages > div > span {
+  font-size: 8px;
+  line-height: 1.4;
+}
+#bird-story-stages > div > small {
+  color: #b2e1cb;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+.bird-story-stage > b,
+.bird-story-stage > strong {
+  font: 500 21px/1 "Manrope", sans-serif;
+  letter-spacing: -0.5px;
+}
+.bird-story-stage[data-active="true"],
+.bird-story-stage.is-active,
+#bird-story-stages > div[data-active="true"] {
+  border-color: #c5f9dc87;
+  background: #a4efcf;
+  color: #123d3d;
+  text-shadow: none;
+}
+.bird-story-stage[data-active="true"]::after,
+.bird-story-stage.is-active::after,
+#bird-story-stages > div[data-active="true"]::after {
+  position: absolute;
+  right: 19px;
+  bottom: -6px;
+  left: 19px;
+  height: 2px;
+  content: "";
+  border-radius: 2px;
+  background: var(--story-mint);
+}
+#bird-story-stages > div[data-active="true"] > small {
+  color: #23645a;
+}
+
+.bird-story-guide {
+  position: absolute;
+  right: var(--story-edge);
+  bottom: 116px;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 10px;
+  width: 255px;
+  min-height: 62px;
+  padding: 10px 11px;
+  border: 1px solid #ebf9ed24;
+  border-radius: 16px;
+  background: #0b303bde;
+  box-shadow: 0 8px 30px #08272d10;
+}
+.bird-story-orb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #b7f9d949;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #c4f7d52e, #114d4e4d);
+  box-shadow: inset 0 0 15px #a0efcd0a;
+}
+.bird-story-orb i {
+  width: 3px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--story-mint);
+  transform-origin: center;
+}
+.bird-story-orb i:nth-child(2) {
+  height: 18px;
+}
+.bird-story-guide > div:not(.bird-story-orb) {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.bird-story-guide b,
+.bird-story-guide strong {
+  color: var(--story-paper);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.bird-story-guide > div > span {
+  color: var(--story-paper);
+  font-size: 10px;
+  line-height: 1.3;
+}
+.bird-story-guide #bird-story-status {
+  color: #bfdccc;
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.bird-story-guide small,
+.bird-story-guide p {
+  margin: 0;
+  color: #c8e0d2;
+  font-size: 8px;
+  line-height: 1.4;
+}
+.bird-story-guide > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-height: 44px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: #d5f7e110;
+  color: var(--story-mint);
+}
+.bird-story-guide > button:hover {
+  background: #d5f7e12a;
+}
+.bird-story-guide > button[aria-pressed="true"] {
+  background: #b5f3d1;
+  color: var(--story-ink);
+}
+.bird-story.is-speaking .bird-story-orb i {
+  animation: bird-story-voice 780ms ease-in-out infinite alternate;
+}
+.bird-story.is-speaking .bird-story-orb i:nth-child(2) {
+  animation-delay: -240ms;
+}
+.bird-story.is-speaking .bird-story-orb i:nth-child(3) {
+  animation-delay: -510ms;
+}
+
+.bird-story-player {
+  position: absolute;
+  right: auto;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: min(930px, calc(100vw - 2 * var(--story-edge)));
+  min-height: 64px;
+  padding: 10px 14px;
+  border: 1px solid #e6f9ea29;
+  border-radius: 16px;
+  background: #092e39e8;
+  box-shadow: 0 15px 50px #09262c18;
+  pointer-events: auto;
+  transform: translateX(-50%);
+}
+.bird-story-transport {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.bird-story-transport > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  color: #e3f6ea;
+  font-family: "DM Sans", sans-serif;
+  font-size: 25px;
+  line-height: 1;
+  transition: background-color 140ms ease;
+}
+.bird-story-transport > button:hover {
+  background: #bcefd11c;
+}
+.bird-story-transport > .bird-story-play {
+  background: var(--story-mint);
+  color: var(--story-ink);
+  font-size: 16px;
+}
+.bird-story-transport > .bird-story-play:hover {
+  background: #c4f8dc;
+}
+.bird-story-player > .bird-story-replay {
+  font-size: 24px;
+}
+.bird-story-player > button,
+.bird-story-player > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex-shrink: 0;
+  min-width: 44px;
+  padding: 0 10px;
+  border-radius: 9px;
+  color: #e2f5e9;
+  font-size: 10px;
+  line-height: 1.3;
+  transition: background-color 140ms ease;
+}
+.bird-story-player > button:hover,
+.bird-story-player > a:hover {
+  background: #c2f8dd16;
+}
+.bird-story-player > [data-story-action="toggle"],
+.bird-story-player > [data-story-action="play"],
+.bird-story-player > [data-story-action="pause"] {
+  width: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--story-mint);
+  color: var(--story-ink);
+}
+.bird-story-player > [data-story-action="toggle"]:hover,
+.bird-story-player > [data-story-action="play"]:hover,
+.bird-story-player > [data-story-action="pause"]:hover {
+  background: #c4f8dc;
+}
+.bird-story-timeline,
+.bird-story-player > label,
+.bird-story-progress {
+  display: flex;
+  flex: 1 1 240px;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 90px;
+}
+.bird-story-timeline > div,
+.bird-story-progress > div,
+.bird-story-player > label > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #deeee3;
+  font-size: 9px;
+  line-height: 1.2;
+}
+.bird-story-timeline b,
+.bird-story-timeline strong,
+.bird-story-progress b,
+.bird-story-progress strong {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bird-story-time,
+#bird-story-time {
+  color: #b8d5c8;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+#bird-story-scrubber {
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  background: transparent;
+  accent-color: var(--story-mint);
+  cursor: pointer;
+}
+#bird-story-scrubber::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 4px;
+  background: #ecfff12f;
+}
+#bird-story-scrubber::-webkit-slider-thumb {
+  width: 10px;
+  height: 10px;
+  margin-top: -3.5px;
+  appearance: none;
+  border: 1px solid #d1ffe4;
+  border-radius: 50%;
+  background: var(--story-mint);
+}
+#bird-story-scrubber::-moz-range-track {
+  height: 3px;
+  border-radius: 4px;
+  background: #ecfff12f;
+}
+#bird-story-scrubber::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #d1ffe4;
+  border-radius: 50%;
+  background: var(--story-mint);
+}
+.bird-story-player details {
+  position: relative;
+  flex-shrink: 0;
+  color: #d7ecdf;
+  font-size: 10px;
+}
+.bird-story-player summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 11px;
+  border-radius: 9px;
+  list-style: none;
+  cursor: pointer;
+}
+.bird-story-player summary::-webkit-details-marker {
+  display: none;
+}
+.bird-story-player summary:hover {
+  background: #c2f8dd16;
+}
+.bird-story-player details > div {
+  position: absolute;
+  right: -3px;
+  bottom: calc(100% + 18px);
+  width: 255px;
+  padding: 19px 20px;
+  border: 1px solid #e2f8e637;
+  border-radius: 14px;
+  background: #0a303bf7;
+  box-shadow: 0 8px 35px #031d2c29;
+  color: #d4e8da;
+  font-size: 10px;
+  line-height: 1.7;
+}
+.bird-story-player details p {
+  margin: 0 0 12px;
+}
+.bird-story-player details a {
+  display: flex;
+  align-items: center;
+  color: var(--story-mint);
+  font-size: 10px;
+}
+.bird-story-explore > div > button,
+.bird-story-explore > div > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 7px;
+  border-bottom: 1px solid #e2f9e516;
+  color: #e4f4e7;
+  font-size: 11px;
+  text-align: left;
+}
+.bird-story-explore > div > a {
+  margin-top: 6px;
+  border-bottom: 0;
+  color: var(--story-mint);
+  font-size: 10px;
+}
+.bird-story-explore > div > button:hover {
+  color: var(--story-mint);
+}
+
+.bird-story-milestone {
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  min-width: 240px;
+  padding: 18px 29px 20px;
+  border: 1px solid #f1d78f94;
+  border-radius: 17px;
+  background: #102f37eb;
+  box-shadow: 0 18px 70px #0d333824;
+  color: var(--story-gold);
+  text-align: left;
+  transform: translateX(-50%);
+  animation: bird-story-arrive 650ms cubic-bezier(.16, 1, .3, 1) both;
+}
+.bird-story-milestone > span {
+  color: var(--story-gold);
+  font-size: 35px;
+}
+.bird-story-milestone > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.bird-story-milestone > div > small {
+  color: #d4dea5;
+  font-size: 7px;
+  letter-spacing: 1.5px;
+}
+.bird-story-milestone p {
+  margin: 0;
+  color: #d7e5d3;
+  font-size: 9px;
+  line-height: 1.5;
+}
+.bird-story-milestone b,
+.bird-story-milestone strong {
+  font: 500 23px/1.2 "Manrope", sans-serif;
+  letter-spacing: -0.6px;
+}
+.bird-story-milestone small,
+.bird-story-milestone span {
+  color: #e1e9d3;
+  font-size: 10px;
+  line-height: 1.4;
+}
+.bird-story-milestone > span {
+  color: var(--story-gold);
+  font-size: 35px;
+}
+.bird-story-error,
+#bird-story-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(420px, calc(100vw - 44px));
+  padding: 27px;
+  border: 1px solid #d5efdd57;
+  border-radius: 18px;
+  background: #092f3af7;
+  color: var(--story-paper);
+  font-size: 14px;
+  line-height: 1.7;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+.bird-story-error button {
+  padding: 0 16px;
+  border-radius: 9px;
+  background: var(--story-mint);
+  color: var(--story-ink);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@keyframes bird-story-voice {
+  from { transform: scaleY(0.5); }
+  to { transform: scaleY(1.25); }
+}
+@keyframes bird-story-arrive {
+  from { opacity: 0; transform: translate(-50%, 15px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (min-width: 1700px) {
+  .bird-story-copy { top: 160px; }
+  #bird-story-narration { font-size: 14px; }
+  .bird-story-guide { width: 280px; }
+}
+@media (max-width: 1100px) {
+  .bird-story { --story-edge: 25px; }
+  .bird-story-copy { top: 118px; width: 305px; }
+  #bird-story-title { font-size: 36px; letter-spacing: -1.4px; }
+  #bird-story-narration { max-width: 290px; font-size: 11px; }
+  #bird-story-kpis { gap: 17px; top: 100px; }
+  .bird-story-kpi { min-width: 65px; }
+  .bird-story-kpi + .bird-story-kpi { padding-left: 17px; }
+  .bird-story-kpi > b, .bird-story-kpi > strong, .bird-story-kpi .value { font-size: 25px; }
+  .bird-story-choices { width: 310px; }
+  .bird-story-choices > button { min-height: 94px; gap: 9px; padding: 15px; }
+  .bird-story-stages { right: 290px; max-width: calc(100vw - 325px); gap: 5px; }
+  .bird-story-stage { min-width: 61px; padding: 9px 10px; }
+  .bird-story-stage > span, .bird-story-stage > small { font-size: 7px; }
+  .bird-story-guide { width: 240px; }
+  #bird-story-kpis > div { min-width: 65px; }
+  #bird-story-kpis > div + div { padding-left: 17px; }
+  #bird-story-kpis > div > b { font-size: 25px; }
+  #bird-story-stages > div { min-width: 61px; padding: 9px 10px; }
+  #bird-story-stages > div > span { font-size: 7px; }
+}
+@media (max-width: 900px) {
+  .bird-story-mode { display: none; }
+}
+@media (max-width: 740px) and (min-height: 501px) {
+  .bird-story { --story-edge: 19px; }
+  .bird-story::before { background: linear-gradient(180deg, #072c35b8, #072c3529 290px, #072c3500 420px), linear-gradient(0deg, #072c35c2, #072c3500 330px); }
+  .bird-story.is-idle::before, .bird-story.is-choice::before { background: linear-gradient(180deg, #072c35d1 0, #072c354d 40%, #072c3500 70%), linear-gradient(0deg, #072c35c4 0, #072c3552 25%, #072c3500 55%); }
+  .bird-story-header { top: max(15px, env(safe-area-inset-top)); gap: 8px; }
+  .bird-story-brand { font-size: 19px; gap: 8px; }
+  .bird-story-brand > svg { width: 25px; height: 25px; }
+  .bird-story-brand small { font-size: 6px; letter-spacing: 1.5px; }
+  .bird-story-header-actions, .bird-story-header > nav { gap: 4px; }
+  .bird-story-header-actions > a, .bird-story-header-actions > button, .bird-story-header > nav > a, .bird-story-header > nav > button { min-width: 44px; padding: 0 11px; font-size: 9px; }
+  .bird-story-copy, .bird-story.is-intro:not(.is-idle):not(.is-choice) .bird-story-copy { top: 156px; width: min(380px, calc(100vw - 2 * var(--story-edge))); }
+  #bird-story-eyebrow { margin-bottom: 9px; font-size: 7px; letter-spacing: 1.5px; }
+  #bird-story-title, .bird-story.is-intro:not(.is-idle):not(.is-choice) #bird-story-title { max-width: 340px; font-size: 33px; line-height: 1.06; letter-spacing: -1.5px; }
+  #bird-story-narration { max-width: 350px; margin-top: 12px; font-size: 11px; line-height: 1.65; }
+  .bird-story-data-caption, .bird-story-data, .bird-story-copy > small { margin-top: 8px; font-size: 8px; }
+  .bird-story.is-idle .bird-story-copy { top: 25%; width: calc(100vw - 2 * var(--story-edge)); }
+  .bird-story.is-idle #bird-story-title { max-width: 390px; font-size: clamp(43px, 12.5vw, 76px); letter-spacing: -2.7px; }
+  .bird-story.is-idle #bird-story-narration { max-width: 335px; margin-top: 19px; font-size: 12px; line-height: 1.7; }
+  .bird-story-copy [data-story-action="start"], .bird-story-start { min-height: 50px; margin-top: 22px; padding: 0 23px; font-size: 11px; }
+  #bird-story-kpis { top: 84px; right: var(--story-edge); left: var(--story-edge); justify-content: space-between; gap: 15px; padding: 0; text-align: left; }
+  .bird-story-kpi { flex: 1; gap: 5px; min-width: 0; }
+  .bird-story-kpi + .bird-story-kpi { padding-left: 15px; }
+  .bird-story-kpi > span, .bird-story-kpi .label { font-size: 8px; }
+  .bird-story-kpi > b, .bird-story-kpi > strong, .bird-story-kpi .value { font-size: 25px; letter-spacing: -1px; }
+  .bird-story-kpi > small, .bird-story-kpi .note { display: none; }
+  #bird-story-kpis > div { flex: 1; gap: 5px; min-width: 0; }
+  #bird-story-kpis > div + div { padding-left: 15px; }
+  #bird-story-kpis > div > small { font-size: 8px; }
+  #bird-story-kpis > div > b { font-size: 25px; letter-spacing: -1px; }
+  .bird-story.is-choice .bird-story-copy { top: 154px; width: calc(100vw - 2 * var(--story-edge)); }
+  .bird-story.is-choice #bird-story-title { max-width: 360px; font-size: 32px; letter-spacing: -1.3px; }
+  .bird-story.is-choice #bird-story-narration { max-width: 340px; }
+  .bird-story-choices { top: auto; right: var(--story-edge); bottom: 172px; left: var(--story-edge); gap: 8px; width: auto; }
+  .bird-story-choices > button { grid-template-columns: 27px minmax(0, 1fr) 22px; min-height: 78px; padding: 13px 15px; border-radius: 13px; background: #0a303bf0; }
+  .bird-story-choices b, .bird-story-choices strong { font-size: 15px; }
+  .bird-story-choices em { font-size: 9px; }
+  .bird-story-choices > button:hover { transform: none; }
+  .bird-story-choice-label { padding-bottom: 3px; font-size: 7px; letter-spacing: 1.2px; }
+  .bird-story-stages { right: var(--story-edge); bottom: 166px; left: var(--story-edge); justify-content: space-between; gap: 4px; width: auto; max-width: none; }
+  .bird-story-stage { flex: 1; min-width: 0; gap: 5px; padding: 9px 5px; border-radius: 7px; text-align: center; }
+  .bird-story-stage > span, .bird-story-stage > small { font-size: 6px; }
+  .bird-story-stage > b, .bird-story-stage > strong { font-size: 17px; }
+  #bird-story-stages > div { flex: 1; min-width: 0; gap: 5px; padding: 9px 5px; border-radius: 7px; text-align: center; }
+  #bird-story-stages > div > span { font-size: 7px; }
+  #bird-story-stages > div > small { font-size: 7px; }
+  .bird-story-guide { right: var(--story-edge); bottom: 98px; gap: 8px; width: 225px; min-height: 56px; padding: 7px 8px; border-radius: 13px; }
+  .bird-story-guide b, .bird-story-guide strong { font-size: 10px; }
+  .bird-story-guide small, .bird-story-guide p { font-size: 7px; }
+  .bird-story-player { right: auto; bottom: max(14px, env(safe-area-inset-bottom)); left: 50%; gap: 7px; width: calc(100vw - 24px); min-height: 64px; padding: 9px 8px; border-radius: 14px; }
+  .bird-story-player > button, .bird-story-player > a { gap: 4px; min-width: 44px; padding: 0 7px; font-size: 0; }
+  .bird-story-player > button svg, .bird-story-player > a svg { width: 17px; height: 17px; }
+  .bird-story-player > .bird-story-replay { font-size: 24px; }
+  .bird-story-transport { gap: 0; }
+  .bird-story-timeline, .bird-story-progress, .bird-story-player > label { min-width: 62px; flex-basis: 115px; }
+  .bird-story-timeline > div, .bird-story-progress > div, .bird-story-player > label > span { gap: 6px; font-size: 8px; }
+  .bird-story-time, #bird-story-time { font-size: 7px; }
+  .bird-story-player details { font-size: 0; }
+  .bird-story-player summary { width: 44px; padding: 0; }
+  .bird-story-player summary::after { content: "···"; color: var(--story-mint); font-size: 22px; letter-spacing: 2px; }
+  .bird-story-player summary svg { display: none; }
+  .bird-story-player summary > span { display: none; }
+  .bird-story-player details > div { right: 0; bottom: calc(100% + 18px); width: min(280px, calc(100vw - 46px)); }
+  .bird-story-milestone { top: 47%; min-width: 215px; padding: 15px 20px; }
+  .bird-story-milestone b, .bird-story-milestone strong { font-size: 21px; }
+}
+@media (max-width: 740px) and (max-height: 740px) and (min-height: 501px) {
+  .bird-story-copy, .bird-story.is-intro:not(.is-idle):not(.is-choice) .bird-story-copy { top: 148px; }
+  #bird-story-title, .bird-story.is-intro:not(.is-idle):not(.is-choice) #bird-story-title { font-size: 28px; max-width: 340px; }
+  #bird-story-narration { font-size: 10px; line-height: 1.5; }
+  .bird-story.is-idle .bird-story-copy { top: 23%; }
+  .bird-story.is-idle #bird-story-title { font-size: 44px; }
+  .bird-story.is-idle #bird-story-narration { font-size: 11px; margin-top: 15px; }
+  .bird-story.is-choice .bird-story-copy { top: 145px; }
+  .bird-story.is-choice #bird-story-title { font-size: 27px; }
+  .bird-story.is-choice #bird-story-narration { display: none; }
+  .bird-story-choices { bottom: 170px; }
+  .bird-story-choices > button { min-height: 69px; padding: 10px 14px; }
+  .bird-story-choices em { font-size: 8px; }
+}
+@media (max-height: 500px) {
+  .bird-story { --story-edge: 21px; }
+  .bird-story-header { top: max(9px, env(safe-area-inset-top)); height: 42px; }
+  .bird-story-brand { gap: 7px; font-size: 18px; }
+  .bird-story-brand > svg { width: 24px; height: 24px; }
+  .bird-story-brand small { font-size: 5px; letter-spacing: 1.4px; }
+  .bird-story-header-actions > a, .bird-story-header-actions > button, .bird-story-header > nav > a, .bird-story-header > nav > button { min-height: 44px; padding: 0 11px; font-size: 9px; }
+  .bird-story-copy, .bird-story.is-intro:not(.is-idle):not(.is-choice) .bird-story-copy { top: 82px; width: min(330px, 43vw); }
+  #bird-story-eyebrow { margin-bottom: 8px; font-size: 7px; letter-spacing: 1.5px; }
+  #bird-story-title, .bird-story.is-intro:not(.is-idle):not(.is-choice) #bird-story-title { font-size: 30px; letter-spacing: -1.2px; }
+  #bird-story-narration { margin-top: 9px; font-size: 10px; line-height: 1.6; }
+  .bird-story-data-caption, .bird-story-data, .bird-story-copy > small { margin-top: 7px; font-size: 7px; }
+  .bird-story.is-idle .bird-story-copy { top: 86px; width: min(430px, 56vw); }
+  .bird-story.is-idle #bird-story-title { font-size: clamp(35px, 5.6vw, 49px); letter-spacing: -2px; }
+  .bird-story.is-idle #bird-story-narration { max-width: 360px; margin-top: 13px; font-size: 10px; }
+  .bird-story-copy [data-story-action="start"], .bird-story-start { min-height: 44px; margin-top: 14px; padding: 0 20px; font-size: 10px; }
+  #bird-story-kpis { top: 72px; gap: 14px; padding: 0; }
+  .bird-story-kpi { min-width: 60px; gap: 5px; }
+  .bird-story-kpi + .bird-story-kpi { padding-left: 14px; }
+  .bird-story-kpi > span, .bird-story-kpi .label { font-size: 7px; }
+  .bird-story-kpi > b, .bird-story-kpi > strong, .bird-story-kpi .value { font-size: 23px; }
+  .bird-story-kpi > small, .bird-story-kpi .note { display: none; }
+  #bird-story-kpis > div { min-width: 60px; gap: 5px; }
+  #bird-story-kpis > div + div { padding-left: 14px; }
+  #bird-story-kpis > div > small { font-size: 7px; }
+  #bird-story-kpis > div > b { font-size: 23px; }
+  .bird-story.is-choice .bird-story-copy { top: 100px; width: 40vw; }
+  .bird-story.is-choice #bird-story-title { font-size: 29px; letter-spacing: -1.1px; }
+  .bird-story.is-choice #bird-story-narration { max-width: 280px; font-size: 10px; }
+  .bird-story-choices { top: 125px; right: var(--story-edge); gap: 6px; width: min(345px, 44vw); }
+  .bird-story-choices > button { grid-template-columns: 22px minmax(0, 1fr) 19px; gap: 9px; min-height: 56px; padding: 9px 13px; border-radius: 10px; }
+  .bird-story-choices > button > span:has(b), .bird-story-choices > button > span:has(strong) { gap: 4px; }
+  .bird-story-choices b, .bird-story-choices strong { font-size: 12px; }
+  .bird-story-choices em { font-size: 7px; }
+  .bird-story-choice-label { display: none; }
+  .bird-story-stages { right: 272px; bottom: 84px; max-width: calc(100vw - 300px); gap: 4px; }
+  .bird-story-stage { min-width: 58px; gap: 4px; padding: 7px 9px; }
+  .bird-story-stage > span, .bird-story-stage > small { font-size: 6px; }
+  .bird-story-stage > b, .bird-story-stage > strong { font-size: 17px; }
+  #bird-story-stages > div { min-width: 58px; gap: 4px; padding: 7px 9px; }
+  #bird-story-stages > div > span { font-size: 7px; }
+  #bird-story-stages > div > small { font-size: 6px; }
+  .bird-story-guide { right: var(--story-edge); bottom: 83px; grid-template-columns: 30px minmax(0, 1fr) 40px; gap: 7px; width: 228px; min-height: 48px; padding: 4px 8px; border-radius: 12px; }
+  .bird-story.is-choice .bird-story-guide { left: var(--story-edge); right: auto; }
+  .bird-story-orb { width: 30px; height: 30px; }
+  .bird-story-guide b, .bird-story-guide strong { font-size: 9px; }
+  .bird-story-guide small, .bird-story-guide p { font-size: 7px; }
+  .bird-story-player { bottom: max(10px, env(safe-area-inset-bottom)); min-height: 57px; gap: 10px; padding: 6px 10px; border-radius: 13px; }
+  .bird-story-player > button, .bird-story-player > a { min-height: 44px; font-size: 9px; }
+  .bird-story-timeline, .bird-story-progress, .bird-story-player > label { gap: 4px; }
+  .bird-story-player details > div { bottom: calc(100% + 12px); }
+  .bird-story-milestone { top: 35%; min-width: 220px; gap: 5px; padding: 13px 24px; }
+  .bird-story-milestone b, .bird-story-milestone strong { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bird-story *, .bird-story::before { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

@@ -222,7 +222,7 @@ async function settled(page) {
   );
   await frames(page);
 }
-async function boot(page, path = "/demo") {
+async function boot(page, path = "/demo?mode=live") {
   const response = await page.goto(new URL(path, base).href);
   expect(response.status()).toBe(200);
   await page.waitForFunction(() => window.__ATLAS_CITY__?.sceneReady);

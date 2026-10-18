@@ -13,7 +13,8 @@
     "test:city-v3": "node tests/city-v3-browser.mjs",
     "test:city-v4": "node tests/city-v4-browser.mjs",
     "test:city-v5": "node tests/city-v5-browser.mjs",
-    "test:demo": "node tests/demo-browser.mjs",
+    "test:demo": "node tests/demo-simulation-browser.mjs",
+    "test:demo:live": "node tests/demo-browser.mjs",
     "test:luma": "node tests/luma-browser.mjs",
     "test:classic": "node tests/smoke.mjs",
     "test:operations": "node tests/operations-browser.mjs"

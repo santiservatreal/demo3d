@@ -1,0 +1,3261 @@
+{
+  "generatedAt": "2026-10-18T21:11:56.148Z",
+  "startedAt": "2026-10-18T21:07:38.203Z",
+  "browser": "154.0.8037.57",
+  "environment": "Chromium headless, ANGLE/SwiftShader software WebGL; no physical-device or live-Tavus validation; no FPS performance claim",
+  "screenshots": "Actual WebGL city at paused story samples; finite DOM entrance animations are finished for readable stills",
+  "liveConversationStarted": false,
+  "microphoneOpened": false,
+  "loadedAssets": [
+    "/assets/index-CbrMXPM4.js",
+    "/assets/app-Crume62P.js",
+    "/assets/simulation-app-D2J1QY-r.js",
+    "/assets/app-zFhWrRl5.js",
+    "/assets/latin-500-Cyqtgt1y.js",
+    "/assets/latin-500-Bm95e5Vc.css",
+    "/assets/RGBELoader-ptE74597.js",
+    "/assets/sparkles-CWcxvvnS.js",
+    "/assets/sliders-horizontal-Uiiy_cVC.js",
+    "/assets/info-CnJiReZA.js",
+    "/assets/users-Du-LrvV8.js",
+    "/assets/app-BtU1d9e3.css",
+    "/assets/style-qgmdvBot.js",
+    "/assets/style-Bm_FjAwn.css",
+    "/assets/simulation-app-CNKmtUKs.css",
+    "/assets/live-app-CAeDvvCf.js"
+  ],
+  "sourceSha256": {
+    "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
+    "package.json": "0873351b5f5987ce9d81fd78fc941d06cbf3fdc5ac3def280b1948f8d621b3bb",
+    "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "67c48c76549b95b9e1e83d93521a7ac78d6b970d6fd9521125bcc5a74a5dbd26",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "58760d5cd57e5dbbb6f2c86bd2c6458c843e69a78260da956e51775e077a365a",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/presentation-camera.js": "f4df9f49808daf91d8cfab73088e0d661f6da21ff5af6b1713c7f3de19971497",
+    "src/city/presentation-effects.js": "3ebcfa372506d0a6d12d02ab3daf2a7771b45c5316838d488e5e5ddbd8d1729e",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "7923eef24a71cbda157fdddec6e1579b9d05917c61a9519f127192886cc11494",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020",
+    "src/demo/app.js": "99e34e0ba05fdd05dedddac4f42bfd6a5860a72c396def369298df3cc147fa94",
+    "src/demo/city-controller.js": "068ac4cbd4d205094afa8606aedd57e7ba0e518c37837eae4b49878a3f430dfd",
+    "src/demo/existing-agent-tools.js": "92b10c1b3de70a8ee5cf4b1c44b3b0ee0c719b153d6cea3b3bec960e0dc0762f",
+    "src/demo/live-app.js": "ed2c38e2780a868afa9e65dc3f16f35d7f1e53512e3a772f1b5168764d99680b",
+    "src/demo/presentation-state.js": "dbd8d6531635cd177d7bbc02a53cbb6640abc7219a16f80787eb5e371e56be86",
+    "src/demo/simulation-app.js": "9f1f664e06ffc4278bd97a07454f7fd4390ce9344cb839b22e89e2a65cb68a22",
+    "src/demo/story-model.js": "31465f432ba1e6de727f54f80771459b29f635c8f0fde5e4b552e1aa545d0e23",
+    "src/demo/story-player.js": "beda1059c060771a1d944bb97dd15d01cf83d3ae1a6e8dd508af58d0d23af549",
+    "src/demo/story.css": "9f9b2086ea97ed3f0c622ecce5b5ead4cbb1a235c502615fa8ebe89c3f8276ef",
+    "src/demo/style.css": "40a12bb5ecb21d66b761559ddd4fcafbb1b7aba61b75f2e73a2f22c2956821ec",
+    "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
+    "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
+    "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
+    "src/main.js": "686f83d68d94b7d0b30059396f5103c41824ff65935aeb8cec163e700c3657a0"
+  },
+  "workingTreeSourceSha256AtCompletion": {
+    "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
+    "package.json": "0873351b5f5987ce9d81fd78fc941d06cbf3fdc5ac3def280b1948f8d621b3bb",
+    "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "67c48c76549b95b9e1e83d93521a7ac78d6b970d6fd9521125bcc5a74a5dbd26",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "58760d5cd57e5dbbb6f2c86bd2c6458c843e69a78260da956e51775e077a365a",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/presentation-camera.js": "f4df9f49808daf91d8cfab73088e0d661f6da21ff5af6b1713c7f3de19971497",
+    "src/city/presentation-effects.js": "3ebcfa372506d0a6d12d02ab3daf2a7771b45c5316838d488e5e5ddbd8d1729e",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "7923eef24a71cbda157fdddec6e1579b9d05917c61a9519f127192886cc11494",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020",
+    "src/demo/app.js": "99e34e0ba05fdd05dedddac4f42bfd6a5860a72c396def369298df3cc147fa94",
+    "src/demo/city-controller.js": "068ac4cbd4d205094afa8606aedd57e7ba0e518c37837eae4b49878a3f430dfd",
+    "src/demo/existing-agent-tools.js": "92b10c1b3de70a8ee5cf4b1c44b3b0ee0c719b153d6cea3b3bec960e0dc0762f",
+    "src/demo/live-app.js": "ed2c38e2780a868afa9e65dc3f16f35d7f1e53512e3a772f1b5168764d99680b",
+    "src/demo/presentation-state.js": "dbd8d6531635cd177d7bbc02a53cbb6640abc7219a16f80787eb5e371e56be86",
+    "src/demo/simulation-app.js": "9f1f664e06ffc4278bd97a07454f7fd4390ce9344cb839b22e89e2a65cb68a22",
+    "src/demo/story-model.js": "31465f432ba1e6de727f54f80771459b29f635c8f0fde5e4b552e1aa545d0e23",
+    "src/demo/story-player.js": "beda1059c060771a1d944bb97dd15d01cf83d3ae1a6e8dd508af58d0d23af549",
+    "src/demo/story.css": "9f9b2086ea97ed3f0c622ecce5b5ead4cbb1a235c502615fa8ebe89c3f8276ef",
+    "src/demo/style.css": "40a12bb5ecb21d66b761559ddd4fcafbb1b7aba61b75f2e73a2f22c2956821ec",
+    "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
+    "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
+    "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
+    "src/main.js": "686f83d68d94b7d0b30059396f5103c41824ff65935aeb8cec163e700c3657a0"
+  },
+  "errors": [],
+  "tavusRequests": [],
+  "results": [
+    {
+      "name": "default-demo-is-an-immersive-local-presentation-with-no-voice-service",
+      "passed": true,
+      "detail": {
+        "state": {
+          "status": "idle",
+          "chapterId": "intro",
+          "elapsed": 0,
+          "duration": 24,
+          "frame": {
+            "chapterId": "intro",
+            "chapterTitle": "Una empresa que puedes ver",
+            "chapterDuration": 24,
+            "chapterElapsed": 0,
+            "chapterProgress": 0,
+            "beatId": "world-assembles",
+            "beatIndex": 0,
+            "beatCount": 3,
+            "beatStart": 0,
+            "beatElapsed": 0,
+            "duration": 12,
+            "progress": 0,
+            "title": "Imagina un mundo para tu empresa",
+            "eyebrow": "BIRD VIEW · PRESENTACIÓN",
+            "narration": "Imagina entender tu empresa como una ciudad. Tus datos empiezan a tomar forma: calles, edificios y personas se conectan, pieza a pieza, delante de ti.",
+            "section": "all",
+            "target": {
+              "kind": "district",
+              "id": "all"
+            },
+            "fromTarget": {
+              "kind": "district",
+              "id": "all"
+            },
+            "effect": "assemble-city",
+            "effectProgress": 0,
+            "effectStageProgress": 0,
+            "cityProgress": 0,
+            "cameraProgress": 0,
+            "camera": {
+              "shot": "world-reveal",
+              "progress": 0
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 1,
+          "disposed": false,
+          "playing": false,
+          "paused": false,
+          "holdingChoice": false,
+          "canPrevious": false,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "assemble",
+            "progress": 1,
+            "phase": "complete",
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": true,
+            "focus": [
+              0,
+              4,
+              -22
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "world-assembles",
+            "cameraProgress": 1
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        },
+        "scene": {
+          "renderer": "WebGL2",
+          "renderedCalls": 236,
+          "entityCount": 49
+        },
+        "layout": {
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "document": {
+            "width": 1440,
+            "height": 1000
+          },
+          "canvasCount": 1,
+          "canvas": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000,
+            "right": 1440,
+            "bottom": 1000
+          },
+          "visibleLegacy": [],
+          "controls": [
+            {
+              "action": "fullscreen",
+              "choice": null,
+              "bounds": {
+                "x": 1264.109375,
+                "y": 23,
+                "width": 44,
+                "height": 44,
+                "right": 1308.109375,
+                "bottom": 67
+              }
+            },
+            {
+              "action": "start",
+              "choice": null,
+              "bounds": {
+                "x": 45.359375,
+                "y": 612.703125,
+                "width": 216.578125,
+                "height": 54,
+                "right": 261.9375,
+                "bottom": 666.703125
+              }
+            },
+            {
+              "action": "voice",
+              "choice": null,
+              "bounds": {
+                "x": 1340.640625,
+                "y": 829,
+                "width": 44,
+                "height": 44,
+                "right": 1384.640625,
+                "bottom": 873
+              }
+            },
+            {
+              "action": "previous",
+              "choice": null,
+              "bounds": {
+                "x": 270,
+                "y": 923,
+                "width": 44,
+                "height": 44,
+                "right": 314,
+                "bottom": 967
+              }
+            },
+            {
+              "action": "pause",
+              "choice": null,
+              "bounds": {
+                "x": 317,
+                "y": 923,
+                "width": 44,
+                "height": 44,
+                "right": 361,
+                "bottom": 967
+              }
+            },
+            {
+              "action": "next",
+              "choice": null,
+              "bounds": {
+                "x": 364,
+                "y": 923,
+                "width": 44,
+                "height": 44,
+                "right": 408,
+                "bottom": 967
+              }
+            },
+            {
+              "action": "replay",
+              "choice": null,
+              "bounds": {
+                "x": 1030.609375,
+                "y": 923,
+                "width": 44,
+                "height": 44,
+                "right": 1074.609375,
+                "bottom": 967
+              }
+            },
+            {
+              "action": null,
+              "choice": "commercial",
+              "bounds": {
+                "x": 939,
+                "y": 747,
+                "width": 213,
+                "height": 44,
+                "right": 1152,
+                "bottom": 791
+              }
+            },
+            {
+              "action": null,
+              "choice": "industrial",
+              "bounds": {
+                "x": 939,
+                "y": 791,
+                "width": 213,
+                "height": 44,
+                "right": 1152,
+                "bottom": 835
+              }
+            },
+            {
+              "action": null,
+              "choice": "communications",
+              "bounds": {
+                "x": 939,
+                "y": 835,
+                "width": 213,
+                "height": 44,
+                "right": 1152,
+                "bottom": 879
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "city-assembles-piece-by-piece-before-the-neighborhood-tour",
+      "passed": true,
+      "detail": {
+        "assembling": {
+          "status": "paused",
+          "chapterId": "intro",
+          "elapsed": 5,
+          "duration": 24,
+          "frame": {
+            "chapterId": "intro",
+            "chapterTitle": "Una empresa que puedes ver",
+            "chapterDuration": 24,
+            "chapterElapsed": 5,
+            "chapterProgress": 0.20833333333333334,
+            "beatId": "world-assembles",
+            "beatIndex": 0,
+            "beatCount": 3,
+            "beatStart": 0,
+            "beatElapsed": 5,
+            "duration": 12,
+            "progress": 0.4166666666666667,
+            "title": "Imagina un mundo para tu empresa",
+            "eyebrow": "BIRD VIEW · PRESENTACIÓN",
+            "narration": "Imagina entender tu empresa como una ciudad. Tus datos empiezan a tomar forma: calles, edificios y personas se conectan, pieza a pieza, delante de ti.",
+            "section": "all",
+            "target": {
+              "kind": "district",
+              "id": "all"
+            },
+            "fromTarget": {
+              "kind": "district",
+              "id": "all"
+            },
+            "effect": "assemble-city",
+            "effectProgress": 0.4166666666666667,
+            "effectStageProgress": 0.4166666666666667,
+            "cityProgress": 0.4166666666666667,
+            "cameraProgress": 0.9259259259259259,
+            "camera": {
+              "shot": "world-reveal",
+              "progress": 0.9259259259259259
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 4,
+          "disposed": false,
+          "playing": false,
+          "paused": true,
+          "holdingChoice": false,
+          "canPrevious": false,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "assemble",
+            "progress": 0.4166666666666667,
+            "phase": "assembling",
+            "revealProgress": 0.4166666666666667,
+            "geometry": {
+              "tilesVisible": true,
+              "tileInstances": 63,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": true,
+            "focus": [
+              0,
+              4,
+              -22
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "world-assembles",
+            "cameraProgress": 0.9259259259259259
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        },
+        "assembled": {
+          "status": "paused",
+          "chapterId": "intro",
+          "elapsed": 18,
+          "duration": 24,
+          "frame": {
+            "chapterId": "intro",
+            "chapterTitle": "Una empresa que puedes ver",
+            "chapterDuration": 24,
+            "chapterElapsed": 18,
+            "chapterProgress": 0.75,
+            "beatId": "neighborhoods",
+            "beatIndex": 1,
+            "beatCount": 3,
+            "beatStart": 12,
+            "beatElapsed": 6,
+            "duration": 12,
+            "progress": 0.5,
+            "title": "Cada barrio cuenta una historia",
+            "eyebrow": "BIRD VIEW · PRESENTACIÓN",
+            "narration": "Aquí viven tus oportunidades. Al otro lado, la fábrica y los repartos. Y entre ambos, las conversaciones que hacen crecer las relaciones con tus clientes.",
+            "section": "all",
+            "target": {
+              "kind": "district",
+              "id": "sales"
+            },
+            "fromTarget": {
+              "kind": "district",
+              "id": "all"
+            },
+            "effect": "none",
+            "effectProgress": 0.5,
+            "effectStageProgress": 0.5,
+            "cityProgress": 1,
+            "cameraProgress": 1,
+            "camera": {
+              "shot": "neighborhoods",
+              "progress": 1
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 5,
+          "disposed": false,
+          "playing": false,
+          "paused": true,
+          "holdingChoice": false,
+          "canPrevious": true,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "none",
+            "progress": 0.5,
+            "phase": "idle",
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": false,
+            "focus": [
+              0,
+              4,
+              -22
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "neighborhoods",
+            "cameraProgress": 1
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "decision-buttons-enter-the-commercial-pipeline-with-a-presentation-camera",
+      "passed": true,
+      "detail": {
+        "initialChoice": {
+          "status": "choice",
+          "chapterId": "intro",
+          "elapsed": 24,
+          "duration": 24,
+          "frame": {
+            "chapterId": "intro",
+            "chapterTitle": "Una empresa que puedes ver",
+            "chapterDuration": 24,
+            "chapterElapsed": 24,
+            "chapterProgress": 1,
+            "beatId": "choose-path",
+            "beatIndex": 2,
+            "beatCount": 3,
+            "beatStart": 24,
+            "beatElapsed": 0,
+            "duration": 0,
+            "progress": 0,
+            "title": "¿Qué parte de la empresa quieres descubrir?",
+            "eyebrow": "BIRD VIEW · PRESENTACIÓN",
+            "narration": "Tú eliges el siguiente recorrido. Podemos descubrir las ventas, la producción o las conversaciones con los clientes.",
+            "section": "all",
+            "target": {
+              "kind": "district",
+              "id": "sales"
+            },
+            "fromTarget": {
+              "kind": "district",
+              "id": "sales"
+            },
+            "effect": "none",
+            "effectProgress": 0,
+            "effectStageProgress": 1,
+            "cityProgress": 1,
+            "cameraProgress": 0,
+            "camera": {
+              "shot": "choose-path",
+              "progress": 0
+            },
+            "holdingChoice": true,
+            "choices": [
+              {
+                "id": "commercial",
+                "label": "Explorar ventas",
+                "description": "De la primera oportunidad a la venta ganada",
+                "section": "sales"
+              },
+              {
+                "id": "industrial",
+                "label": "Ver producción",
+                "description": "De la fábrica hasta la entrega",
+                "section": "industry"
+              },
+              {
+                "id": "communications",
+                "label": "Descubrir relaciones",
+                "description": "Correos, llamadas y reuniones cobran vida",
+                "section": "communications"
+              }
+            ],
+            "fictional": true
+          },
+          "generation": 6,
+          "disposed": false,
+          "playing": false,
+          "paused": false,
+          "holdingChoice": true,
+          "canPrevious": true,
+          "canNext": false,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "none",
+            "progress": 1,
+            "phase": "idle",
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": false,
+            "focus": [
+              0,
+              4,
+              -22
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "choose-path",
+            "cameraProgress": 0
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        },
+        "desktopChoiceLayout": {
+          "cards": [
+            {
+              "x": 1049.640625,
+              "y": 297,
+              "right": 1394.640625,
+              "bottom": 401
+            },
+            {
+              "x": 1049.640625,
+              "y": 412,
+              "right": 1394.640625,
+              "bottom": 516
+            },
+            {
+              "x": 1049.640625,
+              "y": 527,
+              "right": 1394.640625,
+              "bottom": 631
+            }
+          ],
+          "guide": {
+            "x": 1139.640625,
+            "y": 818,
+            "right": 1394.640625,
+            "bottom": 884
+          },
+          "footer": {
+            "x": 255,
+            "y": 912,
+            "right": 1185,
+            "bottom": 978
+          }
+        },
+        "salesLead": {
+          "status": "paused",
+          "chapterId": "commercial",
+          "elapsed": 6,
+          "duration": 48,
+          "frame": {
+            "chapterId": "commercial",
+            "chapterTitle": "El viaje de una venta",
+            "chapterDuration": 48,
+            "chapterElapsed": 6,
+            "chapterProgress": 0.125,
+            "beatId": "first-contact",
+            "beatIndex": 1,
+            "beatCount": 8,
+            "beatStart": 4,
+            "beatElapsed": 2,
+            "duration": 5,
+            "progress": 0.4,
+            "title": "Todo empieza con un contacto",
+            "eyebrow": "VENTAS · RECORRIDO GUIADO",
+            "narration": "En este primer barrio llegan los nuevos contactos. Tu equipo empieza a conocer sus necesidades.",
+            "section": "sales",
+            "target": {
+              "kind": "sales-stage",
+              "id": "lead"
+            },
+            "fromTarget": {
+              "kind": "district",
+              "id": "sales"
+            },
+            "effect": "none",
+            "effectProgress": 0.4,
+            "effectStageProgress": 0.4,
+            "cityProgress": 1,
+            "cameraProgress": 0.888888888888889,
+            "camera": {
+              "shot": "first-contact",
+              "progress": 0.888888888888889
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 9,
+          "disposed": false,
+          "playing": false,
+          "paused": true,
+          "holdingChoice": false,
+          "canPrevious": true,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "none",
+            "progress": 0.4,
+            "phase": "idle",
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": false,
+            "focus": [
+              0,
+              4,
+              -22
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "first-contact",
+            "cameraProgress": 0.888888888888889
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "commercial-story-presents-dismantling-transport-rebuilding-and-a-win",
+      "passed": true,
+      "detail": {
+        "saleSteps": [
+          {
+            "seconds": 26,
+            "frame": {
+              "chapterId": "commercial",
+              "chapterTitle": "El viaje de una venta",
+              "chapterDuration": 48,
+              "chapterElapsed": 26,
+              "chapterProgress": 0.5416666666666666,
+              "beatId": "sale-in-motion",
+              "beatIndex": 5,
+              "beatCount": 8,
+              "beatStart": 24,
+              "beatElapsed": 2,
+              "duration": 15,
+              "progress": 0.13333333333333333,
+              "title": "El acuerdo cambia el paisaje",
+              "eyebrow": "VENTAS · RECORRIDO GUIADO",
+              "narration": "El trato avanza. Las grúas desmontan el edificio, el camión cruza al siguiente barrio y la venta vuelve a construirse. Un cambio de tu CRM se convierte en una historia visible.",
+              "section": "sales",
+              "target": {
+                "kind": "sales-stage",
+                "id": "won"
+              },
+              "fromTarget": {
+                "kind": "sales-stage",
+                "id": "negotiation"
+              },
+              "effect": "sales-transfer",
+              "effectProgress": 0.13333333333333333,
+              "effectStageProgress": 0.11333333333333333,
+              "cityProgress": 1,
+              "cameraProgress": 0.2962962962962963,
+              "camera": {
+                "shot": "follow-sale",
+                "progress": 0.2962962962962963
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "scene": {
+              "effect": "sale",
+              "progress": 0.11333333333333333,
+              "phase": "deconstruct",
+              "buildProgress": 0.5356872907893317,
+              "truckProgress": 0,
+              "completed": false,
+              "transferProgress": 0.13333333333333333,
+              "celebration": 0,
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 1,
+                "truckVisible": true,
+                "representativeVisible": true,
+                "confettiVisible": false,
+                "confettiInstances": 0,
+                "industryParcelsVisible": false
+              },
+              "active": true,
+              "focus": [
+                11.3,
+                0.1,
+                -17
+              ],
+              "sale": {
+                "from": [
+                  11.3,
+                  0.1,
+                  -17
+                ],
+                "to": [
+                  29.5,
+                  0.1,
+                  2.6
+                ],
+                "sourceId": "deal-019",
+                "fictional": true
+              },
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "sale-in-motion",
+              "cameraProgress": 0.2962962962962963
+            },
+            "camera": {
+              "type": "PerspectiveCamera",
+              "position": [
+                19.64831833546087,
+                15.507670269441723,
+                0.39232986554347704
+              ],
+              "quaternion": [
+                -0.2768325768069266,
+                0.21276653145319252,
+                0.06299900284322653,
+                0.9349466579182867
+              ],
+              "target": [
+                11.3,
+                2.9851927662504187,
+                -17
+              ],
+              "zoom": 1
+            }
+          },
+          {
+            "seconds": 32,
+            "frame": {
+              "chapterId": "commercial",
+              "chapterTitle": "El viaje de una venta",
+              "chapterDuration": 48,
+              "chapterElapsed": 32,
+              "chapterProgress": 0.6666666666666666,
+              "beatId": "sale-in-motion",
+              "beatIndex": 5,
+              "beatCount": 8,
+              "beatStart": 24,
+              "beatElapsed": 8,
+              "duration": 15,
+              "progress": 0.5333333333333333,
+              "title": "El acuerdo cambia el paisaje",
+              "eyebrow": "VENTAS · RECORRIDO GUIADO",
+              "narration": "El trato avanza. Las grúas desmontan el edificio, el camión cruza al siguiente barrio y la venta vuelve a construirse. Un cambio de tu CRM se convierte en una historia visible.",
+              "section": "sales",
+              "target": {
+                "kind": "sales-stage",
+                "id": "won"
+              },
+              "fromTarget": {
+                "kind": "sales-stage",
+                "id": "negotiation"
+              },
+              "effect": "sales-transfer",
+              "effectProgress": 0.5333333333333333,
+              "effectStageProgress": 0.4533333333333333,
+              "cityProgress": 1,
+              "cameraProgress": 1,
+              "camera": {
+                "shot": "follow-sale",
+                "progress": 1
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "scene": {
+              "effect": "sale",
+              "progress": 0.4533333333333333,
+              "phase": "transport",
+              "buildProgress": 0,
+              "truckProgress": 0.695259259259259,
+              "completed": false,
+              "transferProgress": 0.5333333333333333,
+              "celebration": 0,
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 1,
+                "truckVisible": true,
+                "representativeVisible": true,
+                "confettiVisible": false,
+                "confettiInstances": 0,
+                "industryParcelsVisible": false
+              },
+              "active": true,
+              "focus": [
+                25,
+                0.12,
+                2.8408239148472063
+              ],
+              "sale": {
+                "from": [
+                  11.3,
+                  0.1,
+                  -17
+                ],
+                "to": [
+                  29.5,
+                  0.1,
+                  2.6
+                ],
+                "sourceId": "deal-019",
+                "fictional": true
+              },
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "sale-in-motion",
+              "cameraProgress": 1
+            },
+            "camera": {
+              "type": "PerspectiveCamera",
+              "position": [
+                33.34831833546087,
+                15.322477503191305,
+                20.233153780390683
+              ],
+              "quaternion": [
+                -0.27683257680692663,
+                0.2127665314531924,
+                0.06299900284322651,
+                0.9349466579182867
+              ],
+              "target": [
+                25,
+                2.8,
+                2.8408239148472063
+              ],
+              "zoom": 1
+            }
+          },
+          {
+            "seconds": 37,
+            "frame": {
+              "chapterId": "commercial",
+              "chapterTitle": "El viaje de una venta",
+              "chapterDuration": 48,
+              "chapterElapsed": 37,
+              "chapterProgress": 0.7708333333333334,
+              "beatId": "sale-in-motion",
+              "beatIndex": 5,
+              "beatCount": 8,
+              "beatStart": 24,
+              "beatElapsed": 13,
+              "duration": 15,
+              "progress": 0.8666666666666667,
+              "title": "El acuerdo cambia el paisaje",
+              "eyebrow": "VENTAS · RECORRIDO GUIADO",
+              "narration": "El trato avanza. Las grúas desmontan el edificio, el camión cruza al siguiente barrio y la venta vuelve a construirse. Un cambio de tu CRM se convierte en una historia visible.",
+              "section": "sales",
+              "target": {
+                "kind": "sales-stage",
+                "id": "won"
+              },
+              "fromTarget": {
+                "kind": "sales-stage",
+                "id": "negotiation"
+              },
+              "effect": "sales-transfer",
+              "effectProgress": 0.8666666666666667,
+              "effectStageProgress": 0.7366666666666667,
+              "cityProgress": 1,
+              "cameraProgress": 1,
+              "camera": {
+                "shot": "follow-sale",
+                "progress": 1
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "scene": {
+              "effect": "sale",
+              "progress": 0.7366666666666667,
+              "phase": "build",
+              "buildProgress": 0.6238425925925924,
+              "truckProgress": 1,
+              "completed": false,
+              "transferProgress": 0.8666666666666667,
+              "celebration": 0,
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 1,
+                "truckVisible": true,
+                "representativeVisible": true,
+                "confettiVisible": false,
+                "confettiInstances": 0,
+                "industryParcelsVisible": false
+              },
+              "active": true,
+              "focus": [
+                29.5,
+                0.1,
+                2.6
+              ],
+              "sale": {
+                "from": [
+                  11.3,
+                  0.1,
+                  -17
+                ],
+                "to": [
+                  29.5,
+                  0.1,
+                  2.6
+                ],
+                "sourceId": "deal-019",
+                "fictional": true
+              },
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "sale-in-motion",
+              "cameraProgress": 1
+            },
+            "camera": {
+              "type": "PerspectiveCamera",
+              "position": [
+                37.84831833546087,
+                15.322477503191305,
+                19.99232986554348
+              ],
+              "quaternion": [
+                -0.27683257680692663,
+                0.2127665314531924,
+                0.06299900284322651,
+                0.9349466579182867
+              ],
+              "target": [
+                29.5,
+                2.8,
+                2.6000000000000014
+              ],
+              "zoom": 1
+            }
+          },
+          {
+            "seconds": 42,
+            "frame": {
+              "chapterId": "commercial",
+              "chapterTitle": "El viaje de una venta",
+              "chapterDuration": 48,
+              "chapterElapsed": 42,
+              "chapterProgress": 0.875,
+              "beatId": "sale-won",
+              "beatIndex": 6,
+              "beatCount": 8,
+              "beatStart": 39,
+              "beatElapsed": 3,
+              "duration": 9,
+              "progress": 0.3333333333333333,
+              "title": "¡Venta ganada!",
+              "eyebrow": "VENTAS · RECORRIDO GUIADO",
+              "narration": "¡Venta ganada! Celebramos el logro del equipo. Una oportunidad cerrada tiene ahora su propio lugar en la ciudad.",
+              "section": "sales",
+              "target": {
+                "kind": "sales-stage",
+                "id": "won"
+              },
+              "fromTarget": {
+                "kind": "sales-stage",
+                "id": "won"
+              },
+              "effect": "celebrate-sale",
+              "effectProgress": 0.3333333333333333,
+              "effectStageProgress": 0.9,
+              "cityProgress": 1,
+              "cameraProgress": 0.7407407407407407,
+              "camera": {
+                "shot": "sale-celebration",
+                "progress": 0.7407407407407407
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "scene": {
+              "effect": "sale",
+              "progress": 0.9,
+              "phase": "complete",
+              "buildProgress": 1,
+              "truckProgress": 1,
+              "completed": true,
+              "transferProgress": 1,
+              "celebration": 0.37500000000000033,
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 0,
+                "truckVisible": false,
+                "representativeVisible": true,
+                "confettiVisible": true,
+                "confettiInstances": 112,
+                "industryParcelsVisible": false
+              },
+              "active": true,
+              "focus": [
+                29.5,
+                0.1,
+                2.6
+              ],
+              "sale": {
+                "from": [
+                  11.3,
+                  0.1,
+                  -17
+                ],
+                "to": [
+                  29.5,
+                  0.1,
+                  2.6
+                ],
+                "sourceId": "deal-019",
+                "fictional": true
+              },
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "sale-won",
+              "cameraProgress": 0.7407407407407407
+            },
+            "camera": {
+              "type": "PerspectiveCamera",
+              "position": [
+                38.397396510628724,
+                21.446023472868887,
+                19.490656457772953
+              ],
+              "quaternion": [
+                -0.30746774048197945,
+                0.2105767710710632,
+                0.06997067064955341,
+                0.9253243308683948
+              ],
+              "target": [
+                29.22187274264165,
+                5.605891114292616,
+                0.3749819411332176
+              ],
+              "zoom": 1
+            },
+            "confettiProjection": {
+              "found": true,
+              "visible": true,
+              "opacity": 1,
+              "insideViewport": 78,
+              "instances": 112,
+              "projectedBounds": {
+                "minX": -0.6253649527900762,
+                "maxX": 0.4204346268699094,
+                "minY": 0.27389454290233906,
+                "maxY": 1.3690482791989151
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "pause-freezes-camera-and-choreography-while-navigation-and-replay-stay-clean",
+      "passed": true,
+      "detail": {
+        "frozen": {
+          "state": {
+            "status": "paused",
+            "chapterId": "commercial",
+            "elapsed": 33,
+            "duration": 48,
+            "frame": {
+              "chapterId": "commercial",
+              "chapterTitle": "El viaje de una venta",
+              "chapterDuration": 48,
+              "chapterElapsed": 33,
+              "chapterProgress": 0.6875,
+              "beatId": "sale-in-motion",
+              "beatIndex": 5,
+              "beatCount": 8,
+              "beatStart": 24,
+              "beatElapsed": 9,
+              "duration": 15,
+              "progress": 0.6,
+              "title": "El acuerdo cambia el paisaje",
+              "eyebrow": "VENTAS · RECORRIDO GUIADO",
+              "narration": "El trato avanza. Las grúas desmontan el edificio, el camión cruza al siguiente barrio y la venta vuelve a construirse. Un cambio de tu CRM se convierte en una historia visible.",
+              "section": "sales",
+              "target": {
+                "kind": "sales-stage",
+                "id": "won"
+              },
+              "fromTarget": {
+                "kind": "sales-stage",
+                "id": "negotiation"
+              },
+              "effect": "sales-transfer",
+              "effectProgress": 0.6,
+              "effectStageProgress": 0.51,
+              "cityProgress": 1,
+              "cameraProgress": 1,
+              "camera": {
+                "shot": "follow-sale",
+                "progress": 1
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "generation": 14,
+            "disposed": false,
+            "playing": false,
+            "paused": true,
+            "holdingChoice": false,
+            "canPrevious": true,
+            "canNext": true,
+            "ready": true,
+            "simulated": true,
+            "scene": {
+              "effect": "sale",
+              "progress": 0.51,
+              "phase": "transport",
+              "buildProgress": 0,
+              "truckProgress": 0.8959999999999998,
+              "completed": false,
+              "transferProgress": 0.6,
+              "celebration": 0,
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 1,
+                "truckVisible": true,
+                "representativeVisible": true,
+                "confettiVisible": false,
+                "confettiInstances": 0,
+                "industryParcelsVisible": false
+              },
+              "active": true,
+              "focus": [
+                27.636871745538713,
+                0.12,
+                9
+              ],
+              "sale": {
+                "from": [
+                  11.3,
+                  0.1,
+                  -17
+                ],
+                "to": [
+                  29.5,
+                  0.1,
+                  2.6
+                ],
+                "sourceId": "deal-019",
+                "fictional": true
+              },
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "sale-in-motion",
+              "cameraProgress": 1
+            },
+            "narration": {
+              "enabled": false,
+              "speaking": false
+            },
+            "tavusLoaded": false,
+            "choices": [
+              {
+                "id": "commercial",
+                "label": "Explorar ventas",
+                "description": "De la primera oportunidad a la venta ganada",
+                "section": "sales"
+              },
+              {
+                "id": "industrial",
+                "label": "Ver producción",
+                "description": "De la fábrica hasta la entrega",
+                "section": "industry"
+              },
+              {
+                "id": "communications",
+                "label": "Descubrir relaciones",
+                "description": "Correos, llamadas y reuniones cobran vida",
+                "section": "communications"
+              }
+            ]
+          },
+          "camera": {
+            "type": "PerspectiveCamera",
+            "position": [
+              35.98519008099958,
+              15.322477503191305,
+              26.392329865543477
+            ],
+            "quaternion": [
+              -0.27683257680692663,
+              0.2127665314531924,
+              0.06299900284322651,
+              0.9349466579182867
+            ],
+            "target": [
+              27.636871745538713,
+              2.8,
+              9
+            ],
+            "zoom": 1
+          }
+        },
+        "afterPause": {
+          "state": {
+            "status": "paused",
+            "chapterId": "commercial",
+            "elapsed": 33,
+            "duration": 48,
+            "frame": {
+              "chapterId": "commercial",
+              "chapterTitle": "El viaje de una venta",
+              "chapterDuration": 48,
+              "chapterElapsed": 33,
+              "chapterProgress": 0.6875,
+              "beatId": "sale-in-motion",
+              "beatIndex": 5,
+              "beatCount": 8,
+              "beatStart": 24,
+              "beatElapsed": 9,
+              "duration": 15,
+              "progress": 0.6,
+              "title": "El acuerdo cambia el paisaje",
+              "eyebrow": "VENTAS · RECORRIDO GUIADO",
+              "narration": "El trato avanza. Las grúas desmontan el edificio, el camión cruza al siguiente barrio y la venta vuelve a construirse. Un cambio de tu CRM se convierte en una historia visible.",
+              "section": "sales",
+              "target": {
+                "kind": "sales-stage",
+                "id": "won"
+              },
+              "fromTarget": {
+                "kind": "sales-stage",
+                "id": "negotiation"
+              },
+              "effect": "sales-transfer",
+              "effectProgress": 0.6,
+              "effectStageProgress": 0.51,
+              "cityProgress": 1,
+              "cameraProgress": 1,
+              "camera": {
+                "shot": "follow-sale",
+                "progress": 1
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "generation": 14,
+            "disposed": false,
+            "playing": false,
+            "paused": true,
+            "holdingChoice": false,
+            "canPrevious": true,
+            "canNext": true,
+            "ready": true,
+            "simulated": true,
+            "scene": {
+              "effect": "sale",
+              "progress": 0.51,
+              "phase": "transport",
+              "buildProgress": 0,
+              "truckProgress": 0.8959999999999998,
+              "completed": false,
+              "transferProgress": 0.6,
+              "celebration": 0,
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 1,
+                "truckVisible": true,
+                "representativeVisible": true,
+                "confettiVisible": false,
+                "confettiInstances": 0,
+                "industryParcelsVisible": false
+              },
+              "active": true,
+              "focus": [
+                27.636871745538713,
+                0.12,
+                9
+              ],
+              "sale": {
+                "from": [
+                  11.3,
+                  0.1,
+                  -17
+                ],
+                "to": [
+                  29.5,
+                  0.1,
+                  2.6
+                ],
+                "sourceId": "deal-019",
+                "fictional": true
+              },
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "sale-in-motion",
+              "cameraProgress": 1
+            },
+            "narration": {
+              "enabled": false,
+              "speaking": false
+            },
+            "tavusLoaded": false,
+            "choices": [
+              {
+                "id": "commercial",
+                "label": "Explorar ventas",
+                "description": "De la primera oportunidad a la venta ganada",
+                "section": "sales"
+              },
+              {
+                "id": "industrial",
+                "label": "Ver producción",
+                "description": "De la fábrica hasta la entrega",
+                "section": "industry"
+              },
+              {
+                "id": "communications",
+                "label": "Descubrir relaciones",
+                "description": "Correos, llamadas y reuniones cobran vida",
+                "section": "communications"
+              }
+            ]
+          },
+          "camera": {
+            "type": "PerspectiveCamera",
+            "position": [
+              35.98519008099958,
+              15.322477503191305,
+              26.392329865543477
+            ],
+            "quaternion": [
+              -0.27683257680692663,
+              0.2127665314531924,
+              0.06299900284322651,
+              0.9349466579182867
+            ],
+            "target": [
+              27.636871745538713,
+              2.8,
+              9
+            ],
+            "zoom": 1
+          }
+        },
+        "next": {
+          "status": "paused",
+          "chapterId": "commercial",
+          "elapsed": 39,
+          "duration": 48,
+          "frame": {
+            "chapterId": "commercial",
+            "chapterTitle": "El viaje de una venta",
+            "chapterDuration": 48,
+            "chapterElapsed": 39,
+            "chapterProgress": 0.8125,
+            "beatId": "sale-won",
+            "beatIndex": 6,
+            "beatCount": 8,
+            "beatStart": 39,
+            "beatElapsed": 0,
+            "duration": 9,
+            "progress": 0,
+            "title": "¡Venta ganada!",
+            "eyebrow": "VENTAS · RECORRIDO GUIADO",
+            "narration": "¡Venta ganada! Celebramos el logro del equipo. Una oportunidad cerrada tiene ahora su propio lugar en la ciudad.",
+            "section": "sales",
+            "target": {
+              "kind": "sales-stage",
+              "id": "won"
+            },
+            "fromTarget": {
+              "kind": "sales-stage",
+              "id": "won"
+            },
+            "effect": "celebrate-sale",
+            "effectProgress": 0,
+            "effectStageProgress": 0.85,
+            "cityProgress": 1,
+            "cameraProgress": 0,
+            "camera": {
+              "shot": "sale-celebration",
+              "progress": 0
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 15,
+          "disposed": false,
+          "playing": false,
+          "paused": true,
+          "holdingChoice": false,
+          "canPrevious": true,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "sale",
+            "progress": 0.85,
+            "phase": "complete",
+            "buildProgress": 1,
+            "truckProgress": 1,
+            "completed": true,
+            "transferProgress": 1,
+            "celebration": 0.06250000000000006,
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": true,
+              "confettiVisible": true,
+              "confettiInstances": 112,
+              "industryParcelsVisible": false
+            },
+            "active": true,
+            "focus": [
+              29.5,
+              0.1,
+              2.6
+            ],
+            "sale": {
+              "from": [
+                11.3,
+                0.1,
+                -17
+              ],
+              "to": [
+                29.5,
+                0.1,
+                2.6
+              ],
+              "sourceId": "deal-019",
+              "fictional": true
+            },
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "sale-won",
+            "cameraProgress": 0
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        },
+        "previous": {
+          "status": "paused",
+          "chapterId": "commercial",
+          "elapsed": 24,
+          "duration": 48,
+          "frame": {
+            "chapterId": "commercial",
+            "chapterTitle": "El viaje de una venta",
+            "chapterDuration": 48,
+            "chapterElapsed": 24,
+            "chapterProgress": 0.5,
+            "beatId": "sale-in-motion",
+            "beatIndex": 5,
+            "beatCount": 8,
+            "beatStart": 24,
+            "beatElapsed": 0,
+            "duration": 15,
+            "progress": 0,
+            "title": "El acuerdo cambia el paisaje",
+            "eyebrow": "VENTAS · RECORRIDO GUIADO",
+            "narration": "El trato avanza. Las grúas desmontan el edificio, el camión cruza al siguiente barrio y la venta vuelve a construirse. Un cambio de tu CRM se convierte en una historia visible.",
+            "section": "sales",
+            "target": {
+              "kind": "sales-stage",
+              "id": "won"
+            },
+            "fromTarget": {
+              "kind": "sales-stage",
+              "id": "negotiation"
+            },
+            "effect": "sales-transfer",
+            "effectProgress": 0,
+            "effectStageProgress": 0,
+            "cityProgress": 1,
+            "cameraProgress": 0,
+            "camera": {
+              "shot": "follow-sale",
+              "progress": 0
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 16,
+          "disposed": false,
+          "playing": false,
+          "paused": true,
+          "holdingChoice": false,
+          "canPrevious": true,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "sale",
+            "progress": 0,
+            "phase": "deconstruct",
+            "buildProgress": 1,
+            "truckProgress": 0,
+            "completed": false,
+            "transferProgress": 0,
+            "celebration": 0,
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 1,
+              "truckVisible": true,
+              "representativeVisible": true,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": true,
+            "focus": [
+              11.3,
+              0.1,
+              -17
+            ],
+            "sale": {
+              "from": [
+                11.3,
+                0.1,
+                -17
+              ],
+              "to": [
+                29.5,
+                0.1,
+                2.6
+              ],
+              "sourceId": "deal-019",
+              "fictional": true
+            },
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "sale-in-motion",
+            "cameraProgress": 0
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        },
+        "replay": {
+          "status": "paused",
+          "chapterId": "intro",
+          "elapsed": 0,
+          "duration": 24,
+          "frame": {
+            "chapterId": "intro",
+            "chapterTitle": "Una empresa que puedes ver",
+            "chapterDuration": 24,
+            "chapterElapsed": 0,
+            "chapterProgress": 0,
+            "beatId": "world-assembles",
+            "beatIndex": 0,
+            "beatCount": 3,
+            "beatStart": 0,
+            "beatElapsed": 0,
+            "duration": 12,
+            "progress": 0,
+            "title": "Imagina un mundo para tu empresa",
+            "eyebrow": "BIRD VIEW · PRESENTACIÓN",
+            "narration": "Imagina entender tu empresa como una ciudad. Tus datos empiezan a tomar forma: calles, edificios y personas se conectan, pieza a pieza, delante de ti.",
+            "section": "all",
+            "target": {
+              "kind": "district",
+              "id": "all"
+            },
+            "fromTarget": {
+              "kind": "district",
+              "id": "all"
+            },
+            "effect": "assemble-city",
+            "effectProgress": 0,
+            "effectStageProgress": 0,
+            "cityProgress": 0,
+            "cameraProgress": 0,
+            "camera": {
+              "shot": "world-reveal",
+              "progress": 0
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 19,
+          "disposed": false,
+          "playing": false,
+          "paused": true,
+          "holdingChoice": false,
+          "canPrevious": false,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "assemble",
+            "progress": 0,
+            "phase": "assembling",
+            "revealProgress": 0,
+            "geometry": {
+              "tilesVisible": true,
+              "tileInstances": 63,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": true,
+            "focus": [
+              0,
+              4,
+              -22
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "world-assembles",
+            "cameraProgress": 0
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "industrial-decision-follows-a-product-through-production-and-delivery",
+      "passed": true,
+      "detail": {
+        "industrialSteps": [
+          {
+            "seconds": 8,
+            "frame": {
+              "chapterId": "industrial",
+              "chapterTitle": "De la fábrica a la entrega",
+              "chapterDuration": 36,
+              "chapterElapsed": 8,
+              "chapterProgress": 0.2222222222222222,
+              "beatId": "manufacturing",
+              "beatIndex": 1,
+              "beatCount": 6,
+              "beatStart": 5,
+              "beatElapsed": 3,
+              "duration": 7,
+              "progress": 0.42857142857142855,
+              "title": "La producción cobra vida",
+              "eyebrow": "OPERACIONES · RECORRIDO GUIADO",
+              "narration": "Un nuevo lote empieza a fabricarse. Máquinas, materiales y personas forman parte del mismo proceso.",
+              "section": "industry",
+              "target": {
+                "kind": "industry-stage",
+                "id": "manufacturing"
+              },
+              "fromTarget": {
+                "kind": "district",
+                "id": "industry"
+              },
+              "effect": "none",
+              "effectProgress": 0.42857142857142855,
+              "effectStageProgress": 0.42857142857142855,
+              "cityProgress": 1,
+              "cameraProgress": 0.9523809523809523,
+              "camera": {
+                "shot": "manufacturing",
+                "progress": 0.9523809523809523
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "scene": {
+              "effect": "none",
+              "progress": 0.42857142857142855,
+              "phase": "idle",
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 0,
+                "truckVisible": false,
+                "representativeVisible": false,
+                "confettiVisible": false,
+                "confettiInstances": 0,
+                "industryParcelsVisible": false
+              },
+              "active": false,
+              "focus": [
+                0,
+                4,
+                -22
+              ],
+              "sale": null,
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "manufacturing",
+              "cameraProgress": 0.9523809523809523
+            }
+          },
+          {
+            "seconds": 20,
+            "frame": {
+              "chapterId": "industrial",
+              "chapterTitle": "De la fábrica a la entrega",
+              "chapterDuration": 36,
+              "chapterElapsed": 20,
+              "chapterProgress": 0.5555555555555556,
+              "beatId": "production-in-motion",
+              "beatIndex": 2,
+              "beatCount": 6,
+              "beatStart": 12,
+              "beatElapsed": 8,
+              "duration": 12,
+              "progress": 0.6666666666666666,
+              "title": "Fabricar, preparar y salir",
+              "eyebrow": "OPERACIONES · RECORRIDO GUIADO",
+              "narration": "El producto pasa a empacado, llega al almacén y se prepara para salir. El movimiento conecta las etapas y muestra dónde está cada lote.",
+              "section": "industry",
+              "target": {
+                "kind": "industry-stage",
+                "id": "transit"
+              },
+              "fromTarget": {
+                "kind": "industry-stage",
+                "id": "manufacturing"
+              },
+              "effect": "production-flow",
+              "effectProgress": 0.6666666666666666,
+              "effectStageProgress": 0.48,
+              "cityProgress": 1,
+              "cameraProgress": 1,
+              "camera": {
+                "shot": "follow-production",
+                "progress": 1
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "scene": {
+              "effect": "industry",
+              "progress": 0.48,
+              "phase": "stored",
+              "travel": 0,
+              "celebration": 0,
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 0,
+                "truckVisible": false,
+                "representativeVisible": false,
+                "confettiVisible": false,
+                "confettiInstances": 0,
+                "industryParcelsVisible": true
+              },
+              "active": true,
+              "focus": [
+                -1.6791039999999793,
+                0.3,
+                -57.5
+              ],
+              "sale": null,
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "production-in-motion",
+              "cameraProgress": 1
+            }
+          },
+          {
+            "seconds": 30,
+            "frame": {
+              "chapterId": "industrial",
+              "chapterTitle": "De la fábrica a la entrega",
+              "chapterDuration": 36,
+              "chapterElapsed": 30,
+              "chapterProgress": 0.8333333333333334,
+              "beatId": "delivery-arrives",
+              "beatIndex": 3,
+              "beatCount": 6,
+              "beatStart": 24,
+              "beatElapsed": 6,
+              "duration": 8,
+              "progress": 0.75,
+              "title": "El último tramo hasta el cliente",
+              "eyebrow": "OPERACIONES · RECORRIDO GUIADO",
+              "narration": "El camión recorre su ruta y llega al destino. La entrega se refleja en la ciudad, de forma clara y visible.",
+              "section": "industry",
+              "target": {
+                "kind": "industry-stage",
+                "id": "delivered"
+              },
+              "fromTarget": {
+                "kind": "industry-stage",
+                "id": "transit"
+              },
+              "effect": "delivery",
+              "effectProgress": 0.75,
+              "effectStageProgress": 0.9299999999999999,
+              "cityProgress": 1,
+              "cameraProgress": 1,
+              "camera": {
+                "shot": "follow-delivery",
+                "progress": 1
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "scene": {
+              "effect": "industry",
+              "progress": 0.9299999999999999,
+              "phase": "transit",
+              "travel": 1,
+              "celebration": 0.22222222222222118,
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 0,
+                "truckVisible": true,
+                "representativeVisible": false,
+                "confettiVisible": true,
+                "confettiInstances": 112,
+                "industryParcelsVisible": false
+              },
+              "active": true,
+              "focus": [
+                28,
+                0.3,
+                -57.5
+              ],
+              "sale": null,
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "delivery-arrives",
+              "cameraProgress": 1
+            },
+            "confettiProjection": {
+              "found": true,
+              "visible": true,
+              "opacity": 1,
+              "insideViewport": 91,
+              "instances": 112,
+              "projectedBounds": {
+                "minX": -0.41365047195707955,
+                "maxX": 0.37628011449746346,
+                "minY": 0.4760763105369949,
+                "maxY": 1.3088227368120053
+              }
+            }
+          },
+          {
+            "seconds": 34,
+            "frame": {
+              "chapterId": "industrial",
+              "chapterTitle": "De la fábrica a la entrega",
+              "chapterDuration": 36,
+              "chapterElapsed": 34,
+              "chapterProgress": 0.9444444444444444,
+              "beatId": "delivered",
+              "beatIndex": 4,
+              "beatCount": 6,
+              "beatStart": 32,
+              "beatElapsed": 2,
+              "duration": 4,
+              "progress": 0.5,
+              "title": "¡Producto entregado!",
+              "eyebrow": "OPERACIONES · RECORRIDO GUIADO",
+              "narration": "Producto entregado. El recorrido se completa y el equipo puede celebrar otro objetivo conseguido.",
+              "section": "industry",
+              "target": {
+                "kind": "industry-stage",
+                "id": "delivered"
+              },
+              "fromTarget": {
+                "kind": "industry-stage",
+                "id": "delivered"
+              },
+              "effect": "delivery",
+              "effectProgress": 0.5,
+              "effectStageProgress": 1,
+              "cityProgress": 1,
+              "cameraProgress": 1,
+              "camera": {
+                "shot": "delivery-celebration",
+                "progress": 1
+              },
+              "holdingChoice": false,
+              "choices": [],
+              "fictional": true
+            },
+            "scene": {
+              "effect": "industry",
+              "progress": 1,
+              "phase": "delivered",
+              "travel": 1,
+              "celebration": 0.9999999999999997,
+              "revealProgress": 1,
+              "geometry": {
+                "tilesVisible": false,
+                "tileInstances": 0,
+                "constructionRigs": 0,
+                "truckVisible": true,
+                "representativeVisible": false,
+                "confettiVisible": true,
+                "confettiInstances": 112,
+                "industryParcelsVisible": false
+              },
+              "active": true,
+              "focus": [
+                28,
+                0.3,
+                -57.5
+              ],
+              "sale": null,
+              "resourcesCreated": true,
+              "tileCount": 63,
+              "maxConfetti": 112,
+              "rendererCount": 0,
+              "animationFrameCount": 0,
+              "businessMutation": false,
+              "beatId": "delivered",
+              "cameraProgress": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "relationship-tour-and-all-replays-preserve-the-crm-and-erp-snapshots",
+      "passed": true,
+      "detail": {
+        "relationships": {
+          "status": "paused",
+          "chapterId": "communications",
+          "elapsed": 18,
+          "duration": 22,
+          "frame": {
+            "chapterId": "communications",
+            "chapterTitle": "Las relaciones dan vida al negocio",
+            "chapterDuration": 22,
+            "chapterElapsed": 18,
+            "chapterProgress": 0.8181818181818182,
+            "beatId": "meetings",
+            "beatIndex": 3,
+            "beatCount": 5,
+            "beatStart": 16,
+            "beatElapsed": 2,
+            "duration": 6,
+            "progress": 0.3333333333333333,
+            "title": "Las reuniones crean confianza",
+            "eyebrow": "RELACIONES · RECORRIDO GUIADO",
+            "narration": "Y esta cafetería reúne los encuentros con clientes. La actividad del CRM se convierte en un lugar que puedes entender de un vistazo.",
+            "section": "communications",
+            "target": {
+              "kind": "communication",
+              "id": "meeting"
+            },
+            "fromTarget": {
+              "kind": "communication",
+              "id": "call"
+            },
+            "effect": "communications-flow",
+            "effectProgress": 0.3333333333333333,
+            "effectStageProgress": 0.8333333333333334,
+            "cityProgress": 1,
+            "cameraProgress": 0.7407407407407407,
+            "camera": {
+              "shot": "meetings",
+              "progress": 0.7407407407407407
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 30,
+          "disposed": false,
+          "playing": false,
+          "paused": true,
+          "holdingChoice": false,
+          "canPrevious": true,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "none",
+            "progress": 0.8333333333333334,
+            "phase": "idle",
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": false,
+            "focus": [
+              28,
+              0.3,
+              -57.5
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "meetings",
+            "cameraProgress": 0.7407407407407407
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "persisted-page-transition-retains-the-player-and-real-unload-disposes-it",
+      "passed": true,
+      "detail": {
+        "validation": "Explicit PageTransitionEvent fixtures; browser back/forward cache admission and real history navigation were not exercised",
+        "restoredDocument": {
+          "status": "paused",
+          "chapterId": "communications",
+          "elapsed": 18.00460000000149,
+          "duration": 22,
+          "frame": {
+            "chapterId": "communications",
+            "chapterTitle": "Las relaciones dan vida al negocio",
+            "chapterDuration": 22,
+            "chapterElapsed": 18.00460000000149,
+            "chapterProgress": 0.8183909090909768,
+            "beatId": "meetings",
+            "beatIndex": 3,
+            "beatCount": 5,
+            "beatStart": 16,
+            "beatElapsed": 2.0046000000014885,
+            "duration": 6,
+            "progress": 0.3341000000002481,
+            "title": "Las reuniones crean confianza",
+            "eyebrow": "RELACIONES · RECORRIDO GUIADO",
+            "narration": "Y esta cafetería reúne los encuentros con clientes. La actividad del CRM se convierte en un lugar que puedes entender de un vistazo.",
+            "section": "communications",
+            "target": {
+              "kind": "communication",
+              "id": "meeting"
+            },
+            "fromTarget": {
+              "kind": "communication",
+              "id": "call"
+            },
+            "effect": "communications-flow",
+            "effectProgress": 0.3341000000002481,
+            "effectStageProgress": 0.833525000000062,
+            "cityProgress": 1,
+            "cameraProgress": 0.7424444444449957,
+            "camera": {
+              "shot": "meetings",
+              "progress": 0.7424444444449957
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 32,
+          "disposed": false,
+          "playing": false,
+          "paused": true,
+          "holdingChoice": false,
+          "canPrevious": true,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "none",
+            "progress": 0.833525000000062,
+            "phase": "idle",
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": false,
+            "focus": [
+              28,
+              0.3,
+              -57.5
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "meetings",
+            "cameraProgress": 0.7424444444449957
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        },
+        "unloadedDocument": {
+          "status": "disposed",
+          "chapterId": "communications",
+          "elapsed": 18.0135,
+          "duration": 22,
+          "frame": {
+            "chapterId": "communications",
+            "chapterTitle": "Las relaciones dan vida al negocio",
+            "chapterDuration": 22,
+            "chapterElapsed": 18.0135,
+            "chapterProgress": 0.8187954545454545,
+            "beatId": "meetings",
+            "beatIndex": 3,
+            "beatCount": 5,
+            "beatStart": 16,
+            "beatElapsed": 2.0135000000000005,
+            "duration": 6,
+            "progress": 0.3355833333333334,
+            "title": "Las reuniones crean confianza",
+            "eyebrow": "RELACIONES · RECORRIDO GUIADO",
+            "narration": "Y esta cafetería reúne los encuentros con clientes. La actividad del CRM se convierte en un lugar que puedes entender de un vistazo.",
+            "section": "communications",
+            "target": {
+              "kind": "communication",
+              "id": "meeting"
+            },
+            "fromTarget": {
+              "kind": "communication",
+              "id": "call"
+            },
+            "effect": "communications-flow",
+            "effectProgress": 0.3355833333333334,
+            "effectStageProgress": 0.8338958333333334,
+            "cityProgress": 1,
+            "cameraProgress": 0.7457407407407409,
+            "camera": {
+              "shot": "meetings",
+              "progress": 0.7457407407407409
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 35,
+          "disposed": true,
+          "playing": false,
+          "paused": false,
+          "holdingChoice": false,
+          "canPrevious": true,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "none",
+            "progress": 0,
+            "phase": "idle",
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": false,
+            "focus": [
+              28,
+              0.3,
+              -57.5
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": null,
+            "cameraProgress": null
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "portrait-and-landscape-keep-the-map-and-presentation-controls-in-view",
+      "passed": true,
+      "detail": {
+        "portraitLayout": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "document": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasCount": 1,
+          "canvas": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "right": 390,
+            "bottom": 844
+          },
+          "visibleLegacy": [],
+          "controls": [
+            {
+              "action": "fullscreen",
+              "choice": null,
+              "bounds": {
+                "x": 250.375,
+                "y": 16,
+                "width": 44,
+                "height": 44,
+                "right": 294.375,
+                "bottom": 60
+              }
+            },
+            {
+              "action": null,
+              "choice": "commercial",
+              "bounds": {
+                "x": 19,
+                "y": 422,
+                "width": 352,
+                "height": 78,
+                "right": 371,
+                "bottom": 500
+              }
+            },
+            {
+              "action": null,
+              "choice": "industrial",
+              "bounds": {
+                "x": 19,
+                "y": 508,
+                "width": 352,
+                "height": 78,
+                "right": 371,
+                "bottom": 586
+              }
+            },
+            {
+              "action": null,
+              "choice": "communications",
+              "bounds": {
+                "x": 19,
+                "y": 594,
+                "width": 352,
+                "height": 78,
+                "right": 371,
+                "bottom": 672
+              }
+            },
+            {
+              "action": "voice",
+              "choice": null,
+              "bounds": {
+                "x": 320,
+                "y": 694,
+                "width": 44,
+                "height": 44,
+                "right": 364,
+                "bottom": 738
+              }
+            },
+            {
+              "action": "previous",
+              "choice": null,
+              "bounds": {
+                "x": 21,
+                "y": 774.90625,
+                "width": 44,
+                "height": 44,
+                "right": 65,
+                "bottom": 818.90625
+              }
+            },
+            {
+              "action": "pause",
+              "choice": null,
+              "bounds": {
+                "x": 65,
+                "y": 774.90625,
+                "width": 44,
+                "height": 44,
+                "right": 109,
+                "bottom": 818.90625
+              }
+            },
+            {
+              "action": "next",
+              "choice": null,
+              "bounds": {
+                "x": 109,
+                "y": 774.90625,
+                "width": 44,
+                "height": 44,
+                "right": 153,
+                "bottom": 818.90625
+              }
+            },
+            {
+              "action": "replay",
+              "choice": null,
+              "bounds": {
+                "x": 274,
+                "y": 774.90625,
+                "width": 44,
+                "height": 44,
+                "right": 318,
+                "bottom": 818.90625
+              }
+            },
+            {
+              "action": null,
+              "choice": "commercial",
+              "bounds": {
+                "x": 110,
+                "y": 598.90625,
+                "width": 238,
+                "height": 44,
+                "right": 348,
+                "bottom": 642.90625
+              }
+            },
+            {
+              "action": null,
+              "choice": "industrial",
+              "bounds": {
+                "x": 110,
+                "y": 642.90625,
+                "width": 238,
+                "height": 44,
+                "right": 348,
+                "bottom": 686.90625
+              }
+            },
+            {
+              "action": null,
+              "choice": "communications",
+              "bounds": {
+                "x": 110,
+                "y": 686.90625,
+                "width": 238,
+                "height": 44,
+                "right": 348,
+                "bottom": 730.90625
+              }
+            }
+          ]
+        },
+        "portraitChoiceLayout": {
+          "cards": [
+            {
+              "x": 19,
+              "y": 422,
+              "right": 371,
+              "bottom": 500
+            },
+            {
+              "x": 19,
+              "y": 508,
+              "right": 371,
+              "bottom": 586
+            },
+            {
+              "x": 19,
+              "y": 594,
+              "right": 371,
+              "bottom": 672
+            }
+          ],
+          "guide": {
+            "x": 146,
+            "y": 686,
+            "right": 371,
+            "bottom": 746
+          },
+          "footer": {
+            "x": 12,
+            "y": 763.8125,
+            "right": 378,
+            "bottom": 830
+          }
+        },
+        "landscapeLayout": {
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "document": {
+            "width": 844,
+            "height": 390
+          },
+          "canvasCount": 1,
+          "canvas": {
+            "x": 0,
+            "y": 0,
+            "width": 844,
+            "height": 390,
+            "right": 844,
+            "bottom": 390
+          },
+          "visibleLegacy": [],
+          "controls": [
+            {
+              "action": "fullscreen",
+              "choice": null,
+              "bounds": {
+                "x": 702.375,
+                "y": 8,
+                "width": 44,
+                "height": 44,
+                "right": 746.375,
+                "bottom": 52
+              }
+            },
+            {
+              "action": "voice",
+              "choice": null,
+              "bounds": {
+                "x": 772,
+                "y": 258,
+                "width": 44,
+                "height": 44,
+                "right": 816,
+                "bottom": 302
+              }
+            },
+            {
+              "action": "previous",
+              "choice": null,
+              "bounds": {
+                "x": 32,
+                "y": 329,
+                "width": 44,
+                "height": 44,
+                "right": 76,
+                "bottom": 373
+              }
+            },
+            {
+              "action": "pause",
+              "choice": null,
+              "bounds": {
+                "x": 79,
+                "y": 329,
+                "width": 44,
+                "height": 44,
+                "right": 123,
+                "bottom": 373
+              }
+            },
+            {
+              "action": "next",
+              "choice": null,
+              "bounds": {
+                "x": 126,
+                "y": 329,
+                "width": 44,
+                "height": 44,
+                "right": 170,
+                "bottom": 373
+              }
+            },
+            {
+              "action": "replay",
+              "choice": null,
+              "bounds": {
+                "x": 677.609375,
+                "y": 329,
+                "width": 44,
+                "height": 44,
+                "right": 721.609375,
+                "bottom": 373
+              }
+            },
+            {
+              "action": null,
+              "choice": "commercial",
+              "bounds": {
+                "x": 581,
+                "y": 159,
+                "width": 213,
+                "height": 44,
+                "right": 794,
+                "bottom": 203
+              }
+            },
+            {
+              "action": null,
+              "choice": "industrial",
+              "bounds": {
+                "x": 581,
+                "y": 203,
+                "width": 213,
+                "height": 44,
+                "right": 794,
+                "bottom": 247
+              }
+            },
+            {
+              "action": null,
+              "choice": "communications",
+              "bounds": {
+                "x": 581,
+                "y": 247,
+                "width": 213,
+                "height": 44,
+                "right": 794,
+                "bottom": 291
+              }
+            }
+          ]
+        },
+        "landscapeChoiceLayout": {
+          "cards": [
+            {
+              "x": 478,
+              "y": 125,
+              "right": 823,
+              "bottom": 181
+            },
+            {
+              "x": 478,
+              "y": 187,
+              "right": 823,
+              "bottom": 243
+            },
+            {
+              "x": 478,
+              "y": 249,
+              "right": 823,
+              "bottom": 305
+            }
+          ],
+          "guide": {
+            "x": 21,
+            "y": 253,
+            "right": 249,
+            "bottom": 307
+          },
+          "footer": {
+            "x": 21,
+            "y": 322,
+            "right": 823,
+            "bottom": 380
+          }
+        }
+      }
+    },
+    {
+      "name": "normal-crm-dashboard-keeps-its-original-orthographic-camera",
+      "passed": true,
+      "detail": {
+        "camera": {
+          "type": "OrthographicCamera",
+          "position": [
+            54,
+            60.24999999999999,
+            68
+          ],
+          "quaternion": [
+            -0.26303476481420407,
+            0.31627355645048966,
+            0.09173665429375545,
+            0.9068451556072201
+          ],
+          "target": [
+            0,
+            5.25,
+            0
+          ],
+          "zoom": 1
+        }
+      }
+    },
+    {
+      "name": "reduced-motion-assembles-the-city-immediately-without-confetti",
+      "passed": true,
+      "detail": {
+        "state": {
+          "status": "paused",
+          "chapterId": "intro",
+          "elapsed": 5.01160000000149,
+          "duration": 24,
+          "frame": {
+            "chapterId": "intro",
+            "chapterTitle": "Una empresa que puedes ver",
+            "chapterDuration": 24,
+            "chapterElapsed": 5.01160000000149,
+            "chapterProgress": 0.20881666666672874,
+            "beatId": "world-assembles",
+            "beatIndex": 0,
+            "beatCount": 3,
+            "beatStart": 0,
+            "beatElapsed": 5.01160000000149,
+            "duration": 12,
+            "progress": 0.4176333333334575,
+            "title": "Imagina un mundo para tu empresa",
+            "eyebrow": "BIRD VIEW · PRESENTACIÓN",
+            "narration": "Imagina entender tu empresa como una ciudad. Tus datos empiezan a tomar forma: calles, edificios y personas se conectan, pieza a pieza, delante de ti.",
+            "section": "all",
+            "target": {
+              "kind": "district",
+              "id": "all"
+            },
+            "fromTarget": {
+              "kind": "district",
+              "id": "all"
+            },
+            "effect": "assemble-city",
+            "effectProgress": 0.4176333333334575,
+            "effectStageProgress": 0.4176333333334575,
+            "cityProgress": 0.4176333333334575,
+            "cameraProgress": 0.9280740740743499,
+            "camera": {
+              "shot": "world-reveal",
+              "progress": 0.9280740740743499
+            },
+            "holdingChoice": false,
+            "choices": [],
+            "fictional": true
+          },
+          "generation": 3,
+          "disposed": false,
+          "playing": false,
+          "paused": true,
+          "holdingChoice": false,
+          "canPrevious": false,
+          "canNext": true,
+          "ready": true,
+          "simulated": true,
+          "scene": {
+            "effect": "assemble",
+            "progress": 1,
+            "phase": "complete",
+            "revealProgress": 1,
+            "geometry": {
+              "tilesVisible": false,
+              "tileInstances": 0,
+              "constructionRigs": 0,
+              "truckVisible": false,
+              "representativeVisible": false,
+              "confettiVisible": false,
+              "confettiInstances": 0,
+              "industryParcelsVisible": false
+            },
+            "active": true,
+            "focus": [
+              0,
+              4,
+              -22
+            ],
+            "sale": null,
+            "resourcesCreated": true,
+            "tileCount": 63,
+            "maxConfetti": 112,
+            "rendererCount": 0,
+            "animationFrameCount": 0,
+            "businessMutation": false,
+            "beatId": "world-assembles",
+            "cameraProgress": 0.9280740740743499
+          },
+          "narration": {
+            "enabled": false,
+            "speaking": false
+          },
+          "tavusLoaded": false,
+          "choices": [
+            {
+              "id": "commercial",
+              "label": "Explorar ventas",
+              "description": "De la primera oportunidad a la venta ganada",
+              "section": "sales"
+            },
+            {
+              "id": "industrial",
+              "label": "Ver producción",
+              "description": "De la fábrica hasta la entrega",
+              "section": "industry"
+            },
+            {
+              "id": "communications",
+              "label": "Descubrir relaciones",
+              "description": "Correos, llamadas y reuniones cobran vida",
+              "section": "communications"
+            }
+          ]
+        },
+        "camera": {
+          "type": "PerspectiveCamera",
+          "position": [
+            68.24808152529079,
+            146.0294111183723,
+            124.91240338953509
+          ],
+          "quaternion": [
+            -0.33436864882626754,
+            0.19720225456680265,
+            0.07176711089501057,
+            0.918780909286675
+          ],
+          "target": [
+            0,
+            6.5,
+            -26.75
+          ],
+          "zoom": 1
+        }
+      }
+    },
+    {
+      "name": "controlled-voice-double-resumes-after-pause-replay-and-branch-change",
+      "passed": true,
+      "detail": {
+        "validation": "Explicit local speech double only; no actual speech synthesis or audio output verified",
+        "state": {
+          "paused": false,
+          "speaking": false,
+          "calls": [
+            {
+              "text": "Imagina entender tu empresa como una ciudad. Tus datos empiezan a tomar forma: calles, edificios y personas se conectan, pieza a pieza, delante de ti.",
+              "lang": "es-ES",
+              "rate": 0.98,
+              "voice": "es-ES",
+              "pausedAtCall": false
+            },
+            {
+              "text": "Imagina entender tu empresa como una ciudad. Tus datos empiezan a tomar forma: calles, edificios y personas se conectan, pieza a pieza, delante de ti.",
+              "lang": "es-ES",
+              "rate": 0.98,
+              "voice": "es-ES",
+              "pausedAtCall": false
+            },
+            {
+              "text": "Viajemos a la zona industrial. Aquí puedes seguir los productos desde la fabricación hasta el cliente.",
+              "lang": "es-ES",
+              "rate": 0.98,
+              "voice": "es-ES",
+              "pausedAtCall": false
+            }
+          ],
+          "pauses": 2,
+          "resumes": 3,
+          "cancels": 9
+        }
+      }
+    },
+    {
+      "name": "optional-live-route-retains-the-agent-without-starting-a-conversation",
+      "passed": true,
+      "detail": {
+        "media": {
+          "getUserMedia": 0,
+          "mediaPlay": 0,
+          "audioContext": 0,
+          "speech": 0,
+          "embedRegistered": true,
+          "widgetRegistered": false,
+          "tavusElements": 0,
+          "mediaElements": 0
+        },
+        "state": {
+          "configuration": {
+            "configured": true,
+            "contractsReady": true
+          },
+          "session": {
+            "status": "idle",
+            "microphone": "not-requested"
+          },
+          "presentation": {
+            "section": "all",
+            "ambient": true
+          }
+        }
+      }
+    }
+  ]
+}
