@@ -492,7 +492,7 @@ test("session restart accepts new calls without allowing a previous session to r
   session.stop();
 });
 
-test("microphone denial and unavailable agent are real terminal errors with no automatic retry", async () => {
+test("microphone denial and unavailable agent preserve the SDK notice without automatic retry", async () => {
   const { session, live, sceneCalls } = setup();
   const widget = live();
   widget.emit("error", {
@@ -505,7 +505,9 @@ test("microphone denial and unavailable agent are real terminal errors with no a
   await tick();
   assert.equal(widget.calls.start, 1);
   assert.equal(sceneCalls.end, 1);
-  assert.equal(session.getWidget(), null);
+  assert.equal(session.getWidget(), widget);
+  assert.equal(widget.calls.destroy, 0);
+  assert.equal(widget.calls.close, 0);
   session.dispose();
 
   const unavailable = setup();
@@ -514,7 +516,141 @@ test("microphone denial and unavailable agent are real terminal errors with no a
   assert.equal(unavailable.session.getState().status, "error");
   assert.equal(unavailable.session.getState().error.code, "AGENT_UNAVAILABLE");
   assert.equal(unavailableWidget.calls.start, 1);
+  assert.equal(unavailable.session.getWidget(), unavailableWidget);
+  assert.equal(unavailableWidget.calls.destroy, 0);
   unavailable.session.dispose();
+});
+
+test("failed Join rollback does not destroy the SDK before its error and retry UI", () => {
+  const { session, widgets, states, sceneCalls } = setup();
+  session.start();
+  const widget = widgets[0];
+  widget.ready();
+  widget.emit("mode-change", { mode: "haircheck" });
+  assert.equal(session.getState().status, "preparing");
+  widget.emit("state-change", { state: "connecting" });
+  widget.emit("state-change", { state: "disconnecting" });
+  widget.emit("conversation-ended", { conversationId: "" });
+  widget.emit("state-change", { state: "ended" });
+  assert.equal(session.getState().status, "connecting");
+  assert.equal(states.some((state) => state.status === "ended"), false);
+  widget.emit("error", { code: "CONVERSATION_ERROR", message: "Start rejected" });
+  widget.emit("state-change", { state: "error" });
+  widget.emit("mode-change", { mode: "unavailable" });
+  assert.equal(session.getState().error.code, "CONVERSATION_ERROR");
+  assert.equal(session.getWidget(), widget);
+  assert.deepEqual(widget.calls, { start: 1, close: 0, destroy: 0, remove: 0 });
+  assert.deepEqual(sceneCalls, { start: 1, end: 1 });
+  session.stop();
+  assert.deepEqual(widget.calls, { start: 1, close: 1, destroy: 1, remove: 1 });
+});
+
+test("Tavus can recover inside the same embed after a failed Join without another automatic start", () => {
+  const { session, widgets, sceneCalls } = setup();
+  session.start();
+  const widget = widgets[0];
+  widget.ready();
+  widget.emit("error", { code: "CONVERSATION_ERROR", message: "Permission denied" });
+  // The visitor retries through the official embed's own controls.
+  widget.emit("state-change", { state: "idle" });
+  widget.emit("mode-change", { mode: "haircheck" });
+  assert.equal(session.getState().status, "preparing");
+  assert.equal(session.getState().error, null);
+  assert.equal(session.getState().microphone, "requested");
+  widget.emit("state-change", { state: "connecting" });
+  widget.emit("conversation-started", { conversationId: "retried-conversation" });
+  assert.equal(session.getState().status, "connected");
+  assert.equal(session.getState().conversationId, "retried-conversation");
+  assert.equal(session.getWidget(), widget);
+  assert.equal(widget.calls.start, 1);
+  assert.deepEqual(sceneCalls, { start: 2, end: 1 });
+  session.stop();
+  assert.equal(sceneCalls.end, 2);
+});
+
+test("queued tools from a failed attempt cannot run or reply after retry in the same embed", async () => {
+  const pending = deferred();
+  const calls = [];
+  const { session, live } = setup({
+    toolBridge: {
+      async handle(payload) {
+        calls.push(payload.tool_call_id);
+        if (payload.tool_call_id === "old-running") await pending.promise;
+        return { ok: true, code: "OK" };
+      },
+    },
+  });
+  const widget = live();
+  for (const tool_call_id of ["old-running", "old-queued"])
+    widget.emit("tool-call", { name: "highlight_building", arguments: "{}", tool_call_id });
+  await tick();
+  widget.emit("error", { code: "CONVERSATION_ERROR" });
+  widget.emit("state-change", { state: "connecting" });
+  widget.emit("conversation-started", { conversationId: "new-conversation" });
+  widget.emit("tool-call", { name: "highlight_building", arguments: "{}", tool_call_id: "new-call" });
+  await tick();
+  pending.resolve();
+  await tick();
+  assert.deepEqual(calls, ["old-running", "new-call"]);
+  assert.deepEqual(widget.messages.map((message) => message.properties.tool_call_id), ["new-call"]);
+  session.stop();
+});
+
+test("SDK after-call view stays mounted until explicit Finalizar and can start another conversation", () => {
+  const { session, live, sceneCalls } = setup();
+  const widget = live();
+  widget.emit("conversation-ended", { conversationId: "conversation-real-1" });
+  widget.emit("state-change", { state: "ended" });
+  widget.emit("mode-change", { mode: "ended" });
+  assert.equal(session.getState().status, "ended");
+  assert.equal(session.getWidget(), widget);
+  assert.equal(widget.calls.destroy, 0);
+  assert.equal(sceneCalls.end, 1);
+  widget.emit("state-change", { state: "connecting" });
+  widget.emit("conversation-started", { conversationId: "next-conversation" });
+  assert.equal(session.getState().status, "connected");
+  assert.deepEqual(sceneCalls, { start: 2, end: 1 });
+  session.stop();
+  assert.equal(widget.calls.destroy, 1);
+  assert.equal(sceneCalls.end, 2);
+});
+
+test("starting over after a retained SDK error releases the previous embed exactly once", () => {
+  const { session, widgets, live } = setup();
+  const first = live();
+  first.emit("mode-change", { mode: "unavailable" });
+  assert.equal(session.start(), true);
+  assert.equal(widgets.length, 2);
+  assert.deepEqual(first.calls, { start: 1, close: 1, destroy: 1, remove: 1 });
+  first.emit("conversation-started", { conversationId: "stale" });
+  assert.equal(session.getState().status, "initializing");
+  session.dispose();
+});
+
+test("a late start rejection cannot remove the SDK error notice or a newer in-embed retry", async () => {
+  for (const retry of [false, true]) {
+    let rejectStart;
+    const { session, widgets } = setup({
+      onAppend(widget) {
+        widget.startConversation = () => new Promise((resolve, reject) => { rejectStart = reject; });
+      },
+    });
+    session.start();
+    const widget = widgets[0];
+    widget.emit("conversation-ended", { conversationId: "" });
+    widget.emit("error", { code: "ORIGINAL_ERROR", message: "Join rejected" });
+    if (retry) {
+      widget.emit("state-change", { state: "connecting" });
+      widget.emit("conversation-started", { conversationId: "retry-joined" });
+    }
+    rejectStart(new Error("late rejection from initial start"));
+    await tick();
+    assert.equal(session.getWidget(), widget);
+    assert.equal(widget.calls.destroy, 0);
+    assert.equal(session.getState().status, retry ? "connected" : "error");
+    assert.equal(session.getState().error?.code ?? null, retry ? null : "ORIGINAL_ERROR");
+    session.dispose();
+  }
 });
 
 test("ready timeout removes the widget and restores the scene without claiming connection", async () => {
@@ -613,5 +749,7 @@ test("initialization and SDK promise failures release scene ownership without op
     "CONVERSATION_START_FAILED",
   );
   assert.equal(rejected.sceneCalls.end, 1);
+  assert.equal(rejected.session.getWidget(), rejected.widgets[0]);
+  assert.equal(rejected.widgets[0].calls.destroy, 0);
   rejected.session.dispose();
 });

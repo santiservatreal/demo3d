@@ -1,0 +1,154 @@
+{
+  "startedAt": "2026-10-18T16:15:04.257Z",
+  "completedAt": "2026-10-18T16:15:25.944Z",
+  "passed": false,
+  "sdk": {
+    "name": "@tavus/embed",
+    "version": "0.19.3",
+    "sha256": "0bbdab55cc0f530427b4f86560930166267874378b35e551ded10f56d406838e"
+  },
+  "sessionSourcePath": "/tmp/tavus-session-before-join-fix.js",
+  "sessionSourceSha256": "ecfda0749c7c1510b6dc0f3960970ac9e1c8a0ed0993ab47d23a5107656d0677",
+  "scope": "Real installed embed/Join handler with intercepted HTTP denial; no successful call, avatar, real microphone permission, or billable request.",
+  "permissionGateBypassed": true,
+  "fixture": {
+    "deployment_id": "dqa-offline-join-regression",
+    "deployment_name": "Offline Join regression fixture",
+    "channel": "widget",
+    "is_available": true,
+    "customization": {
+      "schema_version": 1,
+      "show_haircheck": true,
+      "conversation": {
+        "modality": "video",
+        "enable_chat": false,
+        "enable_closed_captions": false
+      },
+      "preview": {
+        "title": "Prueba local: ningún agente real",
+        "description": "El botón Join ejecuta el SDK oficial contra una respuesta HTTP simulada.",
+        "background": {
+          "type": "background-gradient"
+        }
+      },
+      "haircheck": {
+        "join_button": "Join",
+        "cancel_btn": "Cancel"
+      }
+    }
+  },
+  "requests": [
+    {
+      "url": "https://tavusapi.com/v2/deployments/dqa-offline-join-regression/init",
+      "method": "GET",
+      "outcome": "mock-init-200"
+    },
+    {
+      "url": "https://c.daily.co/call-machine/versioned/0.92.2/static/call-machine-object-bundle.js",
+      "method": "GET",
+      "outcome": "blocked"
+    },
+    {
+      "url": "https://c.dailywebrtc.com/call-machine/versioned/0.92.2/static/call-machine-object-bundle.js",
+      "method": "GET",
+      "outcome": "blocked"
+    },
+    {
+      "url": "https://c.dailywebrtc.net/call-machine/versioned/0.92.2/static/call-machine-object-bundle.js",
+      "method": "GET",
+      "outcome": "blocked"
+    },
+    {
+      "url": "https://tavusapi.com/v2/deployments/dqa-offline-join-regression/start",
+      "method": "POST",
+      "outcome": "mock-start-403"
+    }
+  ],
+  "preservedBeforeFinalizar": null,
+  "state": {
+    "trace": [
+      {
+        "name": "ready",
+        "detail": {
+          "deploymentId": "dqa-offline-join-regression"
+        },
+        "mounted": true,
+        "at": 870.5
+      },
+      {
+        "name": "state-change",
+        "detail": {
+          "state": "idle"
+        },
+        "mounted": true,
+        "at": 875.7999999998137
+      },
+      {
+        "name": "mode-change",
+        "detail": {
+          "mode": "idle"
+        },
+        "mounted": true,
+        "at": 875.8999999994412
+      },
+      {
+        "name": "mode-change",
+        "detail": {
+          "mode": "haircheck"
+        },
+        "mounted": true,
+        "at": 1054.699999999255
+      },
+      {
+        "name": "state-change",
+        "detail": {
+          "state": "connecting"
+        },
+        "mounted": true,
+        "at": 1171.5999999996275
+      },
+      {
+        "name": "state-change",
+        "detail": {
+          "state": "disconnecting"
+        },
+        "mounted": true,
+        "at": 1199.3999999994412
+      },
+      {
+        "name": "conversation-ended",
+        "detail": {
+          "conversationId": ""
+        },
+        "mounted": true,
+        "at": 1200.5999999996275
+      }
+    ],
+    "session": {
+      "status": "ended",
+      "conversationId": null,
+      "speech": null,
+      "microphone": "not-requested",
+      "error": null,
+      "disposed": false
+    },
+    "mounted": false,
+    "scene": {
+      "start": 1,
+      "end": 1
+    }
+  },
+  "consoleErrors": [
+    "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+    "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+    "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[Tavus:API] POST https://tavusapi.com/v2/deployments/dqa-offline-join-regression/start → 403 {\"error\":\"Origin not allowed\"}"
+  ],
+  "pageErrors": [],
+  "failure": {
+    "name": "TimeoutError",
+    "message": "page.waitForFunction: Timeout 20000ms exceeded.",
+    "stack": "page.waitForFunction: Timeout 20000ms exceeded.\n    at /workspace/demo3d/tests/demo-tavus-join-browser.mjs:182:14"
+  }
+}

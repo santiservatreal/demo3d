@@ -62,6 +62,8 @@ La importación del embed es estática al entrar en `/demo`. La dependencia `@ta
 
 Antes de pulsar **Iniciar demo con IA**, el dock muestra un CTA pequeño y no monta el embed, crea una conversación ni solicita micrófono o cámara. Al iniciar, Tavus renderiza su propia vista previa, permisos, vídeo y controles de medios. La cámara del visitante se configura apagada inicialmente. El indicador local no inventa un estado de mute que el SDK no publica; los controles reales están dentro de Tavus. **Interrumpir** envía la interacción oficial y **Finalizar** termina la sesión.
 
+En la vista de preparación, permite el micrófono y pulsa **Join**. Si falla el acceso, la aplicación conserva el embed para mostrar el aviso y los controles de reintento de Tavus. No crea otro intento automáticamente. Tavus puede emitir `conversation-ended` durante la limpieza de un Join fallido, antes de emitir su error: ese evento no debe desmontar la ventana. El cierre normal de la llamada también conserva la pantalla final del agente; **Finalizar**, iniciar una sesión nueva o salir de la página sí libera y retira el embed. Un reintento desde sus controles vuelve a conectar las herramientas visuales y descarta las respuestas pendientes del intento anterior.
+
 El saludo se envía como `custom-greeting` en español. El contexto pide esperar respuesta, ofrecer recorrido comercial o industrial, aceptar interrupciones y confirmar las acciones con el resultado de sus herramientas. La conversación y la voz reales dependen del PAL y de la conexión al servicio; las pruebas con dobles de SDK no las acreditan.
 
 ## Ejecución y comprobaciones

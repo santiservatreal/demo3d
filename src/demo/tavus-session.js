@@ -1,7 +1,7 @@
 /**
  * Browser lifecycle for the official Tavus widget. Importing this module does
  * not import/register the SDK, mount an element, or request media. The browser
- * entry registers @tavus/widget once; only the visitor's Start action calls
+ * entry registers @tavus/embed once; only the visitor's Start action calls
  * start(). createWidget is injectable so lifecycle tests need no media or SDK.
  */
 export const TAVUS_DEMO_GREETING =
@@ -26,7 +26,7 @@ const MAX_TOOL_ARGUMENT_LENGTH = 32768;
 const MAX_TOOLS_PER_SESSION = 256;
 const READY_TIMEOUT_MS = 15000;
 const UNCORRELATED_DUPLICATE_WINDOW_MS = 500;
-const ACTIVE_STATUSES = new Set(["initializing", "connecting", "connected"]);
+const ACTIVE_STATUSES = new Set(["initializing", "preparing", "connecting", "connected"]);
 
 function publicId(value) {
   return typeof value === "string" && /^[^\s\x00-\x1f\x7f]{1,256}$/u.test(value)
@@ -52,7 +52,7 @@ function sdkError(detail) {
     code,
     message: denied
       ? "No se ha concedido acceso al micrófono. Revisa los permisos del navegador y vuelve a iniciar la demo."
-      : "Tavus no ha podido mantener la conversación. Comprueba la conexión y la configuración del agente antes de volver a iniciarla.",
+      : "Tavus no ha podido conectar la conversación. Puedes consultar el aviso del agente y volver a intentarlo.",
     denied,
   };
 }
@@ -92,7 +92,7 @@ export function createTavusDemoSession({
   controller,
   toolBridge,
   onState = () => {},
-  createWidget = () => container?.ownerDocument?.createElement("tavus-widget"),
+  createWidget = () => container?.ownerDocument?.createElement("tavus-embed"),
   readyTimeoutMs = READY_TIMEOUT_MS,
   now = () => Date.now(),
 } = {}) {
@@ -106,6 +106,8 @@ export function createTavusDemoSession({
   };
   let widget = null;
   let generation = 0;
+  let toolGeneration = 0;
+  let hasConnected = false;
   let readyTimer = null;
   let started = false;
   let ownsSceneSession = false;
@@ -132,6 +134,21 @@ export function createTavusDemoSession({
     if (value && typeof value.catch === "function") value.catch(() => {});
   }
 
+  function releaseScene() {
+    toolGeneration++;
+    toolQueue = Promise.resolve();
+    seenToolCalls = new Set();
+    recentUncorrelatedTools = new Map();
+    if (ownsSceneSession) {
+      ownsSceneSession = false;
+      try {
+        ignoreRejection(controller?.endSession?.());
+      } catch {
+        /* Visual cleanup must not interrupt the SDK's own error handling. */
+      }
+    }
+  }
+
   function cleanup() {
     generation++;
     clearReadyTimer();
@@ -141,9 +158,8 @@ export function createTavusDemoSession({
       oldWidget?.removeEventListener(name, listener);
     listeners = [];
     started = false;
-    toolQueue = Promise.resolve();
-    seenToolCalls = new Set();
-    recentUncorrelatedTools = new Map();
+    hasConnected = false;
+    releaseScene();
     // Unsubscribe before close/destroy: the SDK may synchronously emit ended.
     try {
       if (typeof oldWidget?.close === "function")
@@ -167,24 +183,44 @@ export function createTavusDemoSession({
     } catch {
       /* Already removed by destroy. */
     }
-    if (ownsSceneSession) {
-      ownsSceneSession = false;
-      try {
-        ignoreRejection(controller?.endSession?.());
-      } catch {
-        /* Never leave widget resources alive. */
-      }
-    }
   }
 
-  function fail(code, message, microphone = state.microphone) {
-    cleanup();
+  function fail(code, message, microphone = state.microphone, preserveWidget = false) {
+    if (preserveWidget) {
+      clearReadyTimer();
+      hasConnected = false;
+      releaseScene();
+    } else cleanup();
     publish({
       status: "error",
       speech: null,
       microphone,
       error: { code, message },
     });
+  }
+
+  function resumeSdkAttempt(status) {
+    if (!ownsSceneSession) {
+      try {
+        ownsSceneSession = true;
+        if (controller?.startSession?.()?.ok === false)
+          throw new Error("scene unavailable");
+      } catch {
+        fail("SCENE_UNAVAILABLE", "La ciudad todavía no está disponible. Vuelve a iniciar la demo.");
+        return false;
+      }
+    }
+    publish({ status, speech: null, error: null, microphone: "requested" });
+    return true;
+  }
+
+  function finishSdkConversation() {
+    // Tavus also emits ended while rolling back a failed Join, before its
+    // actual error/retry screen. Keep the element and its listeners alive.
+    if (!hasConnected) return;
+    hasConnected = false;
+    releaseScene();
+    publish({ status: "ended", speech: null, microphone: "not-requested" });
   }
 
   function send(interaction, expectedGeneration = generation) {
@@ -222,6 +258,7 @@ export function createTavusDemoSession({
   function receiveTool(detail, expectedGeneration) {
     if (state.status !== "connected" || !detail || typeof detail !== "object")
       return;
+    const expectedToolGeneration = toolGeneration;
     const payload = {
       name: typeof detail.name === "string" ? detail.name : "",
       arguments: typeof detail.arguments === "string" ? detail.arguments : "",
@@ -286,7 +323,7 @@ export function createTavusDemoSession({
     // this queue, and every awaited action checks the session generation again.
     toolQueue = toolQueue
       .then(async () => {
-        if (generation !== expectedGeneration || state.status !== "connected")
+        if (generation !== expectedGeneration || toolGeneration !== expectedToolGeneration || state.status !== "connected")
           return;
         let result;
         try {
@@ -306,7 +343,8 @@ export function createTavusDemoSession({
             message: "No se ha podido ejecutar la acción visual solicitada.",
           };
         }
-        toolReply(payload, result, expectedGeneration);
+        if (toolGeneration === expectedToolGeneration)
+          toolReply(payload, result, expectedGeneration);
       })
       .catch(() => {});
   }
@@ -337,21 +375,25 @@ export function createTavusDemoSession({
     clearReadyTimer();
     started = true;
     publish({ status: "connecting", microphone: "requested" });
+    const expectedToolGeneration = toolGeneration;
+    const startFailed = () => {
+      // An SDK error/rollback can precede rejection of this promise. Preserve
+      // its original notice, and never tear down a newer in-embed retry.
+      if (expectedGeneration !== generation ||
+          expectedToolGeneration !== toolGeneration || state.error) return;
+      fail(
+        "CONVERSATION_START_FAILED",
+        "No se ha podido iniciar la conversación. Revisa el aviso del agente y vuelve a intentarlo.",
+        state.microphone,
+        true,
+      );
+    };
     try {
       const attempt = widget.startConversation();
       if (attempt && typeof attempt.catch === "function")
-        attempt.catch(() => {
-          if (expectedGeneration === generation)
-            fail(
-              "CONVERSATION_START_FAILED",
-              "No se ha podido iniciar la conversación. Vuelve a intentarlo desde el botón de inicio.",
-            );
-        });
+        attempt.catch(startFailed);
     } catch {
-      fail(
-        "CONVERSATION_START_FAILED",
-        "No se ha podido iniciar la conversación. Vuelve a intentarlo desde el botón de inicio.",
-      );
+      startFailed();
     }
   }
 
@@ -392,6 +434,7 @@ export function createTavusDemoSession({
       );
       return false;
     }
+    if (widget) cleanup();
     const expectedGeneration = ++generation;
     publish({
       status: "initializing",
@@ -444,6 +487,8 @@ export function createTavusDemoSession({
       });
       subscribe("tavus:conversation-started", (detail) => {
         if (!started || !publicId(detail?.conversationId)) return;
+        if (!resumeSdkAttempt("connecting")) return;
+        hasConnected = true;
         publish({
           status: "connected",
           conversationId: detail.conversationId,
@@ -451,13 +496,14 @@ export function createTavusDemoSession({
           error: null,
         });
       });
-      subscribe("tavus:conversation-ended", () => stop());
+      subscribe("tavus:conversation-ended", finishSdkConversation);
       subscribe("tavus:error", (detail) => {
         const error = sdkError(detail);
         fail(
           error.code,
           error.message,
           error.denied ? "denied" : state.microphone,
+          true,
         );
       });
       subscribe("tavus:tool-call", (detail) =>
@@ -465,22 +511,28 @@ export function createTavusDemoSession({
       );
       subscribe("tavus:protocol-message", protocol);
       subscribe("tavus:state-change", (detail) => {
-        if (detail?.state === "ended") stop();
-        else if (detail?.state === "error")
+        if (detail?.state === "ended") finishSdkConversation();
+        else if (detail?.state === "error" && !state.error)
           fail(
             "CONNECTION_ERROR",
-            "La conversación se ha desconectado. Puedes volver a iniciarla cuando lo desees.",
+            "No se ha podido conectar. Revisa el aviso del agente y vuelve a intentarlo.",
+            state.microphone,
+            true,
           );
+        else if (detail?.state === "connecting") resumeSdkAttempt("connecting");
         else if (detail?.state === "disconnecting") publish({ speech: null });
         // A connected state alone is not proof of conversation-started.
       });
       subscribe("tavus:mode-change", (detail) => {
-        if (detail?.mode === "unavailable")
+        if (detail?.mode === "unavailable" && !state.error)
           fail(
             "AGENT_UNAVAILABLE",
-            "El agente de Tavus no está disponible. Comprueba sus límites y configuración antes de volver a iniciar la demo.",
+            "El agente no está disponible en este momento. Consulta su aviso para ver el motivo y reintentar.",
+            state.microphone,
+            true,
           );
-        else if (detail?.mode === "ended") stop();
+        else if (detail?.mode === "haircheck") resumeSdkAttempt("preparing");
+        else if (detail?.mode === "ended") finishSdkConversation();
       });
       readyTimer = setTimeout(() => {
         if (expectedGeneration === generation && !started)

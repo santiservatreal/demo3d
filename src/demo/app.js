@@ -36,9 +36,9 @@ shell.append(presentation);
 const panel = presentation.querySelector("#bird-demo-panel");
 const $ = (selector) => presentation.querySelector(selector);
 const escapeHTML = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
-const activeStatuses = new Set(["initializing", "connecting", "connected"]);
+const activeStatuses = new Set(["initializing", "preparing", "connecting", "connected"]);
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-const statusNames = { idle: "Pronta para conversar", initializing: "Preparando tu guía…", connecting: "Conectando…", connected: "Conversación conectada", ended: "Sesión finalizada", error: "No se ha conectado" };
+const statusNames = { idle: "Lista para conversar", initializing: "Preparando tu guía…", preparing: "Lista para unirte", connecting: "Conectando…", connected: "Conversación conectada", ended: "Sesión finalizada", error: "No se ha conectado" };
 let configuration = null, session = null, disposed = false;
 let currentTarget = { kind: "industry-stage", id: "manufacturing" };
 let currentFrame = null, ambientTimer = null, ambientEnabled = false, ambientIndex = 0, canvas = null;
@@ -101,7 +101,7 @@ async function advanceAmbient() {
 }
 function showSession(state = { status: "idle", microphone: "not-requested" }) {
   const active = activeStatuses.has(state.status);
-  if (active) {
+  if (active || state.error) {
     ambientEnabled = false;
     clearTimeout(ambientTimer);
     ambientTimer = null;
@@ -112,12 +112,14 @@ function showSession(state = { status: "idle", microphone: "not-requested" }) {
   $("#bird-demo-status").textContent = statusNames[state.status] || "Estado no disponible";
   $("#bird-demo-microphone").textContent = state.microphone === "denied" ? "Permiso del micrófono denegado" : state.microphone === "not-requested" ? "Micrófono sin solicitar" : state.microphone === "requested" ? "Tavus gestiona los permisos del micrófono" : "Micrófono: usa los controles de Tavus";
   $("[data-demo-action=start]").disabled = active || !configuration?.configured || !cityPresentation.getAvailable();
-  $("[data-demo-action=stop]").disabled = !active;
+  $("[data-demo-action=stop]").disabled = !active && !session?.getWidget();
   $("[data-demo-action=interrupt]").disabled = state.status !== "connected";
   if (state.error) {
     syncFrameToShot();
     $("#bird-demo-message").textContent = state.error.message;
   }
+  else if (state.status === "preparing") $("#bird-demo-message").textContent = "Permite el micrófono y pulsa «Join» en el agente para entrar.";
+  else if (state.status === "connecting") $("#bird-demo-message").textContent = "Estamos conectando con tu guía. Su ventana permanecerá abierta.";
   else if (state.status === "connected") $("#bird-demo-message").textContent = state.speech === "guide" ? "Tu guía está hablando. Puedes interrumpir y preguntar." : state.speech === "user" ? "Te está escuchando…" : "Pregunta por el lugar que te apetezca descubrir.";
   else if (state.status === "ended") {
     syncFrameToShot();

@@ -416,6 +416,34 @@ async function controlledBridgeScenario(label, options = {}) {
   const contextData = JSON.parse(capturedContext.context.split("DATOS FICTICIOS DE LA DEMO:\n").at(-1));
   expect(contextData.presentationTools.definitions).toEqual(EXISTING_AGENT_TOOL_DEFINITIONS);
   expect(contextData.presentationTools.catalogue).toEqual(getExistingAgentCatalogue({ crm: JSON.parse(before.crm), industry: JSON.parse(before.industry) }));
+  // SDK-reported failure must keep its own error/retry surface mounted in the
+  // real presentation dock, on both desktop and mobile. This is a local double;
+  // the dedicated Join suite exercises the actual SDK's failed-Join sequence.
+  await page.evaluate(() => {
+    const widget = __DEMO_QA_SDK_DOUBLE__.elements.at(-1);
+    for (const [name, detail] of [
+      ["conversation-ended", { conversationId: "controlled-conversation" }],
+      ["state-change", { state: "ended" }],
+      ["error", { code: "CONVERSATION_ERROR", message: "Controlled Join rejection" }],
+      ["state-change", { state: "error" }],
+      ["mode-change", { mode: "unavailable" }],
+    ]) widget.dispatchEvent(new CustomEvent(`tavus:${name}`, { detail }));
+  });
+  expect(await page.evaluate(() => __BIRD_DEMO__.getState().session.status)).toBe("error");
+  await expect(page.locator("#bird-widget-host tavus-embed")).toBeVisible();
+  await expect(page.locator("[data-demo-action='stop']")).toBeEnabled();
+  expect(await page.evaluate(() => ({ ends: __DEMO_QA_SDK_DOUBLE__.ends, destroys: __DEMO_QA_SDK_DOUBLE__.destroys }))).toEqual({ ends: 0, destroys: 0 });
+  await page.evaluate(() => {
+    const widget = __DEMO_QA_SDK_DOUBLE__.elements.at(-1);
+    widget.dispatchEvent(new CustomEvent("tavus:mode-change", { detail: { mode: "haircheck" } }));
+  });
+  await expect(page.locator("#bird-demo-message")).toContainText("Join");
+  await page.evaluate(() => {
+    const widget = __DEMO_QA_SDK_DOUBLE__.elements.at(-1);
+    widget.dispatchEvent(new CustomEvent("tavus:state-change", { detail: { state: "connecting" } }));
+    widget.dispatchEvent(new CustomEvent("tavus:conversation-started", { detail: { conversationId: "controlled-retry-conversation" } }));
+  });
+  expect(await page.evaluate(() => __BIRD_DEMO__.getState().session.status)).toBe("connected");
   const movement = await controlledTool(page, `${label}-move`, "trigger_3d_camera_movement", { movement_id: "industry-stage:manufacturing" });
   expect(movement.properties.output.ok).toBe(true);
   await settled(page);
@@ -475,7 +503,7 @@ async function controlledBridgeScenario(label, options = {}) {
   record(`controlled-sdk-double-${label}-uses-real-exported-schemas-bridge-and-webgl-without-a-live-call`, {
     evidenceKind: "CONTROLLED_SDK_DOUBLE_NOT_A_TAVUS_CONVERSATION",
     capturedContext, movement, highlight, pulse, machinery, invalidCamera, unavailableBuilding,
-    initialCamera, focusedCamera, restoredCamera, restoredFrame, focusedFrame, activeLayout, resizeLayouts, machineryMatricesChanged: true, cleanup,
+    initialCamera, focusedCamera, restoredCamera, restoredFrame, focusedFrame, activeLayout, resizeLayouts, machineryMatricesChanged: true, sdkErrorRetainsEmbedAndAllowsRetry: true, cleanup,
   });
   await context.close();
 }
