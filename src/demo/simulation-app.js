@@ -1,9 +1,11 @@
 import { cityPresentation } from "../city/app.js";
 import { getPresentationFrame } from "./presentation-state.js";
 import { createStoryPlayer } from "./story-player.js";
-import { STORY_CHOICES } from "./story-model.js";
+import { STORY_CHOICES, getStoryTourDuration } from "./story-model.js";
+import { createStoryLabels } from "./story-labels.js";
 import "./style.css";
 import "./story.css";
+import "./story-labels.css";
 
 const shell = document.querySelector("#city-app");
 shell.classList.add("c-bird-demo", "is-story-presentation");
@@ -50,6 +52,8 @@ let ready = false, disposed = false, lastBeat = null, lastFrame = null, lastStat
 let voiceEnabled = false, speaking = false, utterance = null, voiceBeat = null;
 let samplingSeek = false;
 let lastVisualPhase = null;
+let labelResizeFrame = null;
+const storyLabels = createStoryLabels({ container: root, project: (target) => cityPresentation.getScene()?.presentation?.projectStoryAnchor?.(target) });
 const chapterNames = { intro: "PRÓLOGO · IMAGINA", commercial: "01 · LA HISTORIA DE UNA VENTA", industrial: "02 · DEL PRODUCTO A LA ENTREGA", communications: "03 · CADA CONVERSACIÓN CUENTA" };
 const effects = { "assemble-city": "assemble", "sales-transfer": "sale", "celebrate-sale": "sale", "production-flow": "industry", delivery: "industry" };
 const choices = [
@@ -105,16 +109,16 @@ function render(frame, state) {
   root.classList.toggle("is-choice", choice);
   root.classList.toggle("is-idle", idle);
   root.classList.toggle("is-paused", state.status === "paused");
-  const visual = ready ? cityPresentation.getScene().presentation.sampleStory?.({ chapterId: frame.chapterId, beatId: frame.beatId, section: frame.section, shotId: `${frame.chapterId}:${frame.beatId}`, seeking: samplingSeek, effect: idle ? "assemble" : effects[frame.effect] || null, progress: idle ? 1 : frame.effectStageProgress, target: frame.target, fromTarget: frame.fromTarget, cameraProgress: idle ? 1 : frame.cameraProgress, camera: true }) : null;
+  const visual = ready ? cityPresentation.getScene().presentation.sampleStory?.({ chapterId: frame.chapterId, beatId: frame.beatId, section: frame.section, shotId: `${frame.chapterId}:${frame.camera?.shot || frame.beatId}`, cameraMode: frame.camera?.mode, beatProgress: frame.progress, seeking: samplingSeek, effect: idle ? "assemble" : effects[frame.effect] || null, progress: idle ? 1 : frame.effectStageProgress, target: frame.target, fromTarget: frame.fromTarget, cameraProgress: idle ? 1 : frame.cameraProgress, camera: true }) : null;
   if (changed) {
     $("#bird-story-eyebrow").textContent = idle ? "IMAGINA UNA FORMA DISTINTA DE ENTENDER TU EMPRESA" : frame.eyebrow;
     $("#bird-story-title").textContent = idle ? "Tu negocio.\nUn mundo vivo." : frame.title;
-    $("#bird-story-narration").textContent = idle ? "De los datos a una ciudad que puedes recorrer. Cada barrio, cada movimiento y cada edificio cuentan una historia." : frame.narration;
+    $("#bird-story-narration").textContent = idle ? "La ciudad se construye ante ti. Después entraremos en sus barrios para acompañar una venta y seguir un producto hasta su entrega." : frame.narration;
     $("#bird-story-status").textContent = idle ? "Una historia que puedes explorar" : state.status === "paused" ? "Presentación en pausa" : choice ? "Elige qué quieres descubrir" : voiceEnabled ? "Narración guiada · Voz del navegador" : "Narración guiada · Subtítulos";
     $("#bird-story-choices").hidden = !choice;
     $("[data-story-action=start]").hidden = !idle;
     $("[data-story-action=start]").disabled = !ready;
-    $("#bird-story-chapter").textContent = chapterNames[frame.chapterId];
+    $("#bird-story-chapter").textContent = idle ? "PRESENTACIÓN COMPLETA · VENTAS Y PRODUCCIÓN" : chapterNames[frame.chapterId];
     const pause = $("[data-story-action=pause]");
     pause.innerHTML = icon(state.playing ? "pause" : "play");
     pause.setAttribute("aria-label", state.playing ? "Pausar presentación" : "Reproducir presentación");
@@ -131,11 +135,14 @@ function render(frame, state) {
     lastVisualPhase = visual?.phase;
   }
   const scrubber = $("#bird-story-scrubber");
-  scrubber.max = String(frame.chapterDuration);
-  scrubber.value = String(frame.chapterElapsed);
+  const duration = idle ? getStoryTourDuration() : state.tour ? state.tourDuration : frame.chapterDuration;
+  const elapsed = idle ? 0 : state.tour ? state.tourElapsed : frame.chapterElapsed;
+  scrubber.max = String(duration);
+  scrubber.value = String(elapsed);
   scrubber.disabled = idle || !ready;
-  scrubber.style.setProperty("--story-progress", `${100 * frame.chapterProgress}%`);
-  $("#bird-story-time").textContent = `${time(frame.chapterElapsed)} / ${time(frame.chapterDuration)}`;
+  scrubber.setAttribute("aria-label", state.tour ? "Posición en la presentación completa" : "Posición en el recorrido");
+  scrubber.style.setProperty("--story-progress", `${duration ? 100 * elapsed / duration : 0}%`);
+  $("#bird-story-time").textContent = `${time(elapsed)} / ${time(duration)}`;
   const milestone = $("#bird-story-milestone");
   milestone.hidden = idle || choice || (frame.effect !== "celebrate-sale" && frame.beatId !== "delivered");
   milestone.querySelector("b").textContent = frame.beatId === "delivered" ? "¡Producto entregado!" : "¡Una venta ganada!";
@@ -143,21 +150,30 @@ function render(frame, state) {
   if (state.status === "paused") window.speechSynthesis?.pause();
   else if (state.status !== "playing") { stopSpeech(); voiceBeat = null; }
   else narrate(frame, state);
+  storyLabels.sample(idle || choice ? { ...frame, labels: { mode: "none" } } : frame);
   lastBeat = frame.beatId;
   lastStatus = state.status;
 }
 const corePlayer = createStoryPlayer({ onFrame: render });
 const player = { ...corePlayer,
   seek(seconds) { samplingSeek = true; try { return corePlayer.seek(seconds); } finally { samplingSeek = false; } },
+  seekTour(seconds) { samplingSeek = true; try { return corePlayer.seekTour(seconds); } finally { samplingSeek = false; } },
   play(options = {}) { samplingSeek = Number(options.elapsed) > 0; try { return corePlayer.play(options); } finally { samplingSeek = false; } },
 };
 function error(message) { $("#bird-story-error").hidden = false; $("#bird-story-error").textContent = message; }
+function prepareTour() {
+  const presentation = cityPresentation.getScene().presentation;
+  presentation.clearStoryEffects();
+  // Repeating a street-level chapter starts the reveal from its opening frame.
+  presentation.sampleStory({ target: { kind: "district", id: "all" }, fromTarget: { kind: "district", id: "all" }, effect: null, progress: 1, cameraProgress: 1, cameraMode: "reveal", seeking: true });
+  presentation.clearStoryEffects();
+}
 function begin() {
   if (!ready || disposed) return;
   stopSpeech(); voiceBeat = null;
-  cityPresentation.getScene().presentation.clearStoryEffects();
+  prepareTour();
   if (document.fullscreenEnabled && !document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
-  player.play({ chapter: "intro", elapsed: 0 });
+  player.play({ chapter: "intro", elapsed: 0, tour: true });
 }
 function pauseOrResume() {
   const { status } = player.getState();
@@ -173,7 +189,7 @@ root.addEventListener("click", (event) => {
   const action = button.dataset.storyAction;
   if (action === "start") begin();
   else if (action === "pause") pauseOrResume();
-  else if (action === "replay") { stopSpeech(); voiceBeat = null; cityPresentation.getScene().presentation.clearStoryEffects(); player.play({ chapter: "intro", elapsed: 0 }); }
+  else if (action === "replay") { stopSpeech(); voiceBeat = null; prepareTour(); player.play({ chapter: "intro", elapsed: 0, tour: true }); }
   else if (action === "previous" || action === "next") { stopSpeech(); voiceBeat = null; player[action](); }
   else if (action === "voice") {
     if (!("speechSynthesis" in window)) return error("Este navegador no ofrece narración. Puedes seguir los subtítulos de la presentación.");
@@ -190,7 +206,11 @@ root.addEventListener("click", (event) => {
     attempt?.catch?.(() => { button.title = "La presentación ya ocupa toda la ventana"; });
   }
 });
-$("#bird-story-scrubber").addEventListener("input", (event) => { stopSpeech(); voiceBeat = null; player.seek(Number(event.target.value)); });
+$("#bird-story-scrubber").addEventListener("input", (event) => {
+  stopSpeech(); voiceBeat = null;
+  const seek = player.getState().tour ? player.seekTour : player.seek;
+  seek(Number(event.target.value));
+});
 function keydown(event) {
   if (!ready || /^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(event.target.tagName)) return;
   if (event.code === "Space") { event.preventDefault(); pauseOrResume(); }
@@ -200,6 +220,16 @@ function keydown(event) {
 function visibility() { if (document.hidden && player.getState().playing) player.pause(); }
 document.addEventListener("keydown", keydown);
 document.addEventListener("visibilitychange", visibility);
+function resizeLabels() {
+  cancelAnimationFrame(labelResizeFrame);
+  labelResizeFrame = requestAnimationFrame(() => {
+    labelResizeFrame = requestAnimationFrame(() => {
+      labelResizeFrame = null;
+      if (!disposed && ready && lastFrame) storyLabels.sample(["idle", "choice"].includes(player.getState().status) ? { ...lastFrame, labels: { mode: "none" } } : lastFrame);
+    });
+  });
+}
+window.addEventListener("resize", resizeLabels);
 async function boot() {
   try {
     await cityPresentation.ready;
@@ -209,6 +239,7 @@ async function boot() {
     cityPresentation.getScene().presentation.setCinematicIdle(false);
     snapshot = cityPresentation.getSnapshot(); ready = true;
     $("[data-story-action=start]").innerHTML = `Comenzar presentación ${icon("arrow")}`;
+    $("[data-story-action=start]").title = `Presentación completa · ${time(getStoryTourDuration())} · Ventas y producción`;
     lastStatus = null;
     player.reset({ autoplay: false });
   } catch {
@@ -222,6 +253,9 @@ function cleanup() {
   document.removeEventListener("keydown", keydown);
   document.removeEventListener("visibilitychange", visibility);
   window.removeEventListener("pagehide", pagehide);
+  window.removeEventListener("resize", resizeLabels);
+  cancelAnimationFrame(labelResizeFrame);
+  storyLabels.dispose();
   cityPresentation.getScene()?.presentation?.clearStoryEffects?.();
 }
 function pagehide(event) {
@@ -231,5 +265,5 @@ function pagehide(event) {
   else cleanup();
 }
 window.addEventListener("pagehide", pagehide);
-window.__BIRD_DEMO_SIMULATION__ = Object.freeze({ player, getState: () => ({ ...player.getState(), ready, simulated: true, frame: lastFrame, scene: cityPresentation.getScene()?.presentation?.getState().story || null, narration: { enabled: voiceEnabled, speaking }, tavusLoaded: !!customElements.get("tavus-embed"), choices: STORY_CHOICES }) });
+window.__BIRD_DEMO_SIMULATION__ = Object.freeze({ player, getState: () => ({ ...player.getState(), ready, simulated: true, frame: lastFrame, scene: cityPresentation.getScene()?.presentation?.getState().story || null, labels: storyLabels.getState(), narration: { enabled: voiceEnabled, speaking }, tavusLoaded: !!customElements.get("tavus-embed"), choices: STORY_CHOICES }) });
 void boot();

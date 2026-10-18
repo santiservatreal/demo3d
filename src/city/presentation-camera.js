@@ -60,6 +60,97 @@ export function cinematicTargetShot(point, {
   return { id, kind, position, target, fov };
 }
 
+/**
+ * Presentation-only street photography. The eye travels along the avenue in
+ * front of a parcel instead of occupying the neighboring parcel. Wider lenses
+ * keep the crane in frame while the eye stays near the building's upper floors.
+ * The map and the live agent deliberately retain cinematicTargetShot above.
+ */
+export function cinematicStoryShot(point, {
+  id = "", mode = "street", context = "sales", phase = "", height = 7,
+  aspect = 1.5, progress = 0, crane = false,
+} = {}) {
+  const portrait = clamp(0.9 / Math.max(0.3, aspect), 1, 1.45);
+  const t = clamp(Number(progress) || 0, 0, 1);
+  const target = point.clone();
+  const position = new THREE.Vector3();
+  const industrial = context === "industry";
+  let fov = 58;
+
+  if (mode === "follow") {
+    // Both roads have an unobstructed strip on the side of the vehicles. No
+    // orbit around the truck can accidentally take the eye through a block.
+    target.y = Math.max(1.25, point.y + 1.1);
+    position.copy(point).add(new THREE.Vector3(-7.2 * portrait, 4.6, 3.1));
+    if (!industrial) position.z = point.z < 0 ? -6.2 : 11.8;
+    position.y = Math.max(4.3, position.y);
+    fov = 54;
+  } else if (industrial) {
+    const forecourt = -53;
+    target.y = mode === "celebration" ? 5 : 2.8;
+    // The southern factory entrances all face the same clear avenue.
+    position.set(point.x + (3.9 - t * 1.5) * portrait, 5.3,
+      Math.max(forecourt, point.z + 9.5));
+    if (mode === "celebration") {
+      position.x = point.x - 8.5 * portrait;
+      position.z = point.z + 11;
+      position.y = 6.5;
+      fov = 62;
+    }
+  } else if (context === "communications") {
+    target.y = 2.3;
+    position.copy(point).add(new THREE.Vector3(5.2 * portrait, 4.4, 9.8));
+    fov = 52;
+  } else {
+    const roadZ = point.z < 0 ? -9 : 9;
+    const rebuilding = phase === "build" || phase === "complete";
+    // Stages are introduced at their first (leftmost) parcel. Approaching from
+    // the left keeps its occupied neighbor out of the foreground in portrait.
+    const side = rebuilding ? 1 : -1;
+    const focusHeight = crane ? 5.45 : Math.max(2, height * 0.48);
+    target.y = mode === "celebration" ? Math.max(6.6, height * 0.72) : focusHeight;
+    position.set(point.x + side * (7.2 - t * 0.9) * portrait,
+      crane ? 6.4 : Math.max(4.2, height * 0.57), roadZ);
+    fov = crane ? 70 : 60;
+    if (mode === "celebration") {
+      // Look across the clear courtyard from the street's opposite side. The
+      // extra headroom includes the burst above the roof, not just its base.
+      position.x = point.x - 12 * portrait;
+      position.y = 8;
+      position.z = roadZ;
+      fov = 76;
+    }
+  }
+
+  // A very near parcel needs a little more along-street room for perspective;
+  // this changes x only, preserving the safe z corridor and low eye height.
+  if (mode !== "follow" && context === "sales") {
+    const minimum = (crane ? 10.7 : 9.4) * portrait;
+    const dz = Math.abs(position.z - target.z);
+    const dx = Math.sqrt(Math.max(0, minimum * minimum - dz * dz));
+    const sign = Math.sign(position.x - target.x) || 1;
+    position.x = target.x + sign * Math.max(dx, Math.abs(position.x - target.x));
+  }
+  return { id, kind: "story", mode, context, position, target, fov };
+}
+
+/** Pure viewport projection used by the small, contextual DOM district signs. */
+export function projectCinematicAnchor(point, camera, {
+  width, height, left = 0, top = 0,
+} = {}) {
+  const projected = point.clone().project(camera);
+  const finite = projected.toArray().every(Number.isFinite);
+  const behind = point.clone().sub(camera.position)
+    .dot(camera.getWorldDirection(new THREE.Vector3())) <= 0;
+  return {
+    x: left + (projected.x + 1) * width / 2,
+    y: top + (1 - projected.y) * height / 2,
+    depth: projected.z,
+    visible: finite && !behind && projected.z >= -1 && projected.z <= 1 &&
+      Math.abs(projected.x) < 1.08 && Math.abs(projected.y) < 1.08,
+  };
+}
+
 export function cinematicRouteLift(from, to) {
   // Long transfers pass above the blocks; close movements remain restrained.
   const horizontal = Math.hypot(to.x - from.x, to.z - from.z);

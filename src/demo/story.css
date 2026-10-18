@@ -43,7 +43,7 @@
 .bird-story *::after {
   box-sizing: border-box;
 }
-.is-story-presentation:has(.bird-story[data-effect="assemble"]) #city-labels {
+.is-story-presentation #city-labels {
   visibility: hidden;
 }
 .bird-story button,

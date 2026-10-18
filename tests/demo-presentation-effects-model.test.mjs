@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import * as THREE from "three";
 import { createArchitecture } from "../src/city/architecture.js";
-import { createPresentationEffects, sampleStoryPhase, STORY_PARTICLE_LIMIT, STORY_TILE_COUNT } from "../src/city/presentation-effects.js";
+import { createPresentationEffects, sampleStoryPhase, STORY_FOUNDATION_CLEARANCE, STORY_PARTICLE_LIMIT, STORY_TILE_COUNT } from "../src/city/presentation-effects.js";
 
 function fixture(reducedMotion = false) {
   const scene = new THREE.Scene(), architecture = createArchitecture(scene), land = new THREE.Group();
@@ -64,6 +64,77 @@ test("puzzle reveal changes actual transforms and restores exact original placem
   assert.equal(f.entity.buildProgress, 1);
   assert.equal(f.entity.visible, true);
   assert.equal(f.effects.getState().active, false);
+  f.dispose();
+});
+
+test("assembly preserves real floor spacing and keeps puzzle tiles below every real foundation", () => {
+  const f = fixture();
+  const geometry = new THREE.BoxGeometry(77, 1.45, 53), material = new THREE.MeshBasicMaterial();
+  const base = new THREE.Mesh(geometry, material);
+  const paint = new THREE.Object3D(); paint.position.y = 0.795;
+  const road = new THREE.Object3D(); road.position.y = 0.78;
+  f.land.add(base, road, paint);
+  f.land.scale.set(1.1, 1.2, 1.3);
+  const originalScale = f.land.scale.toArray();
+  f.land.updateMatrixWorld(true);
+  const originalSpacing = paint.getWorldPosition(new THREE.Vector3()).y - road.getWorldPosition(new THREE.Vector3()).y;
+  const matrix = new THREE.Matrix4(), position = new THREE.Vector3(), scale = new THREE.Vector3(), rotation = new THREE.Quaternion();
+  const tileBounds = new THREE.Box3(), unitBounds = new THREE.Box3(new THREE.Vector3(-0.5, -0.5, -0.5), new THREE.Vector3(0.5, 0.5, 0.5));
+  for (let step = 1; step <= 100; step++) {
+    f.effects.sample({ effect: "assemble-city", progress: step / 100 });
+    const state = f.effects.getState(), diagnostic = state.assembly;
+    assert.deepEqual(f.land.scale.toArray(), originalScale, `floor scale stays rigid at ${step}%`);
+    f.land.updateMatrixWorld(true);
+    const spacing = paint.getWorldPosition(new THREE.Vector3()).y - road.getWorldPosition(new THREE.Vector3()).y;
+    assert.ok(Math.abs(spacing - originalSpacing) < 1e-12, `paint never collapses into asphalt at ${step}%`);
+    const foundationBottom = diagnostic.terrainFloorY + diagnostic.terrainOffset;
+    assert.ok(diagnostic.tileTopMaxY <= foundationBottom - STORY_FOUNDATION_CLEARANCE + 1e-12);
+    const tiles = f.scene.getObjectByName("63 reusable puzzle foundation tiles");
+    for (let i = 0; i < STORY_TILE_COUNT; i++) {
+      tiles.getMatrixAt(i, matrix); matrix.decompose(position, rotation, scale);
+      assert.ok(Math.abs(scale.y - 1.2) < 1e-6, "a puzzle tile never flattens into a coplanar surface");
+      assert.ok(position.y + scale.y / 2 <= foundationBottom - STORY_FOUNDATION_CLEARANCE + 2e-6,
+        `actual tile ${i} remains below the plinth at ${step}%`);
+      assert.ok(Math.abs(position.x - (i % 7 - 3) * 10.8) < 2e-6);
+      assert.ok(Math.abs(position.z - (21 - Math.floor(i / 7) * 12)) < 2e-6);
+      tileBounds.copy(unitBounds).applyMatrix4(matrix);
+      assert.ok(tileBounds.min.x >= position.x - 5.4 && tileBounds.max.x <= position.x + 5.4,
+        "rotating tiles never enter the neighboring column");
+      assert.ok(tileBounds.min.z >= position.z - 6 && tileBounds.max.z <= position.z + 6,
+        "staggered tiles never intersect the neighboring row");
+    }
+  }
+  f.effects.clear();
+  assert.deepEqual(f.land.scale.toArray(), originalScale);
+  assert.equal(f.effects.getState().assembly, null);
+  geometry.dispose(); material.dispose(); f.dispose();
+});
+
+test("puzzle foundations fade before removal and replay reproduces the same geometry", () => {
+  const f = fixture();
+  f.effects.sample({ effect: "assemble-city", progress: 0.8 });
+  const before = f.effects.getState().assembly;
+  assert.ok(before.tileOpacity > 0 && before.tileOpacity < 1);
+  f.effects.sample({ effect: "assemble-city", progress: 0.95 });
+  const late = f.effects.getState();
+  assert.ok(late.assembly.tileOpacity < 0.01);
+  f.effects.sample({ effect: "assemble-city", progress: 0.999 });
+  assert.equal(f.effects.getState().geometry.tilesVisible, false);
+  f.effects.sample({ effect: "assemble-city", progress: 0.8 });
+  assert.deepEqual(f.effects.getState().assembly, before);
+  f.dispose();
+});
+
+test("moving construction invalidates shadows each sampled frame while paused frames stay stable", () => {
+  const f = fixture();
+  for (const effect of ["assemble-city", "sales-transfer", "production-flow"]) {
+    f.effects.sample({ effect, progress: 0.4 });
+    assert.equal(f.effects.consumeShadowUpdate(), true);
+    f.effects.sample({ effect, progress: 0.4001 });
+    assert.equal(f.effects.consumeShadowUpdate(), true, "small geometry changes must not wait for a visible shadow jump");
+    f.effects.sample({ effect, progress: 0.4001 });
+    assert.equal(f.effects.consumeShadowUpdate(), false, "sampling a paused frame never redraws identical shadows");
+  }
   f.dispose();
 });
 

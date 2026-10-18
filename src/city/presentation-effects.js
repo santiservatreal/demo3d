@@ -6,6 +6,7 @@ const clamp = (n) => Math.max(0, Math.min(1, Number(n) || 0));
 const smooth = (n) => { const t = clamp(n); return t * t * (3 - 2 * t); };
 export const STORY_PARTICLE_LIMIT = 112;
 export const STORY_TILE_COUNT = 63;
+export const STORY_FOUNDATION_CLEARANCE = 0.18;
 
 /** Pure sampling makes pause, seeking and replay independent of the render clock. */
 export function sampleStoryPhase(effect, progress, reducedMotion = false) {
@@ -36,7 +37,7 @@ export function createPresentationEffects({ scene, architecture, getRoots, getSa
   root.visible = false;
   scene.add(root);
   let disposed = false, current = sampleStoryPhase(null, 0), savedRoots = [], savedEntities = [], sale = null, assets = null;
-  let shadowProgress = -1, shadowEffect = "", needsShadowUpdate = false;
+  let shadowProgress = -1, shadowEffect = "", needsShadowUpdate = false, assembly = null, assemblyFloorY = 0;
   const dummy = new THREE.Object3D();
   const focus = new THREE.Vector3();
   const resources = [];
@@ -44,7 +45,7 @@ export function createPresentationEffects({ scene, architecture, getRoots, getSa
   function makeAssets() {
     if (assets) return assets;
     const tileGeometry = new THREE.BoxGeometry(1, 1, 1);
-    const tileMaterial = new THREE.MeshStandardMaterial({ color: "#e3ebda", roughness: 0.9 });
+    const tileMaterial = new THREE.MeshStandardMaterial({ color: "#e3ebda", roughness: 0.9, transparent: true });
     const tiles = new THREE.InstancedMesh(tileGeometry, tileMaterial, STORY_TILE_COUNT);
     tiles.name = "63 reusable puzzle foundation tiles";
     tiles.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
@@ -112,6 +113,14 @@ export function createPresentationEffects({ scene, architecture, getRoots, getSa
   function captureTransforms() {
     savedRoots = getRoots().filter(Boolean).map((object) => ({ object, position: object.position.clone(), scale: object.scale.clone(), visible: object.visible }));
     savedEntities = [...architecture.entities.values()].map((entity, index) => ({ entity, index, position: entity.group.position.clone(), visible: entity.visible, buildProgress: entity.buildProgress, accent: entity.accent }));
+    // Foundations belong below the lowest real plinth, including districts
+    // whose floor is lower than the main island. Calculate this once per run.
+    assemblyFloorY = Math.min(0, ...savedRoots.map((row) => row.position.y));
+    const bounds = new THREE.Box3();
+    for (const row of savedRoots) {
+      bounds.setFromObject(row.object);
+      if (!bounds.isEmpty()) assemblyFloorY = Math.min(assemblyFloorY, bounds.min.y);
+    }
   }
   function restoreTransforms() {
     for (const row of savedRoots) { row.object.position.copy(row.position); row.object.scale.copy(row.scale); row.object.visible = row.visible; }
@@ -121,25 +130,38 @@ export function createPresentationEffects({ scene, architecture, getRoots, getSa
   function resetVisuals() {
     restoreTransforms();
     if (assets) { assets.construction.clear(); assets.overlay.visible = assets.industryOverlay.visible = assets.tiles.visible = assets.confetti.visible = assets.pulse.visible = false; }
-    sale = null;
+    sale = null; assembly = null;
   }
   function sampleAssembly(p) {
-    const { tiles } = makeAssets(); tiles.visible = p < 0.99;
+    const { tiles } = makeAssets();
+    const terrainRise = smooth((p - 0.16) / 0.43), terrainOffset = -(1 - terrainRise) * 14;
+    const tileOpacity = 1 - smooth((p - 0.72) / 0.24);
+    tiles.visible = tileOpacity > 0.001 && p < 1;
+    tiles.material.opacity = tileOpacity;
+    let tileTopMaxY = -Infinity;
     for (let i = 0; i < STORY_TILE_COUNT; i++) {
       const col = i % 7, row = Math.floor(i / 7), x = (col - 3) * 10.8, z = 21 - row * 12;
       const delay = (Math.abs(col - 3) * 0.07 + row * 0.045);
-      const rise = smooth((p - delay * 0.75) / 0.28), settle = smooth((p - 0.52) / 0.4);
-      dummy.position.set(x + (1 - rise) * (col - 3) * 4, -18 * (1 - rise) - settle * 0.8, z + (1 - rise) * (row - 4) * 2);
-      dummy.scale.set(10.62 * Math.max(0.001, rise), Math.max(0.001, 1.2 * (1 - settle)), 11.82 * Math.max(0.001, rise));
+      const rise = smooth((p - delay * 0.75) / 0.28);
+      const top = assemblyFloorY + terrainOffset - STORY_FOUNDATION_CLEARANCE - 18 * (1 - rise);
+      // A tile never traverses the road, sidewalk or real island foundation.
+      // Constant thickness and fixed grid positions also prevent neighboring
+      // pieces from intersecting while they arrive at different times.
+      dummy.position.set(x, top - 0.6, z);
+      dummy.scale.set(10.62 * Math.max(0.001, rise), 1.2, 11.82 * Math.max(0.001, rise));
       dummy.rotation.set(0, (1 - rise) * ((i % 3) - 1) * 0.14, 0); dummy.updateMatrix(); tiles.setMatrixAt(i, dummy.matrix);
+      tileTopMaxY = Math.max(tileTopMaxY, top);
     }
     tiles.instanceMatrix.needsUpdate = true;
     for (const row of savedRoots) {
-      const rise = smooth((p - 0.16) / 0.43);
-      row.object.position.y = row.position.y - (1 - rise) * 14;
-      row.object.scale.y = row.scale.y * Math.max(0.001, rise);
-      row.object.visible = row.visible && rise > 0.001;
+      row.object.position.y = row.position.y + terrainOffset;
+      // Flattening Y used to compress paint/road/pavement separation until
+      // their depths became almost identical. A rigid lift preserves it.
+      row.object.scale.copy(row.scale);
+      row.object.visible = row.visible && terrainRise > 0.001;
     }
+    assembly = { terrainOffset, terrainFloorY: assemblyFloorY, tileTopMaxY, tileOpacity,
+      foundationClearance: STORY_FOUNDATION_CLEARANCE, rootCount: savedRoots.length, rigidRoots: true };
     for (const row of savedEntities) {
       const stagger = ((row.position.x + 40) / 80) * 0.14 + ((26 - row.position.z) / 108) * 0.19;
       architecture.updateEntity(row.entity.id, { buildProgress: row.buildProgress * smooth((p - 0.28 - stagger) / 0.35), visible: row.visible });
@@ -234,14 +256,18 @@ export function createPresentationEffects({ scene, architecture, getRoots, getSa
     if (next.effect === "assemble") sampleAssembly(next.progress);
     else if (next.effect === "sale") sampleSale(next);
     else if (next.effect === "industry") sampleIndustry(next);
-    if (shadowEffect !== next.effect || Math.abs(shadowProgress - next.progress) > 0.035) {
+    // Geometry moves continuously; batching shadows into 3.5% jumps made the
+    // construction flash every few tenths of a second. A paused sample stays
+    // free of redundant shadow redraws.
+    const movesGeometry = ["assemble", "sale", "industry"].includes(next.effect);
+    if (shadowEffect !== next.effect || (movesGeometry && shadowProgress !== next.progress)) {
       needsShadowUpdate = true; shadowProgress = next.progress; shadowEffect = next.effect;
     }
     return { ok: true, ...getState() };
   }
   function getState() {
     const construction = assets?.construction.debug();
-    return { ...current, revealProgress: current.effect === "assemble" ? current.progress : 1,
+    return { ...current, revealProgress: current.effect === "assemble" ? current.progress : 1, assembly: assembly ? { ...assembly } : null,
       geometry: { tilesVisible: Boolean(assets?.tiles.visible && root.visible), tileInstances: assets?.tiles.visible && root.visible ? STORY_TILE_COUNT : 0,
         constructionRigs: construction?.visibleRigs || 0, truckVisible: Boolean(root.visible && (assets?.truck.visible && assets?.industryOverlay.visible || construction?.visibleRigs > 0)),
         representativeVisible: Boolean(root.visible && assets?.overlay.visible), confettiVisible: Boolean(root.visible && assets?.confetti.visible), confettiInstances: root.visible && assets?.confetti.visible ? STORY_PARTICLE_LIMIT : 0,

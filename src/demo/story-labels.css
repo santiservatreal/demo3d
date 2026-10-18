@@ -1,0 +1,118 @@
+/* Scene captions are deliberately separate from the product's dashboard labels.
+   Camera projection sets transforms directly; only opacity may transition. */
+.bird-story-floating-labels {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout style;
+}
+.bird-story-floating-leaders {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.bird-story-floating-leaders path {
+  fill: none;
+  stroke: var(--story-label-color, #9bf3cc);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.bird-story-floating-leaders circle {
+  fill: var(--story-label-color, #9bf3cc);
+  stroke: #102f37;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.bird-story-floating-leaders [data-visible] {
+  opacity: 0;
+  transition: opacity 230ms ease;
+}
+.bird-story-floating-leaders [data-visible="true"] {
+  opacity: 0.75;
+}
+.bird-story-floating-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 174px;
+  height: 54px;
+  padding: 9px 12px 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--story-label-color) 56%, transparent);
+  border-radius: 11px;
+  background: #0b303bf0;
+  box-shadow: 0 5px 20px #051e2f22;
+  color: #fffdf5;
+  font-family: "DM Sans", sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 230ms ease;
+  pointer-events: none;
+  will-change: transform;
+}
+.bird-story-floating-label[data-visible="true"] {
+  opacity: 1;
+}
+.bird-story-floating-label[data-active="true"] {
+  border-color: var(--story-label-color);
+  background: #102f37f5;
+}
+.bird-story-floating-number {
+  display: grid;
+  flex: 0 0 29px;
+  width: 29px;
+  height: 29px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--story-label-color) 60%, transparent);
+  border-radius: 8px;
+  color: var(--story-label-color);
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.bird-story-floating-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.bird-story-floating-copy small {
+  overflow: hidden;
+  color: #bfd7d2;
+  font-size: 6px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  text-overflow: ellipsis;
+}
+.bird-story-floating-copy b {
+  color: #fffdf5;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  line-height: 1.1;
+}
+@media (max-width: 649px) {
+  .bird-story-floating-label {
+    gap: 8px;
+    width: 156px;
+    height: 48px;
+    padding: 7px 10px 7px 8px;
+    border-radius: 9px;
+  }
+  .bird-story-floating-number { flex-basis: 26px; width: 26px; height: 26px; font-size: 9px; }
+  .bird-story-floating-copy { gap: 4px; }
+  .bird-story-floating-copy small { font-size: 5.5px; letter-spacing: 0.6px; }
+  .bird-story-floating-copy b { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bird-story-floating-label,
+  .bird-story-floating-leaders [data-visible] { transition: none; }
+}

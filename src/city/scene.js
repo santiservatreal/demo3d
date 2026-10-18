@@ -27,6 +27,8 @@ import {
   CINEMATIC_FOV,
   cinematicBoundsShot,
   cinematicTargetShot,
+  cinematicStoryShot,
+  projectCinematicAnchor,
   cinematicRouteLift,
   sampleCinematicPosition,
   sampleCinematicIdle,
@@ -1806,7 +1808,7 @@ export async function createCityScene({
     schedule();
     return { ok: true, code: "story_cleared", businessMutation: false };
   }
-  function storyShotFor(target) {
+  function storyShotFor(target, frame = {}) {
     const resolved = resolvePresentationTarget(target);
     if (!resolved) return null;
     if (target.kind === "district") {
@@ -1823,9 +1825,53 @@ export async function createCityScene({
       resolved.point.y = 0.5;
     }
     const entity = architecture.entities.get(target.id);
-    return cinematicTargetShot(resolved.point, { kind: target.kind === "sales-stage" ? "deal" : target.kind,
-      id: target.id, height: entity?.model.height || 6, radius: target.kind === "industry-stage" ? 4 : 2.8,
-      aspect: w() / h(), clearance: 13 });
+    const firstDeal = target.kind === "sales-stage"
+      ? state?.deals?.find((entry) => entry.stageId === target.id) : null;
+    const subject = entity || architecture.entities.get(firstDeal?.id);
+    return cinematicStoryShot(resolved.point, {
+      id: target.id, mode: frame.cameraMode || "street", context: resolved.district,
+      height: subject?.model.height || 6, aspect: w() / h(),
+      progress: frame.beatProgress ?? frame.progress ?? 0,
+    });
+  }
+  function projectStoryAnchor(input = {}) {
+    let target = input;
+    if (input.kind === "stage") {
+      target = { kind: ["manufacturing", "packing", "warehouse", "transit", "delivered"].includes(input.id)
+        ? "industry-stage" : "sales-stage", id: input.id };
+    } else if (input.kind === "district") {
+      target = { kind: "district", id: ({ commercial: "sales", industrial: "industry" })[input.id] || input.id };
+    }
+    const resolved = resolvePresentationTarget(target);
+    if (!resolved) return { x: 0, y: 0, depth: 2, visible: false };
+    let point = resolved.point?.clone();
+    const story = storyEffects.getState();
+    if (target.kind === "district") {
+      point = new THREE.Vector3(0, 9, ({ sales: -8, communications: -35, industry: -62, all: -22 })[target.id] ?? -22);
+    } else if (target.kind === "sales-stage") {
+      const firstDeal = state?.deals?.find((entry) => entry.stageId === target.id);
+      const entity = architecture.entities.get(firstDeal?.id);
+      if (entity) point = entity.group.position.clone().add(new THREE.Vector3(0, entity.model.height + 0.9, 0));
+      else if (point) point.y = 6;
+      if (story.effect === "sale" && story.sale && ["negotiation", "won"].includes(target.id)) {
+        // The illustrated sale uses a free won parcel, not the first existing
+        // CRM building. Keep its name over the building actually being filmed.
+        point = new THREE.Vector3(...(target.id === "won" ? story.sale.to : story.sale.from));
+        point.y += 9.2;
+      }
+    } else if (target.kind === "industry-stage") {
+      point.y = target.id === "manufacturing" ? 6.4 : 5.6;
+      if (story.effect === "industry" && target.id === "transit") {
+        point.copy(storyEffects.getFocus());
+        point.y += 3.6;
+      } else if (story.effect === "industry" && target.id === "delivered" && story.phase === "delivered") {
+        point.copy(storyEffects.getFocus());
+        point.y += 4.6;
+      }
+    } else if (target.kind === "communication") point.y = 4.5;
+    if (!point) return { x: 0, y: 0, depth: 2, visible: false };
+    const rect = renderer.domElement.getBoundingClientRect();
+    return projectCinematicAnchor(point, camera, { width: rect.width, height: rect.height, left: rect.left, top: rect.top });
   }
   function sampleStory(frame = {}) {
     if (disposed || !state || !cinematic.enabled) return { ok: false, code: "cinematic_unavailable", businessMutation: false };
@@ -1842,25 +1888,43 @@ export async function createCityScene({
       const key = frame.shotId || `${frame.chapterId || ""}:${frame.beatId || ""}:${target.kind}:${target.id}`;
       if (key !== storyCameraKey || frame.seeking === true) {
         const previous = frame.seeking === true ? storyShotFor(frame.fromTarget) : null;
-        storyCameraFrom = { position: previous?.position || camera.position.clone(), target: previous?.target || controls.target.clone() };
+        storyCameraFrom = { position: previous?.position || camera.position.clone(), target: previous?.target || controls.target.clone(), fov: previous?.fov || camera.fov };
         storyCameraKey = key;
       }
-      let shot = storyShotFor(target);
+      let shot = storyShotFor(target, frame);
       const effect = storyEffects.getState();
       if (effect.effect === "sale" || effect.effect === "industry") {
         const point = storyEffects.getFocus().clone();
-        const victory = effect.effect === "sale" ? clamp((effect.progress - 0.79) / 0.12, 0, 1) : 0;
-        const lift = victory * victory * (3 - 2 * victory);
-        point.y = effect.effect === "sale" ? lerp(2.8, 6, lift) : 1.5;
-        shot = cinematicTargetShot(point, { kind: "presentation", height: effect.effect === "sale" ? 7 : 5,
-          radius: lerp(3.2, 6.8, lift), aspect: w() / h(), clearance: 13 });
+        const moving = effect.phase === "transport" || effect.phase === "transit";
+        const celebrating = effect.celebration > 0 || frame.cameraMode === "celebration";
+        let cameraMode = frame.cameraMode || (celebrating ? "celebration" : moving ? "follow" : "street");
+        if (cameraMode === "district" || cameraMode === "reveal") cameraMode = celebrating ? "celebration" : moving ? "follow" : "street";
+        if (effect.effect === "industry" && !moving && !celebrating) {
+          const stage = ({ manufacturing: "manufacturing", packing: "packing", stored: "warehouse" })[effect.phase];
+          const station = stage && industry.focusPoint(stage);
+          if (station) point.copy(station);
+        }
+        point.y = 0.3;
+        shot = cinematicStoryShot(point, { id: frame.shotId || target.id, mode: cameraMode,
+          context: effect.effect === "sale" ? "sales" : "industry", phase: effect.phase,
+          height: effect.effect === "sale" ? 8.3 : 5.2, crane: effect.effect === "sale" && !moving,
+          progress: frame.beatProgress ?? frame.progress ?? 0, aspect: w() / h() });
       }
       if (shot) {
+        if (frame.seeking === true && (effect.effect === "sale" || effect.effect === "industry")) {
+          // An absolute scrub has no preceding camera history. Frame the
+          // sampled illustration itself; the CRM stage's first real building
+          // can occupy a completely different parcel. Normal playback still
+          // starts each move from the camera captured at the beat boundary.
+          storyCameraFrom = { position: shot.position.clone(), target: shot.target.clone(), fov: shot.fov };
+        }
         const p = reducedMotion ? 1 : clamp(Number(frame.cameraProgress ?? progress) || 0, 0, 1);
         const ease = p * p * p * (p * (p * 6 - 15) + 10);
         sampleCinematicPosition(storyCameraFrom.position, shot.position, p,
           cinematicRouteLift(storyCameraFrom.position, shot.position), camera.position);
         controls.target.lerpVectors(storyCameraFrom.target, shot.target, ease);
+        const nextFov = lerp(storyCameraFrom.fov || CINEMATIC_FOV, shot.fov, ease);
+        if (Math.abs(camera.fov - nextFov) > 0.0001) { camera.fov = nextFov; camera.updateProjectionMatrix(); }
         cinematic.shot = { ...target };
         camera.lookAt(controls.target); camera.updateMatrixWorld();
       }
@@ -1873,6 +1937,7 @@ export async function createCityScene({
     setCinematicMode,
     setCinematicIdle,
     sampleStory,
+    projectStoryAnchor,
     clearStoryEffects,
     captureView: capturePresentationView,
     restoreView: restorePresentationView,
@@ -1894,7 +1959,9 @@ export async function createCityScene({
     getState: () => ({
       cinematicEnabled: cinematic.enabled,
       idle: cinematic.idle,
-      story: { ...storyEffects.getState(), beatId: storyFrame?.beatId || null, cameraProgress: storyFrame?.cameraProgress ?? null },
+      story: { ...storyEffects.getState(), beatId: storyFrame?.beatId || null, cameraProgress: storyFrame?.cameraProgress ?? null,
+        cameraMode: storyFrame?.cameraMode || null, cameraFov: cinematic.enabled ? camera.fov : null,
+        cameraDistance: cinematic.enabled ? camera.position.distanceTo(controls.target) : null },
       shot: cinematic.shot ? { ...cinematic.shot } : null,
       position: camera.position.toArray(),
       target: controls.target.toArray(),
