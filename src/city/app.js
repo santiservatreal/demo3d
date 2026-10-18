@@ -156,6 +156,7 @@ const time = (t) =>
 const provider = createDemoProvider();
 const industryProvider = createIndustryProvider();
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+const publicDemo = /^\/demo\/?$/.test(location.pathname);
 let scene = null,
   sceneReady = false,
   noWebGL = false,
@@ -759,7 +760,7 @@ function industryDrawerHTML() {
     )}</div><p class="c-data-note">Fuente independiente: ${esc(s.source?.system)}. Una venta comercial no fabrica productos, reserva stock ni genera cobros automáticamente.</p></div>`;
 }
 function advanceIndustryBatch(id) {
-  if (ui.mode === "replay") return false;
+  if (publicDemo || ui.mode === "replay") return false;
   const batch = industryProvider.getState().batches.find((b) => b.id === id);
   if (!batch) return false;
   const beforeStage = batch.stageId;
@@ -831,6 +832,7 @@ function scheduleProduction(delay = 14000) {
   }, delay);
 }
 function toggleProduction() {
+  if (publicDemo) return;
   if (ui.productionPlaying) return stopProduction();
   if (ui.mode === "replay") return;
   ui.productionPlaying = true;
@@ -1173,7 +1175,10 @@ function render(event) {
     : "Tu pipeline está listo para explorar";
   const replay = ui.mode === "replay";
   $(".c-win-button").disabled = replay;
-  assistant.update({ mode: ui.mode, district: ui.district });
+  assistant.update({
+    mode: publicDemo ? "replay" : ui.mode,
+    district: ui.district,
+  });
   refreshIcons();
 }
 function setView(view) {
@@ -1231,6 +1236,7 @@ function nextEventId(prefix) {
   return `${prefix}-${String(++eventSequence).padStart(4, "0")}-${getState().events.length}`;
 }
 function changeStage(id, stageId) {
+  if (publicDemo) return false;
   if (ui.mode === "replay") {
     toast("Sal de Replay para simular cambios.");
     return null;
@@ -1266,6 +1272,7 @@ function changeStage(id, stageId) {
   return event;
 }
 function simulateWin() {
+  if (publicDemo) return false;
   if (ui.mode === "replay") return null;
   const state = getState(),
     wonStage = state.stages.find((s) => stageKind(state, s.id) === "won");
@@ -1299,6 +1306,7 @@ function setLayers(partial) {
     .forEach((e) => (e.checked = ui.layers[e.dataset.layer]));
 }
 function setMode(mode) {
+  if (publicDemo && (mode === "tv" || mode === "replay")) return;
   if (mode === ui.mode) return;
   if (mode === "tv" && noWebGL) {
     toast(
@@ -1532,7 +1540,7 @@ function onClick(e) {
   if (advanceEl) return advanceIndustryBatch(advanceEl.dataset.advanceBatch);
   const returnEl = e.target.closest("[data-return-truck]");
   if (returnEl) {
-    if (ui.mode === "replay") return;
+    if (publicDemo || ui.mode === "replay") return;
     if (industryProvider.returnVehicle(returnEl.dataset.returnTruck))
       toast(
         "Regreso vacío registrado. La llegada al almacén se confirma por separado.",
@@ -1541,7 +1549,7 @@ function onClick(e) {
   }
   const arriveEl = e.target.closest("[data-arrive-truck]");
   if (arriveEl) {
-    if (ui.mode === "replay") return;
+    if (publicDemo || ui.mode === "replay") return;
     if (industryProvider.arriveVehicle(arriveEl.dataset.arriveTruck))
       toast("Llegada confirmada. Camión disponible de nuevo.");
     return;
@@ -1970,7 +1978,14 @@ window.__ATLAS_CITY__ = {
   },
   scrubReplay,
 };
-boot();
+const cityReady = boot();
+export const cityPresentation = Object.freeze({
+  ready: cityReady,
+  getScene: () => scene,
+  getSnapshot: () =>
+    structuredClone({ crm: getState(), industry: industryProvider.getState() }),
+  getAvailable: () => sceneReady && !noWebGL,
+});
 window.addEventListener("pagehide", (event) => {
   stopProduction(false);
   celebrations.reset();

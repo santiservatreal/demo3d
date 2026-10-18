@@ -110,6 +110,10 @@ export async function createCityScene({
     h = () => Math.max(1, container.clientHeight);
   let labelSpecs = [],
     labelLayoutDirty = true;
+  const presentationNavigationListeners = new Set();
+  let presentationNavigation = null,
+    presentationHighlight = null,
+    presentationFollowing = false;
   const labelCache = new WeakMap();
   const labelMetrics = {
     contentBuilds: 0,
@@ -162,7 +166,7 @@ export async function createCityScene({
     followFocus = null;
     mode = tvPresentation ? "tv" : "explore";
     pauseTVTour();
-    onNavigate();
+    notifyManualNavigation();
   });
   controls.addEventListener("change", () => {
     if (active && !raf) schedule();
@@ -250,6 +254,18 @@ export async function createCityScene({
   ring.position.y = 0.285;
   ring.visible = false;
   scene.add(ring);
+  // One reusable presentation marker. It shares the selection geometry and
+  // stays invisible unless the dedicated demo controller requests a highlight.
+  const presentationRingMaterial = ringMaterial.clone();
+  presentationRingMaterial.color.set("#139fdd");
+  const presentationRing = new THREE.Mesh(
+    ringGeometry,
+    presentationRingMaterial,
+  );
+  presentationRing.name = "Read-only demo presentation highlight";
+  presentationRing.rotation.x = -Math.PI / 2;
+  presentationRing.visible = false;
+  scene.add(presentationRing);
   const priorityMesh = new THREE.InstancedMesh(
     new THREE.OctahedronGeometry(0.18, 0),
     new THREE.MeshStandardMaterial({ color: "#b34d43", roughness: 0.8 }),
@@ -1179,7 +1195,7 @@ export async function createCityScene({
     camera.updateProjectionMatrix();
     controls.update();
     pauseTVTour();
-    onNavigate();
+    notifyManualNavigation();
     schedule();
   }
   function panBy(dx, dy) {
@@ -1204,9 +1220,364 @@ export async function createCityScene({
     camera.position.add(shift);
     controls.target.add(shift);
     controls.update();
-    onNavigate();
+    notifyManualNavigation();
     schedule();
   }
+  function notifyManualNavigation() {
+    cancelPresentation("manual_navigation");
+    for (const listener of presentationNavigationListeners) {
+      try {
+        listener();
+      } catch (error) {
+        console.info(
+          "Atlas: presentation navigation listener failed.",
+          error.message,
+        );
+      }
+    }
+    onNavigate();
+  }
+  function settlePresentationNavigation(code) {
+    const pending = presentationNavigation;
+    if (!pending) return;
+    presentationNavigation = null;
+    pending.resolve({
+      ok: code === "completed",
+      code,
+      action: pending.action,
+      ...(pending.target ? { target: { ...pending.target } } : {}),
+      businessMutation: false,
+    });
+  }
+  function cancelPresentation(reason = "cancelled") {
+    if (presentationNavigation?.flight === flight) flight = null;
+    settlePresentationNavigation(reason);
+    presentationHighlight = null;
+    presentationRing.visible = false;
+    // Preserve normal CRM following when the demo has never taken ownership.
+    if (presentationFollowing) followFocus = null;
+    presentationFollowing = false;
+  }
+  function presentationFailure(code, target) {
+    return {
+      ok: false,
+      code,
+      ...(target ? { target: { ...target } } : {}),
+      businessMutation: false,
+    };
+  }
+  function resolvePresentationTarget(target) {
+    if (!target || typeof target.id !== "string") return null;
+    const { kind, id } = target;
+    if (kind === "district") {
+      if (!["all", "sales", "communications", "industry"].includes(id))
+        return null;
+      return { district: id, point: null };
+    }
+    if (kind === "deal" || kind === "account") {
+      const records = kind === "deal" ? state?.deals : state?.accounts;
+      if (!records?.some((entry) => entry.id === id)) return null;
+      const entity = architecture.entities.get(id);
+      if (!entity?.visible) return null;
+      return {
+        district: "sales",
+        point: entity.group.position.clone(),
+        radius: 1,
+      };
+    }
+    if (kind === "owner") {
+      if (!layers.activity || !state?.owners?.some((entry) => entry.id === id))
+        return null;
+      const point = people.getOwnerPosition(id);
+      return point ? { district: "sales", point, radius: 0.48 } : null;
+    }
+    if (kind === "sales-stage") {
+      if (id !== "clients" && !state?.stages?.some((entry) => entry.id === id))
+        return null;
+      const point =
+        id === "clients"
+          ? new THREE.Vector3(0, 0, 18)
+          : districtAnchors.get(id)?.clone();
+      if (point && id !== "clients") point.z = -8;
+      return point ? { district: "sales", point, radius: 1.8 } : null;
+    }
+    if (kind === "communication") {
+      const place = communications.getPlaces().find((entry) => entry.id === id);
+      const point = (place?.groundPosition || place?.position)?.clone();
+      return point ? { district: "communications", point, radius: 1.2 } : null;
+    }
+    if (["industry-stage", "batch", "vehicle"].includes(kind)) {
+      const records =
+        kind === "industry-stage"
+          ? industryState?.stages
+          : kind === "batch"
+            ? industryState?.batches
+            : industryState?.vehicles;
+      if (!records?.some((entry) => entry.id === id)) return null;
+      const point = industry.focusPoint(id);
+      return point
+        ? {
+            district: "industry",
+            point,
+            radius: kind === "industry-stage" ? 1.8 : 0.8,
+          }
+        : null;
+    }
+    return null;
+  }
+  function capturePresentationView() {
+    return {
+      version: 1,
+      district,
+      cameraPosition: camera.position.toArray(),
+      target: controls.target.toArray(),
+      zoom: camera.zoom,
+      selectedId,
+      followFocus,
+      followAnchor: followAnchor?.toArray() || null,
+      tvTour: { ...tvTour, sequence: [...tvTour.sequence] },
+      capturedAt: elapsed,
+    };
+  }
+  function restorePresentationView(snapshot) {
+    cancelPresentation("restored");
+    const vector = (value) =>
+      Array.isArray(value) &&
+      value.length === 3 &&
+      value.every(Number.isFinite);
+    if (
+      disposed ||
+      !snapshot ||
+      snapshot.version !== 1 ||
+      !["all", "sales", "communications", "industry"].includes(
+        snapshot.district,
+      ) ||
+      !vector(snapshot.cameraPosition) ||
+      !vector(snapshot.target) ||
+      !Number.isFinite(snapshot.zoom)
+    )
+      return presentationFailure("invalid_view");
+    setDistrict(snapshot.district);
+    flight = null;
+    const target = new THREE.Vector3().fromArray(snapshot.target);
+    const distance = clamp(
+      new THREE.Vector3().fromArray(snapshot.cameraPosition).distanceTo(target),
+      1,
+      300,
+    );
+    controls.target.copy(target);
+    camera.position.copy(target).add(fixedMapOffset(distance));
+    camera.zoom = clamp(snapshot.zoom, controls.minZoom, controls.maxZoom);
+    camera.updateProjectionMatrix();
+    controls.update();
+    select(
+      snapshot.selectedId &&
+        architecture.entities.get(snapshot.selectedId)?.visible
+        ? snapshot.selectedId
+        : null,
+    );
+    followFocus =
+      typeof snapshot.followFocus === "string" ? snapshot.followFocus : null;
+    followAnchor = vector(snapshot.followAnchor)
+      ? new THREE.Vector3().fromArray(snapshot.followAnchor)
+      : null;
+    if (snapshot.tvTour && Array.isArray(snapshot.tvTour.sequence)) {
+      const gap = Math.max(0, elapsed - (Number(snapshot.capturedAt) || 0));
+      Object.assign(tvTour, snapshot.tvTour, {
+        sequence: [...snapshot.tvTour.sequence],
+        nextAt: snapshot.tvTour.nextAt + gap,
+        pausedUntil: snapshot.tvTour.pausedUntil + gap,
+      });
+    }
+    schedule();
+    return { ok: true, code: "restored", businessMutation: false };
+  }
+  function navigatePresentation(action, target, duration, navigate) {
+    if (disposed || !active || document.hidden)
+      return Promise.resolve(presentationFailure("scene_unavailable", target));
+    settlePresentationNavigation("superseded");
+    presentationFollowing = true;
+    tvTour.enabled = false;
+    navigate();
+    if (!flight)
+      return Promise.resolve(presentationFailure("target_unavailable", target));
+    const seconds = Number.isFinite(duration) ? clamp(duration, 0.15, 12) : 2.8;
+    flight.duration = reducedMotion ? 0.01 : seconds;
+    return new Promise((resolve) => {
+      presentationNavigation = { flight, action, target, resolve };
+      schedule();
+    });
+  }
+  function focusPresentationTarget(target = {}, { duration } = {}) {
+    const resolved = resolvePresentationTarget(target);
+    if (!resolved)
+      return Promise.resolve(presentationFailure("target_unavailable", target));
+    return navigatePresentation("focus", target, duration, () => {
+      if (target.kind === "district")
+        setDistrict(target.id, { tour: true, duration: duration ?? 2.8 });
+      else if (target.kind === "deal" || target.kind === "account")
+        focus(target.id, { panelWidth: 0 });
+      else if (target.kind === "owner") focusOwner(target.id);
+      else if (target.kind === "sales-stage") focusDistrict(target.id);
+      else if (target.kind === "communication") {
+        if (district !== resolved.district) setDistrict(resolved.district);
+        focusPoint(resolved.point, { panelWidth: 0 });
+      } else {
+        if (district !== resolved.district) setDistrict(resolved.district);
+        focusPoint(resolved.point, { panelWidth: 0, zoom: 2.35 });
+        followFocus = `industry:${target.id}`;
+        followAnchor = resolved.point.clone();
+      }
+    });
+  }
+  function highlightPresentationTarget(target = {}, { duration } = {}) {
+    if (disposed || !active || document.hidden)
+      return presentationFailure("scene_unavailable", target);
+    const resolved = resolvePresentationTarget(target);
+    if (!resolved?.point)
+      return presentationFailure("target_unavailable", target);
+    if (district !== "all" && district !== resolved.district)
+      return presentationFailure("target_outside_view", target);
+    const marker = {
+      radius: resolved.radius || 1,
+      height: resolved.district === "industry" ? 0.62 : 0.38,
+      offset: new THREE.Vector3(),
+    };
+    if (target.kind === "industry-stage") {
+      // The existing selection proxy encloses the real station footprint
+      // (11.5 × 9 m). Centre the halo on that footprint, not the camera anchor,
+      // and keep its entire perimeter outside the building's base slab.
+      const footprint = scene.getObjectByName(
+        `Selección industria · ${target.id}`,
+      );
+      if (footprint) {
+        const center = footprint.getWorldPosition(new THREE.Vector3());
+        marker.offset.copy(center).sub(resolved.point);
+        marker.radius =
+          (Math.hypot(footprint.scale.x, footprint.scale.z) / 2 + 0.5) /
+          ringGeometry.parameters.outerRadius;
+      }
+      // Stock's slab reaches 0.965 m; the factory/packing slabs reach 0.745 m.
+      marker.height = target.id === "warehouse" ? 1.04 : 0.82;
+    } else if (target.kind === "deal" || target.kind === "account") {
+      const entity = architecture.entities.get(target.id);
+      marker.radius =
+        Math.max(
+          3.5,
+          (Math.hypot(entity.model.width, entity.model.depth) *
+            entity.scaleXZ) /
+            2 +
+            0.5,
+        ) / ringGeometry.parameters.outerRadius;
+    } else if (target.kind === "communication") {
+      // Include the widest 4.8 m café foundation and its 0.67 m world top.
+      marker.radius =
+        (Math.hypot(5.1, 4.05) / 2 + 0.4) / ringGeometry.parameters.outerRadius;
+      marker.height = 0.75;
+    }
+    marker.offset.y = 0;
+    presentationHighlight = {
+      target: { ...target },
+      startedAt: elapsed,
+      duration: Number.isFinite(duration) ? clamp(duration, 0.5, 15) : 5,
+      ...marker,
+    };
+    presentationRing.visible = true;
+    updatePresentation();
+    schedule();
+    return {
+      ok: true,
+      code: "highlighted",
+      target: { ...target },
+      businessMutation: false,
+    };
+  }
+  function updatePresentation() {
+    if (presentationNavigation && presentationNavigation.flight !== flight)
+      settlePresentationNavigation(flight ? "interrupted" : "completed");
+    if (!presentationHighlight) return;
+    const age = elapsed - presentationHighlight.startedAt;
+    const resolved = resolvePresentationTarget(presentationHighlight.target);
+    if (
+      age >= presentationHighlight.duration ||
+      !resolved?.point ||
+      (district !== "all" && district !== resolved.district)
+    ) {
+      presentationHighlight = null;
+      presentationRing.visible = false;
+      return;
+    }
+    presentationRing.position.set(
+      resolved.point.x + presentationHighlight.offset.x,
+      presentationHighlight.height,
+      resolved.point.z + presentationHighlight.offset.z,
+    );
+    // Expand from the fitted perimeter; shrinking below it hides the halo
+    // inside a station foundation again during half of the pulse cycle.
+    const pulse = reducedMotion ? 1 : 1 + (Math.sin(age * 3.5) + 1) * 0.025;
+    presentationRing.scale.setScalar(presentationHighlight.radius * pulse);
+    presentationRingMaterial.opacity = reducedMotion
+      ? 0.9
+      : 0.65 + Math.sin(age * 3.5) * 0.25;
+  }
+  function playPresentationAnimation({ target, kind, duration } = {}) {
+    if (disposed || !active || document.hidden)
+      return presentationFailure("scene_unavailable", target);
+    if (kind === "pulse") {
+      const result = highlightPresentationTarget(target, { duration });
+      return { ...result, animation: "pulse" };
+    }
+    if (kind === "traffic") {
+      const running = layers.traffic && !reducedMotion && quality !== "light";
+      return {
+        ok: running,
+        code: running ? "already_running" : "animation_disabled",
+        animation: kind,
+        businessMutation: false,
+      };
+    }
+    if (kind === "machinery") {
+      const running = Boolean(
+        industryState && industry.debug().machinery.animated,
+      );
+      return {
+        ok: running,
+        code: running ? "already_running" : "animation_disabled",
+        animation: kind,
+        businessMutation: false,
+      };
+    }
+    return {
+      ...presentationFailure("unsupported_animation"),
+      animation: typeof kind === "string" ? kind : null,
+    };
+  }
+  const presentation = Object.freeze({
+    captureView: capturePresentationView,
+    restoreView: restorePresentationView,
+    focusTarget: ({ duration, ...target } = {}) =>
+      focusPresentationTarget(target, { duration }),
+    overview: ({ duration } = {}) =>
+      navigatePresentation("overview", null, duration, () =>
+        setDistrict("all", { tour: true, duration: duration ?? 2.8 }),
+      ),
+    highlightTarget: ({ duration, ...target } = {}) =>
+      highlightPresentationTarget(target, { duration }),
+    playAnimation: playPresentationAnimation,
+    cancel: cancelPresentation,
+    onManualNavigation(listener) {
+      if (typeof listener !== "function") return () => {};
+      presentationNavigationListeners.add(listener);
+      return () => presentationNavigationListeners.delete(listener);
+    },
+    getState: () => ({
+      navigating: Boolean(presentationNavigation),
+      highlight: presentationHighlight
+        ? { ...presentationHighlight.target }
+        : null,
+      businessMutation: false,
+    }),
+  });
   function setLayers(next) {
     layers = { ...layers, ...next };
     traffic.setEnabled?.(
@@ -1772,6 +2143,7 @@ export async function createCityScene({
       }
     }
     if (!reducedMotion) traffic.update?.(delta, elapsed);
+    updatePresentation();
     camera.updateMatrixWorld();
     if (elapsed - lastLabel > 0.12 || !lastLabel) {
       refreshLabelContent();
@@ -1829,6 +2201,7 @@ export async function createCityScene({
       emphasis: emphasis.debug(),
       portraitTV: portraitTV(),
       cameraMoving: !!flight,
+      presentation: presentation.getState(),
       landMinZ,
       district,
       viewBounds: viewBounds(),
@@ -1882,6 +2255,8 @@ export async function createCityScene({
     };
   }
   function dispose() {
+    cancelPresentation("disposed");
+    presentationNavigationListeners.clear();
     disposed = true;
     cancelAnimationFrame(raf);
     resizeObserver.disconnect();
@@ -1906,6 +2281,7 @@ export async function createCityScene({
     }
     ring.geometry.dispose();
     ring.material.dispose();
+    presentationRingMaterial.dispose();
     priorityMesh.geometry.dispose();
     priorityMesh.material.dispose();
     activityMesh.geometry.dispose();
@@ -1929,6 +2305,7 @@ export async function createCityScene({
   setLayers(layers);
   schedule();
   return {
+    presentation,
     sync,
     select,
     focus,

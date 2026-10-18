@@ -13,6 +13,7 @@
     "test:city-v3": "node tests/city-v3-browser.mjs",
     "test:city-v4": "node tests/city-v4-browser.mjs",
     "test:city-v5": "node tests/city-v5-browser.mjs",
+    "test:demo": "node tests/demo-browser.mjs",
     "test:luma": "node tests/luma-browser.mjs",
     "test:classic": "node tests/smoke.mjs",
     "test:operations": "node tests/operations-browser.mjs"
@@ -20,6 +21,9 @@
   "dependencies": {
     "@fontsource/dm-sans": "5.3.0",
     "@fontsource/manrope": "5.3.0",
+    "@tavus/embed": "0.19.3",
+    "@tavus/widget": "0.19.3",
+    "ajv": "8.17.1",
     "lucide": "0.468.0",
     "three": "0.180.0"
   },

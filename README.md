@@ -20,6 +20,8 @@ npm run preview -- --port 4173
 
 **Vercel:** preset **Vite**, directorio raíz `./`, build `npm run build`, salida `dist`. Todos los assets necesarios están incluidos. El push a `main` puede activar un despliegue si el proyecto Vercel está enlazado. El estado de Vercel no se verifica desde esta aplicación.
 
+**Demo comercial con Tavus:** entra en `/demo`. Reutiliza la ciudad y añade la Guía de Bird View con los SDK oficiales, controles manuales y un puente de herramientas de sólo visualización. Requiere el `deployment-id` del widget del agente existente y sus esquemas reales para controlar el mapa por voz. Si faltan, la página lo indica y conserva la exploración manual. [Configuración de Tavus](docs/demo/SETUP.md) · [Pruebas y capturas](docs/demo/VALIDATION.md).
+
 ## Qué explorar
 
 Los botones **Ventas**, **Comunicaciones**, **Industria** y **Empresa** cambian el encuadre de la misma ciudad. **Empresa** muestra los tres distritos conectados; pulsa sus placas para acercarte.
@@ -71,6 +73,7 @@ npm run test:city-v2
 npm run test:city-v3
 npm run test:city-v4
 npm run test:city-v5
+npm run test:demo
 # Regresión de experiencias anteriores, con Vite dev en el puerto 5173:
 npm run test:luma
 npm run test:operations

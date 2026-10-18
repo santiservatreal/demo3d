@@ -1,0 +1,304 @@
+.c-bird-demo .c-main {
+  padding-right: 382px;
+}
+.c-bird-demo .c-wordmark {
+  font-size: 25px;
+  white-space: nowrap;
+}
+.c-bird-demo .c-workspace {
+  display: none;
+}
+.c-bird-demo #city-assistant-host,
+.c-bird-demo .c-win-button,
+.c-bird-demo .c-production-button,
+.c-bird-demo [data-action="replay"],
+.c-bird-demo [data-action="tv"],
+.c-bird-demo .c-stage-editor,
+.c-bird-demo .c-batch-advance {
+  display: none !important;
+}
+.bird-demo-panel {
+  position: fixed;
+  top: 82px;
+  right: 22px;
+  width: 336px;
+  padding: 21px;
+  border: 1px solid #dbe9ee;
+  border-radius: 20px;
+  background: #fcfefe;
+  box-shadow: 0 12px 40px #23496309;
+  color: #244f63;
+  z-index: 12;
+}
+.bird-demo-eyebrow {
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  color: #6893a6;
+}
+.bird-demo-panel h1 {
+  font:
+    600 25px/1.2 Manrope,
+    sans-serif;
+  letter-spacing: -1px;
+  margin: 11px 0 13px;
+}
+.bird-demo-panel h1 span {
+  display: block;
+  font:
+    400 11px/1.5 "DM Sans",
+    sans-serif;
+  color: #8aa2ac;
+  letter-spacing: 0;
+  margin-top: 7px;
+}
+.bird-demo-intro {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #7894a2;
+  margin: 0 0 18px;
+}
+.bird-demo-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+.bird-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e6ad50;
+}
+[data-status="connected"] .bird-status-dot {
+  background: #1baa7d;
+}
+[data-status="error"] .bird-status-dot {
+  background: #dc896b;
+}
+#bird-demo-microphone {
+  font-size: 10px;
+  margin: 7px 0;
+  color: #88a1af;
+}
+#bird-demo-message {
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 10px 0 14px;
+}
+.bird-session-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.bird-demo-panel button {
+  min-height: 36px;
+  padding: 8px 11px;
+  font-size: 10px;
+  border-radius: 9px;
+  background: #edf5f9;
+  color: #477f98;
+}
+.bird-session-controls [data-demo-action="start"] {
+  width: 100%;
+  background: #168b76;
+  color: white;
+  font-size: 12px;
+  min-height: 42px;
+}
+.bird-session-controls [data-demo-action="stop"] {
+  flex: 1;
+}
+.bird-session-controls [data-demo-action="interrupt"] {
+  flex: 1;
+}
+.bird-manual-label {
+  font-size: 9px;
+  margin: 22px 0 9px;
+  color: #8ba1ab;
+}
+.bird-tour-controls {
+  display: flex;
+  gap: 5px;
+}
+.bird-tour-controls button {
+  flex: 1;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+.bird-current-view {
+  margin-top: 15px;
+  padding: 12px;
+  border: 1px solid #e4eef2;
+  border-radius: 10px;
+  background: #f6fafc;
+}
+.bird-current-view b {
+  font-size: 11px;
+}
+.bird-current-view p {
+  font-size: 10px;
+  line-height: 1.6;
+  color: #7f98a6;
+  margin: 6px 0 10px;
+}
+.bird-current-view button {
+  background: #e5f3fc;
+  color: #2585bb;
+}
+.bird-config-hint {
+  color: #9a8059;
+  font-size: 9px;
+  line-height: 1.6;
+  margin: 14px 0 0;
+}
+.bird-explore-link {
+  display: inline-block;
+  margin-top: 17px;
+  font-size: 10px;
+  color: #628a9b;
+  border-bottom: 1px solid #cfe0e8;
+  padding-bottom: 3px;
+}
+.is-conversation-active .bird-demo-intro,
+.is-conversation-active .bird-demo-eyebrow,
+.is-conversation-active .bird-config-hint,
+.is-conversation-active .bird-current-view,
+.is-conversation-active .bird-manual-label {
+  display: none;
+}
+.is-conversation-active .bird-demo-panel {
+  top: 16px;
+  padding: 14px;
+}
+.is-conversation-active .bird-demo-panel h1 {
+  font-size: 18px;
+  margin-top: 0;
+}
+.is-conversation-active .bird-demo-panel h1 span {
+  display: none;
+}
+.is-conversation-active .bird-session-controls [data-demo-action="start"] {
+  display: none;
+}
+.is-conversation-active .bird-tour-controls {
+  margin-top: 9px;
+}
+#bird-widget-host:empty {
+  display: none;
+}
+#bird-widget-host:has(tavus-embed) {
+  height: 240px;
+  margin-top: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #edf5f7;
+}
+#bird-widget-host tavus-embed {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 1000px) and (min-width: 701px) {
+  .c-bird-demo .c-main {
+    padding-right: 328px;
+  }
+  .bird-demo-panel {
+    width: 302px;
+    right: 12px;
+    padding: 16px;
+  }
+  .c-bird-demo .c-header-right {
+    gap: 6px;
+  }
+}
+@media (max-width: 700px) {
+  .c-bird-demo .c-main {
+    padding-right: 10px;
+  }
+  .bird-demo-panel {
+    position: static;
+    width: 100%;
+    padding: 14px;
+    margin: 8px 0 12px;
+    box-shadow: none;
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
+  .bird-demo-panel h1 {
+    font-size: 20px;
+    margin: 6px 0 9px;
+  }
+  .bird-demo-panel h1 span {
+    display: none;
+  }
+  .bird-demo-panel button,
+  .bird-session-controls [data-demo-action="start"] {
+    min-height: 44px;
+  }
+  .bird-demo-eyebrow,
+  .bird-demo-intro,
+  .bird-manual-label,
+  .bird-current-view {
+    display: none;
+  }
+  .bird-demo-intro {
+    font-size: 10px;
+    line-height: 1.6;
+    margin-bottom: 9px;
+  }
+  .bird-session-controls {
+    gap: 5px;
+  }
+  .bird-session-controls [data-demo-action="start"] {
+    width: auto;
+    flex: 2;
+    font-size: 10px;
+  }
+  .bird-session-controls [data-demo-action="stop"],
+  .bird-session-controls [data-demo-action="interrupt"] {
+    flex: 1;
+  }
+  .bird-manual-label {
+    margin-top: 12px;
+  }
+  .bird-current-view {
+    margin-top: 9px;
+    padding: 9px;
+  }
+  .bird-current-view p {
+    margin-bottom: 6px;
+  }
+  .bird-config-hint {
+    margin-top: 9px;
+  }
+  .bird-explore-link {
+    margin-top: 10px;
+  }
+  .c-bird-demo .c-search-row,
+  .c-bird-demo .c-bottom-bar {
+    display: none;
+  }
+  .c-bird-demo .c-world {
+    min-height: 230px;
+  }
+  .is-conversation-active .bird-demo-panel {
+    padding: 10px;
+    margin: 5px 0;
+  }
+  .is-conversation-active #city-metrics,
+  .is-conversation-active .c-district-nav {
+    display: none;
+  }
+  .is-conversation-active .bird-explore-link {
+    display: none;
+  }
+  .is-conversation-active #bird-demo-message {
+    margin: 4px 0 8px;
+  }
+  .is-conversation-active #bird-demo-microphone {
+    margin: 4px 0;
+  }
+  .is-conversation-active .bird-demo-panel h1 {
+    display: none;
+  }
+}

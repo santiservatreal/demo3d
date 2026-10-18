@@ -1,0 +1,589 @@
+{
+  "generatedAt": "2026-10-18T00:22:37.706Z",
+  "startedAt": "2026-10-18T00:21:39.864Z",
+  "browser": "154.0.8037.57",
+  "environment": "Chromium headless, ANGLE/SwiftShader software WebGL; no physical-device or live-Tavus validation",
+  "loadedAssets": [
+    {
+      "url": "/assets/index-miMVSTVZ.js",
+      "status": 200,
+      "sha256": "ed9c6be6e0fcfa6d7de0019a8603c5bbffbfb45e5d5d53295562e867a19cb386"
+    },
+    {
+      "url": "/assets/OrbitControls-Bm95e5Vc.css",
+      "status": 200,
+      "sha256": "6e2a44748c74c5767e11bdaae6a3381a9245ba8d7eac8cddbbf14402e773c072"
+    },
+    {
+      "url": "/assets/app-BtU1d9e3.css",
+      "status": 200,
+      "sha256": "2bc725410f04ef2624603fb74c9f9332530f5d81095715b6d07b396705a38f8a"
+    },
+    {
+      "url": "/assets/app-DMQpJPKC.css",
+      "status": 200,
+      "sha256": "8cbb430b4a0f8e6bd4dcc58cc37a8a892c46fe38de70bd007ca7a1b8be530646"
+    },
+    {
+      "url": "/assets/RoundedBoxGeometry-7fwrSH-n.js",
+      "status": 200,
+      "sha256": "6c7818c96da233eeeeb3f7510e3873c095ee38ebfa67ef5aa4f6d941cf3cd8f9"
+    },
+    {
+      "url": "/assets/app-IKnRg8DU.js",
+      "status": 200,
+      "sha256": "febc199bf53f939c7e255005b88483d585c4ce306b940c0f309b4308d2daea47"
+    },
+    {
+      "url": "/assets/sparkles-DC6gBOT0.js",
+      "status": 200,
+      "sha256": "594c5697fa22452f810193d3c339dba2e410636824aae106840205e6f00a3088"
+    },
+    {
+      "url": "/assets/info-qyfPBwvP.js",
+      "status": 200,
+      "sha256": "683613a5da5d94c75e1c6ace2dcf51d5e610bd43886792030b8932df1b02b742"
+    },
+    {
+      "url": "/assets/sliders-horizontal-DX1n1E4I.js",
+      "status": 200,
+      "sha256": "1b6f4b7adea300a48094952ee48840f40a4e63b2528840b7d1426fda08b9d5f6"
+    },
+    {
+      "url": "/assets/users-CXNWgnAr.js",
+      "status": 200,
+      "sha256": "5a41980180c6c39b7a3f77ce3f7aa113ff46b7ab8f24a602e1e5c720a452b024"
+    },
+    {
+      "url": "/assets/OrbitControls-CwfFsR91.js",
+      "status": 200,
+      "sha256": "4ca0191fe00103cee2479a7d126ff3e53aed848b6ee6e538ac21cd6869a49925"
+    },
+    {
+      "url": "/assets/app-W4suTnxR.js",
+      "status": 200,
+      "sha256": "54c01b492e9d33364092c194f3fb6adcd2cffa2b579e3a66cd1f91bab054df80"
+    }
+  ],
+  "sourceSha256": {
+    "api/tavus-config.js": "763f5182ba766c623e58e61cd11c39d58b689ec83eda5447a715baed0843a02a",
+    "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
+    "package.json": "1568d6333ef461c3e20927f97252fe9e1d174fe46039afec0be2dffc38803c09",
+    "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "67c48c76549b95b9e1e83d93521a7ac78d6b970d6fd9521125bcc5a74a5dbd26",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "58760d5cd57e5dbbb6f2c86bd2c6458c843e69a78260da956e51775e077a365a",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "724180e97eea2efc10ae86b9343f8a0ffc8a0f6a46d9733c8bff2107f456882f",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020",
+    "src/demo/app.js": "4df0101dc48c1ccf2144614b32754a224cb05a945dfb279f2e1b2426c4ec2903",
+    "src/demo/city-controller.js": "068ac4cbd4d205094afa8606aedd57e7ba0e518c37837eae4b49878a3f430dfd",
+    "src/demo/style.css": "1de06851b982a247a3d64db205c49ac693afdf29734d4276bdcd55526421345d",
+    "src/demo/tavus-session.js": "6af6fa9323ccd6cc0bd5d31297006e739934f683dac5a80ac6a40d592734874b",
+    "src/demo/tool-contracts.js": "a02735428b42bbc17685ec86a5a38c5b031386608354be434a9569da9e3bda7e",
+    "src/main.js": "686f83d68d94b7d0b30059396f5103c41824ff65935aeb8cec163e700c3657a0"
+  },
+  "workingTreeSourceSha256AtCompletion": {
+    "api/tavus-config.js": "763f5182ba766c623e58e61cd11c39d58b689ec83eda5447a715baed0843a02a",
+    "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
+    "package.json": "1568d6333ef461c3e20927f97252fe9e1d174fe46039afec0be2dffc38803c09",
+    "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "67c48c76549b95b9e1e83d93521a7ac78d6b970d6fd9521125bcc5a74a5dbd26",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "58760d5cd57e5dbbb6f2c86bd2c6458c843e69a78260da956e51775e077a365a",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "724180e97eea2efc10ae86b9343f8a0ffc8a0f6a46d9733c8bff2107f456882f",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020",
+    "src/demo/app.js": "4df0101dc48c1ccf2144614b32754a224cb05a945dfb279f2e1b2426c4ec2903",
+    "src/demo/city-controller.js": "068ac4cbd4d205094afa8606aedd57e7ba0e518c37837eae4b49878a3f430dfd",
+    "src/demo/style.css": "1de06851b982a247a3d64db205c49ac693afdf29734d4276bdcd55526421345d",
+    "src/demo/tavus-session.js": "6af6fa9323ccd6cc0bd5d31297006e739934f683dac5a80ac6a40d592734874b",
+    "src/demo/tool-contracts.js": "a02735428b42bbc17685ec86a5a38c5b031386608354be434a9569da9e3bda7e",
+    "src/main.js": "686f83d68d94b7d0b30059396f5103c41824ff65935aeb8cec163e700c3657a0"
+  },
+  "errors": [],
+  "tavusRequests": [],
+  "results": [
+    {
+      "name": "demo-route-renders-real-city-with-missing-configuration-and-no-media-autostart",
+      "passed": true,
+      "detail": {
+        "url": "http://127.0.0.1:4173/demo",
+        "configuration": {
+          "configuration": {
+            "configured": false,
+            "contractsReady": false
+          },
+          "session": {
+            "status": "idle",
+            "microphone": "not-requested"
+          }
+        },
+        "media": {
+          "getUserMedia": 0,
+          "mediaPlay": 0,
+          "audioContext": 0,
+          "widgetCount": 0,
+          "widgetRegistered": true,
+          "embedRegistered": true,
+          "mediaElements": 0
+        },
+        "camera": {
+          "quaternion": [
+            -0.26303476481420407,
+            0.31627355645048966,
+            0.09173665429375545,
+            0.9068451556072201
+          ],
+          "position": [
+            54,
+            60.24999999999999,
+            68
+          ],
+          "target": [
+            0,
+            5.25,
+            0
+          ],
+          "zoom": 1
+        }
+      }
+    },
+    {
+      "name": "manual-commercial-camera-and-real-highlight-preserve-crm-and-erp",
+      "passed": true,
+      "detail": {
+        "expectedDeal": {
+          "id": "deal-001",
+          "name": "Nueva sede",
+          "amount": 1500
+        },
+        "sales": {
+          "before": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.31627355645048966,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              54,
+              60.24999999999999,
+              68
+            ],
+            "target": [
+              0,
+              5.25,
+              0
+            ],
+            "zoom": 1
+          },
+          "after": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.31627355645048966,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              11.832618380822787,
+              50.1582224249121,
+              42.54107499807315
+            ],
+            "target": [
+              -35.45,
+              2,
+              -17
+            ],
+            "zoom": 2.5
+          },
+          "presentation": {
+            "navigating": false,
+            "highlight": null,
+            "businessMutation": false
+          },
+          "title": "Nueva sede",
+          "detail": "1500 € · Oportunidad comercial · No es un cobro"
+        },
+        "salesHighlight": {
+          "before": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.31627355645048966,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              11.832618380822787,
+              50.1582224249121,
+              42.54107499807315
+            ],
+            "target": [
+              -35.45,
+              2,
+              -17
+            ],
+            "zoom": 2.5
+          },
+          "after": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.31627355645048966,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              11.832618380822787,
+              50.1582224249121,
+              42.54107499807315
+            ],
+            "target": [
+              -35.45,
+              2,
+              -17
+            ],
+            "zoom": 2.5
+          },
+          "presentation": {
+            "navigating": false,
+            "highlight": {
+              "kind": "deal",
+              "id": "deal-001"
+            },
+            "businessMutation": false
+          },
+          "title": "Nueva sede",
+          "detail": "1500 € · Oportunidad comercial · No es un cobro"
+        }
+      }
+    },
+    {
+      "name": "manual-industrial-camera-highlights-manufacturing-and-preserves-1320-units",
+      "passed": true,
+      "detail": {
+        "sourceUnits": 1320,
+        "industry": {
+          "before": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.31627355645048966,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              11.832618380822787,
+              50.1582224249121,
+              42.54107499807315
+            ],
+            "target": [
+              -35.45,
+              2,
+              -17
+            ],
+            "zoom": 2.5
+          },
+          "after": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.3162735564504897,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              24.536242645358662,
+              56.00913602768011,
+              3.856749997859069
+            ],
+            "target": [
+              -28,
+              2.5,
+              -62.3
+            ],
+            "zoom": 2.35
+          },
+          "presentation": {
+            "navigating": false,
+            "highlight": null,
+            "businessMutation": false
+          },
+          "title": "Fabricación y distribución",
+          "detail": "1320 unidades trazadas. Las entregas están registradas; la ruta es estimada."
+        },
+        "industryHighlight": {
+          "before": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.3162735564504897,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              24.536242645358662,
+              56.00913602768011,
+              3.856749997859069
+            ],
+            "target": [
+              -28,
+              2.5,
+              -62.3
+            ],
+            "zoom": 2.35
+          },
+          "after": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.3162735564504897,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              24.536242645358662,
+              56.00913602768011,
+              3.856749997859069
+            ],
+            "target": [
+              -28,
+              2.5,
+              -62.3
+            ],
+            "zoom": 2.35
+          },
+          "presentation": {
+            "navigating": false,
+            "highlight": {
+              "kind": "industry-stage",
+              "id": "manufacturing"
+            },
+            "businessMutation": false
+          },
+          "title": "Fabricación y distribución",
+          "detail": "1320 unidades trazadas. Las entregas están registradas; la ruta es estimada."
+        }
+      }
+    },
+    {
+      "name": "manual-overview-keeps-fixed-bearing-without-starting-tavus",
+      "passed": true,
+      "detail": {
+        "overview": {
+          "before": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.3162735564504897,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              24.536242645358662,
+              56.00913602768011,
+              3.856749997859069
+            ],
+            "target": [
+              -28,
+              2.5,
+              -62.3
+            ],
+            "zoom": 2.35
+          },
+          "after": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.31627355645048966,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              54,
+              61.24999999999999,
+              41.25
+            ],
+            "target": [
+              0,
+              6.25,
+              -26.75
+            ],
+            "zoom": 1
+          },
+          "presentation": {
+            "navigating": false,
+            "highlight": null,
+            "businessMutation": false
+          },
+          "title": "Tu empresa, de un vistazo",
+          "detail": "Ventas, conversaciones y operaciones en la misma ciudad."
+        },
+        "media": {
+          "getUserMedia": 0,
+          "mediaPlay": 0,
+          "audioContext": 0,
+          "widgetCount": 0,
+          "widgetRegistered": true,
+          "embedRegistered": true,
+          "mediaElements": 0
+        }
+      }
+    },
+    {
+      "name": "normal-city-retains-v5-assistant-and-navigation-without-demo-or-tavus-sdk",
+      "passed": true,
+      "detail": {
+        "media": {
+          "getUserMedia": 0,
+          "mediaPlay": 0,
+          "audioContext": 0,
+          "widgetCount": 0,
+          "widgetRegistered": false,
+          "embedRegistered": false,
+          "mediaElements": 0
+        },
+        "requests": [
+          "/",
+          "/assets/index-miMVSTVZ.js",
+          "/assets/app-IKnRg8DU.js",
+          "/assets/OrbitControls-CwfFsR91.js",
+          "/assets/OrbitControls-Bm95e5Vc.css",
+          "/assets/RoundedBoxGeometry-7fwrSH-n.js",
+          "/assets/sparkles-DC6gBOT0.js",
+          "/assets/sliders-horizontal-DX1n1E4I.js",
+          "/assets/info-qyfPBwvP.js",
+          "/assets/users-CXNWgnAr.js",
+          "/assets/app-BtU1d9e3.css",
+          "/assets/luma/studio.hdr",
+          "/assets/dm-sans-latin-400-normal-CW0RaeGs.woff2",
+          "/assets/manrope-latin-700-normal-BZp_XxE4.woff2",
+          "/assets/dm-sans-latin-500-normal-B9HHJjqV.woff2",
+          "/assets/manrope-latin-600-normal-4f0koTD-.woff2",
+          "/assets/manrope-latin-400-normal-PaqtzbVb.woff2"
+        ]
+      }
+    },
+    {
+      "name": "390px-demo-keeps-guide-controls-and-city-usable-without-media",
+      "passed": true,
+      "detail": {
+        "responsive": {
+          "viewport": 390,
+          "documentWidth": 390,
+          "panel": {
+            "x": 10,
+            "y": 65,
+            "width": 370,
+            "height": 317.15625,
+            "right": 380,
+            "bottom": 382.15625
+          },
+          "start": {
+            "x": 25,
+            "y": 214.375,
+            "width": 154,
+            "height": 44,
+            "right": 179,
+            "bottom": 258.375
+          },
+          "canvas": {
+            "x": 11,
+            "y": 656.15625,
+            "width": 368,
+            "height": 324.703125,
+            "right": 379,
+            "bottom": 980.859375
+          }
+        },
+        "visibleMobileCanvas": {
+          "x": 11,
+          "y": 519.15625,
+          "width": 368,
+          "height": 324.703125
+        },
+        "media": {
+          "getUserMedia": 0,
+          "mediaPlay": 0,
+          "audioContext": 0,
+          "widgetCount": 0,
+          "widgetRegistered": true,
+          "embedRegistered": true,
+          "mediaElements": 0
+        },
+        "mobileIndustry": {
+          "before": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.31627355645048966,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              54,
+              60.24999999999999,
+              68
+            ],
+            "target": [
+              0,
+              5.25,
+              0
+            ],
+            "zoom": 1
+          },
+          "after": {
+            "quaternion": [
+              -0.26303476481420407,
+              0.3162735564504897,
+              0.09173665429375545,
+              0.9068451556072201
+            ],
+            "position": [
+              24.536242645358662,
+              56.00913602768011,
+              3.856749997859069
+            ],
+            "target": [
+              -28,
+              2.5,
+              -62.3
+            ],
+            "zoom": 2.35
+          },
+          "presentation": {
+            "navigating": false,
+            "highlight": null,
+            "businessMutation": false
+          },
+          "title": "Fabricación y distribución",
+          "detail": "1320 unidades trazadas. Las entregas están registradas; la ruta es estimada."
+        }
+      }
+    }
+  ]
+}
