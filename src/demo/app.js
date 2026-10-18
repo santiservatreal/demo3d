@@ -36,10 +36,11 @@ shell.append(presentation);
 const panel = presentation.querySelector("#bird-demo-panel");
 const $ = (selector) => presentation.querySelector(selector);
 const escapeHTML = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
-const activeStatuses = new Set(["initializing", "preparing", "connecting", "connected"]);
+const activeStatuses = new Set(["initializing", "preparing", "connecting", "connected", "closing"]);
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-const statusNames = { idle: "Lista para conversar", initializing: "Preparando tu guía…", preparing: "Lista para unirte", connecting: "Conectando…", connected: "Conversación conectada", ended: "Sesión finalizada", error: "No se ha conectado" };
+const statusNames = { idle: "Lista para conversar", initializing: "Preparando tu guía…", preparing: "Lista para unirte", connecting: "Conectando…", connected: "Conversación conectada", closing: "Cerrando la conversación…", ended: "Sesión finalizada", error: "No se ha conectado" };
 let configuration = null, session = null, disposed = false;
+let startingConversation = false;
 let currentTarget = { kind: "industry-stage", id: "manufacturing" };
 let currentFrame = null, ambientTimer = null, ambientEnabled = false, ambientIndex = 0, canvas = null;
 const controller = createCityPresentationController({ getScene: cityPresentation.getScene, getSnapshot: cityPresentation.getSnapshot, onAction: updatePresentationDetails });
@@ -111,8 +112,9 @@ function showSession(state = { status: "idle", microphone: "not-requested" }) {
   panel.dataset.status = state.status;
   $("#bird-demo-status").textContent = statusNames[state.status] || "Estado no disponible";
   $("#bird-demo-microphone").textContent = state.microphone === "denied" ? "Permiso del micrófono denegado" : state.microphone === "not-requested" ? "Micrófono sin solicitar" : state.microphone === "requested" ? "Tavus gestiona los permisos del micrófono" : "Micrófono: usa los controles de Tavus";
-  $("[data-demo-action=start]").disabled = active || !configuration?.configured || !cityPresentation.getAvailable();
-  $("[data-demo-action=stop]").disabled = !active && !session?.getWidget();
+  $("[data-demo-action=start]").hidden = !!session?.getWidget();
+  $("[data-demo-action=start]").disabled = active || startingConversation || !configuration?.configured || !cityPresentation.getAvailable();
+  $("[data-demo-action=stop]").disabled = state.status === "closing" || (!active && !session?.getWidget());
   $("[data-demo-action=interrupt]").disabled = state.status !== "connected";
   if (state.error) {
     syncFrameToShot();
@@ -120,6 +122,7 @@ function showSession(state = { status: "idle", microphone: "not-requested" }) {
   }
   else if (state.status === "preparing") $("#bird-demo-message").textContent = "Permite el micrófono y pulsa «Join» en el agente para entrar.";
   else if (state.status === "connecting") $("#bird-demo-message").textContent = "Estamos conectando con tu guía. Su ventana permanecerá abierta.";
+  else if (state.status === "closing") $("#bird-demo-message").textContent = "Esperando a que Tavus termine el cierre antes de iniciar otra conversación…";
   else if (state.status === "connected") $("#bird-demo-message").textContent = state.speech === "guide" ? "Tu guía está hablando. Puedes interrumpir y preguntar." : state.speech === "user" ? "Te está escuchando…" : "Pregunta por el lugar que te apetezca descubrir.";
   else if (state.status === "ended") {
     syncFrameToShot();
@@ -158,10 +161,18 @@ function conversationContext() {
     vehicles: industry.vehicles.map(({ id, driverName, status, cargoBatchId }) => ({ id, driverName, status, cargoBatchId })),
   };
 }
-function beginConversation() {
-  if (!configuration?.configured || !cityPresentation.getAvailable()) return;
+async function beginConversation() {
+  if (startingConversation || session?.getWidget() || activeStatuses.has(session?.getState().status) || !configuration?.configured || !cityPresentation.getAvailable()) return;
+  startingConversation = true;
+  $("[data-demo-action=start]").disabled = true;
+  try {
   stopAmbient("conversation_start");
-  session?.dispose();
+  const closed = await session?.dispose();
+  if (disposed) return;
+  if (closed?.ok === false) {
+    $("#bird-demo-message").textContent = "Tavus tarda en liberar la sesión. Espera un momento y vuelve a pulsar Iniciar.";
+    return;
+  }
   controller.endSession({ restore: false });
   const snapshot = cityPresentation.getSnapshot();
   if (snapshot.crm.source?.type !== "simulated" || snapshot.industry.source?.type !== "simulated") {
@@ -174,6 +185,10 @@ function beginConversation() {
     createWidget: () => { const embed = document.createElement("tavus-embed"); embed.setAttribute("layout", "inline"); return embed; },
   });
   session.start();
+  } finally {
+    startingConversation = false;
+    showSession(session?.getState());
+  }
 }
 async function manualView(action) {
   await cityPresentation.ready;

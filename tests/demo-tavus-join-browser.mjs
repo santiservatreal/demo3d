@@ -12,7 +12,13 @@ import path from "node:path";
 // explicitly bypasses only the DOM permission gate, then invokes the real
 // SDK button's click handler. This verifies failed-Join rollback, not media
 // permission acquisition or a successful conversation.
-const output = process.env.JOIN_QA_DIR || "/tmp/demo-tavus-join-real-sdk";
+const scenario = process.env.JOIN_QA_SCENARIO || "origin";
+assert.ok(["origin", "busy"].includes(scenario), "JOIN_QA_SCENARIO must be origin or busy.");
+const output = process.env.JOIN_QA_DIR || `/tmp/demo-tavus-join-real-sdk${scenario === "busy" ? "-busy" : ""}`;
+const denial = scenario === "busy"
+  ? { status: 423, body: { error: "PAL is in another conversation" } }
+  : { status: 403, body: { error: "Origin not allowed" } };
+const deniedStartOutcome = `mock-start-${denial.status}`;
 const deploymentId = "dqa-offline-join-regression";
 const eventNames = [
   "ready", "conversation-created", "conversation-started", "conversation-ended",
@@ -93,7 +99,7 @@ try {
           body: `<!doctype html><html lang="es"><meta charset="utf-8"><title>Join: SDK real, red simulada</title>
             <style>body{margin:24px;background:#eaf2f4;font:14px system-ui;color:#153440}h1{font-size:18px}#widget-host{width:360px;height:470px;background:#dce8e9}button{padding:10px;margin:10px 8px 10px 0}pre{max-height:100px;overflow:auto;font-size:11px}#notice{max-width:750px}</style>
             <h1>Regresión local de Join · SDK real / sin agente ni conexión real</h1>
-            <p id="notice">Todos los destinos externos están interceptados. La respuesta de inicio será un 403 simulado. El gate visual de permisos se puede forzar sólo para probar el handler.</p>
+            <p id="notice">Todos los destinos externos están interceptados. La respuesta de inicio será un ${denial.status} simulado. El gate visual de permisos se puede forzar sólo para probar el handler.</p>
             <button id="start">Iniciar prueba local</button><button id="stop">Finalizar</button>
             <div id="widget-host"></div><pre id="state"></pre>
             <script type="module">
@@ -145,8 +151,8 @@ try {
         return;
       }
       if (url.pathname === `/v2/deployments/${deploymentId}/start` && request.method() === "POST") {
-        entry.outcome = "mock-start-403";
-        await route.fulfill({ status: 403, contentType: "application/json", headers: cors, body: JSON.stringify({ error: "Origin not allowed" }) });
+        entry.outcome = deniedStartOutcome;
+        await route.fulfill({ status: denial.status, contentType: "application/json", headers: cors, body: JSON.stringify(denial.body) });
         return;
       }
       if (url.pathname === `/v2/deployments/${deploymentId}/telemetry`) {
@@ -170,7 +176,7 @@ try {
   const embed = page.locator("tavus-embed");
   const join = embed.getByRole("button", { name: "Join", exact: true });
   await expect(join).toBeVisible();
-  assert.equal(requests.filter((request) => request.outcome === "mock-start-403").length, 0, "The SDK haircheck precedes its room start request.");
+  assert.equal(requests.filter((request) => request.outcome === deniedStartOutcome).length, 0, "The SDK haircheck precedes its room start request.");
   permissionGateBypassed = !(await join.isEnabled());
   if (permissionGateBypassed) {
     // Only release the DOM disabled flag. The SDK itself still owns its button
@@ -178,7 +184,7 @@ try {
     // fabricated. This deliberately does not test the real permission flow.
     await join.evaluate((button) => { button.disabled = false; button.click(); });
   } else await join.click();
-  await expect.poll(() => requests.filter((request) => request.outcome === "mock-start-403").length).toBe(1);
+  await expect.poll(() => requests.filter((request) => request.outcome === deniedStartOutcome).length).toBe(1);
   await page.waitForFunction(() => window.__JOIN_QA__.trace.some((event) => event.name === "error"));
   const state = await page.evaluate(() => ({
     trace: window.__JOIN_QA__.trace,
@@ -199,8 +205,13 @@ try {
     mounted: !!window.__JOIN_QA__.session.getWidget()?.isConnected,
     session: window.__JOIN_QA__.session.getState(),
   }));
-  await page.screenshot({ path: path.join(output, "sdk-join-denied-preserved.png") });
-  assert.equal(requests.filter((request) => request.outcome === "mock-start-403").length, 1, "No host retry may create a second automatic attempt.");
+  if (scenario === "busy") {
+    await expect(embed.getByText("PAL is in another conversation", { exact: true })).toBeVisible();
+    await expect(embed.getByRole("button", { name: "Try again", exact: true })).toBeVisible();
+    assert.equal(preservedBeforeFinalizar.session.error?.code, "AGENT_BUSY", "The host must classify the explicit mocked 423 as busy.");
+  }
+  await page.screenshot({ path: path.join(output, scenario === "busy" ? "sdk-join-busy-preserved.png" : "sdk-join-denied-preserved.png") });
+  assert.equal(requests.filter((request) => request.outcome === deniedStartOutcome).length, 1, "No host retry may create a second automatic attempt.");
   assert.equal(requests.some((request) => request.outcome === "continued-external"), false);
   assert.deepEqual(pageErrors, [], "The fixture must not create uncaught application errors.");
   await page.locator("#stop").click();
@@ -219,6 +230,7 @@ try {
     startedAt, completedAt: new Date().toISOString(), passed: !failure,
     sdk: { name: sdkPackage.name, version: sdkPackage.version, sha256: sha256(sdk) },
     sessionSourcePath: sourcePath, sessionSourceSha256: sha256(source),
+    scenario, denial,
     scope: "Real installed embed/Join handler with intercepted HTTP denial; no successful call, avatar, real microphone permission, or billable request.",
     permissionGateBypassed, fixture, requests, preservedBeforeFinalizar, state, consoleErrors, pageErrors, failure,
   }, null, 2));

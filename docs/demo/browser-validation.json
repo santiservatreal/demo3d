@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-18T16:16:27.067Z",
-  "startedAt": "2026-10-18T16:13:19.601Z",
+  "generatedAt": "2026-10-18T16:37:28.918Z",
+  "startedAt": "2026-10-18T16:34:20.281Z",
   "expectedPublicDeploymentId": "d7770b89-ab37-4445-b065-2a5150e2e4cb",
   "realSdkStartButtonClicked": false,
   "controlledSdkDoubleStartClicks": 2,
@@ -8,51 +8,9 @@
   "environment": "Chromium headless, ANGLE/SwiftShader software WebGL; no physical-device or live-Tavus validation",
   "loadedAssets": [
     {
-      "url": "/assets/index-CuEdqC8X.js",
+      "url": "/assets/index-CIgIhnlR.js",
       "status": 200,
-      "sha256": "025391627ad537f6a2d16b1d9ca2ff9774fd4720b9b47548959cfe7f67fa7470",
-      "containsExpectedPublicDeploymentId": false
-    },
-    {
-      "url": "/assets/OrbitControls-Bm95e5Vc.css",
-      "status": 200,
-      "sha256": "6e2a44748c74c5767e11bdaae6a3381a9245ba8d7eac8cddbbf14402e773c072",
-      "containsExpectedPublicDeploymentId": false
-    },
-    {
-      "url": "/assets/app-0O5U0a0Y.css",
-      "status": 200,
-      "sha256": "d615dafbaf0680d409ea954567aa44c37fdbe4877debce5b70708d5598f02bc9",
-      "containsExpectedPublicDeploymentId": false
-    },
-    {
-      "url": "/assets/app-BtU1d9e3.css",
-      "status": 200,
-      "sha256": "2bc725410f04ef2624603fb74c9f9332530f5d81095715b6d07b396705a38f8a",
-      "containsExpectedPublicDeploymentId": false
-    },
-    {
-      "url": "/assets/sliders-horizontal-DX1n1E4I.js",
-      "status": 200,
-      "sha256": "1b6f4b7adea300a48094952ee48840f40a4e63b2528840b7d1426fda08b9d5f6",
-      "containsExpectedPublicDeploymentId": false
-    },
-    {
-      "url": "/assets/sparkles-DC6gBOT0.js",
-      "status": 200,
-      "sha256": "594c5697fa22452f810193d3c339dba2e410636824aae106840205e6f00a3088",
-      "containsExpectedPublicDeploymentId": false
-    },
-    {
-      "url": "/assets/RoundedBoxGeometry-7fwrSH-n.js",
-      "status": 200,
-      "sha256": "6c7818c96da233eeeeb3f7510e3873c095ee38ebfa67ef5aa4f6d941cf3cd8f9",
-      "containsExpectedPublicDeploymentId": false
-    },
-    {
-      "url": "/assets/info-qyfPBwvP.js",
-      "status": 200,
-      "sha256": "683613a5da5d94c75e1c6ace2dcf51d5e610bd43886792030b8932df1b02b742",
+      "sha256": "9e92270e2dbea2b13d5bb269c2c2f349545bcc3062330aabdc9f1c2bbe1bfb4b",
       "containsExpectedPublicDeploymentId": false
     },
     {
@@ -62,9 +20,51 @@
       "containsExpectedPublicDeploymentId": false
     },
     {
+      "url": "/assets/OrbitControls-Bm95e5Vc.css",
+      "status": 200,
+      "sha256": "6e2a44748c74c5767e11bdaae6a3381a9245ba8d7eac8cddbbf14402e773c072",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/app-BtU1d9e3.css",
+      "status": 200,
+      "sha256": "2bc725410f04ef2624603fb74c9f9332530f5d81095715b6d07b396705a38f8a",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/app-Bm_FjAwn.css",
+      "status": 200,
+      "sha256": "5022e9bfce74ca3f7d0abe93a078f85944af4eec458a6f3ca50413b9fcfd7955",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/RoundedBoxGeometry-7fwrSH-n.js",
+      "status": 200,
+      "sha256": "6c7818c96da233eeeeb3f7510e3873c095ee38ebfa67ef5aa4f6d941cf3cd8f9",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/sparkles-DC6gBOT0.js",
+      "status": 200,
+      "sha256": "594c5697fa22452f810193d3c339dba2e410636824aae106840205e6f00a3088",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/info-qyfPBwvP.js",
+      "status": 200,
+      "sha256": "683613a5da5d94c75e1c6ace2dcf51d5e610bd43886792030b8932df1b02b742",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
       "url": "/assets/users-CXNWgnAr.js",
       "status": 200,
       "sha256": "5a41980180c6c39b7a3f77ce3f7aa113ff46b7ab8f24a602e1e5c720a452b024",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/sliders-horizontal-DX1n1E4I.js",
+      "status": 200,
+      "sha256": "1b6f4b7adea300a48094952ee48840f40a4e63b2528840b7d1426fda08b9d5f6",
       "containsExpectedPublicDeploymentId": false
     },
     {
@@ -74,9 +74,9 @@
       "containsExpectedPublicDeploymentId": false
     },
     {
-      "url": "/assets/app-Bm7KfoJu.js",
+      "url": "/assets/app-D9woM4V3.js",
       "status": 200,
-      "sha256": "76237b7792e6683ead2ead7a6b5dc43235eeed39fac2f80e64c7598602620f45",
+      "sha256": "5ca49994b9c276babf79cdc2446c349a487cd90ef842967041eee6a4b80c6f87",
       "containsExpectedPublicDeploymentId": true
     }
   ],
@@ -109,12 +109,13 @@
     "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
     "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
     "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020",
-    "src/demo/app.js": "c056b4baa4c067459283c801713a20f8f05697520def7dcb9d9ffbd8092a3e75",
+    "src/demo/app.js": "ed2c38e2780a868afa9e65dc3f16f35d7f1e53512e3a772f1b5168764d99680b",
     "src/demo/city-controller.js": "068ac4cbd4d205094afa8606aedd57e7ba0e518c37837eae4b49878a3f430dfd",
     "src/demo/existing-agent-tools.js": "92b10c1b3de70a8ee5cf4b1c44b3b0ee0c719b153d6cea3b3bec960e0dc0762f",
     "src/demo/presentation-state.js": "dbd8d6531635cd177d7bbc02a53cbb6640abc7219a16f80787eb5e371e56be86",
-    "src/demo/style.css": "a013b1ee14f850dd07d8c63570bd183c00036320a543b23830e39b1c826ebf40",
-    "src/demo/tavus-session.js": "ac57796d6224419cef6909d80173ac21337c314d91e5bbe7506767f2929391a9",
+    "src/demo/style.css": "40a12bb5ecb21d66b761559ddd4fcafbb1b7aba61b75f2e73a2f22c2956821ec",
+    "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
+    "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
     "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
     "src/main.js": "686f83d68d94b7d0b30059396f5103c41824ff65935aeb8cec163e700c3657a0"
   },
@@ -147,12 +148,13 @@
     "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
     "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
     "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020",
-    "src/demo/app.js": "c056b4baa4c067459283c801713a20f8f05697520def7dcb9d9ffbd8092a3e75",
+    "src/demo/app.js": "ed2c38e2780a868afa9e65dc3f16f35d7f1e53512e3a772f1b5168764d99680b",
     "src/demo/city-controller.js": "068ac4cbd4d205094afa8606aedd57e7ba0e518c37837eae4b49878a3f430dfd",
     "src/demo/existing-agent-tools.js": "92b10c1b3de70a8ee5cf4b1c44b3b0ee0c719b153d6cea3b3bec960e0dc0762f",
     "src/demo/presentation-state.js": "dbd8d6531635cd177d7bbc02a53cbb6640abc7219a16f80787eb5e371e56be86",
-    "src/demo/style.css": "a013b1ee14f850dd07d8c63570bd183c00036320a543b23830e39b1c826ebf40",
-    "src/demo/tavus-session.js": "ac57796d6224419cef6909d80173ac21337c314d91e5bbe7506767f2929391a9",
+    "src/demo/style.css": "40a12bb5ecb21d66b761559ddd4fcafbb1b7aba61b75f2e73a2f22c2956821ec",
+    "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
+    "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
     "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
     "src/main.js": "686f83d68d94b7d0b30059396f5103c41824ff65935aeb8cec163e700c3657a0"
   },
@@ -599,20 +601,20 @@
           },
           "after": {
             "quaternion": [
-              -0.34259189848630683,
-              0.1460986634340077,
-              0.054023999069403916,
-              0.9264811812222058
+              -0.4119543983413217,
+              0.15285984321685714,
+              0.07031694287108821,
+              0.8955350186141363
             ],
             "position": [
-              -16.68033932899538,
-              23.105735815685577,
-              -38.23757863276871
+              -0.970926914916415,
+              28.327385328289665,
+              -32.00863183281891
             ],
             "target": [
-              -23.78631179275171,
-              3.3233874871409403,
-              -60.20847839894766
+              -8.159294715726944,
+              3.039259903922308,
+              -52.45179537707901
             ],
             "zoom": 1,
             "type": "PerspectiveCamera",
@@ -626,14 +628,14 @@
               "id": "meeting"
             },
             "position": [
-              -16.68033932899538,
-              23.105735815685577,
-              -38.23757863276871
+              -0.970926914916415,
+              28.327385328289665,
+              -32.00863183281891
             ],
             "target": [
-              -23.78631179275171,
-              3.3233874871409403,
-              -60.20847839894766
+              -8.159294715726944,
+              3.039259903922308,
+              -52.45179537707901
             ],
             "navigating": true,
             "highlight": null,
@@ -668,20 +670,20 @@
         "overview": {
           "before": {
             "quaternion": [
-              -0.2768852184782994,
-              0.21420982480750528,
-              0.06346398380415542,
-              0.9345699810628781
+              -0.27683257680692663,
+              0.2127665314531924,
+              0.06299900284322651,
+              0.9349466579182867
             ],
             "position": [
-              35.340868519044896,
-              14.98399366014548,
-              -17.610624064807407
+              35.34831833546087,
+              14.922477503191304,
+              -17.607670134456523
             ],
             "target": [
-              26.904360798595064,
-              2.4017388945709985,
-              -35.047471821788264
+              27,
+              2.4,
+              -35
             ],
             "zoom": 1,
             "type": "PerspectiveCamera",
@@ -784,7 +786,7 @@
         },
         "requests": [
           "/",
-          "/assets/index-CuEdqC8X.js",
+          "/assets/index-CIgIhnlR.js",
           "/assets/app-BtAr57pN.js",
           "/assets/OrbitControls-CwfFsR91.js",
           "/assets/OrbitControls-Bm95e5Vc.css",
@@ -1208,6 +1210,13 @@
         "resizeLayouts": [],
         "machineryMatricesChanged": true,
         "sdkErrorRetainsEmbedAndAllowsRetry": true,
+        "closing": {
+          "status": "closing",
+          "starts": 1,
+          "destroys": 0,
+          "mounted": 1,
+          "startDisabled": true
+        },
         "cleanup": {
           "ends": 1,
           "destroys": 1,
@@ -1572,6 +1581,13 @@
         ],
         "machineryMatricesChanged": true,
         "sdkErrorRetainsEmbedAndAllowsRetry": true,
+        "closing": {
+          "status": "closing",
+          "starts": 1,
+          "destroys": 0,
+          "mounted": 1,
+          "startDisabled": true
+        },
         "cleanup": {
           "ends": 1,
           "destroys": 1,

@@ -598,6 +598,7 @@
 }
 .bird-session-controls [data-demo-action="stop"]:disabled,
 .bird-session-controls [data-demo-action="interrupt"]:disabled,
+.bird-session-controls [data-demo-action="start"][hidden],
 .c-bird-demo.is-conversation-active .bird-session-controls [data-demo-action="start"] {
   display: none;
 }

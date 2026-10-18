@@ -1,8 +1,10 @@
 # Bird View · Presentación inmersiva
 
-**227 casos Node y 8 grupos de navegador pasan**, con cero errores JavaScript no capturados. La compilación de producción terminó correctamente. `/demo` muestra la ciudad a pantalla completa con cámara de perspectiva, rótulos e indicadores por toma y el guía en una esquina. La ruta `/` conserva el dashboard y la cámara fija.
+**244 casos Node y 8 grupos de navegador pasan**, con cero errores JavaScript no capturados. La compilación de producción terminó correctamente. `/demo` muestra la ciudad a pantalla completa con cámara de perspectiva, rótulos e indicadores por toma y el guía en una esquina. La ruta `/` conserva el dashboard y la cámara fija.
 
 La [regresión de Join con el SDK real](JOIN_FIX.md) también pasa: una respuesta HTTP de fallo simulada ya no desmonta el agente antes de que muestre su aviso. La misma prueba falla con el código anterior. No se inició una conversación real.
+
+La [mejora de disponibilidad y cierre](TAVUS_AVAILABILITY.md) añade espera de cierre, una sola instancia y diagnósticos diferenciados. Dos escenarios con el SDK real y HTTP simulado distinguen agente ocupado (423) y dominio rechazado (403); ninguno inicia una llamada real.
 
 ![Plano de fabricación, indicadores y guía en la esquina](captures/immersive-manufacturing-cinematic-highlight.png)
 
@@ -37,6 +39,7 @@ Ambos grupos verifican la aplicación, los esquemas exportados reales, el puente
 - Finalizar restaura cámara e indicadores y termina/destruye el doble una sola vez. Las instantáneas serializadas del CRM y ERP no cambian.
 - En móvil se cambia de vertical a horizontal y viceversa sin montar otra sesión; el dock y el elemento inerte siguen dentro de la ventana.
 - Un error del SDK conserva el elemento visible y el botón Finalizar habilitado. La preparación y el reintento dentro del mismo elemento recuperan el estado conectado y las herramientas sin un segundo inicio automático. Se comprueba en escritorio y móvil.
+- El inicio exterior queda oculto mientras existe el embed y no puede crear otro aunque se invoque directamente su botón. Finalizar mantiene un estado `closing`, el elemento montado y el inicio bloqueado mientras la operación de cierre controlada está pendiente; después lo retira. Ambos tamaños verifican esa espera.
 
 ![Prueba controlada: escena real y espacio del embed, sin avatar ni conversación real](captures/immersive-qa-inert-embed-desktop.png)
 
@@ -46,11 +49,11 @@ Todas las imágenes con doble llevan un rótulo explícito. La zona vacía del e
 
 ## Modelos, red y trazabilidad
 
-Los mismos archivos del script de pruebas se ejecutaron con `node --test --test-isolation=none`: **227/227 casos**, sin fallos ni omitidos. Incluyen indicadores y estados de presentación, geometría de cámara, contratos, controlador y ciclo de sesión. Se verifican cifras comerciales y unidades industriales separadas, datos ausentes, planos dentro del encuadre, altura segura y conservación de la cámara normal. Seis regresiones nuevas cubren rollback de Join, reintento dentro del embed, respuestas pendientes, pantalla final, reinicio y rechazo tardío de la promesa inicial.
+Los mismos archivos del script de pruebas se ejecutaron con `node --test --test-isolation=none`: **244/244 casos**, sin fallos ni omitidos. Incluyen indicadores y estados de presentación, geometría de cámara, contratos, controlador y ciclo de sesión. Se verifican cifras comerciales y unidades industriales separadas, datos ausentes, planos dentro del encuadre, altura segura y conservación de la cámara normal. Los 26 casos de sesión cubren rollback de Join, reintento dentro del embed, respuestas pendientes, pantalla final, reinicio bloqueado, rechazo tardío, cierre y diagnóstico. Otros 15 casos comprueban la espera y limpieza del cierre con promesas y eventos controlados.
 
 Durante la suite de navegador hubo **cero solicitudes** a `tavusapi.com`, dominios Tavus y `daily.co`, incluidos subdominios, y sus rutas están bloqueadas por la prueba. Cero llamadas a `getUserMedia`, reproducción multimedia o creación de `AudioContext`. Se registran dos inicios con doble y `realSdkStartButtonClicked: false`.
 
-El [informe completo](browser-validation.json) contiene los ocho resultados, respuestas de herramientas, dimensiones, restauración y SHA-256 de fuentes y assets JS/CSS recibidos por HTTP. Incluye `app-Bm7KfoJu.js`, `app-BtAr57pN.js` y `app-0O5U0a0Y.css`, todos con HTTP 200. Las fuentes coinciden al principio y al final de la ejecución; después se contrastaron también con el checkout actual. `.env.production` se incluye; `.env.local` no se incorpora al informe.
+El [informe completo](browser-validation.json) contiene los ocho resultados, respuestas de herramientas, dimensiones, restauración y SHA-256 de fuentes y assets JS/CSS recibidos por HTTP. Incluye `app-D9woM4V3.js`, `app-BtAr57pN.js` y `app-Bm_FjAwn.css`, todos con HTTP 200. Las fuentes coinciden al principio y al final de la ejecución; después se contrastaron también con el checkout actual. `.env.production` se incluye; `.env.local` no se incorpora al informe.
 
 Vite preview no ejecuta las funciones serverless. La página utiliza el ID público compilado y los esquemas incluidos; la API y sus overrides se validan en los casos Node. No se ha comprobado el endpoint publicado de Vercel ni una llamada real en el dominio final.
 

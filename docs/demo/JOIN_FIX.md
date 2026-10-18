@@ -1,5 +1,7 @@
 # El agente desaparecía al pulsar Join
 
+Este documento registra la corrección inicial `f5de545`. La [verificación actual](VALIDATION.md) incorpora también la mejora posterior de [disponibilidad y cierre](TAVUS_AVAILABILITY.md).
+
 El SDK de Tavus 0.19.3 puede emitir `conversation-ended` durante la limpieza de un inicio fallido, antes de `CONVERSATION_ERROR`. La integración interpretaba ese evento como una orden de destruir el embed. Desmontaba el agente antes de que pudiera mostrar su pantalla de error o completar su propia recuperación.
 
 Ahora los eventos de error y de fin conservan el componente oficial. Un `ended` anterior a la primera conexión no se presenta como una llamada completada. Finalizar, sustituir explícitamente la sesión, salir de la página o un fallo estructural de inicialización sí liberan el componente. Las herramientas pendientes se cancelan por intento; una respuesta o promesa del intento anterior no puede afectar a un reintento dentro del mismo embed. No hay reintentos automáticos de la aplicación.

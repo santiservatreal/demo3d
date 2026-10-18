@@ -146,7 +146,7 @@ async function installControlledSdkDouble(page) {
   await page.addInitScript(() => {
     const nativeCreateElement = document.createElement;
     const nativeDefine = customElements.define.bind(customElements);
-    const state = { elements: [], starts: 0, ends: 0, destroys: 0, messages: [], blockedDefinitions: [] };
+    const state = { elements: [], starts: 0, ends: 0, endCalls: 0, destroys: 0, messages: [], blockedDefinitions: [] };
     Object.defineProperty(window, "__DEMO_QA_SDK_DOUBLE__", { value: state });
     customElements.define = function (name, ...args) {
       if (["tavus-widget", "tavus-embed"].includes(name)) {
@@ -170,7 +170,22 @@ async function installControlledSdkDouble(page) {
         return Promise.resolve();
       };
       element.sendMessage = (message) => state.messages.push(structuredClone(message));
-      element.endConversation = () => { state.ends++; };
+      let ending = false;
+      const closeCompletion = new Promise((resolve) => { state.releaseClose = resolve; });
+      element.endConversation = () => {
+        state.endCalls++;
+        if (!ending) {
+          ending = true;
+          state.ends++;
+          const conversationId = window.__BIRD_DEMO__?.getState().session.conversationId;
+          queueMicrotask(() => {
+            element.dispatchEvent(new CustomEvent("tavus:mode-change", { detail: { mode: "ended" } }));
+            element.dispatchEvent(new CustomEvent("tavus:conversation-ended", { detail: { conversationId } }));
+          });
+          return Promise.resolve();
+        }
+        return closeCompletion;
+      };
       element.destroy = () => { state.destroys++; };
       state.elements.push(element);
       return element;
@@ -432,6 +447,9 @@ async function controlledBridgeScenario(label, options = {}) {
   expect(await page.evaluate(() => __BIRD_DEMO__.getState().session.status)).toBe("error");
   await expect(page.locator("#bird-widget-host tavus-embed")).toBeVisible();
   await expect(page.locator("[data-demo-action='stop']")).toBeEnabled();
+  await expect(page.locator("[data-demo-action='start']")).toBeHidden();
+  await page.evaluate(() => document.querySelector("[data-demo-action='start']").click());
+  expect(await page.evaluate(() => __DEMO_QA_SDK_DOUBLE__.starts)).toBe(1);
   expect(await page.evaluate(() => ({ ends: __DEMO_QA_SDK_DOUBLE__.ends, destroys: __DEMO_QA_SDK_DOUBLE__.destroys }))).toEqual({ ends: 0, destroys: 0 });
   await page.evaluate(() => {
     const widget = __DEMO_QA_SDK_DOUBLE__.elements.at(-1);
@@ -491,6 +509,13 @@ async function controlledBridgeScenario(label, options = {}) {
     const { camera, controls } = __ATLAS_CITY__.scene.debug;
     return { quaternion: camera.quaternion.toArray(), position: camera.position.toArray(), target: controls.target.toArray(), zoom: camera.zoom, type: camera.type, fov: camera.fov ?? null };
   });
+  await page.waitForFunction(() => __DEMO_QA_SDK_DOUBLE__.endCalls === 2);
+  const closing = await page.evaluate(() => {
+    const proof = { status: __BIRD_DEMO__.getState().session.status, starts: __DEMO_QA_SDK_DOUBLE__.starts, destroys: __DEMO_QA_SDK_DOUBLE__.destroys, mounted: document.querySelectorAll("[data-qa-sdk-double]").length, startDisabled: document.querySelector("[data-demo-action='start']").disabled };
+    __DEMO_QA_SDK_DOUBLE__.releaseClose();
+    return proof;
+  });
+  expect(closing).toEqual({ status: "closing", starts: 1, destroys: 0, mounted: 1, startDisabled: true });
   await page.waitForFunction(() => __BIRD_DEMO__.getState().session.status === "ended");
   await settled(page);
   const restoredFrame = await assertFrame(page, before, { overview: true });
@@ -503,7 +528,7 @@ async function controlledBridgeScenario(label, options = {}) {
   record(`controlled-sdk-double-${label}-uses-real-exported-schemas-bridge-and-webgl-without-a-live-call`, {
     evidenceKind: "CONTROLLED_SDK_DOUBLE_NOT_A_TAVUS_CONVERSATION",
     capturedContext, movement, highlight, pulse, machinery, invalidCamera, unavailableBuilding,
-    initialCamera, focusedCamera, restoredCamera, restoredFrame, focusedFrame, activeLayout, resizeLayouts, machineryMatricesChanged: true, sdkErrorRetainsEmbedAndAllowsRetry: true, cleanup,
+    initialCamera, focusedCamera, restoredCamera, restoredFrame, focusedFrame, activeLayout, resizeLayouts, machineryMatricesChanged: true, sdkErrorRetainsEmbedAndAllowsRetry: true, closing, cleanup,
   });
   await context.close();
 }

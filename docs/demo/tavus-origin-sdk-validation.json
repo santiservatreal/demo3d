@@ -1,0 +1,205 @@
+{
+  "startedAt": "2026-10-18T16:34:48.869Z",
+  "completedAt": "2026-10-18T16:34:51.085Z",
+  "passed": true,
+  "sdk": {
+    "name": "@tavus/embed",
+    "version": "0.19.3",
+    "sha256": "0bbdab55cc0f530427b4f86560930166267874378b35e551ded10f56d406838e"
+  },
+  "sessionSourcePath": "src/demo/tavus-session.js",
+  "sessionSourceSha256": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
+  "scenario": "origin",
+  "denial": {
+    "status": 403,
+    "body": {
+      "error": "Origin not allowed"
+    }
+  },
+  "scope": "Real installed embed/Join handler with intercepted HTTP denial; no successful call, avatar, real microphone permission, or billable request.",
+  "permissionGateBypassed": true,
+  "fixture": {
+    "deployment_id": "dqa-offline-join-regression",
+    "deployment_name": "Offline Join regression fixture",
+    "channel": "widget",
+    "is_available": true,
+    "customization": {
+      "schema_version": 1,
+      "show_haircheck": true,
+      "conversation": {
+        "modality": "video",
+        "enable_chat": false,
+        "enable_closed_captions": false
+      },
+      "preview": {
+        "title": "Prueba local: ningún agente real",
+        "description": "El botón Join ejecuta el SDK oficial contra una respuesta HTTP simulada.",
+        "background": {
+          "type": "background-gradient"
+        }
+      },
+      "haircheck": {
+        "join_button": "Join",
+        "cancel_btn": "Cancel"
+      }
+    }
+  },
+  "requests": [
+    {
+      "url": "https://tavusapi.com/v2/deployments/dqa-offline-join-regression/init",
+      "method": "GET",
+      "outcome": "mock-init-200"
+    },
+    {
+      "url": "https://c.daily.co/call-machine/versioned/0.92.2/static/call-machine-object-bundle.js",
+      "method": "GET",
+      "outcome": "blocked"
+    },
+    {
+      "url": "https://c.dailywebrtc.com/call-machine/versioned/0.92.2/static/call-machine-object-bundle.js",
+      "method": "GET",
+      "outcome": "blocked"
+    },
+    {
+      "url": "https://c.dailywebrtc.net/call-machine/versioned/0.92.2/static/call-machine-object-bundle.js",
+      "method": "GET",
+      "outcome": "blocked"
+    },
+    {
+      "url": "https://tavusapi.com/v2/deployments/dqa-offline-join-regression/start",
+      "method": "POST",
+      "outcome": "mock-start-403"
+    }
+  ],
+  "preservedBeforeFinalizar": {
+    "mounted": true,
+    "session": {
+      "status": "error",
+      "conversationId": null,
+      "speech": null,
+      "microphone": "requested",
+      "error": {
+        "code": "AGENT_ORIGIN_BLOCKED",
+        "message": "Tavus no permite este dominio. Añade el dominio de esta web a los dominios permitidos de su deployment."
+      },
+      "disposed": false
+    }
+  },
+  "state": {
+    "trace": [
+      {
+        "name": "ready",
+        "detail": {
+          "deploymentId": "dqa-offline-join-regression"
+        },
+        "mounted": true,
+        "at": 1120.7000000001863
+      },
+      {
+        "name": "state-change",
+        "detail": {
+          "state": "idle"
+        },
+        "mounted": true,
+        "at": 1121.3999999994412
+      },
+      {
+        "name": "mode-change",
+        "detail": {
+          "mode": "idle"
+        },
+        "mounted": true,
+        "at": 1121.3999999994412
+      },
+      {
+        "name": "mode-change",
+        "detail": {
+          "mode": "haircheck"
+        },
+        "mounted": true,
+        "at": 1254.7000000001863
+      },
+      {
+        "name": "state-change",
+        "detail": {
+          "state": "connecting"
+        },
+        "mounted": true,
+        "at": 1388.7000000001863
+      },
+      {
+        "name": "state-change",
+        "detail": {
+          "state": "disconnecting"
+        },
+        "mounted": true,
+        "at": 1421.5999999996275
+      },
+      {
+        "name": "conversation-ended",
+        "detail": {
+          "conversationId": ""
+        },
+        "mounted": true,
+        "at": 1423.5
+      },
+      {
+        "name": "state-change",
+        "detail": {
+          "state": "ended"
+        },
+        "mounted": true,
+        "at": 1423.5
+      },
+      {
+        "name": "error",
+        "detail": {
+          "code": "CONVERSATION_ERROR",
+          "message": "ApiError: API error 403: {\"error\":\"Origin not allowed\"}"
+        },
+        "mounted": true,
+        "at": 1423.7999999998137
+      },
+      {
+        "name": "state-change",
+        "detail": {
+          "state": "error"
+        },
+        "mounted": true,
+        "at": 1424.2000000001863
+      },
+      {
+        "name": "mode-change",
+        "detail": {
+          "mode": "unavailable"
+        },
+        "mounted": true,
+        "at": 1494.8999999994412
+      }
+    ],
+    "session": {
+      "status": "ended",
+      "conversationId": null,
+      "speech": null,
+      "microphone": "not-requested",
+      "error": null,
+      "disposed": false
+    },
+    "mounted": false,
+    "scene": {
+      "start": 1,
+      "end": 1
+    }
+  },
+  "consoleErrors": [
+    "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+    "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+    "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[Tavus:API] POST https://tavusapi.com/v2/deployments/dqa-offline-join-regression/start → 403 {\"error\":\"Origin not allowed\"}",
+    "[Tavus:Conversation] Start failed ApiError: API error 403: {\"error\":\"Origin not allowed\"}\n    at a (http://127.0.0.1:5188/node_modules/@tavus/embed/dist/index.mjs:1221:51)\n    at async vm (http://127.0.0.1:5188/node_modules/@tavus/embed/dist/index.mjs:14653:10)\n    at async http://127.0.0.1:5188/node_modules/@tavus/embed/dist/index.mjs:15231:11\n    at async http://127.0.0.1:5188/node_modules/@tavus/embed/dist/index.mjs:15294:76",
+    "[Tavus:Flow] /start rejected: origin http://127.0.0.1:5188 is not on this deployment's allowed-origins list. Add it in the Tavus portal."
+  ],
+  "pageErrors": [],
+  "failure": null
+}

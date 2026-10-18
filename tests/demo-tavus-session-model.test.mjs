@@ -311,13 +311,15 @@ test("uncorrelated identical requests coalesce briefly and can be repeated later
   session.stop();
 });
 
-test("the official inline embed is ended before destruction when no close method exists", () => {
+test("the inline embed waits for SDK end and the shared close operation before destruction", async () => {
   const order = [];
   const { session, live, sceneCalls } = setup({
     onAppend(widget) {
       widget.close = undefined;
       widget.endConversation = () => {
         order.push("end");
+        widget.emit("mode-change", { mode: "ended" });
+        widget.emit("conversation-ended", { conversationId: "conversation-real-1" });
         return Promise.resolve();
       };
       widget.destroy = () => {
@@ -326,9 +328,12 @@ test("the official inline embed is ended before destruction when no close method
     },
   });
   live();
+  const stopped = session.stop();
   session.stop();
-  session.stop();
-  assert.deepEqual(order, ["end", "destroy"]);
+  assert.equal(session.getState().status, "closing");
+  assert.equal(session.start(), false);
+  await stopped;
+  assert.deepEqual(order, ["end", "end", "destroy"]);
   assert.equal(sceneCalls.end, 1);
 });
 
@@ -615,10 +620,14 @@ test("SDK after-call view stays mounted until explicit Finalizar and can start a
   assert.equal(sceneCalls.end, 2);
 });
 
-test("starting over after a retained SDK error releases the previous embed exactly once", () => {
+test("a retained SDK error requires Finalizar before the outer Start can create another embed", () => {
   const { session, widgets, live } = setup();
   const first = live();
   first.emit("mode-change", { mode: "unavailable" });
+  assert.equal(session.start(), false);
+  assert.equal(widgets.length, 1);
+  assert.equal(first.calls.start, 1);
+  session.stop();
   assert.equal(session.start(), true);
   assert.equal(widgets.length, 2);
   assert.deepEqual(first.calls, { start: 1, close: 1, destroy: 1, remove: 1 });
@@ -663,6 +672,58 @@ test("ready timeout removes the widget and restores the scene without claiming c
   assert.equal(widgets[0].calls.start, 0);
   assert.deepEqual(sceneCalls, { start: 1, end: 1 });
   session.dispose();
+});
+
+test("specific server failures are distinguished from the SDK's generic busy screen", () => {
+  for (const [message, code, copy] of [
+    ['ApiError: API error 423: {"error":"PAL is in another conversation"}', "AGENT_BUSY", /simultáneas/],
+    ['ApiError: API error 409: {"error":"concurrency limit"}', "AGENT_BUSY", /simultáneas/],
+    ['ApiError: API error 429: {}', "AGENT_RATE_LIMITED", /intentos/],
+    ['ApiError: API error 402: {}', "AGENT_QUOTA_LIMIT", /límite de uso/],
+    ['ApiError: API error 403: {"error":"Origin not allowed"}', "AGENT_ORIGIN_BLOCKED", /dominio/],
+    ['ApiError: API error 503: {}', "AGENT_SERVICE_UNAVAILABLE", /respondiendo/],
+    ['TypeError: Failed to fetch', "CONVERSATION_ERROR", /no ha podido conectar/],
+  ]) {
+    const { session, live } = setup();
+    const widget = live();
+    widget.emit("error", { code: "CONVERSATION_ERROR", message });
+    widget.emit("mode-change", { mode: "unavailable" });
+    assert.equal(session.getState().error.code, code);
+    assert.match(session.getState().error.message, copy);
+    assert.equal(session.getWidget(), widget);
+    assert.equal(widget.calls.start, 1);
+    session.dispose();
+  }
+});
+
+test("Finalizar waits for SDK closure and blocks rapid restart and stale SDK events", async () => {
+  const backend = deferred();
+  let widget, endCalls = 0;
+  const { session } = setup({
+    onAppend(element) {
+      widget = element;
+      element.endConversation = () => ++endCalls === 1 ? Promise.resolve() : backend.promise;
+    },
+  });
+  session.start();
+  widget.ready();
+  widget.emit("conversation-started", { conversationId: "owned-call" });
+  const closing = session.stop();
+  session.dispose();
+  assert.equal(session.start(), false);
+  assert.equal(session.getState().status, "closing");
+  widget.emit("conversation-started", { conversationId: "stale-call" });
+  assert.equal(session.getState().status, "closing");
+  widget.emit("conversation-ended", { conversationId: "owned-call" });
+  widget.emit("mode-change", { mode: "ended" });
+  await tick();
+  assert.equal(endCalls, 2);
+  assert.equal(widget.calls.destroy, 0);
+  backend.resolve();
+  await closing;
+  assert.equal(widget.calls.destroy, 1);
+  assert.equal(widget.calls.remove, 1);
+  assert.equal(session.getState().disposed, true);
 });
 
 test("speaking indicators never infer microphone mute or expose transcript text", () => {

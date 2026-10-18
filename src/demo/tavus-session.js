@@ -1,3 +1,5 @@
+import { closeTavusEmbed } from "./tavus-close.js";
+
 /**
  * Browser lifecycle for the official Tavus widget. Importing this module does
  * not import/register the SDK, mount an element, or request media. The browser
@@ -26,7 +28,7 @@ const MAX_TOOL_ARGUMENT_LENGTH = 32768;
 const MAX_TOOLS_PER_SESSION = 256;
 const READY_TIMEOUT_MS = 15000;
 const UNCORRELATED_DUPLICATE_WINDOW_MS = 500;
-const ACTIVE_STATUSES = new Set(["initializing", "preparing", "connecting", "connected"]);
+const ACTIVE_STATUSES = new Set(["initializing", "preparing", "connecting", "connected", "closing"]);
 
 function publicId(value) {
   return typeof value === "string" && /^[^\s\x00-\x1f\x7f]{1,256}$/u.test(value)
@@ -44,10 +46,21 @@ function sdkError(detail) {
       ? detail.code.slice(0, 120)
       : "TAVUS_ERROR";
   const text = `${code} ${typeof detail?.message === "string" ? detail.message : ""}`;
+  const httpStatus = Number(text.match(/API error\s+(\d{3})\b/i)?.[1]) || null;
   const denied =
     /not.?allowed.?error|permission.?denied|microphone.*(?:denied|not.allowed)|(?:denied|permiso).*micr[oó]fono|micr[oó]fono.*denegad/i.test(
       text,
     );
+  if (httpStatus === 409 || httpStatus === 423 || /PAL is in another conversation|concurren(?:cy|t).*limit/i.test(text))
+    return { code: "AGENT_BUSY", message: "Tavus ha alcanzado su límite de conversaciones simultáneas. Finaliza cualquier prueba de este agente en Tavus u otra pestaña y pulsa «Try again».", denied: false };
+  if (httpStatus === 429)
+    return { code: "AGENT_RATE_LIMITED", message: "Tavus ha recibido demasiados intentos seguidos. Espera un momento y pulsa «Try again».", denied: false };
+  if (httpStatus === 402)
+    return { code: "AGENT_QUOTA_LIMIT", message: "Tavus ha alcanzado el límite de uso. Revisa los minutos y límites del agente en Tavus antes de reintentar.", denied: false };
+  if (/Origin not allowed/i.test(text))
+    return { code: "AGENT_ORIGIN_BLOCKED", message: "Tavus no permite este dominio. Añade el dominio de esta web a los dominios permitidos de su deployment.", denied: false };
+  if (httpStatus >= 500)
+    return { code: "AGENT_SERVICE_UNAVAILABLE", message: "Tavus no está respondiendo correctamente. Espera un momento y pulsa «Try again».", denied: false };
   return {
     code,
     message: denied
@@ -94,6 +107,7 @@ export function createTavusDemoSession({
   onState = () => {},
   createWidget = () => container?.ownerDocument?.createElement("tavus-embed"),
   readyTimeoutMs = READY_TIMEOUT_MS,
+  closeTimeoutMs = 8000,
   now = () => Date.now(),
 } = {}) {
   let state = {
@@ -115,6 +129,8 @@ export function createTavusDemoSession({
   let toolQueue = Promise.resolve();
   let seenToolCalls = new Set();
   let recentUncorrelatedTools = new Map();
+  let closePending = null;
+  let sdkMode = "idle";
 
   function publish(patch) {
     state = { ...state, ...patch };
@@ -150,9 +166,12 @@ export function createTavusDemoSession({
   }
 
   function cleanup() {
+    if (closePending) return closePending;
     generation++;
     clearReadyTimer();
     const oldWidget = widget;
+    const wasConnected = hasConnected || sdkMode === "call";
+    const callEnded = !hasConnected;
     widget = null;
     for (const [name, listener] of listeners)
       oldWidget?.removeEventListener(name, listener);
@@ -160,6 +179,11 @@ export function createTavusDemoSession({
     started = false;
     hasConnected = false;
     releaseScene();
+    if (typeof oldWidget?.endConversation === "function") {
+      closePending = closeTavusEmbed(oldWidget, { connected: wasConnected, callEnded, modeEnded: sdkMode === "ended", conversationId: state.conversationId, timeoutMs: closeTimeoutMs })
+        .finally(() => { closePending = null; });
+      return closePending;
+    }
     // Unsubscribe before close/destroy: the SDK may synchronously emit ended.
     try {
       if (typeof oldWidget?.close === "function")
@@ -398,7 +422,7 @@ export function createTavusDemoSession({
   }
 
   function start() {
-    if (state.disposed || ACTIVE_STATUSES.has(state.status)) return false;
+    if (state.disposed || closePending || widget || ACTIVE_STATUSES.has(state.status)) return false;
     const id = publicId(
       typeof deploymentId === "string" ? deploymentId.trim() : deploymentId,
     );
@@ -434,7 +458,6 @@ export function createTavusDemoSession({
       );
       return false;
     }
-    if (widget) cleanup();
     const expectedGeneration = ++generation;
     publish({
       status: "initializing",
@@ -524,6 +547,7 @@ export function createTavusDemoSession({
         // A connected state alone is not proof of conversation-started.
       });
       subscribe("tavus:mode-change", (detail) => {
+        sdkMode = detail?.mode || sdkMode;
         if (detail?.mode === "unavailable" && !state.error)
           fail(
             "AGENT_UNAVAILABLE",
@@ -557,20 +581,29 @@ export function createTavusDemoSession({
   }
 
   function stop() {
-    if (state.disposed) return;
-    cleanup();
-    publish({ status: "ended", speech: null, microphone: "not-requested" });
+    if (state.disposed || state.status === "closing") return closePending;
+    const pending = cleanup();
+    publish({ status: pending ? "closing" : "ended", speech: null, microphone: "not-requested", error: null });
+    return pending?.then((result) => {
+      publish({ status: result.ok ? "ended" : "error", error: result.ok ? null : { code: result.code, message: "Tavus tarda en liberar la sesión. Espera un momento antes de volver a iniciar." } });
+      return result;
+    });
   }
 
   function dispose() {
-    if (state.disposed) return;
-    cleanup();
+    if (state.disposed) return closePending;
+    const pending = cleanup();
     publish({
-      status: "ended",
+      status: pending ? "closing" : "ended",
       speech: null,
       microphone: "not-requested",
       disposed: true,
     });
+    pending?.then((result) => publish({
+      status: result.ok ? "ended" : "error",
+      error: result.ok ? null : { code: result.code, message: "Tavus tarda en liberar la sesión. Espera un momento antes de volver a iniciar." },
+    }));
+    return pending;
   }
 
   return {
