@@ -10,9 +10,11 @@ En [PAL Maker](https://maker.tavus.io/dev), abre la sección de deployments y lo
 <tavus-widget deployment-id="VALOR_DEL_SNIPPET"></tavus-widget>
 ```
 
-El usuario facilitó el **PAL ID `p5695fb057e5`**. Se conserva como referencia; no se convierte automáticamente en un deployment. El intento de comprobarlo con una lectura pública de `/v2/deployments/:id/init` fue bloqueado por el proxy de este entorno con 403 antes de llegar a Tavus. Eso no demuestra que el ID sea válido ni inválido. No se ha creado otro PAL ni una conversación de prueba.
+El usuario facilitó el **PAL ID `p5695fb057e5`** y, después, el snippet oficial con **Deployment ID `d7770b89-ab37-4445-b065-2a5150e2e4cb`**. Este último está configurado en `.env.production` como `VITE_TAVUS_DEPLOYMENT_ID`, por lo que la compilación de producción ya lo utiliza sin copiarlo manualmente en Vercel. Una variable de compilación definida en Vercel tiene prioridad sobre ese valor.
 
-En Vercel → Settings → Environment Variables:
+La lectura pública de `/v2/deployments/d7770b89-ab37-4445-b065-2a5150e2e4cb/init` respondió HTTP 200, con nombre «Guía de Bird View Widget», canal `widget` e `is_available: true`. Esto confirma la publicación; no prueba una conversación ni los dominios permitidos de la web final. La respuesta no incluye esquemas de herramientas. No se ha creado otro PAL ni una conversación de prueba.
+
+Para sobrescribir el ID público o completar las herramientas, usa Vercel → Settings → Environment Variables:
 
 | Variable                    | Uso                                                                                                              |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -52,7 +54,9 @@ npm run preview -- --port 4173 --strictPort
 npm run test:demo
 ```
 
-Vite preview sirve el cliente, no las funciones `/api/*`. Sin variables de compilación, muestra correctamente el estado de configuración pendiente. Vercel ejecuta la función de configuración del servidor. Los tests Node prueban esa API y el puente sin credenciales.
+Vite preview sirve el cliente, no las funciones `/api/*`. La compilación usa el ID público de `.env.production`; el frontend también lo conserva como alternativa cuando la API no devuelve un ID. La API de Vercel sólo informa de las variables disponibles en su proceso, por lo que puede devolver `configured: false` si no se han añadido variables de servidor aunque el cliente tenga el ID compilado. Los tests Node prueban esa API y el puente sin credenciales.
+
+Para desarrollo, copia `.env.example` a `.env.local` si todavía no existe. El archivo local está ignorado por Git y ya se ha preparado en esta máquina. No incluyas claves privadas en variables con prefijo `VITE_`.
 
 Se verifican serialización de movimientos, cancelación al navegar manualmente, restauración de la vista y limpieza de listeners. La copia de protocolo `conversation.tool_call` no vuelve a ejecutar el evento `tavus:tool-call`. Sólo se devuelve `conversation.tool_result` cuando existe un ID de correlación real.
 
@@ -63,5 +67,7 @@ Resultados y límites de las pruebas: [VALIDATION.md](VALIDATION.md).
 ## Entorno de Codex
 
 El borrador de configuración guarda las instrucciones de instalación/arranque, los requisitos de variables públicas y los dominios de Tavus/Daily necesarios: `tavusapi.com`, `*.tavusapi.com`, `docs.tavus.io`, `maker.tavus.io`, `*.tavus.io`, `*.daily.co` y `challenges.cloudflare.com`. Se conserva el preset de gestores de paquetes. No se ha añadido ninguna API key.
+
+El Deployment ID facilitado está guardado también como valor sugerido de `TAVUS_DEPLOYMENT_ID` y `VITE_TAVUS_DEPLOYMENT_ID`. Los esquemas originales siguen pendientes en `TAVUS_TOOL_CONTRACTS_JSON`.
 
 Guardar el borrador no aplica cambios a esta máquina ni publica el entorno. Para usarlos en tareas futuras, revisa y guarda la configuración en los ajustes del entorno y después publica el entorno. La publicación de la web en Vercel es un proceso distinto.

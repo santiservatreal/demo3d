@@ -1,71 +1,86 @@
 {
-  "generatedAt": "2026-10-18T00:22:37.706Z",
-  "startedAt": "2026-10-18T00:21:39.864Z",
+  "generatedAt": "2026-10-18T00:26:38.756Z",
+  "startedAt": "2026-10-18T00:25:40.778Z",
+  "expectedPublicDeploymentId": "d7770b89-ab37-4445-b065-2a5150e2e4cb",
+  "startButtonClicked": false,
   "browser": "154.0.8037.57",
   "environment": "Chromium headless, ANGLE/SwiftShader software WebGL; no physical-device or live-Tavus validation",
   "loadedAssets": [
     {
-      "url": "/assets/index-miMVSTVZ.js",
+      "url": "/assets/index-CQ9fdrLn.js",
       "status": 200,
-      "sha256": "ed9c6be6e0fcfa6d7de0019a8603c5bbffbfb45e5d5d53295562e867a19cb386"
+      "sha256": "020f1d0dbcf3f733c1d39ee8272be0d1f84f467fb466a802229d4a3f4a7d7d74",
+      "containsExpectedPublicDeploymentId": false
     },
     {
       "url": "/assets/OrbitControls-Bm95e5Vc.css",
       "status": 200,
-      "sha256": "6e2a44748c74c5767e11bdaae6a3381a9245ba8d7eac8cddbbf14402e773c072"
-    },
-    {
-      "url": "/assets/app-BtU1d9e3.css",
-      "status": 200,
-      "sha256": "2bc725410f04ef2624603fb74c9f9332530f5d81095715b6d07b396705a38f8a"
-    },
-    {
-      "url": "/assets/app-DMQpJPKC.css",
-      "status": 200,
-      "sha256": "8cbb430b4a0f8e6bd4dcc58cc37a8a892c46fe38de70bd007ca7a1b8be530646"
-    },
-    {
-      "url": "/assets/RoundedBoxGeometry-7fwrSH-n.js",
-      "status": 200,
-      "sha256": "6c7818c96da233eeeeb3f7510e3873c095ee38ebfa67ef5aa4f6d941cf3cd8f9"
-    },
-    {
-      "url": "/assets/app-IKnRg8DU.js",
-      "status": 200,
-      "sha256": "febc199bf53f939c7e255005b88483d585c4ce306b940c0f309b4308d2daea47"
+      "sha256": "6e2a44748c74c5767e11bdaae6a3381a9245ba8d7eac8cddbbf14402e773c072",
+      "containsExpectedPublicDeploymentId": false
     },
     {
       "url": "/assets/sparkles-DC6gBOT0.js",
       "status": 200,
-      "sha256": "594c5697fa22452f810193d3c339dba2e410636824aae106840205e6f00a3088"
+      "sha256": "594c5697fa22452f810193d3c339dba2e410636824aae106840205e6f00a3088",
+      "containsExpectedPublicDeploymentId": false
     },
     {
-      "url": "/assets/info-qyfPBwvP.js",
+      "url": "/assets/RoundedBoxGeometry-7fwrSH-n.js",
       "status": 200,
-      "sha256": "683613a5da5d94c75e1c6ace2dcf51d5e610bd43886792030b8932df1b02b742"
+      "sha256": "6c7818c96da233eeeeb3f7510e3873c095ee38ebfa67ef5aa4f6d941cf3cd8f9",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/app-BtU1d9e3.css",
+      "status": 200,
+      "sha256": "2bc725410f04ef2624603fb74c9f9332530f5d81095715b6d07b396705a38f8a",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/app-DMQpJPKC.css",
+      "status": 200,
+      "sha256": "8cbb430b4a0f8e6bd4dcc58cc37a8a892c46fe38de70bd007ca7a1b8be530646",
+      "containsExpectedPublicDeploymentId": false
     },
     {
       "url": "/assets/sliders-horizontal-DX1n1E4I.js",
       "status": 200,
-      "sha256": "1b6f4b7adea300a48094952ee48840f40a4e63b2528840b7d1426fda08b9d5f6"
+      "sha256": "1b6f4b7adea300a48094952ee48840f40a4e63b2528840b7d1426fda08b9d5f6",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/info-qyfPBwvP.js",
+      "status": 200,
+      "sha256": "683613a5da5d94c75e1c6ace2dcf51d5e610bd43886792030b8932df1b02b742",
+      "containsExpectedPublicDeploymentId": false
     },
     {
       "url": "/assets/users-CXNWgnAr.js",
       "status": 200,
-      "sha256": "5a41980180c6c39b7a3f77ce3f7aa113ff46b7ab8f24a602e1e5c720a452b024"
+      "sha256": "5a41980180c6c39b7a3f77ce3f7aa113ff46b7ab8f24a602e1e5c720a452b024",
+      "containsExpectedPublicDeploymentId": false
+    },
+    {
+      "url": "/assets/app-IKnRg8DU.js",
+      "status": 200,
+      "sha256": "febc199bf53f939c7e255005b88483d585c4ce306b940c0f309b4308d2daea47",
+      "containsExpectedPublicDeploymentId": false
     },
     {
       "url": "/assets/OrbitControls-CwfFsR91.js",
       "status": 200,
-      "sha256": "4ca0191fe00103cee2479a7d126ff3e53aed848b6ee6e538ac21cd6869a49925"
+      "sha256": "4ca0191fe00103cee2479a7d126ff3e53aed848b6ee6e538ac21cd6869a49925",
+      "containsExpectedPublicDeploymentId": false
     },
     {
-      "url": "/assets/app-W4suTnxR.js",
+      "url": "/assets/app-ytn8nZM7.js",
       "status": 200,
-      "sha256": "54c01b492e9d33364092c194f3fb6adcd2cffa2b579e3a66cd1f91bab054df80"
+      "sha256": "ca8e6c0ae46465ab4e06e69c6d6b3888702564bf8647f22034c00150efbfaa2a",
+      "containsExpectedPublicDeploymentId": true
     }
   ],
   "sourceSha256": {
+    ".env.production": "c9e8669d5de9f0a1d321b156e516ede9a5dd04870e532a48341d103e63fe1d97",
     "api/tavus-config.js": "763f5182ba766c623e58e61cd11c39d58b689ec83eda5447a715baed0843a02a",
     "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
     "package.json": "1568d6333ef461c3e20927f97252fe9e1d174fe46039afec0be2dffc38803c09",
@@ -100,6 +115,7 @@
     "src/main.js": "686f83d68d94b7d0b30059396f5103c41824ff65935aeb8cec163e700c3657a0"
   },
   "workingTreeSourceSha256AtCompletion": {
+    ".env.production": "c9e8669d5de9f0a1d321b156e516ede9a5dd04870e532a48341d103e63fe1d97",
     "api/tavus-config.js": "763f5182ba766c623e58e61cd11c39d58b689ec83eda5447a715baed0843a02a",
     "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
     "package.json": "1568d6333ef461c3e20927f97252fe9e1d174fe46039afec0be2dffc38803c09",
@@ -137,13 +153,13 @@
   "tavusRequests": [],
   "results": [
     {
-      "name": "demo-route-renders-real-city-with-missing-configuration-and-no-media-autostart",
+      "name": "demo-route-renders-real-city-with-ready-configuration-and-no-media-autostart",
       "passed": true,
       "detail": {
         "url": "http://127.0.0.1:4173/demo",
         "configuration": {
           "configuration": {
-            "configured": false,
+            "configured": true,
             "contractsReady": false
           },
           "session": {
@@ -470,7 +486,7 @@
         },
         "requests": [
           "/",
-          "/assets/index-miMVSTVZ.js",
+          "/assets/index-CQ9fdrLn.js",
           "/assets/app-IKnRg8DU.js",
           "/assets/OrbitControls-CwfFsR91.js",
           "/assets/OrbitControls-Bm95e5Vc.css",

@@ -1,11 +1,25 @@
 import { chromium, expect } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { loadEnv } from "vite";
 
-// This suite exercises the real missing-configuration page and manual 3D
+// This suite exercises the real public configuration and manual 3D
 // controls. It never fabricates a Tavus connection, media stream, or avatar.
 const base = process.env.BASE_URL || "http://127.0.0.1:4173";
 const output = process.env.CAPTURE_DIR || "docs/demo";
+// An explicit empty override exercises the unconfigured build. Never infer a
+// connection from the presence of a public deployment ID, and never click Start.
+const expectedPublicDeploymentId = Object.hasOwn(
+  process.env,
+  "EXPECT_TAVUS_DEPLOYMENT_ID",
+)
+  ? process.env.EXPECT_TAVUS_DEPLOYMENT_ID.trim()
+  : (
+      loadEnv("production", process.cwd(), "VITE_").VITE_TAVUS_DEPLOYMENT_ID ||
+      ""
+    ).trim();
+const expectedConfigured = Boolean(expectedPublicDeploymentId);
+const configurationLabel = expectedConfigured ? "ready" : "unconfigured";
 await mkdir(`${output}/captures`, { recursive: true });
 const startedAt = new Date().toISOString();
 const results = [],
@@ -21,6 +35,7 @@ async function sourceHashes() {
     "api/tavus-config.js",
     "package.json",
     "package-lock.json",
+    ".env.production",
   ];
   for (const directory of ["src/city", "src/demo"])
     for (const name of await readdir(directory))
@@ -66,6 +81,9 @@ function observe(page, name) {
           url: url.pathname,
           status: response.status(),
           sha256: hash(body),
+          containsExpectedPublicDeploymentId:
+            expectedConfigured &&
+            body.includes(Buffer.from(expectedPublicDeploymentId)),
         }))
         .catch((error) => ({ url: url.pathname, error: error.message })),
     );
@@ -225,19 +243,23 @@ try {
     fixed = await camera(page);
   const configuration = await page.evaluate(() => __BIRD_DEMO__.getState());
   expect(configuration.configuration).toEqual({
-    configured: false,
+    configured: expectedConfigured,
     contractsReady: false,
   });
   expect(configuration.session).toMatchObject({
     status: "idle",
     microphone: "not-requested",
   });
-  await expect(page.locator("[data-demo-action='start']")).toBeDisabled();
+  if (expectedConfigured)
+    await expect(page.locator("[data-demo-action='start']")).toBeEnabled();
+  else await expect(page.locator("[data-demo-action='start']")).toBeDisabled();
   await expect(page.locator("[data-demo-action='stop']")).toBeDisabled();
   await expect(page.locator("[data-demo-action='interrupt']")).toBeDisabled();
-  await expect(page.locator("#bird-demo-status")).toContainText("pendiente");
+  await expect(page.locator("#bird-demo-status")).toContainText(
+    expectedConfigured ? "Listo para empezar" : "pendiente",
+  );
   await expect(page.locator("#bird-demo-message")).toContainText(
-    "Deployment ID",
+    expectedConfigured ? "Pulsa Iniciar" : "Deployment ID",
   );
   await expect(page.locator("#bird-demo-config-hint")).toContainText(
     "esquemas",
@@ -248,9 +270,9 @@ try {
   await expect(page.locator("#bird-demo-panel")).toBeVisible();
   const initialMedia = await mediaState(page);
   noMedia(initialMedia);
-  await shot(page, "demo-desktop-unconfigured");
+  await shot(page, `demo-desktop-${configurationLabel}`);
   record(
-    "demo-route-renders-real-city-with-missing-configuration-and-no-media-autostart",
+    `demo-route-renders-real-city-with-${configurationLabel}-configuration-and-no-media-autostart`,
     { url: page.url(), configuration, media: initialMedia, camera: fixed },
   );
 
@@ -377,11 +399,16 @@ try {
   await mobile.page.waitForFunction(
     () => !!window.__BIRD_DEMO__?.getState().configuration,
   );
-  await expect(
-    mobile.page.locator("[data-demo-action='start']"),
-  ).toBeDisabled();
+  if (expectedConfigured)
+    await expect(
+      mobile.page.locator("[data-demo-action='start']"),
+    ).toBeEnabled();
+  else
+    await expect(
+      mobile.page.locator("[data-demo-action='start']"),
+    ).toBeDisabled();
   await expect(mobile.page.locator("#bird-demo-message")).toContainText(
-    "Deployment ID",
+    expectedConfigured ? "Pulsa Iniciar" : "Deployment ID",
   );
   const mobileBefore = await sources(mobile.page),
     mobileFixed = await camera(mobile.page);
@@ -418,7 +445,7 @@ try {
   expect(responsive.start.width).toBeGreaterThanOrEqual(44);
   expect(responsive.start.height).toBeGreaterThanOrEqual(44);
   expect(responsive.canvas.height).toBeGreaterThanOrEqual(150);
-  await shot(mobile.page, "demo-mobile-unconfigured-industry");
+  await shot(mobile.page, `demo-mobile-${configurationLabel}-industry`);
   await mobile.page.locator("#city-world").scrollIntoViewIfNeeded();
   await frames(mobile.page, 2);
   const visibleMobileCanvas = await mobile.page
@@ -446,16 +473,23 @@ try {
   expect(tavusRequests).toEqual([]);
   const finalSourceSha256 = await sourceHashes();
   expect(finalSourceSha256).toEqual(initialSourceSha256);
+  const loadedAssets = await Promise.all(loadedAssetPromises);
+  if (expectedConfigured)
+    expect(
+      loadedAssets.some((asset) => asset.containsExpectedPublicDeploymentId),
+    ).toBe(true);
   await writeFile(
     `${output}/browser-validation.json`,
     JSON.stringify(
       {
         generatedAt: new Date().toISOString(),
         startedAt,
+        expectedPublicDeploymentId: expectedPublicDeploymentId || null,
+        startButtonClicked: false,
         browser: browser.version(),
         environment:
           "Chromium headless, ANGLE/SwiftShader software WebGL; no physical-device or live-Tavus validation",
-        loadedAssets: await Promise.all(loadedAssetPromises),
+        loadedAssets,
         sourceSha256: initialSourceSha256,
         workingTreeSourceSha256AtCompletion: finalSourceSha256,
         errors,
