@@ -186,3 +186,44 @@ test("reset and dispose invalidate a pending reply and disposed bridges execute 
   assert.equal(bridge.getStatus().ready, false);
   assert.equal(calls, 1);
 });
+
+test("a command table accepts only bounded literal presentation commands and an exclusive binding form", async () => {
+  const manifest = fixture();
+  manifest.bindings[TAVUS_TOOL_NAMES[0]] = { command: {
+    pointer: "/record/id", map: {
+      "owner-lucia": { action: "focus", target: { kind: "owner", id: "owner-lucia" }, duration: 2 },
+    },
+  } };
+  const { bridge, commands } = harness(manifest);
+  assert.equal((await bridge.handle(detail())).ok, true);
+  assert.deepEqual(commands[0], { action: "focus", target: { kind: "owner", id: "owner-lucia" }, duration: 2 });
+  assert.equal((await bridge.handle(detail({ record: { id: "deal-001" }, seconds: 2 }))).code, "TOOL_BINDING_UNRESOLVED");
+  for (const mutate of [
+    (binding) => { binding.action = { value: "focus" }; },
+    (binding) => { binding.command.map["owner-lucia"].action = "close_deal"; },
+    (binding) => { binding.command.map["owner-lucia"].target.kind = "write-crm"; },
+    (binding) => { binding.command.map["owner-lucia"].target.extra = "untrusted"; },
+    (binding) => { binding.command.map["owner-lucia"].duration = 900; },
+    (binding) => { binding.command.map["owner-lucia"].execute = "code"; },
+    (binding) => { binding.command.map = Object.fromEntries(Array.from({ length: 129 }, (_, index) => [String(index), { action: "overview" }])); },
+  ]) {
+    const invalid = structuredClone(manifest);
+    mutate(invalid.bindings[TAVUS_TOOL_NAMES[0]]);
+    assert.equal(loadTavusToolContracts(invalid).ready, false);
+  }
+});
+
+test("literal command tables are copied before execution and cannot use inherited table entries", async () => {
+  const manifest = fixture();
+  manifest.tools[0].function.parameters = { type: "object", required: ["id"], properties: { id: { type: "string" } } };
+  manifest.bindings[TAVUS_TOOL_NAMES[0]] = { command: { pointer: "/id", map: { known: { action: "overview" } } } };
+  const calls = [];
+  const bridge = createTavusToolBridge({ contracts: manifest, controller: { executeInternalCommand: async (command) => {
+    calls.push(command.action); command.action = "mutated"; return { ok: true };
+  } } });
+  assert.equal((await bridge.handle(detail({ id: "known" }))).ok, true);
+  assert.equal((await bridge.handle(detail({ id: "known" }))).ok, true);
+  assert.equal((await bridge.handle(detail({ id: "toString" }))).code, "TOOL_BINDING_UNRESOLVED");
+  assert.equal((await bridge.handle(detail({ id: "__proto__" }))).code, "TOOL_BINDING_UNRESOLVED");
+  assert.deepEqual(calls, ["overview", "overview"]);
+});

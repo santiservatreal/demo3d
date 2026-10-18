@@ -14,13 +14,15 @@ El usuario facilitó el **PAL ID `p5695fb057e5`** y, después, el snippet oficia
 
 La lectura pública de `/v2/deployments/d7770b89-ab37-4445-b065-2a5150e2e4cb/init` respondió HTTP 200, con nombre «Guía de Bird View Widget», canal `widget` e `is_available: true`. Esto confirma la publicación; no prueba una conversación ni los dominios permitidos de la web final. La respuesta no incluye esquemas de herramientas. No se ha creado otro PAL ni una conversación de prueba.
 
-Para sobrescribir el ID público o completar las herramientas, usa Vercel → Settings → Environment Variables:
+Los tres esquemas reales facilitados por el usuario ya están versionados en [`src/demo/existing-agent-tools.js`](../../src/demo/existing-agent-tools.js). La demo los vincula a los objetos existentes cuando la ciudad termina de cargar; no hace falta añadir una variable de contratos para utilizarlos.
+
+Para sobrescribir la configuración pública, usa Vercel → Settings → Environment Variables:
 
 | Variable                    | Uso                                                                                                              |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `TAVUS_DEPLOYMENT_ID`       | ID público del snippet del deployment existente. La API `/api/tavus-config` lo entrega al navegador.             |
 | `TAVUS_PAL_ID`              | Referencia opcional al PAL existente. No sustituye al deployment.                                                |
-| `TAVUS_TOOL_CONTRACTS_JSON` | Exportación real de las tres funciones y sus mapeos de presentación; ver [TOOL_CONTRACTS.md](TOOL_CONTRACTS.md). |
+| `TAVUS_TOOL_CONTRACTS_JSON` | Override opcional de los esquemas y bindings. Vacía o ausente utiliza los contratos incluidos; un override inválido desactiva el puente. Ver [TOOL_CONTRACTS.md](TOOL_CONTRACTS.md). |
 | `VITE_TAVUS_DEPLOYMENT_ID`  | Alternativa para compilación estática o Vite local; es el mismo ID público.                                      |
 
 No se necesita `TAVUS_API_KEY` para este flujo y no se envía ninguna clave al navegador. Configura los dominios permitidos del deployment en Tavus para incluir tu dominio de Vercel. Usa HTTPS; localhost es un contexto seguro para desarrollo. Después de cambiar variables de compilación, vuelve a desplegar.
@@ -29,9 +31,9 @@ No se necesita `TAVUS_API_KEY` para este flujo y no se envía ninguna clave al n
 
 ## Herramientas del PAL
 
-Las funciones solicitadas son `trigger_3d_camera_movement`, `highlight_building` y `trigger_animation`. Sus nombres no permiten deducir qué parámetros manda el agente. El widget no ofrece un contrato público para recuperar sus esquemas; se necesitan las definiciones exportadas del PAL existente. La integración no inventa esos parámetros ni crea herramientas nuevas en Tavus.
+Las funciones existentes son `trigger_3d_camera_movement`, `highlight_building` y `trigger_animation`. Sus exports reales establecen, respectivamente, los campos obligatorios de tipo string `movement_id`, `building_id` y `animation_id`. Se conservan sus esquemas y descripciones, sin añadir enums, restricciones de campos adicionales ni metadatos de propietario. No se crean herramientas ni agentes en Tavus.
 
-El puente compila los JSON Schema con AJV y aplica los mapeos explícitos sólo después de validar argumentos, objetivos y duración. Si falta la exportación, devuelve `TOOL_SCHEMA_UNAVAILABLE` al agente, no un éxito ficticio. Los botones **Comercial**, **Industrial**, **Vista general** y **Destacar edificio** permiten comprobar la ciudad manualmente mientras se termina esa configuración; no representan órdenes de voz ejecutadas.
+Antes de cada conversación, el contexto comunica las definiciones y un catálogo de IDs con sus nombres: la instantánea inicial contiene **82 movimientos, 55 edificios y 57 animaciones**. Los valores son propios de Bird View y se resuelven mediante tablas explícitas; no son parámetros nuevos ni enums añadidos en Tavus. El puente valida los argumentos con AJV y comprueba que el destino siga existiendo antes de ejecutar la acción. Un ID desconocido devuelve error. Los botones **Comercial**, **Industrial**, **Vista general** y **Destacar edificio** siguen disponibles para explorar manualmente.
 
 Los controles visuales admiten enfoques, resaltados y pulsos. Los vehículos y la maquinaria existentes siguen funcionando. Fabricar, cambiar etapas, entregar productos o cerrar ventas no son acciones de este agente. Las animaciones de obras y los traslados que requieren cambios de datos se rechazan desde este puente.
 
@@ -54,11 +56,11 @@ npm run preview -- --port 4173 --strictPort
 npm run test:demo
 ```
 
-Vite preview sirve el cliente, no las funciones `/api/*`. La compilación usa el ID público de `.env.production`; el frontend también lo conserva como alternativa cuando la API no devuelve un ID. La API de Vercel sólo informa de las variables disponibles en su proceso, por lo que puede devolver `configured: false` si no se han añadido variables de servidor aunque el cliente tenga el ID compilado. Los tests Node prueban esa API y el puente sin credenciales.
+Vite preview sirve el cliente, no las funciones `/api/*`. La compilación usa el ID público de `.env.production`; el frontend también lo conserva como alternativa cuando la API no devuelve un ID. Sin override de contratos, `/api/tavus-config` devuelve `contractSource: "bundled"` y `contracts: null`: el cliente compila los contratos incluidos con su instantánea de la ciudad. Ese `null` no significa que falten esquemas. La API sólo informa de las variables disponibles en su proceso, por lo que puede devolver `configured: false` aunque el cliente tenga el ID compilado. Los tests Node prueban esa API y el puente sin credenciales.
 
 Para desarrollo, copia `.env.example` a `.env.local` si todavía no existe. El archivo local está ignorado por Git y ya se ha preparado en esta máquina. No incluyas claves privadas en variables con prefijo `VITE_`.
 
-Se verifican serialización de movimientos, cancelación al navegar manualmente, restauración de la vista y limpieza de listeners. La copia de protocolo `conversation.tool_call` no vuelve a ejecutar el evento `tavus:tool-call`. Sólo se devuelve `conversation.tool_result` cuando existe un ID de correlación real.
+Las pruebas cubren esquemas reales, catálogos, serialización de movimientos, cancelación al navegar manualmente, restauración de la vista y limpieza de listeners. La copia de protocolo `conversation.tool_call` no vuelve a ejecutar el evento `tavus:tool-call`. Sólo se devuelve `conversation.tool_result` cuando existe un ID de correlación real. Los eventos inyectados mediante dobles de SDK verifican el puente hacia WebGL, pero no acreditan reconocimiento de voz, respuesta del PAL ni permisos del dominio final. Sigue pendiente una conversación real desde la web desplegada.
 
 Las fuentes de contrato consultadas fueron el [README oficial](https://unpkg.com/@tavus/widget@0.19.3/README.md), sus [tipos](https://unpkg.com/@tavus/widget@0.19.3/dist/integration.d.ts), el [ejemplo oficial](https://github.com/Tavus-Engineering/tavus-examples/blob/main/examples/widget-prompt.md) y el [embed oficial](https://unpkg.com/@tavus/embed@0.19.3/README.md). Tras los rechazos iniciales con 403, se pudieron leer las páginas oficiales de [deployments](https://docs.tavus.io/sections/deployments/overview) y [widget](https://docs.tavus.io/sections/deployments/widget.md), que confirman PAL Maker y el atributo del código de instalación. Los métodos y eventos se contrastaron con los tipos y la implementación oficial de la versión instalada.
 
@@ -68,6 +70,6 @@ Resultados y límites de las pruebas: [VALIDATION.md](VALIDATION.md).
 
 El borrador de configuración guarda las instrucciones de instalación/arranque, los requisitos de variables públicas y los dominios de Tavus/Daily necesarios: `tavusapi.com`, `*.tavusapi.com`, `docs.tavus.io`, `maker.tavus.io`, `*.tavus.io`, `*.daily.co` y `challenges.cloudflare.com`. Se conserva el preset de gestores de paquetes. No se ha añadido ninguna API key.
 
-El Deployment ID facilitado está guardado también como valor sugerido de `TAVUS_DEPLOYMENT_ID` y `VITE_TAVUS_DEPLOYMENT_ID`. Los esquemas originales siguen pendientes en `TAVUS_TOOL_CONTRACTS_JSON`.
+El Deployment ID facilitado está guardado también como valor sugerido de `TAVUS_DEPLOYMENT_ID` y `VITE_TAVUS_DEPLOYMENT_ID`. Las instrucciones reutilizables guardadas ya indican que los esquemas originales están incluidos y que `TAVUS_TOOL_CONTRACTS_JSON` es únicamente un override opcional.
 
 Guardar el borrador no aplica cambios a esta máquina ni publica el entorno. Para usarlos en tareas futuras, revisa y guarda la configuración en los ajustes del entorno y después publica el entorno. La publicación de la web en Vercel es un proceso distinto.

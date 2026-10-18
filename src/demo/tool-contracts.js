@@ -58,6 +58,13 @@ function validValueBinding(binding) {
 }
 
 function validBinding(binding) {
+  if (object(binding) && own(binding, "command")) {
+    const command = binding.command;
+    return onlyKeys(binding, ["command"]) && object(command) &&
+      onlyKeys(command, ["pointer", "map"]) && !!pointerParts(command.pointer) &&
+      object(command.map) && Object.keys(command.map).length <= 128 &&
+      Object.values(command.map).every(validPresentationCommand);
+  }
   if (!object(binding) || !onlyKeys(binding, ["action", "target", "duration", "animation"]) ||
       !validValueBinding(binding.action)) return false;
   if (own(binding, "target") && (!object(binding.target) ||
@@ -126,13 +133,18 @@ export function loadTavusToolContracts(raw) {
   }
 }
 
-function mappedValue(binding, args) {
-  if (own(binding, "value")) return binding.value;
+function pointerValue(pointer, args) {
   let value = args;
-  for (const part of pointerParts(binding.pointer)) {
+  for (const part of pointerParts(pointer)) {
     if (value === null || typeof value !== "object" || !own(value, part)) throw new Error("TOOL_BINDING_UNRESOLVED");
     value = value[part];
   }
+  return value;
+}
+
+function mappedValue(binding, args) {
+  if (own(binding, "value")) return binding.value;
+  let value = pointerValue(binding.pointer, args);
   if (own(binding, "map")) {
     if (!scalar(value) || !own(binding.map, String(value))) throw new Error("TOOL_BINDING_UNRESOLVED");
     value = binding.map[String(value)];
@@ -141,23 +153,39 @@ function mappedValue(binding, args) {
   return value;
 }
 
+function validPresentationCommand(command) {
+  return object(command) && onlyKeys(command, ["action", "target", "duration", "animation"]) &&
+    ACTIONS.has(command.action) &&
+    !(own(command, "target") && (!object(command.target) ||
+      !onlyKeys(command.target, ["kind", "id"]) ||
+      !TARGET_KINDS.has(command.target.kind) || typeof command.target.id !== "string" ||
+      !command.target.id || command.target.id.length > 160)) &&
+    !(command.duration !== undefined && (!Number.isFinite(command.duration) || command.duration < 0.15 || command.duration > 12)) &&
+    !(command.animation !== undefined && !ANIMATIONS.has(command.animation)) &&
+    !(command.action === "animation" && !ANIMATIONS.has(command.animation)) &&
+    !(["focus", "highlight"].includes(command.action) && !command.target) &&
+    !(command.action === "animation" && command.animation === "pulse" && !command.target);
+}
+
 function mapCommand(binding, args) {
-  const command = { action: mappedValue(binding.action, args) };
-  if (binding.target) command.target = {
-    kind: mappedValue(binding.target.kind, args),
-    id: mappedValue(binding.target.id, args),
-  };
-  for (const key of ["duration", "animation"]) {
-    if (binding[key]) command[key] = mappedValue(binding[key], args);
+  let command;
+  if (binding.command) {
+    const id = pointerValue(binding.command.pointer, args);
+    if (typeof id !== "string" || !own(binding.command.map, id)) throw new Error("TOOL_BINDING_UNRESOLVED");
+    // The map comes from trusted configuration. Never treat incoming arguments
+    // as a command or let a renderer mutate the validated configuration.
+    command = JSON.parse(JSON.stringify(binding.command.map[id]));
+  } else {
+    command = { action: mappedValue(binding.action, args) };
+    if (binding.target) command.target = {
+      kind: mappedValue(binding.target.kind, args),
+      id: mappedValue(binding.target.id, args),
+    };
+    for (const key of ["duration", "animation"]) {
+      if (binding[key]) command[key] = mappedValue(binding[key], args);
+    }
   }
-  if (!ACTIONS.has(command.action) ||
-      (command.target && (!TARGET_KINDS.has(command.target.kind) || typeof command.target.id !== "string" ||
-        !command.target.id || command.target.id.length > 160)) ||
-      (command.duration !== undefined && (!Number.isFinite(command.duration) || command.duration < 0.15 || command.duration > 12)) ||
-      (command.animation !== undefined && !ANIMATIONS.has(command.animation)) ||
-      (command.action === "animation" && !ANIMATIONS.has(command.animation)) ||
-      (["focus", "highlight"].includes(command.action) && !command.target) ||
-      (command.action === "animation" && command.animation === "pulse" && !command.target)) throw new Error("INVALID_PRESENTATION_COMMAND");
+  if (!validPresentationCommand(command)) throw new Error("INVALID_PRESENTATION_COMMAND");
   return command;
 }
 

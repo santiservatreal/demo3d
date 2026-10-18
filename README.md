@@ -20,7 +20,7 @@ npm run preview -- --port 4173
 
 **Vercel:** preset **Vite**, directorio raíz `./`, build `npm run build`, salida `dist`. Todos los assets necesarios están incluidos. El push a `main` puede activar un despliegue si el proyecto Vercel está enlazado. El estado de Vercel no se verifica desde esta aplicación.
 
-**Demo comercial con Tavus:** entra en `/demo`. Reutiliza la ciudad y añade la Guía de Bird View con los SDK oficiales, controles manuales y un puente de herramientas de sólo visualización. El Deployment ID del agente existente ya está configurado en `.env.production`. Para controlar el mapa por voz siguen pendientes sus esquemas reales; la página lo indica y conserva la exploración manual. [Configuración de Tavus](docs/demo/SETUP.md) · [Pruebas y capturas](docs/demo/VALIDATION.md).
+**Demo comercial con Tavus:** entra en `/demo`. Reutiliza la ciudad y añade la Guía de Bird View con los SDK oficiales, controles manuales y un puente de herramientas de sólo visualización. El Deployment ID y los tres esquemas reales del agente existente ya están incluidos. Al iniciar, el agente recibe los IDs disponibles para enfocar comerciales, destacar edificios y activar efectos; no modifica el CRM. El widget se usa en escritorio y el embed oficial mantiene visible la ciudad en móvil. La conversación de voz real y los permisos del dominio final siguen pendientes de comprobación. [Configuración de Tavus](docs/demo/SETUP.md) · [Pruebas y capturas](docs/demo/VALIDATION.md).
 
 ## Qué explorar
 

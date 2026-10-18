@@ -16,7 +16,8 @@ test("public config does not infer a deployment from a PAL ID or a secret API ke
   assert.equal(response.body.configured, false);
   assert.equal(response.body.deploymentId, null);
   assert.equal(response.body.palId, "p5695fb057e5");
-  assert.equal(response.body.contracts.code, "TOOL_SCHEMA_UNAVAILABLE");
+  assert.equal(response.body.contractSource, "bundled");
+  assert.equal(response.body.contracts, null);
   assert.equal(JSON.stringify(response.body).includes("private-key"), false);
 });
 
@@ -35,6 +36,7 @@ test("the endpoint never sends arbitrary environment values, persona secrets, AP
   for (const secret of ["secret-api", "secret-openai", "secret-persona", "raw-secret"]) assert.equal(text.includes(secret), false);
   assert.equal(response.body.contracts.ready, false);
   assert.equal(response.body.contracts.code, "TOOL_SCHEMA_INVALID");
+  assert.equal(response.body.contractSource, "environment");
   assert.equal(response.headers["cache-control"], "no-store");
 });
 
@@ -59,6 +61,7 @@ test("a valid exported manifest is returned as public configuration without chan
   const result = invoke({ TAVUS_DEPLOYMENT_ID: "public-deployment", TAVUS_TOOL_CONTRACTS_JSON: JSON.stringify(manifest) });
   assert.equal(result.body.configured, true);
   assert.equal(result.body.contracts.ready, true);
+  assert.equal(result.body.contractSource, "environment");
   assert.deepEqual(result.body.contracts.tools, manifest.tools);
   assert.deepEqual(result.body.contracts.bindings, manifest.bindings);
 });

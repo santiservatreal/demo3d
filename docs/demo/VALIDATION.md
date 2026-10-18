@@ -1,49 +1,62 @@
 # Bird View · Demo Tavus
 
-Se completaron **195 pruebas automáticas** y **6 grupos de navegador** en la compilación final. La página `/demo` presenta la ciudad real y sus controles manuales, con el Deployment ID público facilitado por el usuario ya configurado y el botón de inicio habilitado. Esta ejecución no inicia una conversación. Los esquemas de las herramientas del agente siguen pendientes.
+La compilación final pasó **205 pruebas de modelos y componentes** y **8 grupos de navegador**: seis comprueban la aplicación sin iniciar sesión y dos ejercitan el puente con un **doble controlado del SDK**. Los tres esquemas reales aportados por el usuario están integrados y el catálogo se genera con las entidades existentes. No se ha iniciado una conversación real de Tavus.
 
-![Demo de Bird View sin conversación iniciada](captures/demo-desktop-ready.png)
+![Demo real antes de iniciar una conversación](captures/demo-desktop-ready.png)
 
-## Navegador
+## Aplicación sin sesión
 
-Se utilizó Chromium **154.0.8037.57**, en 1440 × 1000 y con móvil emulado de 390 × 844, con WebGL2 y ANGLE/SwiftShader por software. Las imágenes son capturas reales del navegador. No se midieron FPS nuevos ni se probó un teléfono físico.
+Se utilizó Chromium **154.0.8037.57**, en 1440 × 1000 y con móvil emulado de 390 × 844, con WebGL2 y ANGLE/SwiftShader por software. Las imágenes son capturas del navegador. No se midieron FPS nuevos ni se probó un teléfono físico.
 
-Los seis grupos pasaron con **cero errores JavaScript no capturados**:
+Los seis grupos sin dobles comprueban:
 
-1. Acceso directo por HTTP a `/demo`, con ciudad renderizada, estado «Listo para empezar» e **Iniciar demo con IA** habilitado. Finalizar e Interrumpir permanecen deshabilitados; la sesión está en `idle` y el micrófono sin solicitar. El bundle recibido por HTTP contiene el Deployment ID público esperado. No se pulsa Iniciar ni aparece una conexión o avatar ficticios.
-2. Botón **Comercial**: encuadre real de `deal-001`, «Nueva sede», y halo visible. El panel muestra sus 1.500 € como oportunidad comercial y aclara que no es un cobro.
-3. Botón **Industrial**: encuadre y halo de fabricación. Las 1.320 unidades trazadas se mantienen; la interfaz identifica la ruta como estimada.
-4. Botón **Vista general**: regreso a toda la empresa. Los componentes del cuaternión de cámara conservan su orientación dentro de `0,00001` durante los tres encuadres.
-5. Ruta principal `/`: conserva el asistente V5 visible y la navegación a comunicaciones. No carga el módulo de la demo ni los SDK Tavus, no registra sus componentes y no solicita la configuración Tavus. Es una comprobación dirigida de regresión; no se repitió aquí toda la suite V5.
-6. Móvil de 390 px: guía y controles dentro del ancho disponible, sin desplazamiento horizontal; botón de inicio habilitado y de 44 px de altura. El encuadre industrial funciona y el mapa completo puede verse mediante desplazamiento vertical.
+1. Acceso HTTP directo a `/demo`, ciudad renderizada, estado «Listo para empezar» e **Iniciar demo con IA** habilitado. Finalizar e Interrumpir permanecen deshabilitados; la sesión está en `idle` y el micrófono sin solicitar. Los contratos figuran listos y el bundle recibido contiene el Deployment ID público esperado.
+2. Botón **Comercial**: encuadre real de `deal-001`, «Nueva sede», y halo visible. Su importe se identifica como oportunidad comercial, no como cobro.
+3. Botón **Industrial**: encuadre y halo de fabricación, con sus cantidades reales: 1.320 unidades trazadas y 240 en fabricación. La interfaz identifica la ruta como estimada.
+4. Botón **Vista general**: regreso a toda la empresa. La orientación de cámara se conserva dentro de una tolerancia de `0,00001` durante los tres encuadres.
+5. Ruta principal `/`: conserva el asistente V5 y la navegación a comunicaciones. No carga el módulo de la demo ni los SDK Tavus, no registra sus componentes y no solicita la configuración Tavus. Es una comprobación dirigida; no se repitió toda la suite V5.
+6. Móvil de 390 px: guía y controles dentro del ancho disponible, sin desplazamiento horizontal; botón de inicio habilitado y de 44 px de altura. Funciona el encuadre industrial y el mapa completo puede verse con desplazamiento vertical.
 
-En cada navegación se comparan las instantáneas serializadas del CRM y de la industria: **no cambian los registros**. Los botones manuales actúan sobre el controlador de presentación, no se atribuyen a una conversación de IA.
+En cada navegación se comparan las instantáneas serializadas del CRM y de la industria: **los registros no cambian**. Los botones manuales no se atribuyen a una orden de voz.
 
-La suite instrumenta `getUserMedia`, `HTMLMediaElement.play` y la creación de `AudioContext`: las tres cuentas quedan a cero. No se monta ningún `tavus-widget` ni `tavus-embed`, no aparecen elementos de audio/vídeo y no se realizan peticiones a `tavusapi.com`, `tavus.io`, `tavus.com`, `tavus.dev` ni `daily.co`, incluidos sus subdominios. En `/demo` sí se importan los SDK oficiales y se registran ambos componentes, conforme a su instalación; registrar el componente no inicia una conversación. La ruta `/` no los registra ni descarga `app-ytn8nZM7.js`, el módulo que los contiene.
+![Encuadre industrial con el halo real](captures/demo-industrial-readonly-highlight.png)
 
-![Encuadre comercial y halo sobre la oportunidad](captures/demo-commercial-readonly-highlight.png)
+[Encuadre comercial](captures/demo-commercial-readonly-highlight.png) · [Guía móvil](captures/demo-mobile-ready-industry.png) · [Mapa móvil](captures/demo-mobile-industrial-city.png) · [Ruta principal](captures/normal-city-v5-preserved.png).
 
-![Encuadre industrial y halo visible alrededor de la fábrica](captures/demo-industrial-readonly-highlight.png)
+## Puente con SDK controlado
 
-La revisión inicial encontró un botón móvil de 42 px y un halo industrial oculto por la plataforma de la fábrica. Se corrigieron el tamaño táctil, la composición móvil y el perímetro/altura del halo antes de repetir los seis grupos completos. No se cuentan los intentos iniciales incompletos como grupos adicionales.
+Los otros dos grupos se ejecutan en contextos separados, uno de escritorio y otro móvil. Antes de cargar la aplicación, la prueba sustituye exclusivamente la creación de `tavus-widget`/`tavus-embed` por un `div` local con métodos y eventos controlados. No se instancia ningún componente real de Tavus. Las solicitudes a Tavus y Daily están además bloqueadas por el navegador de prueba.
 
-[Móvil: guía y controles](captures/demo-mobile-ready-industry.png) · [Móvil: mapa tras desplazarse](captures/demo-mobile-industrial-city.png) · [Ruta principal conservada](captures/normal-city-v5-preserved.png).
+Sólo en estos contextos se pulsa Iniciar. El flujo de **la aplicación real** crea su sesión, puente, validadores y controlador de presentación. El doble emite eventos `tavus:conversation-started` y `tavus:tool-call`; ese estado conectado pertenece al doble, no al servicio. Las capturas llevan el rótulo permanente «PRUEBA CONTROLADA · SDK DOBLE · Sin conexión, voz ni vídeo reales».
 
-[Informe de navegador](browser-validation.json). Conserva los SHA-256 de los módulos JS y CSS realmente recibidos por HTTP, incluidos `app-ytn8nZM7.js`, `app-IKnRg8DU.js` y `app-DMQpJPKC.css`. Los hashes de todas las fuentes incluidas coinciden al comenzar y terminar la ejecución final, incluida `.env.production`; `.env.local` no se incluye en los hashes ni en el informe. Todos los assets registrados respondieron con HTTP 200. El informe registra el ID público esperado, comprueba su presencia en el bundle servido y deja constancia de `startButtonClicked: false`.
+En ambos tamaños se comprueba:
 
-## Modelos, contratos y sesión
+- El contexto enviado contiene las tres definiciones exactas de `existing-agent-tools.js` y un catálogo idéntico al generado con la instantánea del CRM/ERP: 82 movimientos, 55 edificios/áreas y 57 animaciones.
+- `trigger_3d_camera_movement` con `movement_id: "industry-stage:manufacturing"` completa el encuadre del renderer real conservando la orientación.
+- `highlight_building` con `building_id: "industry-stage:manufacturing"` y `trigger_animation` con `animation_id: "pulse:industry-stage:manufacturing"` producen el halo visible sobre la fábrica.
+- `trigger_animation` con `animation_id: "machinery"` confirma la animación existente con `already_running`. Las matrices de los objetos de la cinta cambian entre fotogramas; no se avanza ningún lote ni se registra producción nueva.
+- La ausencia del argumento requerido devuelve `TOOL_ARGUMENTS_INVALID`. Un identificador de edificio no anunciado en el catálogo devuelve `TOOL_BINDING_UNRESOLVED`.
+- Finalizar restaura la cámara anterior, cierra y destruye el doble una vez y elimina su `div`. CRM y ERP conservan exactamente sus instantáneas anteriores.
 
-`npm test` pasó sus 20 archivos, y la compilación de producción terminó correctamente. Se ejecutaron además los mismos archivos con `node --test --test-isolation=none`, que enumeró **195/195 casos**, sin fallos ni casos omitidos. Incluyen 12 pruebas del controlador de presentación, 18 de contratos/API y 18 del ciclo de sesión.
+![Prueba del puente sobre WebGL real; el SDK es un doble expresamente identificado](captures/qa-sdk-double-desktop-tool-highlight.png)
 
-Las pruebas del controlador verifican IDs existentes, cola acotada, serialización, cancelación, prioridad a la navegación manual, restauración y ausencia de escrituras CRM/ERP. Las de contratos validan esquemas, bindings explícitos, argumentos y límites; sus esquemas son **fixtures sintéticos de prueba**, no los del agente del usuario. Las de sesión usan un widget controlado para comprobar inicio, estado, errores, deduplicación de herramientas, interrupción y limpieza. No acreditan el comportamiento de un deployment real.
+[Prueba móvil del puente con el mismo rótulo](captures/qa-sdk-double-mobile-tool-highlight.png). El `div` no reproduce la reserva de espacio ni la interfaz del avatar embed real: esta comprobación móvil acredita el flujo de eventos y la visualización 3D, **no la composición de un avatar real junto al mapa**.
 
-La configuración del handler `/api/tavus-config` se comprueba con respuestas y variables de entorno controladas, incluida la ausencia de credenciales en su salida. También se invocó el handler local con `--env-file=.env.local`: devolvió GET 200, el ID público exacto y contratos pendientes. El servidor estático `vite preview` de esta ejecución no ejecuta las funciones serverless: la página obtiene HTML de fallback en esa ruta, detecta que no es configuración JSON y utiliza el ID público compilado desde `.env.production`. No se ha validado el endpoint publicado de Vercel desde el navegador.
+## Red, artefactos y pruebas Node
 
-## Pendiente de conexión real
+Los ocho grupos terminaron con **cero errores JavaScript no capturados**. Las cuentas instrumentadas de `getUserMedia`, `HTMLMediaElement.play` y creación de `AudioContext` quedan a cero. No se montan elementos reales `tavus-widget`/`tavus-embed` ni audio/vídeo, y no se solicitan recursos a `tavusapi.com`, `tavus.io`, `tavus.com`, `tavus.dev` ni `daily.co`, incluidos sus subdominios. En `/demo` sí se importan los SDK oficiales y se registran sus componentes; registrarlos no inicia una conversación.
 
-El usuario proporcionó el snippet del widget con Deployment ID `d7770b89-ab37-4445-b065-2a5150e2e4cb`. La comprobación pública de `/init` devolvió HTTP 200, «Guía de Bird View Widget» e `is_available: true`; confirma la disponibilidad de la publicación, no una conversación ni sus dominios permitidos. La exportación de las tres herramientas del agente existente sigue pendiente; véase [configuración y lectura pública del deployment](SETUP.md).
+[Informe de navegador](browser-validation.json). Registra **dos clics de inicio con doble** y `realSdkStartButtonClicked: false`. Conserva los SHA-256 de las respuestas JS/CSS realmente recibidas, incluidos `app-CGN78Dty.js`, `app-D-wTd5vv.js` y `app-DMQpJPKC.css`, todas con HTTP 200. Los hashes de las fuentes coinciden al comenzar y terminar, incluida `.env.production`; `.env.local` no se incluye en los hashes ni en el informe. Los resultados controlados se identifican con `CONTROLLED_SDK_DOUBLE_NOT_A_TAVUS_CONVERSATION`.
 
-No se han verificado una conversación real, audio bidireccional, saludo, interrupciones de voz, permisos en un dispositivo físico ni llamadas reales de herramientas del agente. Las capturas no contienen un avatar, voz o conexión simulados. Los controles por voz seguirán pendientes hasta revisar los esquemas reales; véase [contratos de herramientas](TOOL_CONTRACTS.md).
+La compilación de producción terminó correctamente. Los archivos del script `npm test` se ejecutaron también con `node --test --test-isolation=none`: **205/205 casos**, sin fallos ni omitidos. Cubren contratos reales, catálogo acotado, validación de IDs, cola, cancelación, restauración, deduplicación y limpieza. Los fixtures sintéticos anteriores siguen utilizándose para casos genéricos; no sustituyen las definiciones reales recibidas del usuario. Los esquemas reales se conservan sin añadir enums ni prohibiciones de campos extra que no estaban en el export. La selección de acciones permitidas se aplica después mediante los bindings del catálogo.
+
+La API `/api/tavus-config` se prueba con respuestas y variables controladas, incluida la ausencia de credenciales en su salida y el rechazo de overrides inválidos. Su configuración predeterminada indica `contractSource: "bundled"`; el cliente vincula las definiciones reales a su instantánea. `vite preview` no ejecuta funciones serverless: en estas pruebas devuelve HTML de fallback en esa ruta y el cliente utiliza el ID público compilado y los contratos incluidos. No se ha validado el endpoint publicado de Vercel desde este navegador.
+
+## Alcance pendiente
+
+El usuario facilitó el Deployment ID `d7770b89-ab37-4445-b065-2a5150e2e4cb`. Su lectura pública de `/init` respondió HTTP 200, «Guía de Bird View Widget» e `is_available: true`; confirma la disponibilidad de la publicación, no una conversación ni los dominios permitidos de la web final. Véase [configuración](SETUP.md) y [contratos](TOOL_CONTRACTS.md).
+
+Siguen sin comprobarse con Tavus real la conversación, audio bidireccional, saludo, interrupciones de voz, permisos en un dispositivo físico y llamadas espontáneas de herramientas del agente. No se ha creado una llamada facturable. Las dos pruebas del SDK doble demuestran el puente local y sus resultados visuales; no acreditan esos comportamientos del servicio.
 
 ## Reproducir
 
@@ -59,10 +72,11 @@ En otra terminal, con una única sesión de navegador:
 npm run test:demo
 ```
 
-`BASE_URL`, `CHROMIUM_PATH` y `CAPTURE_DIR` permiten cambiar el servidor, Chromium y el destino de las evidencias. Por defecto, la suite resuelve el ID público esperado con `loadEnv("production", process.cwd(), "VITE_")`. `EXPECT_TAVUS_DEPLOYMENT_ID` permite sustituirlo; una cadena explícitamente vacía selecciona las comprobaciones de configuración ausente. Para ese modo hay que servir una compilación sin ID y un servidor que tampoco lo publique. La suite nunca pulsa Iniciar ni crea automáticamente una conversación.
+`BASE_URL`, `CHROMIUM_PATH` y `CAPTURE_DIR` permiten cambiar servidor, Chromium y destino. El ID esperado se obtiene con `loadEnv("production", process.cwd(), "VITE_")`; `EXPECT_TAVUS_DEPLOYMENT_ID` permite sustituirlo. Una cadena explícitamente vacía selecciona seis grupos sin configuración y omite los dos de SDK doble. Para ese modo deben servirse una compilación sin ID y un servidor que tampoco lo publique:
 
 ```sh
-# Sólo para comprobar una compilación sin configuración:
 VITE_TAVUS_DEPLOYMENT_ID='' npm run build
 EXPECT_TAVUS_DEPLOYMENT_ID='' npm run test:demo
 ```
+
+La suite sólo pulsa Iniciar después de instalar el doble local y bloquea los dominios Tavus/Daily en todos sus contextos. No inicia automáticamente una conversación real.

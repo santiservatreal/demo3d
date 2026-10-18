@@ -4,6 +4,10 @@ import { cityPresentation } from "../city/app.js";
 import { createCityPresentationController } from "./city-controller.js";
 import { createTavusDemoSession } from "./tavus-session.js";
 import {
+  createExistingAgentContracts,
+  getExistingAgentCatalogue,
+} from "./existing-agent-tools.js";
+import {
   createTavusToolBridge,
   loadTavusToolContracts,
 } from "./tool-contracts.js";
@@ -50,7 +54,47 @@ let configuration = null,
 const controller = createCityPresentationController({
   getScene: cityPresentation.getScene,
   getSnapshot: cityPresentation.getSnapshot,
+  onAction: updatePresentationDetails,
 });
+
+function updatePresentationDetails(event) {
+  if (event.status !== "finished" || !event.result?.ok) return;
+  const { command } = event;
+  if (command.action === "overview") {
+    $("#bird-demo-view-title").textContent = "Tu empresa, de un vistazo";
+    $("#bird-demo-view-detail").textContent =
+      "Ventas, conversaciones y operaciones en la misma ciudad.";
+    return;
+  }
+  if (!command.target) return;
+  const snapshot = cityPresentation.getSnapshot();
+  const catalogue = getExistingAgentCatalogue(snapshot);
+  const id = `${command.target.kind}:${command.target.id}`;
+  const item = catalogue.movements.find((entry) => entry.id === id);
+  if (item) $("#bird-demo-view-title").textContent = item.label;
+  currentTarget = { ...command.target };
+  const { crm, industry } = snapshot;
+  const target = command.target;
+  let detail = "Navegación y visualización · Datos ficticios";
+  if (target.kind === "deal") {
+    const deal = crm.deals.find((entry) => entry.id === target.id);
+    if (deal)
+      detail = `${new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(deal.amount)} · Oportunidad comercial · No es un cobro`;
+  } else if (target.kind === "industry-stage" || (target.kind === "district" && target.id === "industry")) {
+    const batches = industry.batches.filter((batch) => target.kind === "district" || batch.stageId === target.id);
+    detail = `${industry.batches.reduce((sum, batch) => sum + batch.quantity, 0)} unidades trazadas · ${batches.reduce((sum, batch) => sum + batch.quantity, 0)} en ${target.kind === "district" ? "la operación" : "esta etapa"} · Ruta estimada; no es GPS en directo`;
+  } else if (target.kind === "owner") {
+    const deals = crm.deals.filter((deal) => deal.ownerId === target.id && deal.status !== "lost");
+    detail = `${deals.length} oportunidades asignadas · Posición ilustrativa del comercial`;
+  } else if (target.kind === "batch") {
+    const batch = industry.batches.find((entry) => entry.id === target.id);
+    if (batch) detail = `${batch.quantity} unidades · ${batch.productName} · Etapa: ${industry.stages.find((stage) => stage.id === batch.stageId)?.name || batch.stageId}`;
+  } else if (target.kind === "vehicle") {
+    const vehicle = industry.vehicles.find((entry) => entry.id === target.id);
+    if (vehicle) detail = `${vehicle.driverName} · Ruta estimada; no es GPS en directo`;
+  }
+  $("#bird-demo-view-detail").textContent = detail;
+}
 
 function showSession(state = { status: "idle", microphone: "not-requested" }) {
   const active = ["initializing", "connecting", "connected"].includes(
@@ -91,7 +135,8 @@ async function readConfiguration() {
     configured: !!deploymentId,
     deploymentId: deploymentId || null,
     palId: null,
-    contracts: loadTavusToolContracts(null),
+    contractSource: "bundled",
+    contracts: null,
   };
   const abort = new AbortController();
   const timer = setTimeout(() => abort.abort(), 5000);
@@ -112,6 +157,8 @@ async function readConfiguration() {
           ...data,
           deploymentId: data.deploymentId || config.deploymentId,
           configured: !!(data.deploymentId || config.deploymentId),
+          contractSource: data.contractSource ||
+            (data.contracts?.code === "TOOL_SCHEMA_UNAVAILABLE" ? "bundled" : "environment"),
         };
     }
   } catch {
@@ -135,6 +182,14 @@ function conversationContext() {
     toolStatus: configuration.contracts.ready
       ? "Esquemas exportados configurados; espera siempre el resultado de cada herramienta."
       : "Faltan los esquemas exportados: las herramientas devolverán TOOL_SCHEMA_UNAVAILABLE. Explica el límite y sugiere los botones manuales, sin afirmar que has movido el mapa.",
+    presentationTools: configuration.contracts.ready
+      ? {
+          definitions: configuration.contracts.tools,
+          catalogue: configuration.contractSource === "bundled"
+            ? getExistingAgentCatalogue({ crm, industry })
+            : { bindings: configuration.contracts.bindings },
+        }
+      : null,
     departments: ["all", "sales", "communications", "industry"],
     owners: crm.owners.map(({ id, name }) => ({ id, name })),
     salesStages: crm.stages.map(({ id, name }) => ({ id, name })),
@@ -268,6 +323,12 @@ async function boot() {
   configuration = await readConfiguration();
   await cityPresentation.ready;
   if (disposed) return;
+  if (configuration.contractSource === "bundled")
+    configuration.contracts = loadTavusToolContracts(
+      createExistingAgentContracts(cityPresentation.getSnapshot()),
+    );
+  else if (!configuration.contracts)
+    configuration.contracts = loadTavusToolContracts(null);
   if (!cityPresentation.getAvailable())
     $("#bird-demo-message").textContent =
       "La ciudad 3D no se ha podido iniciar en este navegador. La vista de tabla sigue disponible.";

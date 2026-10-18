@@ -2,13 +2,16 @@ import { chromium, expect } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { loadEnv } from "vite";
+import { EXISTING_AGENT_TOOL_DEFINITIONS, getExistingAgentCatalogue } from "../src/demo/existing-agent-tools.js";
 
 // This suite exercises the real public configuration and manual 3D
-// controls. It never fabricates a Tavus connection, media stream, or avatar.
+// controls. SDK doubles below exercise local events only: no Tavus connection,
+// media stream, or avatar is created. Their screenshots carry a QA banner.
 const base = process.env.BASE_URL || "http://127.0.0.1:4173";
 const output = process.env.CAPTURE_DIR || "docs/demo";
 // An explicit empty override exercises the unconfigured build. Never infer a
-// connection from the presence of a public deployment ID, and never click Start.
+// connection from the presence of a public deployment ID. Start is clicked only
+// after replacing widget creation with the explicitly labelled local SDK double.
 const expectedPublicDeploymentId = Object.hasOwn(
   process.env,
   "EXPECT_TAVUS_DEPLOYMENT_ID",
@@ -28,6 +31,9 @@ const results = [],
 const loadedAssetUrls = new Set(),
   loadedAssetPromises = [];
 let currentPage;
+let controlledStartClicks = 0;
+const vendorHost = (hostname) =>
+  /(?:^|\.)(?:tavusapi\.com|tavus\.(?:io|com|dev)|daily\.co)$/i.test(hostname);
 const hash = (body) => createHash("sha256").update(body).digest("hex");
 async function sourceHashes() {
   const files = [
@@ -96,6 +102,13 @@ async function createPage(name, options = {}) {
   });
   const page = await context.newPage();
   observe(page, name);
+  // A guard in addition to assertions: no test may accidentally start a paid
+  // Tavus session or open a Daily room, even if a future SDK changes behaviour.
+  await context.route("**/*", (route) =>
+    vendorHost(new URL(route.request().url()).hostname)
+      ? route.abort("blockedbyclient")
+      : route.continue(),
+  );
   await page.addInitScript(() => {
     const calls = { getUserMedia: 0, mediaPlay: 0, audioContext: 0 };
     Object.defineProperty(window, "__DEMO_QA_MEDIA__", { value: calls });
@@ -127,6 +140,43 @@ async function createPage(name, options = {}) {
   });
   currentPage = page;
   return { page, context };
+}
+async function installControlledSdkDouble(page) {
+  await page.addInitScript(() => {
+    const nativeCreateElement = document.createElement;
+    const state = { elements: [], starts: 0, closes: 0, destroys: 0, messages: [] };
+    Object.defineProperty(window, "__DEMO_QA_SDK_DOUBLE__", { value: state });
+    document.createElement = function (name, ...args) {
+      if (!["tavus-widget", "tavus-embed"].includes(String(name).toLowerCase()))
+        return nativeCreateElement.call(this, name, ...args);
+      // This is a DIV, never an instance of either registered Tavus element.
+      const element = nativeCreateElement.call(this, "div");
+      element.dataset.qaSdkDouble = name;
+      element.style.display = "none";
+      element.startConversation = () => {
+        state.starts++;
+        queueMicrotask(() => element.dispatchEvent(new CustomEvent("tavus:conversation-started", {
+          detail: { conversationId: "qa-controlled-sdk-double-no-real-call" },
+        })));
+        return Promise.resolve();
+      };
+      element.sendMessage = (message) => state.messages.push(structuredClone(message));
+      element.close = () => { state.closes++; };
+      element.destroy = () => { state.destroys++; };
+      state.elements.push(element);
+      return element;
+    };
+  });
+}
+async function markControlledScreenshot(page) {
+  await page.evaluate(() => {
+    const banner = document.createElement("div");
+    banner.id = "qa-controlled-sdk-banner";
+    banner.textContent = "PRUEBA CONTROLADA · SDK DOBLE · Sin conexión, voz ni vídeo reales";
+    banner.setAttribute("role", "note");
+    banner.style.cssText = "position:fixed;z-index:2147483647;top:0;left:0;right:0;background:#7c2d12;color:white;padding:9px 12px;font:700 12px/1.4 sans-serif;text-align:center;pointer-events:none";
+    document.body.append(banner);
+  });
 }
 async function frames(page, count = 2) {
   await page.evaluate(
@@ -231,6 +281,91 @@ async function manual(page, action) {
     detail: await page.locator("#bird-demo-view-detail").innerText(),
   };
 }
+async function controlledTool(page, id, name, args) {
+  await page.evaluate(({ id, name, args }) => {
+    const widget = __DEMO_QA_SDK_DOUBLE__.elements.at(-1);
+    widget.dispatchEvent(new CustomEvent("tavus:tool-call", {
+      detail: { name, arguments: JSON.stringify(args), tool_call_id: id },
+    }));
+  }, { id, name, args });
+  await page.waitForFunction((id) => __DEMO_QA_SDK_DOUBLE__.messages.some((message) =>
+    message.event_type === "conversation.tool_result" && message.properties.tool_call_id === id), id);
+  return page.evaluate((id) => __DEMO_QA_SDK_DOUBLE__.messages.find((message) =>
+    message.event_type === "conversation.tool_result" && message.properties.tool_call_id === id), id);
+}
+async function controlledBridgeScenario(label, options = {}) {
+  const { page, context } = await createPage(`qa-controlled-sdk-${label}`, options);
+  await installControlledSdkDouble(page);
+  await boot(page);
+  await page.waitForFunction(() => __BIRD_DEMO__?.getState().configuration?.contractsReady);
+  const before = await sources(page), initialCamera = await camera(page);
+  noMedia(await mediaState(page));
+  await markControlledScreenshot(page);
+  await page.locator("[data-demo-action='start']").click();
+  controlledStartClicks++;
+  await page.waitForFunction(() => __BIRD_DEMO__.getState().session.status === "connected");
+  const capturedContext = await page.evaluate(() => {
+    const widget = __DEMO_QA_SDK_DOUBLE__.elements.at(-1);
+    return {
+      surface: widget.dataset.qaSdkDouble,
+      deploymentId: widget.getAttribute("deployment-id"),
+      context: widget.getAttribute("conversational-context"),
+      starts: __DEMO_QA_SDK_DOUBLE__.starts,
+      actualTavusElementCount: document.querySelectorAll("tavus-widget,tavus-embed").length,
+    };
+  });
+  expect(capturedContext.surface).toBe(label === "mobile" ? "tavus-embed" : "tavus-widget");
+  expect(capturedContext.deploymentId).toBe(expectedPublicDeploymentId);
+  expect(capturedContext.starts).toBe(1);
+  expect(capturedContext.actualTavusElementCount).toBe(0);
+  expect(capturedContext.context).toContain("industry-stage:manufacturing");
+  const contextData = JSON.parse(capturedContext.context.split("DATOS FICTICIOS DE LA DEMO:\n").at(-1));
+  expect(contextData.presentationTools.definitions).toEqual(EXISTING_AGENT_TOOL_DEFINITIONS);
+  expect(contextData.presentationTools.catalogue).toEqual(getExistingAgentCatalogue({ crm: JSON.parse(before.crm), industry: JSON.parse(before.industry) }));
+  const movement = await controlledTool(page, `${label}-move`, "trigger_3d_camera_movement", { movement_id: "industry-stage:manufacturing" });
+  expect(movement.properties.output.ok).toBe(true);
+  await settled(page);
+  const focusedCamera = await camera(page);
+  fixedBearing(initialCamera, focusedCamera);
+  expect(await page.evaluate(() => __ATLAS_CITY__.scene.getDiagnostics().district)).toBe("industry");
+  const highlight = await controlledTool(page, `${label}-highlight`, "highlight_building", { building_id: "industry-stage:manufacturing" });
+  expect(highlight.properties.output.ok).toBe(true);
+  expect(await page.evaluate(() => __ATLAS_CITY__.scene.presentation.getState().highlight)).toMatchObject({ kind: "industry-stage", id: "manufacturing" });
+  const pulse = await controlledTool(page, `${label}-pulse`, "trigger_animation", { animation_id: "pulse:industry-stage:manufacturing" });
+  expect(pulse.properties.output.ok).toBe(true);
+  if (label === "mobile") await page.locator("#city-world").scrollIntoViewIfNeeded();
+  await frames(page, 1);
+  await shot(page, `qa-sdk-double-${label}-tool-highlight`);
+  const machinery = await controlledTool(page, `${label}-machinery`, "trigger_animation", { animation_id: "machinery" });
+  expect(machinery.properties.output.ok).toBe(true);
+  const matrixBefore = await page.evaluate(() => Array.from(__ATLAS_CITY__.scene.debug.scene.getObjectByName("Animación ilustrativa de fabricación y empacado").instanceMatrix.array.slice(0, 32)));
+  await frames(page, 3);
+  const matrixAfter = await page.evaluate(() => Array.from(__ATLAS_CITY__.scene.debug.scene.getObjectByName("Animación ilustrativa de fabricación y empacado").instanceMatrix.array.slice(0, 32)));
+  expect(matrixAfter).not.toEqual(matrixBefore);
+  const invalidCamera = await controlledTool(page, `${label}-invalid-args`, "trigger_3d_camera_movement", { unsupported_key: "industry-stage:manufacturing" });
+  expect(invalidCamera.properties.output.ok).toBe(false);
+  expect(invalidCamera.properties.output.code).toBe("TOOL_ARGUMENTS_INVALID");
+  const unavailableBuilding = await controlledTool(page, `${label}-missing-building`, "highlight_building", { building_id: "not-an-existing-building" });
+  expect(unavailableBuilding.properties.output.ok).toBe(false);
+  expect(unavailableBuilding.properties.output.code).toBe("TOOL_BINDING_UNRESOLVED");
+  expect(await sources(page)).toEqual(before);
+  noMedia(await mediaState(page));
+  await page.locator("[data-demo-action='stop']").click();
+  await page.waitForFunction(() => __BIRD_DEMO__.getState().session.status === "ended");
+  await settled(page);
+  const restoredCamera = await camera(page);
+  for (const key of ["position", "target", "quaternion"]) restoredCamera[key].forEach((value, index) => expect(Math.abs(value - initialCamera[key][index])).toBeLessThan(1e-5));
+  expect(Math.abs(restoredCamera.zoom - initialCamera.zoom)).toBeLessThan(1e-5);
+  expect(await sources(page)).toEqual(before);
+  const cleanup = await page.evaluate(() => ({ closes: __DEMO_QA_SDK_DOUBLE__.closes, destroys: __DEMO_QA_SDK_DOUBLE__.destroys, mountedDoubles: document.querySelectorAll("[data-qa-sdk-double]").length }));
+  expect(cleanup).toEqual({ closes: 1, destroys: 1, mountedDoubles: 0 });
+  record(`controlled-sdk-double-${label}-uses-real-exported-schemas-bridge-and-webgl-without-a-live-call`, {
+    evidenceKind: "CONTROLLED_SDK_DOUBLE_NOT_A_TAVUS_CONVERSATION",
+    capturedContext, movement, highlight, pulse, machinery, invalidCamera, unavailableBuilding,
+    initialCamera, focusedCamera, restoredCamera, machineryMatricesChanged: true, cleanup,
+  });
+  await context.close();
+}
 
 try {
   const desktop = await createPage("demo-desktop");
@@ -242,9 +377,9 @@ try {
   const before = await sources(page),
     fixed = await camera(page);
   const configuration = await page.evaluate(() => __BIRD_DEMO__.getState());
-  expect(configuration.configuration).toEqual({
+  expect(configuration.configuration).toMatchObject({
     configured: expectedConfigured,
-    contractsReady: false,
+    contractsReady: true,
   });
   expect(configuration.session).toMatchObject({
     status: "idle",
@@ -262,7 +397,7 @@ try {
     expectedConfigured ? "Pulsa Iniciar" : "Deployment ID",
   );
   await expect(page.locator("#bird-demo-config-hint")).toContainText(
-    "esquemas",
+    "Controles del agente configurados",
   );
   await expect(page.locator("#bird-demo-microphone")).toHaveText(
     "Micrófono sin solicitar",
@@ -280,7 +415,7 @@ try {
   const expectedDeal = JSON.parse(before.crm).deals.find((deal) =>
     ["lead", "qualified", "proposal", "negotiation"].includes(deal.stageId),
   );
-  expect(sales.title).toBe(expectedDeal.name);
+  expect(sales.title).toContain(expectedDeal.name);
   expect(sales.detail).toContain("Oportunidad comercial");
   expect(sales.detail).toContain("No es un cobro");
   expect(
@@ -310,9 +445,9 @@ try {
     0,
   );
   expect(sourceUnits).toBe(1320);
-  expect(industry.title).toBe("Fabricación y distribución");
+  expect(industry.title).toContain(JSON.parse(before.industry).stages.find((stage) => stage.id === "manufacturing").name);
   expect(industry.detail).toContain(`${sourceUnits} unidades`);
-  expect(industry.detail).toContain("ruta es estimada");
+  expect(industry.detail).toContain("Ruta estimada");
   expect(
     await page.evaluate(() => __ATLAS_CITY__.scene.getDiagnostics().district),
   ).toBe("industry");
@@ -464,12 +599,13 @@ try {
   });
   await mobile.context.close();
 
+  if (expectedConfigured) {
+    await controlledBridgeScenario("desktop");
+    await controlledBridgeScenario("mobile", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1 });
+  }
+
   expect(errors).toEqual([]);
-  const tavusRequests = requests.filter(({ url }) =>
-    /(?:^|\.)(?:tavusapi\.com|tavus\.(?:io|com|dev)|daily\.co)$/i.test(
-      new URL(url).hostname,
-    ),
-  );
+  const tavusRequests = requests.filter(({ url }) => vendorHost(new URL(url).hostname));
   expect(tavusRequests).toEqual([]);
   const finalSourceSha256 = await sourceHashes();
   expect(finalSourceSha256).toEqual(initialSourceSha256);
@@ -485,7 +621,8 @@ try {
         generatedAt: new Date().toISOString(),
         startedAt,
         expectedPublicDeploymentId: expectedPublicDeploymentId || null,
-        startButtonClicked: false,
+        realSdkStartButtonClicked: false,
+        controlledSdkDoubleStartClicks: controlledStartClicks,
         browser: browser.version(),
         environment:
           "Chromium headless, ANGLE/SwiftShader software WebGL; no physical-device or live-Tavus validation",

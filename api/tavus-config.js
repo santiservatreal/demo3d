@@ -16,12 +16,16 @@ export function createTavusConfigHandler({ env = process.env } = {}) {
     }
     const deploymentId = publicId(env.TAVUS_DEPLOYMENT_ID) || publicId(env.VITE_TAVUS_DEPLOYMENT_ID);
     res.statusCode = 200;
+    const hasOverride = typeof env.TAVUS_TOOL_CONTRACTS_JSON === "string" && env.TAVUS_TOOL_CONTRACTS_JSON.trim() !== "";
     res.end(JSON.stringify({
       configured: Boolean(deploymentId),
       code: deploymentId ? "TAVUS_DEPLOYMENT_CONFIGURED" : "TAVUS_DEPLOYMENT_NOT_CONFIGURED",
       deploymentId,
       palId: publicId(env.TAVUS_PAL_ID),
-      contracts: loadTavusToolContracts(env.TAVUS_TOOL_CONTRACTS_JSON),
+      // Bind the bundled, owner-provided export to the actual client snapshot.
+      // Invalid explicit overrides remain errors instead of falling back.
+      contractSource: hasOverride ? "environment" : "bundled",
+      contracts: hasOverride ? loadTavusToolContracts(env.TAVUS_TOOL_CONTRACTS_JSON) : null,
     }));
   };
 }
