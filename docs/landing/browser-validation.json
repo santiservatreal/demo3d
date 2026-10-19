@@ -1,0 +1,436 @@
+{
+  "generatedAt": "2026-10-19T09:52:54.610Z",
+  "startedAt": "2026-10-19T09:52:36.473Z",
+  "browser": "154.0.8037.57",
+  "environment": "Chromium headless on Linux; desktop 1440×1000 and mobile viewport 390×844, not a physical-phone test. Existing WebGL routes use ANGLE/SwiftShader.",
+  "screenshots": "Actual rendered landing; finite DOM animations disabled for readable stills.",
+  "productDestination": "https://pipeline-city.vercel.app/",
+  "liveConversationStarted": false,
+  "microphoneOpened": false,
+  "results": [
+    {
+      "name": "desktop-landing-presents-birdview-by-faradai-with-a-working-product-destination",
+      "passed": true,
+      "detail": {
+        "title": "BirdView — Tu empresa, a vista de pájaro · FaradAI",
+        "productUrl": "https://pipeline-city.vercel.app/",
+        "layout": {
+          "viewportWidth": 1440,
+          "viewportHeight": 1000,
+          "bodyWidth": 1440,
+          "documentWidth": 1440,
+          "overflow": []
+        },
+        "media": {
+          "getUserMedia": 0,
+          "play": 0,
+          "speech": 0,
+          "tavusRegistered": false,
+          "tavusElements": 0
+        }
+      }
+    },
+    {
+      "name": "navigation-anchors-resolve-to-real-product-sections",
+      "passed": true,
+      "detail": {
+        "anchorLinks": [
+          {
+            "text": "Saltar al contenido",
+            "href": "#birdview-landing",
+            "exists": true
+          },
+          {
+            "text": "El producto",
+            "href": "#features",
+            "exists": true
+          },
+          {
+            "text": "Cómo funciona",
+            "href": "#how-it-works",
+            "exists": true
+          },
+          {
+            "text": "Preguntas frecuentes",
+            "href": "#faq",
+            "exists": true
+          },
+          {
+            "text": "El producto",
+            "href": "#features",
+            "exists": true
+          },
+          {
+            "text": "Cómo funciona",
+            "href": "#how-it-works",
+            "exists": true
+          },
+          {
+            "text": "Preguntas frecuentes",
+            "href": "#faq",
+            "exists": true
+          },
+          {
+            "text": "Descubre una nueva forma de ver",
+            "href": "#features",
+            "exists": true
+          },
+          {
+            "text": "El producto",
+            "href": "#features",
+            "exists": true
+          },
+          {
+            "text": "Preguntas frecuentes",
+            "href": "#faq",
+            "exists": true
+          },
+          {
+            "text": "Volver arriba ↑",
+            "href": "#birdview-landing",
+            "exists": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "feature-controls-show-distinct-sales-team-and-activity-explanations",
+      "passed": true,
+      "detail": {
+        "featureStates": [
+          {
+            "feature": "sales",
+            "text": "01 / VENTAS\nCada oportunidad\ntiene su lugar.\n\nTu pipeline se convierte en barrios. Los edificios muestran las oportunidades y la ciudad cambia cuando una venta avanza.\n\nIdentifica la etapa de cada oportunidad.\nReconoce dónde se concentra el valor.\nCelebra los acuerdos ganados.\nRecorrer el pipeline\nDe nuevo lead a venta ganada"
+          },
+          {
+            "feature": "team",
+            "text": "02 / EQUIPO\nEl trabajo de tu equipo\ncobra vida.\n\nLas personas forman parte del mapa. Relaciona las oportunidades con sus responsables y sigue el recorrido del equipo por la ciudad.\n\nIdentifica a los responsables.\nPon contexto a cada oportunidad.\nComparte una misma visión del negocio.\nConocer la presentación\nPersonas detrás de cada oportunidad"
+          },
+          {
+            "feature": "activity",
+            "text": "03 / ACTIVIDAD\nLas conversaciones\ntambién tienen barrio.\n\nCorreos, llamadas y reuniones encuentran su lugar. Una oficina de correos, una central de llamadas o una cafetería hacen visible la actividad que mueve tu negocio.\n\nDa contexto a los contactos con clientes.\nReúne los canales en una misma vista.\nEntiende la actividad de un vistazo.\nDescubrir la actividad\nCada conversación cuenta"
+          }
+        ]
+      }
+    },
+    {
+      "name": "faq-opens-with-pointer-and-closes-with-keyboard-and-product-imagery-loads",
+      "passed": true,
+      "detail": {
+        "questions": 5,
+        "images": [
+          {
+            "src": "/assets/landing/birdview-city.webp",
+            "complete": true,
+            "width": 2400
+          },
+          {
+            "src": "/assets/landing/birdview-sales.webp",
+            "complete": true,
+            "width": 1600
+          },
+          {
+            "src": "/assets/landing/birdview-team.webp",
+            "complete": true,
+            "width": 1600
+          },
+          {
+            "src": "/assets/landing/birdview-activity.webp",
+            "complete": true,
+            "width": 1600
+          },
+          {
+            "src": "/assets/landing/birdview-industry.webp",
+            "complete": true,
+            "width": 1600
+          }
+        ],
+        "layout": {
+          "viewportWidth": 1440,
+          "viewportHeight": 1000,
+          "bodyWidth": 1440,
+          "documentWidth": 1440,
+          "overflow": []
+        }
+      }
+    },
+    {
+      "name": "mobile-navigation-opens-closes-on-selection-and-supports-escape",
+      "passed": true,
+      "detail": {
+        "heroLayout": {
+          "viewportWidth": 390,
+          "viewportHeight": 844,
+          "bodyWidth": 390,
+          "documentWidth": 390,
+          "overflow": [
+            {
+              "tag": "IMG",
+              "className": "bv-city-image",
+              "left": -81.890625,
+              "right": 471.90625
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "mobile-content-tabs-and-faq-remain-usable-without-horizontal-scroll",
+      "passed": true,
+      "detail": {
+        "featureLayout": {
+          "viewportWidth": 390,
+          "viewportHeight": 844,
+          "bodyWidth": 390,
+          "documentWidth": 390,
+          "overflow": [
+            {
+              "tag": "IMG",
+              "className": "bv-city-image",
+              "left": -81.890625,
+              "right": 471.90625
+            }
+          ]
+        },
+        "faqLayout": {
+          "viewportWidth": 390,
+          "viewportHeight": 844,
+          "bodyWidth": 390,
+          "documentWidth": 390,
+          "overflow": [
+            {
+              "tag": "IMG",
+              "className": "bv-city-image",
+              "left": -81.890625,
+              "right": 471.90625
+            }
+          ]
+        },
+        "media": {
+          "getUserMedia": 0,
+          "play": 0,
+          "speech": 0,
+          "tavusRegistered": false,
+          "tavusElements": 0
+        }
+      }
+    },
+    {
+      "name": "trailing-slash-route-and-reduced-motion-keep-the-landing-and-feature-controls-available",
+      "passed": true,
+      "detail": {
+        "path": "/page/",
+        "layout": {
+          "viewportWidth": 1440,
+          "viewportHeight": 1000,
+          "bodyWidth": 1440,
+          "documentWidth": 1440,
+          "overflow": []
+        }
+      }
+    },
+    {
+      "name": "existing-dashboard-route-keeps-its-city-experience",
+      "passed": true,
+      "detail": {
+        "path": "/",
+        "media": {
+          "getUserMedia": 0,
+          "play": 0,
+          "speech": 0,
+          "tavusRegistered": false,
+          "tavusElements": 0
+        }
+      }
+    },
+    {
+      "name": "existing-presentation-route-keeps-its-city-experience",
+      "passed": true,
+      "detail": {
+        "path": "/demo",
+        "media": {
+          "getUserMedia": 0,
+          "play": 0,
+          "speech": 0,
+          "tavusRegistered": false,
+          "tavusElements": 0
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "failedResources": [],
+  "tavusRequests": [],
+  "loadedAssets": [
+    "/assets/modulepreload-polyfill-B5Qt9EMX.js",
+    "/assets/app-FCYrSXvS.js",
+    "/assets/latin-700-LcJfTqXW.css",
+    "/assets/latin-600-BnRhtdY-.css",
+    "/assets/app-BJoYa6sv.css",
+    "/assets/app-DtkvRjdp.js",
+    "/assets/landing/birdview-city.webp",
+    "/assets/manrope-latin-700-normal-BZp_XxE4.woff2",
+    "/assets/landing/birdview-sales.webp",
+    "/assets/dm-sans-latin-400-normal-CW0RaeGs.woff2",
+    "/assets/manrope-latin-600-normal-4f0koTD-.woff2",
+    "/assets/dm-sans-latin-600-normal-Aqo67rzb.woff2",
+    "/assets/dm-sans-latin-500-normal-B9HHJjqV.woff2",
+    "/assets/landing/birdview-industry.webp",
+    "/assets/landing/birdview-team.webp",
+    "/assets/landing/birdview-activity.webp",
+    "/assets/landing/birdview-mark.svg",
+    "/assets/latin-400-CIditRp3.css",
+    "/assets/app-BtU1d9e3.css",
+    "/assets/RGBELoader-BquQ1Z7r.js",
+    "/assets/app-BHK49WIY.js",
+    "/assets/sparkles-Da5qkh_G.js",
+    "/assets/info-DtALk9Ur.js",
+    "/assets/users-CBh7sSBi.js",
+    "/assets/sliders-horizontal-qyZjLL62.js",
+    "/assets/latin-400-B4QAHSh-.js",
+    "/assets/app-B2dJqqPn.js",
+    "/assets/simulation-app-B2pmtNoY.js",
+    "/assets/style-Bm_FjAwn.css",
+    "/assets/simulation-app-BP9ylIrr.css",
+    "/assets/style-CwaeE-xL.js",
+    "/assets/manrope-latin-400-normal-PaqtzbVb.woff2"
+  ],
+  "sourceSha256": {
+    "index.html": "93d387f4b00ee4d4fb2d32633e1de4503e5e0c974fb11d41c3df4dd24782eac9",
+    "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
+    "package.json": "0873351b5f5987ce9d81fd78fc941d06cbf3fdc5ac3def280b1948f8d621b3bb",
+    "page/index.html": "54917a938ae0c43ce5e895824ae155c3f5125d4ef5466e46037446081ae20e8e",
+    "public/assets/landing/birdview-activity.webp": "d29648bd586109bdf4b20a1b468ec35d3ec538a80f35cacc175c658c91c745f0",
+    "public/assets/landing/birdview-city.webp": "3e191243e7bd709ad2522a3b1d98a1bc032c4a12e7dfb00c77fd3155a84679b4",
+    "public/assets/landing/birdview-industry.webp": "a7b9cfc2beb61d219714b827808d7d211641b108728073f0f2002f8450f5bd3d",
+    "public/assets/landing/birdview-mark.svg": "86fe313b334a919596c504b78f0b669d16a46c8423179a0e28ce954d29b58a2d",
+    "public/assets/landing/birdview-sales.webp": "35bf4a738c41f7a08b2638418b3e4ca3ab8677f5d710cce6af979f5ccc65173e",
+    "public/assets/landing/birdview-team.webp": "146e4f80959a051c22470a29afe020d577c5cec63207585f758339d3cc98bf0c",
+    "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "67c48c76549b95b9e1e83d93521a7ac78d6b970d6fd9521125bcc5a74a5dbd26",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "58760d5cd57e5dbbb6f2c86bd2c6458c843e69a78260da956e51775e077a365a",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/presentation-camera.js": "a3d8c9af0041a9eac0b8ee523bdf05a6190733b30349c01686ba46f6df7eef20",
+    "src/city/presentation-effects.js": "25d94511f1d13d0439f840c4feb2827e0d70d9078c46c92efd2e2d3111f951a1",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "2e661042f149765390de52618c24408718f801c3e1779c8a1d92f1bc86c1e3fb",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020",
+    "src/classic.js": "1b232c550cfc55aa4ac3f09b21ffa484a46fff52fb77426cdc4a2ac3351ac5ee",
+    "src/demo/app.js": "99e34e0ba05fdd05dedddac4f42bfd6a5860a72c396def369298df3cc147fa94",
+    "src/demo/city-controller.js": "068ac4cbd4d205094afa8606aedd57e7ba0e518c37837eae4b49878a3f430dfd",
+    "src/demo/existing-agent-tools.js": "92b10c1b3de70a8ee5cf4b1c44b3b0ee0c719b153d6cea3b3bec960e0dc0762f",
+    "src/demo/live-app.js": "ed2c38e2780a868afa9e65dc3f16f35d7f1e53512e3a772f1b5168764d99680b",
+    "src/demo/presentation-state.js": "dbd8d6531635cd177d7bbc02a53cbb6640abc7219a16f80787eb5e371e56be86",
+    "src/demo/simulation-app.js": "ccad718d07f6a4e080d08f7f6a621b021f40eaabf153209282a36904e69459ef",
+    "src/demo/story-labels.css": "5e147ef5c50c9f62d20915a5c59fe80cc7df08c2375ac8212e930bfcb6bb2946",
+    "src/demo/story-labels.js": "1f4de4ca692712ed2328497fee5e2c77e23764bd0a4cb76c91328a386cf39f8a",
+    "src/demo/story-model.js": "36a41b746eff3e2560af3b331ab7ab47bdb24c4687fccdfab378f1d9a24f7fee",
+    "src/demo/story-player.js": "669a592075d9a0f5f4eb6fd816e549902494cae5afe8afadb9f0cb9924838278",
+    "src/demo/story.css": "2022f9589d985395e80e253bf50009ab7e28e6224741e3371124ae630391d36c",
+    "src/demo/style.css": "40a12bb5ecb21d66b761559ddd4fcafbb1b7aba61b75f2e73a2f22c2956821ec",
+    "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
+    "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
+    "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
+    "src/landing/app.js": "dcf1f912d629db1aeeaf753804264a15e65e00d7fe817d5d7ba1f3d7b78002a5",
+    "src/landing/style.css": "f1db21625b6deda37425d03bf893476c3f1cf1cc9ca9c0e2a7289d5893912e49",
+    "src/luma/app.js": "0146dc81f3542e6ae9c5bef8d1807c15d9414836507156ce4524b9cced991f0d",
+    "src/luma/assets.js": "c88d2c789dad6af119ffcd3bf199918d61d3910fea1b8a1afa2bc41bc20a964d",
+    "src/luma/renderer-lab.js": "ef8703b51f59af12ba1677ec16df57d5b7c714c391d03aea492ba61598b1c28e",
+    "src/luma/scene.js": "f363dde6750caee460456a9a411a4a4854ad4607bbcdb8f247173fbc4bccc047",
+    "src/luma/simulation.js": "f4e12e16640014b42d2864b7fea963690fe8e4dd6df6a86dc937ae90e06895d3",
+    "src/luma/style.css": "6b6c2118cf4e5cab4a2aeba847ebdd64d7da87e1810f536e1319ea0f68293550",
+    "src/main.js": "6a55e27a91384bd03291eeca47b16a778a15beafb4417ed347c6bf9db6a2306b",
+    "src/operations/app.js": "5cb4a1391af391b0431f916f7de59303588c9d4fcd4e4fbd2dc61fa344c0e15b",
+    "src/operations/model.js": "f8e9a038c759a182a61aaea8bd71dcf62ff2168fd4de92a55bdfdbb364981d73",
+    "src/operations/operations.css": "62479f468ddb42db09571f6193e6c5b378cfb3c3a6a42e9c3837f5c62c738b01",
+    "src/operations/scene.js": "1673b3577f5991879759e47fd0a36ff7d41150476826b664127a66edf37e20ce",
+    "src/style.css": "4e1c2f0abd9897376a73cc7b001d09d6400056d15a51d7e9ced62d9972626d17",
+    "vercel.json": "668a25e743367c26c1467216d20d07312fa013a4e2a1b779a8f9c223211da05a",
+    "vite.config.js": "e68a53983b8ed561934949c30ccabcc5f74502afd202b6f098ccdb17ab1cd33e"
+  },
+  "workingTreeSourceSha256AtCompletion": {
+    "index.html": "93d387f4b00ee4d4fb2d32633e1de4503e5e0c974fb11d41c3df4dd24782eac9",
+    "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
+    "package.json": "0873351b5f5987ce9d81fd78fc941d06cbf3fdc5ac3def280b1948f8d621b3bb",
+    "page/index.html": "54917a938ae0c43ce5e895824ae155c3f5125d4ef5466e46037446081ae20e8e",
+    "public/assets/landing/birdview-activity.webp": "d29648bd586109bdf4b20a1b468ec35d3ec538a80f35cacc175c658c91c745f0",
+    "public/assets/landing/birdview-city.webp": "3e191243e7bd709ad2522a3b1d98a1bc032c4a12e7dfb00c77fd3155a84679b4",
+    "public/assets/landing/birdview-industry.webp": "a7b9cfc2beb61d219714b827808d7d211641b108728073f0f2002f8450f5bd3d",
+    "public/assets/landing/birdview-mark.svg": "86fe313b334a919596c504b78f0b669d16a46c8423179a0e28ce954d29b58a2d",
+    "public/assets/landing/birdview-sales.webp": "35bf4a738c41f7a08b2638418b3e4ca3ab8677f5d710cce6af979f5ccc65173e",
+    "public/assets/landing/birdview-team.webp": "146e4f80959a051c22470a29afe020d577c5cec63207585f758339d3cc98bf0c",
+    "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
+    "src/city/architecture.js": "349277c2167bc047aa07bd84f9dcba54de9c8b154e1d3cf97fa8d4cc447ee1a1",
+    "src/city/assistant-client.js": "d6263fa6dcda18f13dcfd6d44db913caa569240db16894b43d2180eb80379ffd",
+    "src/city/assistant-model.js": "ceee6d53e98df22a76f81241e6d260556c6e0d2ef724a748697358ae52f0ee1c",
+    "src/city/assistant-panel.css": "69bf81343c1063e01661f53ef2651d644602daf1453c7cd112e0c55199a765a8",
+    "src/city/assistant-panel.js": "67c48c76549b95b9e1e83d93521a7ac78d6b970d6fd9521125bcc5a74a5dbd26",
+    "src/city/celebrations.css": "572c9164c8c2bbb55dd19667ca01dcb392bd8a72ad714b3eefdef94aa980fcf4",
+    "src/city/celebrations.js": "24da3812da3a7873ad62951e76b07fc0be55a20ef2dfe0d888542691b4d49f6d",
+    "src/city/communications-model.js": "09bfa312186cca40ffc1ec7bd105a67b1dec181c7a8a0fba896bed40f0637991",
+    "src/city/communications.js": "fd8567145e333900d95e29d1bac35f0006db960f9e5943018b609bdaebc9b5e8",
+    "src/city/construction.js": "73735ad3e7c8a5fc2c734e34e071218cdff93ea66c6a9f4049c943b1b25c2646",
+    "src/city/expansion.css": "ee266d939da31c73207cde57a7f7b6faa7e0a3d06bee9fbe80d80dec87f97eca",
+    "src/city/industry-model.js": "9425e1cfcad9560cab735d2121dd3b6acebb5ed750f0eeaf660993cd6849b01e",
+    "src/city/industry.js": "2dc14c9dbc3d457fefd254781f09cbb84913a23ac96e301613dcf9e3ade45ea8",
+    "src/city/map-camera.js": "bdf245254b56b54118429d8fabe28b63748b2ffb969d2a45843ccca3495c030d",
+    "src/city/map-layout.css": "58760d5cd57e5dbbb6f2c86bd2c6458c843e69a78260da956e51775e077a365a",
+    "src/city/model.js": "c5a4c4c23a9af76f6256318a3c57a2645aab00f265f5653ab202861e07dff3f0",
+    "src/city/people.js": "e7e3568368690ed015095fd5d7f0a3fbfc27b677c7225a051b9cebbc9d465219",
+    "src/city/presentation-camera.js": "a3d8c9af0041a9eac0b8ee523bdf05a6190733b30349c01686ba46f6df7eef20",
+    "src/city/presentation-effects.js": "25d94511f1d13d0439f840c4feb2827e0d70d9078c46c92efd2e2d3111f951a1",
+    "src/city/production-demo.js": "6163d8047c5aa9f84ce08171121efa041b18af598fe2b6fa96d18d04fb09be10",
+    "src/city/scene.js": "2e661042f149765390de52618c24408718f801c3e1779c8a1d92f1bc86c1e3fb",
+    "src/city/sector-emphasis.js": "b4a4e540e7d2bc7583aa47bc4f9847d2a07ea508b511c5131f029c974d271a7f",
+    "src/city/style.css": "eff8762da47ad4bb1ace342f53ccf173df00e84af49c66c1d669c24102ada8fe",
+    "src/city/traffic.js": "ec5c034faf2344bb774603e7df1648b6acb71eb17c422b1f8a43ada67b58f020",
+    "src/classic.js": "1b232c550cfc55aa4ac3f09b21ffa484a46fff52fb77426cdc4a2ac3351ac5ee",
+    "src/demo/app.js": "99e34e0ba05fdd05dedddac4f42bfd6a5860a72c396def369298df3cc147fa94",
+    "src/demo/city-controller.js": "068ac4cbd4d205094afa8606aedd57e7ba0e518c37837eae4b49878a3f430dfd",
+    "src/demo/existing-agent-tools.js": "92b10c1b3de70a8ee5cf4b1c44b3b0ee0c719b153d6cea3b3bec960e0dc0762f",
+    "src/demo/live-app.js": "ed2c38e2780a868afa9e65dc3f16f35d7f1e53512e3a772f1b5168764d99680b",
+    "src/demo/presentation-state.js": "dbd8d6531635cd177d7bbc02a53cbb6640abc7219a16f80787eb5e371e56be86",
+    "src/demo/simulation-app.js": "ccad718d07f6a4e080d08f7f6a621b021f40eaabf153209282a36904e69459ef",
+    "src/demo/story-labels.css": "5e147ef5c50c9f62d20915a5c59fe80cc7df08c2375ac8212e930bfcb6bb2946",
+    "src/demo/story-labels.js": "1f4de4ca692712ed2328497fee5e2c77e23764bd0a4cb76c91328a386cf39f8a",
+    "src/demo/story-model.js": "36a41b746eff3e2560af3b331ab7ab47bdb24c4687fccdfab378f1d9a24f7fee",
+    "src/demo/story-player.js": "669a592075d9a0f5f4eb6fd816e549902494cae5afe8afadb9f0cb9924838278",
+    "src/demo/story.css": "2022f9589d985395e80e253bf50009ab7e28e6224741e3371124ae630391d36c",
+    "src/demo/style.css": "40a12bb5ecb21d66b761559ddd4fcafbb1b7aba61b75f2e73a2f22c2956821ec",
+    "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
+    "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
+    "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
+    "src/landing/app.js": "dcf1f912d629db1aeeaf753804264a15e65e00d7fe817d5d7ba1f3d7b78002a5",
+    "src/landing/style.css": "f1db21625b6deda37425d03bf893476c3f1cf1cc9ca9c0e2a7289d5893912e49",
+    "src/luma/app.js": "0146dc81f3542e6ae9c5bef8d1807c15d9414836507156ce4524b9cced991f0d",
+    "src/luma/assets.js": "c88d2c789dad6af119ffcd3bf199918d61d3910fea1b8a1afa2bc41bc20a964d",
+    "src/luma/renderer-lab.js": "ef8703b51f59af12ba1677ec16df57d5b7c714c391d03aea492ba61598b1c28e",
+    "src/luma/scene.js": "f363dde6750caee460456a9a411a4a4854ad4607bbcdb8f247173fbc4bccc047",
+    "src/luma/simulation.js": "f4e12e16640014b42d2864b7fea963690fe8e4dd6df6a86dc937ae90e06895d3",
+    "src/luma/style.css": "6b6c2118cf4e5cab4a2aeba847ebdd64d7da87e1810f536e1319ea0f68293550",
+    "src/main.js": "6a55e27a91384bd03291eeca47b16a778a15beafb4417ed347c6bf9db6a2306b",
+    "src/operations/app.js": "5cb4a1391af391b0431f916f7de59303588c9d4fcd4e4fbd2dc61fa344c0e15b",
+    "src/operations/model.js": "f8e9a038c759a182a61aaea8bd71dcf62ff2168fd4de92a55bdfdbb364981d73",
+    "src/operations/operations.css": "62479f468ddb42db09571f6193e6c5b378cfb3c3a6a42e9c3837f5c62c738b01",
+    "src/operations/scene.js": "1673b3577f5991879759e47fd0a36ff7d41150476826b664127a66edf37e20ce",
+    "src/style.css": "4e1c2f0abd9897376a73cc7b001d09d6400056d15a51d7e9ced62d9972626d17",
+    "vercel.json": "668a25e743367c26c1467216d20d07312fa013a4e2a1b779a8f9c223211da05a",
+    "vite.config.js": "e68a53983b8ed561934949c30ccabcc5f74502afd202b6f098ccdb17ab1cd33e"
+  }
+}
