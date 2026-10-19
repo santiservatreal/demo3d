@@ -3,7 +3,14 @@ import "@fontsource/dm-sans/latin-500.css";
 import "@fontsource/dm-sans/latin-600.css";
 import "@fontsource/manrope/latin-600.css";
 import "@fontsource/manrope/latin-700.css";
+import { LANDING_EXAMPLE } from "./executive-data.js";
+import { createLandingMotion } from "./motion.js";
+import { renderLandingMapContext, createLandingMapContext } from "./map-context.js";
+import { renderDirectorStory, createDirectorStory } from "./director-story.js";
 import "./style.css";
+import "./map-context.css";
+import "./director-story.css";
+import "./motion.css";
 
 const productUrl = "https://pipeline-city.vercel.app/";
 const asset = (name) => `/assets/landing/birdview-${name}.webp`;
@@ -50,29 +57,19 @@ document.querySelector("#app").innerHTML = `
   <main id="birdview-landing">
     <section class="bv-hero" aria-labelledby="bv-hero-title">
       <div class="bv-hero-heading bv-container">
-        <div><p class="bv-eyebrow"><span></span> UNA NUEVA PERSPECTIVA PARA TU NEGOCIO</p><h1 id="bv-hero-title">Tu empresa,<br>a vista de <span>pájaro.</span></h1></div>
-        <div class="bv-hero-intro"><p>Todo lo que pasa en tu negocio,<br class="bv-desktop-break"> en una ciudad que puedes explorar.<br class="bv-desktop-break"> Ventas, equipo y actividad.<br class="bv-desktop-break"> Por fin, una visión de conjunto.</p><div class="bv-hero-actions"><a class="bv-button bv-button-blue" ${external}>Entrar en la ciudad ${icon("northeast")}</a><a class="bv-video-link" href="/demo"><span>${icon("play")}</span> Ver presentación</a></div><small>Un producto de <b>FaradAI</b></small></div>
+        <div><p class="bv-eyebrow"><span></span> LA VISIÓN DE CONJUNTO PARA DIRIGIR TU NEGOCIO</p><h1 id="bv-hero-title">Tu empresa,<br>a vista de <span>pájaro.</span></h1></div>
+        <div class="bv-hero-intro"><p>Ve cuánto has facturado,<br class="bv-desktop-break"> qué ventas están por cerrar<br class="bv-desktop-break"> y dónde necesita apoyo tu equipo.<br class="bv-desktop-break"> Una visión de conjunto para decidir.</p><div class="bv-hero-actions"><a class="bv-button bv-button-blue" ${external}>Entrar en la ciudad ${icon("northeast")}</a><a class="bv-video-link" href="/demo"><span>${icon("play")}</span> Ver presentación</a></div><small>Un producto de <b>FaradAI</b></small></div>
       </div>
       <div class="bv-city-stage">
-        <div class="bv-map-grid" aria-hidden="true"></div>
-        <img class="bv-city-image" src="${asset("city")}" alt="Ciudad isométrica de BirdView con edificios que representan las oportunidades, las comunicaciones y las operaciones de una empresa" width="2000" height="1120" fetchpriority="high">
-        <div class="bv-floating bv-floating-pipeline"><span class="bv-card-label"><i></i> TU PIPELINE, A SIMPLE VISTA</span><div><strong>95.000<span>€</span></strong>${icon("chart")}</div><span class="bv-mini-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><small>Oportunidades que toman forma.</small></div>
-        <button class="bv-map-pin bv-pin-sales" data-hero-focus="sales"><span>01</span> Tu próxima venta ${icon("northeast")}</button>
-        <button class="bv-map-pin bv-pin-team" data-hero-focus="team"><span>02</span> Un equipo conectado ${icon("people")}</button>
-        <div class="bv-floating bv-floating-win"><span class="bv-win-icon">${icon("check")}</span><div><small>UN NUEVO LOGRO EN LA CIUDAD</small><b>¡Venta ganada!</b></div><span>+18.000 €</span></div>
+        ${renderLandingMapContext(LANDING_EXAMPLE)}
         <div class="bv-hero-caption"><span><i></i> Ciudad real de la demo · Datos de ejemplo</span><a href="#features">Descubre una nueva forma de ver ${icon("down")}</a><span>Diseñado por FaradAI</span></div>
       </div>
     </section>
 
-    <section class="bv-perspective bv-container" aria-labelledby="bv-perspective-title">
-      <p class="bv-eyebrow">MENOS DISTANCIA ENTRE LOS DATOS Y LAS IDEAS</p>
-      <h2 id="bv-perspective-title">Hay una historia detrás<br>de cada número. <span>Ahora puedes verla.</span></h2>
-      <p>Un nuevo contacto. Una propuesta que avanza. Un equipo que consigue una venta. BirdView convierte esos momentos en lugares y movimiento, para que entender tu negocio sea tan natural como mirar una ciudad.</p>
-      <div class="bv-principles"><span>${icon("eye")} Una visión de conjunto</span><span>${icon("layers")} Cada etapa en su lugar</span><span>${icon("spark")} Cada avance cobra vida</span></div>
-    </section>
+    ${renderDirectorStory(LANDING_EXAMPLE)}
 
     <section class="bv-features bv-container" id="features" aria-labelledby="bv-features-title">
-      <div class="bv-section-heading"><div><p class="bv-eyebrow">UNA CIUDAD. MUCHAS HISTORIAS.</p><h2 id="bv-features-title">Acércate a lo<br>que importa.</h2></div><p>Explora el negocio desde diferentes perspectivas.<br>Todo forma parte de la misma ciudad.</p></div>
+      <div class="bv-section-heading"><div><p class="bv-eyebrow">DEL DATO A LA DECISIÓN</p><h2 id="bv-features-title">Acércate a lo<br>que importa.</h2></div><p>El contexto detrás de cada cifra.<br>Ventas, responsables y actividad en la misma vista.</p></div>
       <div class="bv-feature-tabs" role="tablist" aria-label="Perspectivas de BirdView"><button id="bv-tab-sales" role="tab" data-feature-tab="sales" aria-controls="bv-panel-sales" aria-selected="true" tabindex="0">${icon("chart")} Tus ventas <span>01</span></button><button id="bv-tab-team" role="tab" data-feature-tab="team" aria-controls="bv-panel-team" aria-selected="false" tabindex="-1">${icon("people")} Tu equipo <span>02</span></button><button id="bv-tab-activity" role="tab" data-feature-tab="activity" aria-controls="bv-panel-activity" aria-selected="false" tabindex="-1">${icon("message")} La actividad <span>03</span></button></div>
       <div class="bv-feature-panel" id="bv-panel-sales" data-feature-panel="sales" role="tabpanel" aria-labelledby="bv-tab-sales">
         <div class="bv-feature-copy"><span class="bv-feature-number">01 / VENTAS</span><h3>Cada oportunidad<br>tiene su lugar.</h3><p>Tu pipeline se convierte en barrios. Los edificios muestran las oportunidades y la ciudad cambia cuando una venta avanza.</p><ul><li>${icon("check")} Identifica la etapa de cada oportunidad.</li><li>${icon("check")} Reconoce dónde se concentra el valor.</li><li>${icon("check")} Celebra los acuerdos ganados.</li></ul><a ${external}>Recorrer el pipeline ${icon("northeast")}</a></div><div class="bv-feature-visual"><img src="${asset("sales")}" alt="Detalle del barrio comercial de BirdView con oportunidades representadas como edificios" width="1600" height="1000" loading="lazy"><div class="bv-visual-tag"><i></i> De nuevo lead a venta ganada</div></div>
@@ -120,6 +117,7 @@ mobileNav.addEventListener("click", (event) => { if (event.target.closest("a")) 
 document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !mobileNav.hidden) { closeMenu(); menu.focus(); } });
 matchMedia("(min-width: 901px)").addEventListener("change", (event) => { if (event.matches) closeMenu(); });
 
+let motion = null;
 const tabs = [...document.querySelectorAll("[data-feature-tab]")];
 function selectFeature(id, focus = false) {
   for (const tab of tabs) {
@@ -129,6 +127,7 @@ function selectFeature(id, focus = false) {
     if (selected && focus) tab.focus();
   }
   for (const panel of document.querySelectorAll("[data-feature-panel]")) panel.hidden = panel.dataset.featurePanel !== id;
+  motion?.refresh();
 }
 for (const [index, tab] of tabs.entries()) {
   tab.addEventListener("click", () => selectFeature(tab.dataset.featureTab));
@@ -137,10 +136,25 @@ for (const [index, tab] of tabs.entries()) {
     if (destination !== null) { event.preventDefault(); selectFeature(tabs[destination].dataset.featureTab, true); }
   });
 }
-for (const button of document.querySelectorAll("[data-hero-focus]")) button.addEventListener("click", () => {
-  selectFeature(button.dataset.heroFocus);
+function exploreFeature(id) {
+  selectFeature(id);
   document.querySelector("#features").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
-});
+}
+const landingRoot = document.querySelector("#birdview-landing");
+const mapContext = createLandingMapContext({ container: landingRoot, snapshot: LANDING_EXAMPLE, onExplore: exploreFeature });
+const directorStory = createDirectorStory({ container: landingRoot, snapshot: LANDING_EXAMPLE, onChange: () => motion?.refresh() });
+motion = createLandingMotion({ root: landingRoot });
+window.__BIRD_LANDING_MOTION__ = motion;
+window.__BIRD_LANDING__ = Object.freeze({ getState: () => ({ example: LANDING_EXAMPLE, motion: motion.getState(), map: mapContext.getState(), director: directorStory.getState() }) });
+
+function cleanup(event) {
+  if (event.persisted) return;
+  motion.dispose();
+  mapContext.dispose();
+  directorStory.dispose();
+  window.removeEventListener("pagehide", cleanup);
+}
+window.addEventListener("pagehide", cleanup);
 
 const appear = [...document.querySelectorAll(".bv-section-heading, .bv-perspective, .bv-steps > article, .bv-possibilities")];
 if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) appear.forEach(element => element.classList.add("is-visible"));

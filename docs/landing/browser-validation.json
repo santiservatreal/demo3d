@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-19T09:52:54.610Z",
-  "startedAt": "2026-10-19T09:52:36.473Z",
+  "generatedAt": "2026-10-19T10:20:05.637Z",
+  "startedAt": "2026-10-19T10:19:25.783Z",
   "browser": "154.0.8037.57",
-  "environment": "Chromium headless on Linux; desktop 1440×1000 and mobile viewport 390×844, not a physical-phone test. Existing WebGL routes use ANGLE/SwiftShader.",
-  "screenshots": "Actual rendered landing; finite DOM animations disabled for readable stills.",
+  "environment": "Chromium headless on Linux; desktop 1440×1000 and mobile viewports 390×844 / 360×800, not a physical-phone test. Existing WebGL routes use ANGLE/SwiftShader.",
+  "screenshots": "Actual rendered landing. Finite DOM entrance animations are disabled for readable stills; number evolution is observed as real intermediate DOM values in a separate page.",
   "productDestination": "https://pipeline-city.vercel.app/",
   "liveConversationStarted": false,
   "microphoneOpened": false,
@@ -14,6 +14,13 @@
       "detail": {
         "title": "BirdView — Tu empresa, a vista de pájaro · FaradAI",
         "productUrl": "https://pipeline-city.vercel.app/",
+        "firstViewportContext": [
+          "lead",
+          "qualified",
+          "proposal",
+          "negotiation",
+          "won"
+        ],
         "layout": {
           "viewportWidth": 1440,
           "viewportHeight": 1000,
@@ -28,6 +35,294 @@
           "tavusRegistered": false,
           "tavusElements": 0
         }
+      }
+    },
+    {
+      "name": "commercial-map-identifies-five-real-stages-and-opens-context-with-keyboard-and-pointer",
+      "passed": true,
+      "detail": {
+        "stageStates": [
+          {
+            "stage": "lead",
+            "count": 4,
+            "amount": 20000,
+            "control": "1 Nuevos leads 4 oportunidades · 20.000 €",
+            "detail": "Nuevos leads El próximo negocio empieza aquí. Dos contactos esperan una primera conversación. Valor en esta etapa 20.000 € Oportunidades 4 Responsables Equipo comercial 2 necesitan atención"
+          },
+          {
+            "stage": "qualified",
+            "count": 3,
+            "amount": 18000,
+            "control": "2 Cualificados 3 oportunidades · 18.000 €",
+            "detail": "Cualificados El interés ya tiene recorrido. Tres oportunidades con encaje confirmado. Valor en esta etapa 18.000 € Oportunidades 3 Responsable Lucía Costa Ver el pipeline"
+          },
+          {
+            "stage": "proposal",
+            "count": 2,
+            "amount": 30000,
+            "control": "3 Propuestas 2 oportunidades · 30.000 €",
+            "detail": "Propuestas Propuestas con una decisión pendiente. Dos propuestas concentran 30.000 € del pipeline. Valor en esta etapa 30.000 € Oportunidades 2 Responsable Ana Gil Ver el pipeline"
+          },
+          {
+            "stage": "negotiation",
+            "count": 1,
+            "amount": 27000,
+            "control": "4 Negociación 1 oportunidad · 27.000 €",
+            "detail": "Negociación Una negociación que merece tu atención. Luma SL lleva cinco días sin respuesta. Hay 27.000 € en seguimiento. Valor en esta etapa 27.000 € Oportunidades 1 Responsable Marc Ruiz 1 necesita atención"
+          },
+          {
+            "stage": "won",
+            "count": 4,
+            "amount": 60000,
+            "control": "5 Ventas ganadas 4 ganadas · 60.000 €",
+            "detail": "Ventas ganadas Los resultados también tienen barrio. Cuatro acuerdos ganados este mes. El último, de Marc Ruiz: 18.000 €. Ganado este mes 60.000 € Ventas ganadas 4 Responsables Todo el equipo Ver el pipeline"
+          }
+        ],
+        "controls": [
+          {
+            "stage": "lead",
+            "text": "1Nuevos leads4 oportunidades · 20.000 €",
+            "label": null,
+            "pressed": "true",
+            "x": 358.859375,
+            "y": 221.296875,
+            "width": 127,
+            "height": 46
+          },
+          {
+            "stage": "qualified",
+            "text": "2Cualificados3 oportunidades · 18.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 470.015625,
+            "y": 268.5,
+            "width": 127,
+            "height": 46
+          },
+          {
+            "stage": "proposal",
+            "text": "3Propuestas2 oportunidades · 30.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 579.5,
+            "y": 314.984375,
+            "width": 127,
+            "height": 46
+          },
+          {
+            "stage": "negotiation",
+            "text": "4Negociación1 oportunidad · 27.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 688.828125,
+            "y": 361.484375,
+            "width": 127,
+            "height": 46
+          },
+          {
+            "stage": "won",
+            "text": "5Ventas ganadas4 ganadas · 60.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 800,
+            "y": 408.671875,
+            "width": 127,
+            "height": 46
+          }
+        ]
+      }
+    },
+    {
+      "name": "executive-questions-distinguish-open-pipeline-won-contracts-and-issued-invoices",
+      "passed": true,
+      "detail": {
+        "directorStates": [
+          {
+            "question": "overview",
+            "text": "FACTURADO ESTE MES 42.000 € Una lectura de conjunto Ventas ganadas 60.000 € Cada edificio, una oportunidad. Ventas ganadas 60.000 € = Facturado 42.000 € + Por facturar 18.000 € Objetivo de ventas 80.000 € 75 %",
+            "metrics": [
+              {
+                "target": 42000,
+                "value": 42000,
+                "state": "complete",
+                "text": "42.000 €",
+                "label": "42.000 €",
+                "format": "eur"
+              },
+              {
+                "target": 60000,
+                "value": 60000,
+                "state": "complete",
+                "text": "60.000 €",
+                "label": "60.000 €",
+                "format": "eur"
+              },
+              {
+                "target": 60000,
+                "value": 60000,
+                "state": "complete",
+                "text": "60.000 €",
+                "label": "60.000 €",
+                "format": "eur"
+              },
+              {
+                "target": 42000,
+                "value": 42000,
+                "state": "complete",
+                "text": "42.000 €",
+                "label": "42.000 €",
+                "format": "eur"
+              },
+              {
+                "target": 18000,
+                "value": 18000,
+                "state": "complete",
+                "text": "18.000 €",
+                "label": "18.000 €",
+                "format": "eur"
+              },
+              {
+                "target": 75,
+                "value": 75,
+                "state": "complete",
+                "text": "75 %",
+                "label": "75 %",
+                "format": "percent"
+              }
+            ]
+          },
+          {
+            "question": "attention",
+            "text": "CUENTAS QUE NECESITAN ATENCIÓN 3 prioridades visibles Luma SL 27.000 € La próxima conversación importa. Luma SL Negociación 5 días sin respuesta. Una oportunidad de 27.000 € que merece una llamada. Responsable: Marc Ruiz 2 leads pendientes de primer contacto Arce Estudio Lucía Costa 6000 € Nexo Digital Ana Gil 4000 €",
+            "metrics": [
+              {
+                "target": 3,
+                "value": 3,
+                "state": "complete",
+                "text": "3",
+                "label": "3",
+                "format": "integer"
+              }
+            ]
+          },
+          {
+            "question": "team",
+            "text": "PERSONAS DETRÁS DE LOS RESULTADOS 60.000 € ganados LC Lucía Costa En la ciudad LC Lucía Costa 2 ventas ganadas · 4 en curso 32.000 € MR Marc Ruiz 1 venta ganada · 3 en curso 18.000 € AG Ana Gil 1 venta ganada · 3 en curso 10.000 € Resultados y carga de trabajo, con su contexto.",
+            "metrics": [
+              {
+                "target": 60000,
+                "value": 60000,
+                "state": "complete",
+                "text": "60.000 €",
+                "label": "60.000 €",
+                "format": "eur"
+              },
+              {
+                "target": 32000,
+                "value": 32000,
+                "state": "complete",
+                "text": "32.000 €",
+                "label": "32.000 €",
+                "format": "eur"
+              },
+              {
+                "target": 18000,
+                "value": 18000,
+                "state": "complete",
+                "text": "18.000 €",
+                "label": "18.000 €",
+                "format": "eur"
+              },
+              {
+                "target": 10000,
+                "value": 10000,
+                "state": "complete",
+                "text": "10.000 €",
+                "label": "10.000 €",
+                "format": "eur"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "representative-results-reconcile-with-the-company-example-without-changing-its-data",
+      "passed": true,
+      "detail": {
+        "teamFacts": [
+          {
+            "id": "lucia",
+            "name": "Lucía Costa",
+            "amount": 32000,
+            "wins": 2,
+            "active": 4,
+            "text": "LC Lucía Costa 2 ventas ganadas · 4 en curso 32.000 €"
+          },
+          {
+            "id": "marc",
+            "name": "Marc Ruiz",
+            "amount": 18000,
+            "wins": 1,
+            "active": 3,
+            "text": "MR Marc Ruiz 1 venta ganada · 3 en curso 18.000 €"
+          },
+          {
+            "id": "ana",
+            "name": "Ana Gil",
+            "amount": 10000,
+            "wins": 1,
+            "active": 3,
+            "text": "AG Ana Gil 1 venta ganada · 3 en curso 10.000 €"
+          }
+        ],
+        "wonTotal": 60000,
+        "wins": 4,
+        "activeOpportunities": 10
+      }
+    },
+    {
+      "name": "scrolling-the-executive-story-changes-the-visible-question-and-its-indicators",
+      "passed": true,
+      "detail": {
+        "scrollPerspectives": [
+          {
+            "perspective": "overview",
+            "state": {
+              "active": "overview",
+              "desktop": true,
+              "disposed": false,
+              "panelCount": 3,
+              "simulated": true,
+              "businessMutation": false,
+              "snapshotProvided": true
+            }
+          },
+          {
+            "perspective": "attention",
+            "state": {
+              "active": "attention",
+              "desktop": true,
+              "disposed": false,
+              "panelCount": 3,
+              "simulated": true,
+              "businessMutation": false,
+              "snapshotProvided": true
+            }
+          },
+          {
+            "perspective": "team",
+            "state": {
+              "active": "team",
+              "desktop": true,
+              "disposed": false,
+              "panelCount": 3,
+              "simulated": true,
+              "businessMutation": false,
+              "snapshotProvided": true
+            }
+          }
+        ]
       }
     },
     {
@@ -130,6 +425,21 @@
             "width": 1600
           },
           {
+            "src": "/assets/landing/birdview-sales.webp",
+            "complete": true,
+            "width": 1600
+          },
+          {
+            "src": "/assets/landing/birdview-team.webp",
+            "complete": true,
+            "width": 1600
+          },
+          {
+            "src": "/assets/landing/birdview-sales.webp",
+            "complete": true,
+            "width": 1600
+          },
+          {
             "src": "/assets/landing/birdview-team.webp",
             "complete": true,
             "width": 1600
@@ -155,6 +465,909 @@
       }
     },
     {
+      "name": "backgrounded-landing-suspends-counter-work-and-resumes-without-a-time-jump",
+      "passed": true,
+      "detail": {
+        "visibilityMethod": "QA-controlled document.visibilityState with a real visibilitychange event; not an OS focus test",
+        "hiddenBefore": {
+          "active": 1,
+          "completed": 4,
+          "total": 16,
+          "pendingFrame": false,
+          "reducedMotion": false,
+          "suspended": true,
+          "disposed": false,
+          "frameCount": 35,
+          "observerCount": 1,
+          "units": [
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            }
+          ],
+          "values": [
+            {
+              "target": 42000,
+              "value": 42000,
+              "formatted": "42.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 95000,
+              "value": 95000,
+              "formatted": "95.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 3,
+              "value": 3,
+              "formatted": "3",
+              "state": "complete"
+            },
+            {
+              "target": 32000,
+              "value": 32000,
+              "formatted": "32.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 18000,
+              "value": 7055.206727196045,
+              "formatted": "7.055 €",
+              "state": "running"
+            },
+            {
+              "target": 42000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 60000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 60000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 42000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 18000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 75,
+              "value": 0,
+              "formatted": "0 %",
+              "state": "pending"
+            },
+            {
+              "target": 3,
+              "value": 0,
+              "formatted": "0",
+              "state": "pending"
+            },
+            {
+              "target": 60000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 32000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 18000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 10000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            }
+          ],
+          "businessMutation": false
+        },
+        "hiddenAfter": {
+          "active": 1,
+          "completed": 4,
+          "total": 16,
+          "pendingFrame": false,
+          "reducedMotion": false,
+          "suspended": true,
+          "disposed": false,
+          "frameCount": 35,
+          "observerCount": 1,
+          "units": [
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            }
+          ],
+          "values": [
+            {
+              "target": 42000,
+              "value": 42000,
+              "formatted": "42.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 95000,
+              "value": 95000,
+              "formatted": "95.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 3,
+              "value": 3,
+              "formatted": "3",
+              "state": "complete"
+            },
+            {
+              "target": 32000,
+              "value": 32000,
+              "formatted": "32.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 18000,
+              "value": 7055.206727196045,
+              "formatted": "7.055 €",
+              "state": "running"
+            },
+            {
+              "target": 42000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 60000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 60000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 42000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 18000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 75,
+              "value": 0,
+              "formatted": "0 %",
+              "state": "pending"
+            },
+            {
+              "target": 3,
+              "value": 0,
+              "formatted": "0",
+              "state": "pending"
+            },
+            {
+              "target": 60000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 32000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 18000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            },
+            {
+              "target": 10000,
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
+            }
+          ],
+          "businessMutation": false
+        }
+      }
+    },
+    {
+      "name": "offscreen-metrics-start-at-zero-then-count-monotonically-to-the-final-value-once",
+      "passed": true,
+      "detail": {
+        "subject": {
+          "target": 18000,
+          "value": 0,
+          "state": "pending",
+          "text": "0 €",
+          "label": "18.000 €"
+        },
+        "partial": {
+          "value": 7055.206727196045,
+          "text": "7.055 €"
+        },
+        "animation": {
+          "target": 18000,
+          "value": 18000,
+          "text": "18.000 €",
+          "samples": [
+            {
+              "value": 0,
+              "state": "pending"
+            },
+            {
+              "value": 0,
+              "state": "pending"
+            },
+            {
+              "value": 0,
+              "state": "running"
+            },
+            {
+              "value": 3351.391130188152,
+              "state": "running"
+            },
+            {
+              "value": 7055.206727196045,
+              "state": "running"
+            },
+            {
+              "value": 7738.1158526185345,
+              "state": "running"
+            },
+            {
+              "value": 8187.911155278464,
+              "state": "running"
+            },
+            {
+              "value": 9860.420609510016,
+              "state": "running"
+            },
+            {
+              "value": 10247.658601669553,
+              "state": "running"
+            },
+            {
+              "value": 10982.762198908491,
+              "state": "running"
+            },
+            {
+              "value": 12616.73386403813,
+              "state": "running"
+            },
+            {
+              "value": 13462.540364272496,
+              "state": "running"
+            },
+            {
+              "value": 14214.761130624507,
+              "state": "running"
+            },
+            {
+              "value": 14878.88313154409,
+              "state": "running"
+            },
+            {
+              "value": 15276.154312657505,
+              "state": "running"
+            },
+            {
+              "value": 15964.778710885703,
+              "state": "running"
+            },
+            {
+              "value": 16261.459538089215,
+              "state": "running"
+            },
+            {
+              "value": 16872.149260681697,
+              "state": "running"
+            },
+            {
+              "value": 17070.055550403216,
+              "state": "running"
+            },
+            {
+              "value": 17320.361204273733,
+              "state": "running"
+            },
+            {
+              "value": 17459.908807487347,
+              "state": "running"
+            },
+            {
+              "value": 17678.73979732519,
+              "state": "running"
+            },
+            {
+              "value": 17761.392666659987,
+              "state": "running"
+            },
+            {
+              "value": 17856.798519428263,
+              "state": "running"
+            },
+            {
+              "value": 17903.5924870343,
+              "state": "running"
+            },
+            {
+              "value": 17952.846892500707,
+              "state": "running"
+            },
+            {
+              "value": 17973.8999546249,
+              "state": "running"
+            },
+            {
+              "value": 17992.052133866706,
+              "state": "running"
+            },
+            {
+              "value": 17998.923105975126,
+              "state": "running"
+            },
+            {
+              "value": 17999.945753086395,
+              "state": "running"
+            },
+            {
+              "value": 18000,
+              "state": "complete"
+            },
+            {
+              "value": 18000,
+              "state": "complete"
+            }
+          ]
+        },
+        "initialMetrics": [
+          {
+            "target": 42000,
+            "value": 35715.65240605761,
+            "state": "running",
+            "text": "35.716 €",
+            "label": "42.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 95000,
+            "value": 80785.40425179698,
+            "state": "running",
+            "text": "80.785 €",
+            "label": "95.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 3,
+            "value": 2.5511180290041153,
+            "state": "running",
+            "text": "3",
+            "label": "3",
+            "format": "integer"
+          },
+          {
+            "target": 32000,
+            "value": 27211.92564271056,
+            "state": "running",
+            "text": "27.212 €",
+            "label": "32.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 18000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "18.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 42000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "42.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 60000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "60.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 60000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "60.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 42000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "42.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 18000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "18.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 75,
+            "value": 0,
+            "state": "pending",
+            "text": "0 %",
+            "label": "75 %",
+            "format": "percent"
+          },
+          {
+            "target": 3,
+            "value": 0,
+            "state": "pending",
+            "text": "0",
+            "label": "3",
+            "format": "integer"
+          },
+          {
+            "target": 60000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "60.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 32000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "32.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 18000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "18.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 10000,
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
+            "label": "10.000 €",
+            "format": "eur"
+          }
+        ]
+      }
+    },
+    {
+      "name": "finished-or-offscreen-metrics-leave-no-idle-animation-clock-running",
+      "passed": true,
+      "detail": {
+        "idleBefore": {
+          "active": 0,
+          "completed": 5,
+          "total": 16,
+          "pendingFrame": false,
+          "reducedMotion": false,
+          "suspended": false,
+          "disposed": false,
+          "frameCount": 73,
+          "observerCount": 1,
+          "units": [
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            }
+          ],
+          "values": [
+            {
+              "target": 42000,
+              "value": 42000,
+              "formatted": "42.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 95000,
+              "value": 95000,
+              "formatted": "95.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 3,
+              "value": 3,
+              "formatted": "3",
+              "state": "complete"
+            },
+            {
+              "target": 32000,
+              "value": 32000,
+              "formatted": "32.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 18000,
+              "value": 18000,
+              "formatted": "18.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 42000,
+              "value": 24028.05344562297,
+              "formatted": "24.028 €",
+              "state": "running"
+            },
+            {
+              "target": 60000,
+              "value": 34325.790636604244,
+              "formatted": "34.326 €",
+              "state": "running"
+            },
+            {
+              "target": 60000,
+              "value": 34310.645100960995,
+              "formatted": "34.311 €",
+              "state": "running"
+            },
+            {
+              "target": 42000,
+              "value": 24017.451570672696,
+              "formatted": "24.017 €",
+              "state": "running"
+            },
+            {
+              "target": 18000,
+              "value": 10293.193530288298,
+              "formatted": "10.293 €",
+              "state": "running"
+            },
+            {
+              "target": 75,
+              "value": 42.88830637620124,
+              "formatted": "43 %",
+              "state": "running"
+            },
+            {
+              "target": 3,
+              "value": 0,
+              "formatted": "0",
+              "state": "pending"
+            },
+            {
+              "target": 60000,
+              "value": 8521.391555614719,
+              "formatted": "8.521 €",
+              "state": "running"
+            },
+            {
+              "target": 32000,
+              "value": 4538.320882237685,
+              "formatted": "4.538 €",
+              "state": "running"
+            },
+            {
+              "target": 18000,
+              "value": 2552.8054962586975,
+              "formatted": "2.553 €",
+              "state": "running"
+            },
+            {
+              "target": 10000,
+              "value": 1418.2252756992764,
+              "formatted": "1.418 €",
+              "state": "running"
+            }
+          ],
+          "businessMutation": false
+        },
+        "idleAfter": {
+          "active": 0,
+          "completed": 5,
+          "total": 16,
+          "pendingFrame": false,
+          "reducedMotion": false,
+          "suspended": false,
+          "disposed": false,
+          "frameCount": 73,
+          "observerCount": 1,
+          "units": [
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
+            }
+          ],
+          "values": [
+            {
+              "target": 42000,
+              "value": 42000,
+              "formatted": "42.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 95000,
+              "value": 95000,
+              "formatted": "95.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 3,
+              "value": 3,
+              "formatted": "3",
+              "state": "complete"
+            },
+            {
+              "target": 32000,
+              "value": 32000,
+              "formatted": "32.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 18000,
+              "value": 18000,
+              "formatted": "18.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 42000,
+              "value": 24028.05344562297,
+              "formatted": "24.028 €",
+              "state": "running"
+            },
+            {
+              "target": 60000,
+              "value": 34325.790636604244,
+              "formatted": "34.326 €",
+              "state": "running"
+            },
+            {
+              "target": 60000,
+              "value": 34310.645100960995,
+              "formatted": "34.311 €",
+              "state": "running"
+            },
+            {
+              "target": 42000,
+              "value": 24017.451570672696,
+              "formatted": "24.017 €",
+              "state": "running"
+            },
+            {
+              "target": 18000,
+              "value": 10293.193530288298,
+              "formatted": "10.293 €",
+              "state": "running"
+            },
+            {
+              "target": 75,
+              "value": 42.88830637620124,
+              "formatted": "43 %",
+              "state": "running"
+            },
+            {
+              "target": 3,
+              "value": 0,
+              "formatted": "0",
+              "state": "pending"
+            },
+            {
+              "target": 60000,
+              "value": 8521.391555614719,
+              "formatted": "8.521 €",
+              "state": "running"
+            },
+            {
+              "target": 32000,
+              "value": 4538.320882237685,
+              "formatted": "4.538 €",
+              "state": "running"
+            },
+            {
+              "target": 18000,
+              "value": 2552.8054962586975,
+              "formatted": "2.553 €",
+              "state": "running"
+            },
+            {
+              "target": 10000,
+              "value": 1418.2252756992764,
+              "formatted": "1.418 €",
+              "state": "running"
+            }
+          ],
+          "businessMutation": false
+        }
+      }
+    },
+    {
       "name": "mobile-navigation-opens-closes-on-selection-and-supports-escape",
       "passed": true,
       "detail": {
@@ -163,14 +1376,7 @@
           "viewportHeight": 844,
           "bodyWidth": 390,
           "documentWidth": 390,
-          "overflow": [
-            {
-              "tag": "IMG",
-              "className": "bv-city-image",
-              "left": -81.890625,
-              "right": 471.90625
-            }
-          ]
+          "overflow": []
         }
       }
     },
@@ -183,29 +1389,67 @@
           "viewportHeight": 844,
           "bodyWidth": 390,
           "documentWidth": 390,
-          "overflow": [
-            {
-              "tag": "IMG",
-              "className": "bv-city-image",
-              "left": -81.890625,
-              "right": 471.90625
-            }
-          ]
+          "overflow": []
         },
         "faqLayout": {
           "viewportWidth": 390,
           "viewportHeight": 844,
           "bodyWidth": 390,
           "documentWidth": 390,
-          "overflow": [
-            {
-              "tag": "IMG",
-              "className": "bv-city-image",
-              "left": -81.890625,
-              "right": 471.90625
-            }
-          ]
+          "overflow": []
         },
+        "mobileMapControls": [
+          {
+            "stage": "lead",
+            "text": "1Nuevos leads4 oportunidades · 20.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 19.5,
+            "y": 322.125,
+            "width": 171.5,
+            "height": 54
+          },
+          {
+            "stage": "qualified",
+            "text": "2Cualificados3 oportunidades · 18.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 199,
+            "y": 322.125,
+            "width": 171.5,
+            "height": 54
+          },
+          {
+            "stage": "proposal",
+            "text": "3Propuestas2 oportunidades · 30.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 19.5,
+            "y": 384.125,
+            "width": 171.5,
+            "height": 54
+          },
+          {
+            "stage": "negotiation",
+            "text": "4Negociación1 oportunidad · 27.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 199,
+            "y": 384.125,
+            "width": 171.5,
+            "height": 54
+          },
+          {
+            "stage": "won",
+            "text": "5Ventas ganadas4 ganadas · 60.000 €",
+            "label": null,
+            "pressed": "true",
+            "x": 19.5,
+            "y": 446.125,
+            "width": 351,
+            "height": 46
+          }
+        ],
         "media": {
           "getUserMedia": 0,
           "play": 0,
@@ -216,7 +1460,72 @@
       }
     },
     {
-      "name": "trailing-slash-route-and-reduced-motion-keep-the-landing-and-feature-controls-available",
+      "name": "narrow-mobile-keeps-five-stage-targets-separated-and-footer-navigation-working",
+      "passed": true,
+      "detail": {
+        "controls": [
+          {
+            "stage": "lead",
+            "text": "1Nuevos leads4 oportunidades · 20.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 18,
+            "y": 361.328125,
+            "width": 158,
+            "height": 52
+          },
+          {
+            "stage": "qualified",
+            "text": "2Cualificados3 oportunidades · 18.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 184,
+            "y": 361.328125,
+            "width": 158,
+            "height": 52
+          },
+          {
+            "stage": "proposal",
+            "text": "3Propuestas2 oportunidades · 30.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 18,
+            "y": 421.328125,
+            "width": 158,
+            "height": 52
+          },
+          {
+            "stage": "negotiation",
+            "text": "4Negociación1 oportunidad · 27.000 €",
+            "label": null,
+            "pressed": "true",
+            "x": 184,
+            "y": 421.328125,
+            "width": 158,
+            "height": 52
+          },
+          {
+            "stage": "won",
+            "text": "5Ventas ganadas4 ganadas · 60.000 €",
+            "label": null,
+            "pressed": "false",
+            "x": 18,
+            "y": 481.328125,
+            "width": 324,
+            "height": 46
+          }
+        ],
+        "layout": {
+          "viewportWidth": 360,
+          "viewportHeight": 800,
+          "bodyWidth": 360,
+          "documentWidth": 360,
+          "overflow": []
+        }
+      }
+    },
+    {
+      "name": "trailing-slash-route-and-reduced-motion-show-final-metrics-without-animation",
       "passed": true,
       "detail": {
         "path": "/page/",
@@ -226,6 +1535,288 @@
           "bodyWidth": 1440,
           "documentWidth": 1440,
           "overflow": []
+        },
+        "reducedMetrics": [
+          {
+            "target": 42000,
+            "value": 42000,
+            "state": "complete",
+            "text": "42.000 €",
+            "label": "42.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 95000,
+            "value": 95000,
+            "state": "complete",
+            "text": "95.000 €",
+            "label": "95.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 3,
+            "value": 3,
+            "state": "complete",
+            "text": "3",
+            "label": "3",
+            "format": "integer"
+          },
+          {
+            "target": 32000,
+            "value": 32000,
+            "state": "complete",
+            "text": "32.000 €",
+            "label": "32.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 18000,
+            "value": 18000,
+            "state": "complete",
+            "text": "18.000 €",
+            "label": "18.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 42000,
+            "value": 42000,
+            "state": "complete",
+            "text": "42.000 €",
+            "label": "42.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 60000,
+            "value": 60000,
+            "state": "complete",
+            "text": "60.000 €",
+            "label": "60.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 60000,
+            "value": 60000,
+            "state": "complete",
+            "text": "60.000 €",
+            "label": "60.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 42000,
+            "value": 42000,
+            "state": "complete",
+            "text": "42.000 €",
+            "label": "42.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 18000,
+            "value": 18000,
+            "state": "complete",
+            "text": "18.000 €",
+            "label": "18.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 75,
+            "value": 75,
+            "state": "complete",
+            "text": "75 %",
+            "label": "75 %",
+            "format": "percent"
+          },
+          {
+            "target": 3,
+            "value": 3,
+            "state": "complete",
+            "text": "3",
+            "label": "3",
+            "format": "integer"
+          },
+          {
+            "target": 60000,
+            "value": 60000,
+            "state": "complete",
+            "text": "60.000 €",
+            "label": "60.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 32000,
+            "value": 32000,
+            "state": "complete",
+            "text": "32.000 €",
+            "label": "32.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 18000,
+            "value": 18000,
+            "state": "complete",
+            "text": "18.000 €",
+            "label": "18.000 €",
+            "format": "eur"
+          },
+          {
+            "target": 10000,
+            "value": 10000,
+            "state": "complete",
+            "text": "10.000 €",
+            "label": "10.000 €",
+            "format": "eur"
+          }
+        ],
+        "reducedState": {
+          "active": 0,
+          "completed": 16,
+          "total": 16,
+          "pendingFrame": false,
+          "reducedMotion": true,
+          "suspended": false,
+          "disposed": false,
+          "frameCount": 0,
+          "observerCount": 1,
+          "units": [
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            }
+          ],
+          "values": [
+            {
+              "target": 42000,
+              "value": 42000,
+              "formatted": "42.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 95000,
+              "value": 95000,
+              "formatted": "95.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 3,
+              "value": 3,
+              "formatted": "3",
+              "state": "complete"
+            },
+            {
+              "target": 32000,
+              "value": 32000,
+              "formatted": "32.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 18000,
+              "value": 18000,
+              "formatted": "18.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 42000,
+              "value": 42000,
+              "formatted": "42.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 60000,
+              "value": 60000,
+              "formatted": "60.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 60000,
+              "value": 60000,
+              "formatted": "60.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 42000,
+              "value": 42000,
+              "formatted": "42.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 18000,
+              "value": 18000,
+              "formatted": "18.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 75,
+              "value": 75,
+              "formatted": "75 %",
+              "state": "complete"
+            },
+            {
+              "target": 3,
+              "value": 3,
+              "formatted": "3",
+              "state": "complete"
+            },
+            {
+              "target": 60000,
+              "value": 60000,
+              "formatted": "60.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 32000,
+              "value": 32000,
+              "formatted": "32.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 18000,
+              "value": 18000,
+              "formatted": "18.000 €",
+              "state": "complete"
+            },
+            {
+              "target": 10000,
+              "value": 10000,
+              "formatted": "10.000 €",
+              "state": "complete"
+            }
+          ],
+          "businessMutation": false
         }
       }
     },
@@ -261,34 +1852,35 @@
   "errors": [],
   "failedResources": [],
   "tavusRequests": [],
+  "thirdPartyRequests": [],
   "loadedAssets": [
     "/assets/modulepreload-polyfill-B5Qt9EMX.js",
-    "/assets/app-FCYrSXvS.js",
-    "/assets/latin-700-LcJfTqXW.css",
+    "/assets/app-CO1zmH5I.js",
+    "/assets/app-DYXJ_CvF.css",
+    "/assets/app-C4jlBRnH.js",
     "/assets/latin-600-BnRhtdY-.css",
-    "/assets/app-BJoYa6sv.css",
-    "/assets/app-DtkvRjdp.js",
+    "/assets/latin-700-LcJfTqXW.css",
     "/assets/landing/birdview-city.webp",
     "/assets/manrope-latin-700-normal-BZp_XxE4.woff2",
     "/assets/landing/birdview-sales.webp",
+    "/assets/dm-sans-latin-600-normal-Aqo67rzb.woff2",
     "/assets/dm-sans-latin-400-normal-CW0RaeGs.woff2",
     "/assets/manrope-latin-600-normal-4f0koTD-.woff2",
-    "/assets/dm-sans-latin-600-normal-Aqo67rzb.woff2",
     "/assets/dm-sans-latin-500-normal-B9HHJjqV.woff2",
-    "/assets/landing/birdview-industry.webp",
     "/assets/landing/birdview-team.webp",
+    "/assets/landing/birdview-industry.webp",
     "/assets/landing/birdview-activity.webp",
     "/assets/landing/birdview-mark.svg",
     "/assets/latin-400-CIditRp3.css",
     "/assets/app-BtU1d9e3.css",
-    "/assets/RGBELoader-BquQ1Z7r.js",
-    "/assets/app-BHK49WIY.js",
     "/assets/sparkles-Da5qkh_G.js",
+    "/assets/RGBELoader-BquQ1Z7r.js",
     "/assets/info-DtALk9Ur.js",
     "/assets/users-CBh7sSBi.js",
     "/assets/sliders-horizontal-qyZjLL62.js",
+    "/assets/app-BHK49WIY.js",
     "/assets/latin-400-B4QAHSh-.js",
-    "/assets/app-B2dJqqPn.js",
+    "/assets/app-B6XqXOYc.js",
     "/assets/simulation-app-B2pmtNoY.js",
     "/assets/style-Bm_FjAwn.css",
     "/assets/simulation-app-BP9ylIrr.css",
@@ -347,7 +1939,14 @@
     "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
     "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
     "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
-    "src/landing/app.js": "dcf1f912d629db1aeeaf753804264a15e65e00d7fe817d5d7ba1f3d7b78002a5",
+    "src/landing/app.js": "64142e264368ee22cbdb9b1e993d92c0f58ae6018a1d77da2f965d8245d12060",
+    "src/landing/director-story.css": "2af0c8522757088da4fc4013cb4000d4585bb66840e12f5a08c3803e36103674",
+    "src/landing/director-story.js": "b87a272deac21382fd3c89fd2ec021177d066ec3265625391f7e2c4c81880fe8",
+    "src/landing/executive-data.js": "49ccd8aff87115c9ae54d9bb9f5001f4937fbcce5e1a260a99dac5cbaafcc47f",
+    "src/landing/map-context.css": "9ff077edf3a082f65a210da3564cc8d1d791037033a9e8e036991ed4503a90f5",
+    "src/landing/map-context.js": "f0a717479c35b1a70c898176b125cdd3dc7c50edbb0b6c1e25e430935ae9e6f2",
+    "src/landing/motion.css": "a325f15c7eb501adf949be6a2972e8f07d6d0c6e733dffb78dddf81cd5a44f1f",
+    "src/landing/motion.js": "24098fe127434a06253c2607cd0b3dd76f67d3fbed304b90498f8f8e453cfe8f",
     "src/landing/style.css": "f1db21625b6deda37425d03bf893476c3f1cf1cc9ca9c0e2a7289d5893912e49",
     "src/luma/app.js": "0146dc81f3542e6ae9c5bef8d1807c15d9414836507156ce4524b9cced991f0d",
     "src/luma/assets.js": "c88d2c789dad6af119ffcd3bf199918d61d3910fea1b8a1afa2bc41bc20a964d",
@@ -416,7 +2015,14 @@
     "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
     "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
     "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
-    "src/landing/app.js": "dcf1f912d629db1aeeaf753804264a15e65e00d7fe817d5d7ba1f3d7b78002a5",
+    "src/landing/app.js": "64142e264368ee22cbdb9b1e993d92c0f58ae6018a1d77da2f965d8245d12060",
+    "src/landing/director-story.css": "2af0c8522757088da4fc4013cb4000d4585bb66840e12f5a08c3803e36103674",
+    "src/landing/director-story.js": "b87a272deac21382fd3c89fd2ec021177d066ec3265625391f7e2c4c81880fe8",
+    "src/landing/executive-data.js": "49ccd8aff87115c9ae54d9bb9f5001f4937fbcce5e1a260a99dac5cbaafcc47f",
+    "src/landing/map-context.css": "9ff077edf3a082f65a210da3564cc8d1d791037033a9e8e036991ed4503a90f5",
+    "src/landing/map-context.js": "f0a717479c35b1a70c898176b125cdd3dc7c50edbb0b6c1e25e430935ae9e6f2",
+    "src/landing/motion.css": "a325f15c7eb501adf949be6a2972e8f07d6d0c6e733dffb78dddf81cd5a44f1f",
+    "src/landing/motion.js": "24098fe127434a06253c2607cd0b3dd76f67d3fbed304b90498f8f8e453cfe8f",
     "src/landing/style.css": "f1db21625b6deda37425d03bf893476c3f1cf1cc9ca9c0e2a7289d5893912e49",
     "src/luma/app.js": "0146dc81f3542e6ae9c5bef8d1807c15d9414836507156ce4524b9cced991f0d",
     "src/luma/assets.js": "c88d2c789dad6af119ffcd3bf199918d61d3910fea1b8a1afa2bc41bc20a964d",

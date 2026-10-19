@@ -1,0 +1,36 @@
+/* The map's cards have their own positioning transform. Animate only opacity
+   and the independent translate property so their anchors never drift. */
+#birdview-landing [data-count-to] {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+#birdview-landing [data-reveal-sequence] [data-reveal-item] {
+  opacity: 0;
+  translate: 0 9px;
+  transition: opacity 520ms ease, translate 520ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+#birdview-landing [data-reveal-sequence][data-motion-state="visible"] [data-reveal-item] {
+  opacity: 1;
+  translate: 0 0;
+}
+.bv-city-stage {
+  max-width: 1400px;
+}
+.bv-hero {
+  padding-top: 54px;
+}
+@media (max-width: 900px) {
+  .bv-hero { padding-top: 43px; }
+}
+@media (max-width: 600px) {
+  .bv-hero { padding-top: 37px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #birdview-landing [data-reveal-sequence] [data-reveal-item] {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+}

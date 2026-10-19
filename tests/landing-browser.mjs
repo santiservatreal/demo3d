@@ -6,6 +6,7 @@ import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 // presentation routes receive a read-only smoke check; no conversations start.
 const base = process.env.BASE_URL || "http://127.0.0.1:4173";
 const output = process.env.CAPTURE_DIR || "/tmp/birdview-landing-qa";
+const previewOnly = process.env.LANDING_QA_MODE === "preview";
 const startedAt = new Date().toISOString();
 const productUrl = "https://pipeline-city.vercel.app/";
 const results = [], errors = [], requests = [], failedResources = [];
@@ -62,6 +63,16 @@ async function createPage(name, options = {}) {
       const speak = speechSynthesis.speak.bind(speechSynthesis);
       speechSynthesis.speak = (...args) => { media.speech++; return speak(...args); };
     }
+    const counterSamples = new Map();
+    window.__LANDING_QA_COUNTERS__ = counterSamples;
+    new MutationObserver(records => {
+      for (const record of records) {
+        if (record.type !== "attributes" || !record.target.matches("[data-count-to]")) continue;
+        const target = record.target;
+        if (!counterSamples.has(target)) counterSamples.set(target, []);
+        counterSamples.get(target).push({ value: Number(target.getAttribute("data-count-value")), state: target.getAttribute("data-count-state") });
+      }
+    }).observe(document, { subtree: true, attributes: true, attributeFilter: ["data-count-value", "data-count-state"] });
   });
   return { page, context };
 }
@@ -81,6 +92,13 @@ async function readWholePage(page) {
       window.scrollTo({ top: y, behavior: "instant" });
       return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     }, y);
+  }
+  for (const group of await page.locator("[data-metric-group]").all()) {
+    if (!await group.isVisible() || !await group.locator("[data-count-to]").count()) continue;
+    await group.scrollIntoViewIfNeeded();
+    // A desktop scroll can switch the sticky director panel. A panel that was
+    // visible before scrolling may now be hidden and must keep its value paused.
+    await expect.poll(() => group.evaluate(element => !element.getClientRects().length || [...element.querySelectorAll("[data-count-to]")].every(counter => counter.dataset.countState === "complete"))).toBe(true);
   }
   await page.waitForFunction(() => [...document.images].filter(image => image.getClientRects().length > 0).every(image => image.complete && image.naturalWidth > 0));
   await page.evaluate(() => {
@@ -113,6 +131,40 @@ async function noAgentOrMedia(page) {
   expect(media).toEqual({ getUserMedia: 0, play: 0, speech: 0, tavusRegistered: false, tavusElements: 0 });
   return media;
 }
+async function settleVisibleCounters(page) {
+  await page.waitForFunction(() => [...document.querySelectorAll("[data-count-to]")].filter(element => {
+    const rect = element.getBoundingClientRect();
+    return element.getClientRects().length && rect.bottom > 90 && rect.top < innerHeight;
+  }).every(element => element.dataset.countState === "complete"));
+}
+async function counterSnapshot(page, scope = "body") {
+  return page.locator(`${scope} [data-count-to]`).evaluateAll(elements => elements.map(element => ({
+    target: Number(element.dataset.countTo), value: Number(element.dataset.countValue), state: element.dataset.countState,
+    text: element.textContent, label: element.getAttribute("aria-label"), format: element.dataset.countFormat,
+  })));
+}
+async function mapControls(page) {
+  return page.locator("[data-map-stage]").evaluateAll(elements => elements.map(element => {
+    const rect = element.getBoundingClientRect();
+    return { stage: element.dataset.mapStage, text: element.textContent.replace(/\s+/g, " ").trim(), label: element.getAttribute("aria-label"), pressed: element.getAttribute("aria-pressed"), x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+  }));
+}
+async function verifyMapControlLayout(page) {
+  const controls = await mapControls(page);
+  expect(controls).toHaveLength(5);
+  for (const control of controls) {
+    expect(control.width).toBeGreaterThanOrEqual(44);
+    expect(control.height).toBeGreaterThanOrEqual(40);
+    expect(control.x).toBeGreaterThanOrEqual(-1);
+    expect(control.x + control.width).toBeLessThanOrEqual((await page.viewportSize()).width + 1);
+  }
+  for (let i = 0; i < controls.length; i++) for (let j = i + 1; j < controls.length; j++) {
+    const a = controls[i], b = controls[j];
+    const overlap = Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x) > 1 && Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y) > 1;
+    expect(overlap).toBe(false);
+  }
+  return controls;
+}
 function record(name, detail = {}) {
   results.push({ name, passed: true, detail });
   console.log(`PASS ${name}`);
@@ -121,6 +173,36 @@ function record(name, detail = {}) {
 try {
   const desktop = await createPage("landing-desktop");
   await boot(desktop.page);
+  if (previewOnly) {
+    await desktop.page.waitForTimeout(1600);
+    await capture(desktop.page, "01-desktop-hero");
+    await desktop.page.locator(".bv-city-stage").scrollIntoViewIfNeeded();
+    await settleVisibleCounters(desktop.page);
+    await capture(desktop.page, "02-desktop-map");
+    await desktop.page.locator("[data-director-board]").scrollIntoViewIfNeeded();
+    for (const perspective of ["overview", "attention", "team"]) {
+      await desktop.page.locator(`[data-director-tab='${perspective}']`).click();
+      await desktop.page.waitForTimeout(1500);
+      await capture(desktop.page, `06-desktop-executive-${perspective}`);
+    }
+    const desktopLayout = await layout(desktop.page);
+    await desktop.context.close();
+    const mobile = await createPage("landing-mobile-preview", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    await boot(mobile.page);
+    await mobile.page.waitForTimeout(1600);
+    await capture(mobile.page, "03-mobile-hero");
+    await mobile.page.locator(".bv-city-stage").scrollIntoViewIfNeeded();
+    await settleVisibleCounters(mobile.page);
+    await capture(mobile.page, "04-mobile-map");
+    await mobile.page.locator("[data-director-board]").scrollIntoViewIfNeeded();
+    await mobile.page.waitForTimeout(1500);
+    await capture(mobile.page, "09-mobile-executive");
+    await readWholePage(mobile.page);
+    await capture(mobile.page, "05-mobile-full-page", true);
+    await writeFile(`${output}/preview.json`, JSON.stringify({ generatedAt: new Date().toISOString(), exploratory: true, desktopLayout, mobileLayout: await layout(mobile.page), errors, failedResources }, null, 2));
+    await browser.close();
+    process.exit(0);
+  }
   await expect(desktop.page.locator("main#birdview-landing")).toBeVisible();
   await expect(desktop.page.locator("h1")).toHaveCount(1);
   await expect(desktop.page.locator("h1")).toBeVisible();
@@ -134,8 +216,114 @@ try {
   await expect(heroCtas.first()).toHaveAttribute("target", "_blank");
   expect((await heroCtas.first().getAttribute("rel")).split(/\s+/)).toContain("noopener");
   await expect(desktop.page.locator("a[href='/demo']").first()).toBeVisible();
+  const exampleBefore = await desktop.page.evaluate(() => JSON.stringify(__BIRD_LANDING__.getState().example));
+  await expect(desktop.page.locator("[data-map-pipeline]")).toBeInViewport();
+  const firstViewportContext = await desktop.page.evaluate(() => [...document.querySelectorAll("[data-map-stage]")].filter(element => {
+    const rect = element.getBoundingClientRect();
+    return rect.bottom > 0 && rect.top < innerHeight && rect.left >= 0 && rect.right <= innerWidth;
+  }).map(element => element.dataset.mapStage));
+  expect(firstViewportContext.length).toBeGreaterThanOrEqual(3);
   await capture(desktop.page, "01-desktop-hero");
-  record("desktop-landing-presents-birdview-by-faradai-with-a-working-product-destination", { title, productUrl, layout: await layout(desktop.page), media: await noAgentOrMedia(desktop.page) });
+  record("desktop-landing-presents-birdview-by-faradai-with-a-working-product-destination", { title, productUrl, firstViewportContext, layout: await layout(desktop.page), media: await noAgentOrMedia(desktop.page) });
+
+  const stageFacts = [
+    ["lead", /nuevos leads/i, 4, 20000],
+    ["qualified", /cualificados/i, 3, 18000],
+    ["proposal", /propuestas/i, 2, 30000],
+    ["negotiation", /negociación/i, 1, 27000],
+    ["won", /ventas ganadas/i, 4, 60000],
+  ];
+  const stageStates = [];
+  for (const [stage, label, count, amount] of stageFacts) {
+    const control = desktop.page.locator(`[data-map-stage='${stage}']`);
+    await expect(control).toBeVisible();
+    await expect(control).toContainText(label);
+    await control.click();
+    await expect(control).toHaveAttribute("aria-pressed", "true");
+    await expect(desktop.page.locator("[data-map-stage][aria-pressed='true']")).toHaveCount(1);
+    const detail = desktop.page.locator("[data-map-detail]");
+    await expect(detail).toBeVisible();
+    await expect(detail).toHaveAttribute("aria-live", "polite");
+    await expect(detail).toContainText(label);
+    await expect(detail.locator("dd").nth(0)).toHaveText(new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(amount));
+    await expect(detail.locator("dd").nth(1)).toHaveText(String(count));
+    stageStates.push({ stage, count, amount, control: (await control.innerText()).replace(/\s+/g, " "), detail: (await detail.innerText()).replace(/\s+/g, " ") });
+  }
+  await desktop.page.locator("[data-map-stage='lead']").focus();
+  await desktop.page.keyboard.press("Enter");
+  await expect(desktop.page.locator("[data-map-stage='lead']")).toHaveAttribute("aria-pressed", "true");
+  await expect(desktop.page.locator("[data-map-stage='lead']")).toBeFocused();
+  await desktop.page.keyboard.press("ArrowRight");
+  await expect(desktop.page.locator("[data-map-stage='qualified']")).toHaveAttribute("aria-pressed", "true");
+  await expect(desktop.page.locator("[data-map-stage='qualified']")).toBeFocused();
+  await desktop.page.keyboard.press("End");
+  await expect(desktop.page.locator("[data-map-stage='won']")).toHaveAttribute("aria-pressed", "true");
+  await desktop.page.keyboard.press("Home");
+  await expect(desktop.page.locator("[data-map-stage='lead']")).toHaveAttribute("aria-pressed", "true");
+  await expect(desktop.page.locator("[data-map-pipeline]")).toContainText(/95[.\s]?000/);
+  await desktop.page.locator("[data-map-win]").scrollIntoViewIfNeeded();
+  await expect(desktop.page.locator("[data-map-win]")).toContainText(/18[.\s]?000/);
+  await expect(desktop.page.locator("[data-map-rep]")).toContainText(/Lucía\s+Costa/);
+  await expect(desktop.page.locator("[data-map-rep]")).toContainText(/32[.\s]?000/);
+  await settleVisibleCounters(desktop.page);
+  await capture(desktop.page, "09-desktop-map-context");
+  record("commercial-map-identifies-five-real-stages-and-opens-context-with-keyboard-and-pointer", { stageStates, controls: await verifyMapControlLayout(desktop.page) });
+
+  await desktop.page.locator("#direction").scrollIntoViewIfNeeded();
+  const directorStates = [];
+  for (const question of ["overview", "attention", "team"]) {
+    const tab = desktop.page.locator(`[data-director-tab='${question}']`);
+    await tab.click();
+    await expect(tab).toHaveAttribute("aria-selected", "true");
+    await expect(desktop.page.locator("[data-director-tab][aria-selected='true']")).toHaveCount(1);
+    const panel = desktop.page.locator(`[data-director-panel='${question}']`);
+    await expect(panel).toBeVisible();
+    for (const other of ["overview", "attention", "team"].filter(value => value !== question)) await expect(desktop.page.locator(`[data-director-panel='${other}']`)).toBeHidden();
+    for (const counter of await panel.locator("[data-count-to]").all()) await expect(counter).toHaveAttribute("data-count-state", "complete");
+    directorStates.push({ question, text: (await panel.innerText()).replace(/\s+/g, " "), metrics: await counterSnapshot(desktop.page, `[data-director-panel='${question}']`) });
+    await capture(desktop.page, `12-executive-${question}`);
+  }
+  const overview = desktop.page.locator("[data-director-panel='overview']");
+  for (const [metric, target] of [["invoiced", 42000], ["won", 60000], ["pending-invoice", 18000], ["target-progress", 75]]) {
+    const element = overview.locator(`[data-kpi='${metric}']`);
+    const targets = await element.evaluate(node => [node, ...node.querySelectorAll("[data-count-to]")].filter(element => element.hasAttribute("data-count-to")).map(element => Number(element.dataset.countTo)));
+    expect(targets).toContain(target);
+  }
+  expect(directorStates.find(state => state.question === "overview").text).toMatch(/facturad[oa]/i);
+  expect(directorStates.find(state => state.question === "overview").text).toMatch(/ganad[oa]/i);
+  expect(directorStates.find(state => state.question === "overview").text).not.toMatch(/cobrad[oa]/i);
+  const attentionText = directorStates.find(state => state.question === "attention").text;
+  expect(attentionText).toMatch(/Luma\s+SL/);
+  expect(attentionText).toMatch(/5\s+días/);
+  expect(attentionText).toMatch(/Marc\s+Ruiz/);
+  record("executive-questions-distinguish-open-pipeline-won-contracts-and-issued-invoices", { directorStates });
+
+  const teamFacts = [];
+  for (const [id, name, amount, wins, active] of [["lucia", "Lucía Costa", 32000, 2, 4], ["marc", "Marc Ruiz", 18000, 1, 3], ["ana", "Ana Gil", 10000, 1, 3]]) {
+    const row = desktop.page.locator(`[data-team-rep='${id}']`);
+    await expect(row).toBeVisible();
+    await expect(row).toContainText(name);
+    await expect(row).toHaveAttribute("data-wins", String(wins));
+    await expect(row).toHaveAttribute("data-active", String(active));
+    const values = await row.locator("[data-count-to]").evaluateAll(elements => elements.map(element => Number(element.dataset.countTo)));
+    expect(values).toContain(amount);
+    teamFacts.push({ id, name, amount, wins, active, text: (await row.innerText()).replace(/\s+/g, " ") });
+  }
+  expect(teamFacts.reduce((total, rep) => total + rep.amount, 0)).toBe(60000);
+  expect(teamFacts.reduce((total, rep) => total + rep.wins, 0)).toBe(4);
+  expect(teamFacts.reduce((total, rep) => total + rep.active, 0)).toBe(10);
+  expect(await desktop.page.evaluate(() => JSON.stringify(__BIRD_LANDING__.getState().example))).toBe(exampleBefore);
+  record("representative-results-reconcile-with-the-company-example-without-changing-its-data", { teamFacts, wonTotal: 60000, wins: 4, activeOpportunities: 10 });
+
+  const scrollPerspectives = [];
+  for (const perspective of ["overview", "attention", "team"]) {
+    await desktop.page.locator(`[data-director-step='${perspective}']`).evaluate(element => element.scrollIntoView({ block: "center", behavior: "instant" }));
+    await expect(desktop.page.locator(`[data-director-tab='${perspective}']`)).toHaveAttribute("aria-selected", "true");
+    await expect(desktop.page.locator(`[data-director-panel='${perspective}']`)).toBeVisible();
+    scrollPerspectives.push({ perspective, state: await desktop.page.evaluate(() => __BIRD_LANDING__.getState().director) });
+  }
+  await capture(desktop.page, "13-executive-scroll-team");
+  record("scrolling-the-executive-story-changes-the-visible-question-and-its-indicators", { scrollPerspectives });
 
   const anchorLinks = await desktop.page.evaluate(() => [...document.querySelectorAll("a[href^='#']")].map(link => ({ text: link.textContent.trim(), href: link.getAttribute("href"), exists: !!document.getElementById(link.getAttribute("href").slice(1)) })));
   expect(anchorLinks.length).toBeGreaterThanOrEqual(3);
@@ -181,6 +369,84 @@ try {
   record("faq-opens-with-pointer-and-closes-with-keyboard-and-product-imagery-loads", { questions: await questions.count(), images: imageResults, layout: await layout(desktop.page) });
   await desktop.context.close();
 
+  const motion = await createPage("landing-number-evolution");
+  await boot(motion.page);
+  await motion.page.waitForFunction(() => !!window.__BIRD_LANDING_MOTION__?.getState);
+  const initialMetrics = await counterSnapshot(motion.page);
+  const subject = await motion.page.evaluate(() => {
+    const candidates = [...document.querySelectorAll("[data-count-to]")];
+    const element = candidates.find(element => Number(element.dataset.countTo) > 0 && element.dataset.countState === "pending" && element.getBoundingClientRect().top > innerHeight && element.getClientRects().length);
+    if (!element) return null;
+    element.dataset.qaCounter = "scroll-subject";
+    const owner = element.closest("[data-metric-group], [data-reveal-sequence]") || element;
+    owner.dataset.qaMetricGroup = "scroll-subject";
+    return { target: Number(element.dataset.countTo), value: Number(element.dataset.countValue), state: element.dataset.countState, text: element.textContent, label: element.getAttribute("aria-label") };
+  });
+  expect(subject).not.toBeNull();
+  expect(subject.value).toBe(0);
+  expect(subject.state).toBe("pending");
+  expect(subject.label).not.toBe(subject.text);
+  await motion.page.locator("[data-qa-metric-group='scroll-subject']").scrollIntoViewIfNeeded();
+  await motion.page.waitForFunction(() => {
+    const element = document.querySelector("[data-qa-counter='scroll-subject']");
+    return element.dataset.countState === "running" && Number(element.dataset.countValue) > 0 && Number(element.dataset.countValue) < Number(element.dataset.countTo);
+  });
+  const partial = await motion.page.locator("[data-qa-counter='scroll-subject']").evaluate(element => ({ value: Number(element.dataset.countValue), text: element.textContent }));
+  expect(partial.value).toBeGreaterThan(0);
+  expect(partial.value).toBeLessThan(subject.target);
+
+  await motion.page.evaluate(() => {
+    Object.defineProperty(document, "visibilityState", { configurable: true, get: () => "hidden" });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  const hiddenBefore = await motion.page.evaluate(() => __BIRD_LANDING_MOTION__.getState());
+  expect(hiddenBefore.suspended).toBe(true);
+  expect(hiddenBefore.pendingFrame).toBe(false);
+  await motion.page.waitForTimeout(220);
+  const hiddenAfter = await motion.page.evaluate(() => __BIRD_LANDING_MOTION__.getState());
+  expect(hiddenAfter.frameCount).toBe(hiddenBefore.frameCount);
+  expect(hiddenAfter.values).toEqual(hiddenBefore.values);
+  await motion.page.evaluate(() => {
+    delete document.visibilityState;
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await motion.page.waitForFunction(previous => __BIRD_LANDING_MOTION__.getState().frameCount > previous, hiddenAfter.frameCount);
+  record("backgrounded-landing-suspends-counter-work-and-resumes-without-a-time-jump", { visibilityMethod: "QA-controlled document.visibilityState with a real visibilitychange event; not an OS focus test", hiddenBefore, hiddenAfter });
+
+  await expect(motion.page.locator("[data-qa-counter='scroll-subject']")).toHaveAttribute("data-count-state", "complete");
+  const animation = await motion.page.locator("[data-qa-counter='scroll-subject']").evaluate(element => ({
+    target: Number(element.dataset.countTo), value: Number(element.dataset.countValue), text: element.textContent,
+    samples: __LANDING_QA_COUNTERS__.get(element) || [],
+  }));
+  expect(animation.value).toBe(animation.target);
+  expect(animation.samples.some(sample => sample.value > 0 && sample.value < animation.target)).toBe(true);
+  for (let index = 1; index < animation.samples.length; index++) expect(animation.samples[index].value).toBeGreaterThanOrEqual(animation.samples[index - 1].value);
+  await motion.page.locator("h1").scrollIntoViewIfNeeded();
+  await motion.page.locator("[data-qa-metric-group='scroll-subject']").scrollIntoViewIfNeeded();
+  await motion.page.waitForTimeout(180);
+  expect(await motion.page.locator("[data-qa-counter='scroll-subject']").evaluate(element => Number(element.dataset.countValue))).toBe(subject.target);
+  record("offscreen-metrics-start-at-zero-then-count-monotonically-to-the-final-value-once", { subject, partial, animation, initialMetrics });
+
+  for (const tab of ["sales", "team", "activity"]) {
+    await motion.page.locator(`[data-feature-tab='${tab}']`).click();
+    for (const counter of await motion.page.locator(`[data-feature-panel='${tab}'] [data-count-to]`).all()) {
+      await counter.scrollIntoViewIfNeeded();
+      await expect(counter).toHaveAttribute("data-count-state", "complete");
+    }
+  }
+  await readWholePage(motion.page);
+  await motion.page.locator("footer").scrollIntoViewIfNeeded();
+  await motion.page.waitForTimeout(150);
+  const idleBefore = await motion.page.evaluate(() => __BIRD_LANDING_MOTION__.getState());
+  expect(idleBefore.pendingFrame).toBe(false);
+  expect(idleBefore.active).toBe(0);
+  await motion.page.waitForTimeout(220);
+  const idleAfter = await motion.page.evaluate(() => __BIRD_LANDING_MOTION__.getState());
+  expect(idleAfter.frameCount).toBe(idleBefore.frameCount);
+  expect(idleAfter.values).toEqual(idleBefore.values);
+  record("finished-or-offscreen-metrics-leave-no-idle-animation-clock-running", { idleBefore, idleAfter });
+  await motion.context.close();
+
   const mobile = await createPage("landing-mobile", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1 });
   await boot(mobile.page);
   await expect(mobile.page.locator("h1")).toBeInViewport();
@@ -207,21 +473,47 @@ try {
   await expect(mobile.page.locator("[data-feature-panel='activity']")).toBeVisible();
   await capture(mobile.page, "06-mobile-feature");
   const mobileFeatureLayout = await layout(mobile.page);
+  await mobile.page.locator("[data-map-stage='won']").scrollIntoViewIfNeeded();
+  await mobile.page.locator("[data-map-stage='won']").click();
+  await expect(mobile.page.locator("[data-map-detail]")).toContainText(/ventas ganadas/i);
+  const mobileMapControls = await verifyMapControlLayout(mobile.page);
+  await settleVisibleCounters(mobile.page);
+  await capture(mobile.page, "10-mobile-commercial-map");
   await mobile.page.locator("#faq").scrollIntoViewIfNeeded();
   await mobile.page.locator("#faq details summary").first().click();
   await expect(mobile.page.locator("#faq details").first()).toHaveAttribute("open", "");
   await capture(mobile.page, "07-mobile-faq");
   await readWholePage(mobile.page);
   await capture(mobile.page, "08-mobile-full-page", true);
-  record("mobile-content-tabs-and-faq-remain-usable-without-horizontal-scroll", { featureLayout: mobileFeatureLayout, faqLayout: await layout(mobile.page), media: await noAgentOrMedia(mobile.page) });
+  record("mobile-content-tabs-and-faq-remain-usable-without-horizontal-scroll", { featureLayout: mobileFeatureLayout, faqLayout: await layout(mobile.page), mobileMapControls, media: await noAgentOrMedia(mobile.page) });
   await mobile.context.close();
+
+  const narrow = await createPage("landing-narrow-mobile", { viewport: { width: 360, height: 800 }, isMobile: true, hasTouch: true });
+  await boot(narrow.page);
+  await narrow.page.locator("[data-map-stage='negotiation']").scrollIntoViewIfNeeded();
+  const narrowControls = await verifyMapControlLayout(narrow.page);
+  await narrow.page.locator("[data-map-stage='negotiation']").click();
+  await expect(narrow.page.locator("[data-map-detail]")).toContainText(/Luma\s+SL/);
+  await capture(narrow.page, "11-narrow-mobile-map");
+  await narrow.page.locator("footer a[href='#birdview-landing']").click();
+  await expect(narrow.page.locator("h1")).toBeInViewport();
+  record("narrow-mobile-keeps-five-stage-targets-separated-and-footer-navigation-working", { controls: narrowControls, layout: await layout(narrow.page) });
+  await narrow.context.close();
 
   const reduced = await createPage("landing-reduced-motion", { reducedMotion: "reduce" });
   await boot(reduced.page, "/page/");
   await expect(reduced.page.locator("h1")).toBeVisible();
   await reduced.page.locator("[data-feature-tab='team']").click();
   await expect(reduced.page.locator("[data-feature-panel='team']")).toBeVisible();
-  record("trailing-slash-route-and-reduced-motion-keep-the-landing-and-feature-controls-available", { path: "/page/", layout: await layout(reduced.page) });
+  const reducedMetrics = await counterSnapshot(reduced.page);
+  expect(reducedMetrics.length).toBeGreaterThan(5);
+  expect(reducedMetrics.filter(metric => metric.state !== "complete" || metric.value !== metric.target)).toEqual([]);
+  const reducedState = await reduced.page.evaluate(() => __BIRD_LANDING_MOTION__.getState());
+  expect(reducedState.reducedMotion).toBe(true);
+  expect(reducedState.pendingFrame).toBe(false);
+  expect(reducedState.frameCount).toBe(0);
+  expect(await reduced.page.evaluate(() => document.getAnimations().filter(animation => animation.playState === "running").length)).toBe(0);
+  record("trailing-slash-route-and-reduced-motion-show-final-metrics-without-animation", { path: "/page/", layout: await layout(reduced.page), reducedMetrics, reducedState });
   await reduced.context.close();
 
   for (const [path, name] of [["/", "dashboard"], ["/demo", "presentation"]]) {
@@ -245,14 +537,16 @@ try {
   expect(failedResources).toEqual([]);
   const tavusRequests = requests.filter(request => vendorHost(new URL(request.url).hostname));
   expect(tavusRequests).toEqual([]);
+  const thirdPartyRequests = requests.filter(request => new URL(request.url).origin !== new URL(base).origin);
+  expect(thirdPartyRequests).toEqual([]);
   const finalSourceSha256 = await sourceHashes();
   expect(finalSourceSha256).toEqual(sourceSha256);
   await writeFile(`${output}/browser-validation.json`, JSON.stringify({
     generatedAt: new Date().toISOString(), startedAt, browser: browser.version(),
-    environment: "Chromium headless on Linux; desktop 1440×1000 and mobile viewport 390×844, not a physical-phone test. Existing WebGL routes use ANGLE/SwiftShader.",
-    screenshots: "Actual rendered landing; finite DOM animations disabled for readable stills.",
+    environment: "Chromium headless on Linux; desktop 1440×1000 and mobile viewports 390×844 / 360×800, not a physical-phone test. Existing WebGL routes use ANGLE/SwiftShader.",
+    screenshots: "Actual rendered landing. Finite DOM entrance animations are disabled for readable stills; number evolution is observed as real intermediate DOM values in a separate page.",
     productDestination: productUrl, liveConversationStarted: false, microphoneOpened: false,
-    results, errors, failedResources, tavusRequests, loadedAssets: [...loadedAssets], sourceSha256, workingTreeSourceSha256AtCompletion: finalSourceSha256,
+    results, errors, failedResources, tavusRequests, thirdPartyRequests, loadedAssets: [...loadedAssets], sourceSha256, workingTreeSourceSha256AtCompletion: finalSourceSha256,
   }, null, 2));
   await rm(`${output}/last-failure.json`, { force: true });
   await rm(`${output}/failure.png`, { force: true });
