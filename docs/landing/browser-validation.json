@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-19T15:46:12.354Z",
-  "startedAt": "2026-10-19T15:45:34.039Z",
+  "generatedAt": "2026-10-19T17:17:38.116Z",
+  "startedAt": "2026-10-19T17:16:48.016Z",
   "browser": "154.0.8037.57",
   "environment": "Chromium headless on Linux; desktop 1440×1000 and mobile viewports 390×844 / 360×800, not a physical-phone test. Existing WebGL routes use ANGLE/SwiftShader.",
   "screenshots": "Actual rendered landing. Finite DOM entrance animations are disabled for readable stills; number evolution is observed as real intermediate DOM values in a separate page.",
@@ -16,20 +16,16 @@
         "productUrl": "https://pipeline-city.vercel.app/",
         "metadata": {
           "description": "Descubre BirdView, un producto de FaradAI. Una ciudad visual para explorar tus ventas, tu equipo y la actividad de tu negocio. Prueba la demo interactiva.",
-          "themeColor": "#131917",
+          "themeColor": "#f7f7f4",
           "validThemeColor": true
         },
         "heroImage": {
-          "path": "/assets/landing/birdview-city-dark.webp",
-          "width": 2400,
-          "height": 1344
+          "path": "/assets/landing/birdview-hero-film.mp4",
+          "poster": "/assets/landing/birdview-hero-poster.webp",
+          "width": 1600,
+          "height": 900
         },
-        "firstViewportContext": [
-          "lead",
-          "qualified",
-          "proposal",
-          "negotiation"
-        ],
+        "firstViewportContext": [],
         "layout": {
           "viewportWidth": 1440,
           "viewportHeight": 1000,
@@ -39,11 +35,61 @@
         },
         "media": {
           "getUserMedia": 0,
-          "play": 0,
+          "play": 1,
           "speech": 0,
+          "playTargets": [
+            {
+              "hero": true,
+              "tag": "VIDEO",
+              "muted": true,
+              "defaultMuted": true,
+              "source": "http://127.0.0.1:4173/assets/landing/birdview-hero-film.mp4"
+            }
+          ],
           "tavusRegistered": false,
-          "tavusElements": 0
+          "tavusElements": 0,
+          "audioElements": 0,
+          "videos": [
+            {
+              "hero": true,
+              "muted": true,
+              "defaultMuted": true,
+              "loop": true,
+              "playsInline": true,
+              "source": "http://127.0.0.1:4173/assets/landing/birdview-hero-film.mp4"
+            }
+          ]
         }
+      }
+    },
+    {
+      "name": "local-silent-hero-film-advances-and-pauses-with-controls-scroll-and-page-visibility",
+      "passed": true,
+      "detail": {
+        "filmStart": {
+          "time": 1.390222,
+          "duration": 12,
+          "muted": true,
+          "defaultMuted": true,
+          "loop": true,
+          "playsInline": true,
+          "poster": "http://127.0.0.1:4173/assets/landing/birdview-hero-poster.webp",
+          "source": "http://127.0.0.1:4173/assets/landing/birdview-hero-film.mp4"
+        },
+        "manuallyPausedAt": 1.596513,
+        "offscreenAt": 1.624425,
+        "hiddenFilmAt": 1.649473,
+        "state": {
+          "playing": true,
+          "visible": true,
+          "reducedMotion": false,
+          "manuallyPaused": false,
+          "unavailable": false,
+          "disposed": false,
+          "currentTime": 1.653955,
+          "muted": true
+        },
+        "visibilityMethod": "QA-controlled document.visibilityState with visibilitychange; not an OS focus test"
       }
     },
     {
@@ -94,9 +140,9 @@
             "label": null,
             "pressed": "true",
             "x": 333.0859375,
-            "y": 210.296875,
+            "y": 529.875,
             "width": 178.546875,
-            "height": 46
+            "height": 45
           },
           {
             "stage": "qualified",
@@ -104,9 +150,9 @@
             "label": null,
             "pressed": "false",
             "x": 444.2421875,
-            "y": 257.5,
+            "y": 577.078125,
             "width": 178.546875,
-            "height": 46
+            "height": 45
           },
           {
             "stage": "proposal",
@@ -114,9 +160,9 @@
             "label": null,
             "pressed": "false",
             "x": 553.7265625,
-            "y": 303.984375,
+            "y": 623.5625,
             "width": 178.546875,
-            "height": 46
+            "height": 45
           },
           {
             "stage": "negotiation",
@@ -124,9 +170,9 @@
             "label": null,
             "pressed": "false",
             "x": 669.0703125,
-            "y": 350.484375,
+            "y": 670.0625,
             "width": 166.515625,
-            "height": 46
+            "height": 45
           },
           {
             "stage": "won",
@@ -134,9 +180,9 @@
             "label": null,
             "pressed": "false",
             "x": 789.5,
-            "y": 397.671875,
+            "y": 717.25,
             "width": 148,
-            "height": 46
+            "height": 45
           }
         ]
       }
@@ -345,6 +391,11 @@
             "exists": true
           },
           {
+            "text": "La visión",
+            "href": "#city-map",
+            "exists": true
+          },
+          {
             "text": "Plataforma",
             "href": "#features",
             "exists": true
@@ -355,8 +406,8 @@
             "exists": true
           },
           {
-            "text": "Cómo funciona",
-            "href": "#how-it-works",
+            "text": "La visión",
+            "href": "#city-map",
             "exists": true
           },
           {
@@ -380,8 +431,38 @@
             "exists": true
           },
           {
-            "text": "DEL DATO A LA DECISIÓN",
+            "text": "Explorar la plataforma",
+            "href": "#city-map",
+            "exists": true
+          },
+          {
+            "text": "01 / EL PIPELINEDel primer contactoal acuerdo ganado.Ventas",
+            "href": "#features",
+            "exists": true
+          },
+          {
+            "text": "02 / LAS PERSONASQuienes hacen avanzartu negocio, a la vista.Equipo",
+            "href": "#features",
+            "exists": true
+          },
+          {
+            "text": "03 / LOS PROCESOSDe la fabricacióna la entrega.Operaciones",
+            "href": "#operations",
+            "exists": true
+          },
+          {
+            "text": "Una perspectiva para dirigir",
             "href": "#direction",
+            "exists": true
+          },
+          {
+            "text": "01 / COMERCIALEquipos de ventasDel primer lead al acuerdo.Explorar",
+            "href": "#features",
+            "exists": true
+          },
+          {
+            "text": "02 / SERVICIOSEmpresas de serviciosPersonas, clientes y conversaciones.Explorar",
+            "href": "#features",
             "exists": true
           },
           {
@@ -419,7 +500,22 @@
             "feature": "activity",
             "text": "03 / ACTIVIDAD\nLas conversaciones\ntambién tienen barrio.\n\nCorreos, llamadas y reuniones encuentran su lugar. Una oficina de correos, una central de llamadas o una cafetería hacen visible la actividad que mueve tu negocio.\n\nDa contexto a los contactos con clientes.\nReúne los canales en una misma vista.\nEntiende la actividad de un vistazo.\nDescubrir la actividad\nCada conversación cuenta"
           }
-        ]
+        ],
+        "perspectiveLinks": [
+          {
+            "feature": "sales",
+            "text": "01 / EL PIPELINE Del primer contacto al acuerdo ganado. Ventas"
+          },
+          {
+            "feature": "team",
+            "text": "02 / LAS PERSONAS Quienes hacen avanzar tu negocio, a la vista. Equipo"
+          },
+          {
+            "feature": "activity",
+            "text": "02 / SERVICIOS Empresas de servicios Personas, clientes y conversaciones. Explorar"
+          }
+        ],
+        "businessCases": 3
       }
     },
     {
@@ -429,7 +525,12 @@
         "questions": 5,
         "images": [
           {
-            "src": "/assets/landing/birdview-city-dark.webp",
+            "src": "/assets/landing/birdview-hero-poster.webp",
+            "complete": true,
+            "width": 1600
+          },
+          {
+            "src": "/assets/landing/birdview-city.webp",
             "complete": true,
             "width": 2400
           },
@@ -464,6 +565,16 @@
             "width": 1600
           },
           {
+            "src": "/assets/landing/birdview-sales.webp",
+            "complete": true,
+            "width": 1600
+          },
+          {
+            "src": "/assets/landing/birdview-activity.webp",
+            "complete": true,
+            "width": 1600
+          },
+          {
             "src": "/assets/landing/birdview-industry.webp",
             "complete": true,
             "width": 1600
@@ -484,14 +595,14 @@
       "detail": {
         "visibilityMethod": "QA-controlled document.visibilityState with a real visibilitychange event; not an OS focus test",
         "hiddenBefore": {
-          "active": 5,
+          "active": 4,
           "completed": 0,
           "total": 16,
           "pendingFrame": false,
           "reducedMotion": false,
           "suspended": true,
           "disposed": false,
-          "frameCount": 37,
+          "frameCount": 2,
           "observerCount": 1,
           "units": [
             {
@@ -503,10 +614,6 @@
               "visible": true
             },
             {
-              "state": "visible",
-              "visible": true
-            },
-            {
               "state": "pending",
               "visible": false
             },
@@ -523,12 +630,16 @@
               "visible": false
             },
             {
-              "state": "visible",
+              "state": "pending",
               "visible": false
             },
             {
               "state": "visible",
-              "visible": true
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
             },
             {
               "state": "visible",
@@ -546,33 +657,33 @@
           "values": [
             {
               "target": 42000,
-              "value": 41999.363955670175,
-              "formatted": "41.999 €",
+              "value": 5601.385236678891,
+              "formatted": "5.601 €",
               "state": "running"
             },
             {
               "target": 95000,
-              "value": 94998.56132830158,
-              "formatted": "94.999 €",
+              "value": 12669.799940107014,
+              "formatted": "12.670 €",
               "state": "running"
             },
             {
               "target": 3,
-              "value": 2.9999545682621553,
-              "formatted": "3",
+              "value": 0.4000989454770636,
+              "formatted": "0",
               "state": "running"
             },
             {
               "target": 32000,
-              "value": 31999.515394796323,
-              "formatted": "32.000 €",
+              "value": 4267.722085088679,
+              "formatted": "4.268 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 737.6866550010888,
-              "formatted": "738 €",
-              "state": "running"
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
             },
             {
               "target": 42000,
@@ -644,14 +755,14 @@
           "businessMutation": false
         },
         "hiddenAfter": {
-          "active": 5,
+          "active": 4,
           "completed": 0,
           "total": 16,
           "pendingFrame": false,
           "reducedMotion": false,
           "suspended": true,
           "disposed": false,
-          "frameCount": 37,
+          "frameCount": 2,
           "observerCount": 1,
           "units": [
             {
@@ -663,10 +774,6 @@
               "visible": true
             },
             {
-              "state": "visible",
-              "visible": true
-            },
-            {
               "state": "pending",
               "visible": false
             },
@@ -683,12 +790,16 @@
               "visible": false
             },
             {
-              "state": "visible",
+              "state": "pending",
               "visible": false
             },
             {
               "state": "visible",
-              "visible": true
+              "visible": false
+            },
+            {
+              "state": "pending",
+              "visible": false
             },
             {
               "state": "visible",
@@ -706,33 +817,33 @@
           "values": [
             {
               "target": 42000,
-              "value": 41999.363955670175,
-              "formatted": "41.999 €",
+              "value": 5601.385236678891,
+              "formatted": "5.601 €",
               "state": "running"
             },
             {
               "target": 95000,
-              "value": 94998.56132830158,
-              "formatted": "94.999 €",
+              "value": 12669.799940107014,
+              "formatted": "12.670 €",
               "state": "running"
             },
             {
               "target": 3,
-              "value": 2.9999545682621553,
-              "formatted": "3",
+              "value": 0.4000989454770636,
+              "formatted": "0",
               "state": "running"
             },
             {
               "target": 32000,
-              "value": 31999.515394796323,
-              "formatted": "32.000 €",
+              "value": 4267.722085088679,
+              "formatted": "4.268 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 737.6866550010888,
-              "formatted": "738 €",
-              "state": "running"
+              "value": 0,
+              "formatted": "0 €",
+              "state": "pending"
             },
             {
               "target": 42000,
@@ -810,20 +921,20 @@
       "passed": true,
       "detail": {
         "subject": {
-          "target": 18000,
+          "target": 42000,
           "value": 0,
           "state": "pending",
           "text": "0 €",
-          "label": "18.000 €"
+          "label": "42.000 €"
         },
         "partial": {
-          "value": 737.6866550010888,
-          "text": "738 €"
+          "value": 5601.385236678891,
+          "text": "5.601 €"
         },
         "animation": {
-          "target": 18000,
-          "value": 18000,
-          "text": "18.000 €",
+          "target": 42000,
+          "value": 42000,
+          "text": "42.000 €",
           "samples": [
             {
               "value": 0,
@@ -838,127 +949,123 @@
               "state": "running"
             },
             {
-              "value": 737.6866550010888,
+              "value": 1192.5317557670285,
               "state": "running"
             },
             {
-              "value": 1023.9460739787974,
+              "value": 5601.385236678891,
               "state": "running"
             },
             {
-              "value": 1654.5461720444055,
+              "value": 6326.133560654295,
               "state": "running"
             },
             {
-              "value": 4030.9609913228087,
+              "value": 10350.017999078627,
               "state": "running"
             },
             {
-              "value": 5125.902272737514,
+              "value": 14052.221332260948,
               "state": "running"
             },
             {
-              "value": 7143.963336180778,
+              "value": 17460.363647222395,
               "state": "running"
             },
             {
-              "value": 8509.967937962101,
+              "value": 19575.21487540003,
               "state": "running"
             },
             {
-              "value": 10146.851160674976,
+              "value": 23422.48824055635,
               "state": "running"
             },
             {
-              "value": 10888.418842479086,
+              "value": 25174.069645227388,
               "state": "running"
             },
             {
-              "value": 11911.839082114604,
+              "value": 29055.370278137663,
               "state": "running"
             },
             {
-              "value": 13115.664387445982,
+              "value": 31070.038628748127,
               "state": "running"
             },
             {
-              "value": 13908.385507413523,
+              "value": 32867.38550004212,
               "state": "running"
             },
             {
-              "value": 14822.57674222028,
+              "value": 33945.77355518556,
               "state": "running"
             },
             {
-              "value": 15590.366892059741,
+              "value": 35397.3924274351,
               "state": "running"
             },
             {
-              "value": 15923.347334092952,
+              "value": 36264.42087736141,
               "state": "running"
             },
             {
-              "value": 16361.369466580449,
+              "value": 37759.948662238276,
               "state": "running"
             },
             {
-              "value": 16616.411712719346,
+              "value": 38398.73041956356,
               "state": "running"
             },
             {
-              "value": 16947.39589198186,
+              "value": 39233.5964933872,
               "state": "running"
             },
             {
-              "value": 17221.369653910944,
+              "value": 39925.78882901895,
               "state": "running"
             },
             {
-              "value": 17373.8183290102,
+              "value": 40492.67788742291,
               "state": "running"
             },
             {
-              "value": 17564.018645273456,
+              "value": 40807.04692539437,
               "state": "running"
             },
             {
-              "value": 17710.928596819584,
+              "value": 41297.19034349923,
               "state": "running"
             },
             {
-              "value": 17820.461319282815,
+              "value": 41482.04252001255,
               "state": "running"
             },
             {
-              "value": 17875.379193265286,
+              "value": 41748.03476115455,
               "state": "running"
             },
             {
-              "value": 17934.826790896717,
+              "value": 41927.55831703811,
               "state": "running"
             },
             {
-              "value": 17971.525417332767,
+              "value": 41976.08126293885,
               "state": "running"
             },
             {
-              "value": 17990.936748242388,
+              "value": 41991.710742646435,
               "state": "running"
             },
             {
-              "value": 17997.035398260312,
+              "value": 41999.60065699203,
               "state": "running"
             },
             {
-              "value": 17999.898864197305,
-              "state": "running"
-            },
-            {
-              "value": 18000,
+              "value": 42000,
               "state": "complete"
             },
             {
-              "value": 18000,
+              "value": 42000,
               "state": "complete"
             }
           ]
@@ -966,33 +1073,33 @@
         "initialMetrics": [
           {
             "target": 42000,
-            "value": 34798.35390946502,
-            "state": "running",
-            "text": "34.798 €",
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
             "label": "42.000 €",
             "format": "eur"
           },
           {
             "target": 95000,
-            "value": 78710.56241426611,
-            "state": "running",
-            "text": "78.711 €",
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
             "label": "95.000 €",
             "format": "eur"
           },
           {
             "target": 3,
-            "value": 2.48559670781893,
-            "state": "running",
-            "text": "2",
+            "value": 0,
+            "state": "pending",
+            "text": "0",
             "label": "3",
             "format": "integer"
           },
           {
             "target": 32000,
-            "value": 26513.031550068587,
-            "state": "running",
-            "text": "26.513 €",
+            "value": 0,
+            "state": "pending",
+            "text": "0 €",
             "label": "32.000 €",
             "format": "eur"
           },
@@ -1107,7 +1214,7 @@
           "reducedMotion": false,
           "suspended": false,
           "disposed": false,
-          "frameCount": 80,
+          "frameCount": 70,
           "observerCount": 1,
           "units": [
             {
@@ -1127,7 +1234,7 @@
               "visible": false
             },
             {
-              "state": "visible",
+              "state": "pending",
               "visible": false
             },
             {
@@ -1155,7 +1262,7 @@
               "visible": false
             },
             {
-              "state": "visible",
+              "state": "pending",
               "visible": false
             }
           ],
@@ -1192,68 +1299,68 @@
             },
             {
               "target": 42000,
-              "value": 31853.270237301072,
-              "formatted": "31.853 €",
+              "value": 28282.4523386321,
+              "formatted": "28.282 €",
               "state": "running"
             },
             {
               "target": 60000,
-              "value": 45504.67176757296,
-              "formatted": "45.505 €",
+              "value": 40403.50334090301,
+              "formatted": "40.404 €",
               "state": "running"
             },
             {
               "target": 60000,
-              "value": 45504.67176757296,
-              "formatted": "45.505 €",
+              "value": 40403.50334090301,
+              "formatted": "40.404 €",
               "state": "running"
             },
             {
               "target": 42000,
-              "value": 31853.270237301072,
-              "formatted": "31.853 €",
+              "value": 28282.4523386321,
+              "formatted": "28.282 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 13651.401530271887,
-              "formatted": "13.651 €",
+              "value": 12121.0510022709,
+              "formatted": "12.121 €",
               "state": "running"
             },
             {
               "target": 75,
-              "value": 56.8808397094662,
-              "formatted": "57 %",
+              "value": 50.50437917612876,
+              "formatted": "51 %",
               "state": "running"
             },
             {
               "target": 3,
-              "value": 0.5399224319303734,
-              "formatted": "1",
-              "state": "running"
+              "value": 0,
+              "formatted": "0",
+              "state": "pending"
             },
             {
               "target": 60000,
-              "value": 3728.263244137597,
-              "formatted": "3.728 €",
+              "value": 10529.289872177953,
+              "formatted": "10.529 €",
               "state": "running"
             },
             {
               "target": 32000,
-              "value": 1981.5931542225726,
-              "formatted": "1.982 €",
+              "value": 5615.621265161575,
+              "formatted": "5.616 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 1114.6461492501971,
-              "formatted": "1.115 €",
+              "value": 3158.7869616533862,
+              "formatted": "3.159 €",
               "state": "running"
             },
             {
               "target": 10000,
-              "value": 619.247860694554,
-              "formatted": "619 €",
+              "value": 1754.8816453629922,
+              "formatted": "1.755 €",
               "state": "running"
             }
           ],
@@ -1267,7 +1374,7 @@
           "reducedMotion": false,
           "suspended": false,
           "disposed": false,
-          "frameCount": 80,
+          "frameCount": 70,
           "observerCount": 1,
           "units": [
             {
@@ -1287,7 +1394,7 @@
               "visible": false
             },
             {
-              "state": "visible",
+              "state": "pending",
               "visible": false
             },
             {
@@ -1315,7 +1422,7 @@
               "visible": false
             },
             {
-              "state": "visible",
+              "state": "pending",
               "visible": false
             }
           ],
@@ -1352,68 +1459,68 @@
             },
             {
               "target": 42000,
-              "value": 31853.270237301072,
-              "formatted": "31.853 €",
+              "value": 28282.4523386321,
+              "formatted": "28.282 €",
               "state": "running"
             },
             {
               "target": 60000,
-              "value": 45504.67176757296,
-              "formatted": "45.505 €",
+              "value": 40403.50334090301,
+              "formatted": "40.404 €",
               "state": "running"
             },
             {
               "target": 60000,
-              "value": 45504.67176757296,
-              "formatted": "45.505 €",
+              "value": 40403.50334090301,
+              "formatted": "40.404 €",
               "state": "running"
             },
             {
               "target": 42000,
-              "value": 31853.270237301072,
-              "formatted": "31.853 €",
+              "value": 28282.4523386321,
+              "formatted": "28.282 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 13651.401530271887,
-              "formatted": "13.651 €",
+              "value": 12121.0510022709,
+              "formatted": "12.121 €",
               "state": "running"
             },
             {
               "target": 75,
-              "value": 56.8808397094662,
-              "formatted": "57 %",
+              "value": 50.50437917612876,
+              "formatted": "51 %",
               "state": "running"
             },
             {
               "target": 3,
-              "value": 0.5399224319303734,
-              "formatted": "1",
-              "state": "running"
+              "value": 0,
+              "formatted": "0",
+              "state": "pending"
             },
             {
               "target": 60000,
-              "value": 3728.263244137597,
-              "formatted": "3.728 €",
+              "value": 10529.289872177953,
+              "formatted": "10.529 €",
               "state": "running"
             },
             {
               "target": 32000,
-              "value": 1981.5931542225726,
-              "formatted": "1.982 €",
+              "value": 5615.621265161575,
+              "formatted": "5.616 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 1114.6461492501971,
-              "formatted": "1.115 €",
+              "value": 3158.7869616533862,
+              "formatted": "3.159 €",
               "state": "running"
             },
             {
               "target": 10000,
-              "value": 619.247860694554,
-              "formatted": "619 €",
+              "value": 1754.8816453629922,
+              "formatted": "1.755 €",
               "state": "running"
             }
           ],
@@ -1459,7 +1566,7 @@
             "label": null,
             "pressed": "false",
             "x": 19.5,
-            "y": 278.984375,
+            "y": 278.84375,
             "width": 171.5,
             "height": 75
           },
@@ -1469,7 +1576,7 @@
             "label": null,
             "pressed": "false",
             "x": 199,
-            "y": 278.984375,
+            "y": 278.84375,
             "width": 171.5,
             "height": 75
           },
@@ -1479,7 +1586,7 @@
             "label": null,
             "pressed": "false",
             "x": 19.5,
-            "y": 361.984375,
+            "y": 361.84375,
             "width": 171.5,
             "height": 75
           },
@@ -1489,7 +1596,7 @@
             "label": null,
             "pressed": "false",
             "x": 199,
-            "y": 361.984375,
+            "y": 361.84375,
             "width": 171.5,
             "height": 75
           },
@@ -1499,17 +1606,51 @@
             "label": null,
             "pressed": "true",
             "x": 19.5,
-            "y": 444.984375,
+            "y": 444.84375,
             "width": 351,
             "height": 48
           }
         ],
         "media": {
           "getUserMedia": 0,
-          "play": 0,
+          "play": 3,
           "speech": 0,
+          "playTargets": [
+            {
+              "hero": true,
+              "tag": "VIDEO",
+              "muted": true,
+              "defaultMuted": true,
+              "source": "http://127.0.0.1:4173/assets/landing/birdview-hero-film.mp4"
+            },
+            {
+              "hero": true,
+              "tag": "VIDEO",
+              "muted": true,
+              "defaultMuted": true,
+              "source": "http://127.0.0.1:4173/assets/landing/birdview-hero-film.mp4"
+            },
+            {
+              "hero": true,
+              "tag": "VIDEO",
+              "muted": true,
+              "defaultMuted": true,
+              "source": "http://127.0.0.1:4173/assets/landing/birdview-hero-film.mp4"
+            }
+          ],
           "tavusRegistered": false,
-          "tavusElements": 0
+          "tavusElements": 0,
+          "audioElements": 0,
+          "videos": [
+            {
+              "hero": true,
+              "muted": true,
+              "defaultMuted": true,
+              "loop": true,
+              "playsInline": true,
+              "source": "http://127.0.0.1:4173/assets/landing/birdview-hero-film.mp4"
+            }
+          ]
         }
       }
     },
@@ -1524,7 +1665,7 @@
             "label": null,
             "pressed": "false",
             "x": 18,
-            "y": 325.984375,
+            "y": 335.09375,
             "width": 158,
             "height": 75
           },
@@ -1534,7 +1675,7 @@
             "label": null,
             "pressed": "false",
             "x": 184,
-            "y": 325.984375,
+            "y": 335.09375,
             "width": 158,
             "height": 75
           },
@@ -1544,7 +1685,7 @@
             "label": null,
             "pressed": "false",
             "x": 18,
-            "y": 408.984375,
+            "y": 418.09375,
             "width": 158,
             "height": 75
           },
@@ -1554,7 +1695,7 @@
             "label": null,
             "pressed": "true",
             "x": 184,
-            "y": 408.984375,
+            "y": 418.09375,
             "width": 158,
             "height": 75
           },
@@ -1564,16 +1705,16 @@
             "label": null,
             "pressed": "false",
             "x": 18,
-            "y": 491.984375,
+            "y": 501.09375,
             "width": 324,
             "height": 48
           }
         ],
         "layout": {
-          "viewportWidth": 360,
-          "viewportHeight": 800,
-          "bodyWidth": 360,
-          "documentWidth": 360,
+          "viewportWidth": 364,
+          "viewportHeight": 809,
+          "bodyWidth": 364,
+          "documentWidth": 364,
           "overflow": []
         }
       }
@@ -1733,39 +1874,39 @@
           "units": [
             {
               "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
               "visible": false
             },
             {
               "state": "visible",
-              "visible": false
-            },
-            {
-              "state": "visible",
               "visible": true
-            },
-            {
-              "state": "visible",
-              "visible": true
-            },
-            {
-              "state": "visible",
-              "visible": true
-            },
-            {
-              "state": "visible",
-              "visible": true
-            },
-            {
-              "state": "visible",
-              "visible": true
-            },
-            {
-              "state": "visible",
-              "visible": false
-            },
-            {
-              "state": "visible",
-              "visible": false
             },
             {
               "state": "visible",
@@ -1879,6 +2020,45 @@
             }
           ],
           "businessMutation": false
+        },
+        "reducedFilm": {
+          "playing": false,
+          "visible": false,
+          "reducedMotion": true,
+          "manuallyPaused": false,
+          "unavailable": false,
+          "disposed": false,
+          "currentTime": 0,
+          "muted": true
+        },
+        "reducedMedia": {
+          "getUserMedia": 0,
+          "play": 0,
+          "speech": 0,
+          "playTargets": [],
+          "tavusRegistered": false,
+          "tavusElements": 0,
+          "audioElements": 0,
+          "videos": [
+            {
+              "hero": true,
+              "muted": true,
+              "defaultMuted": true,
+              "loop": true,
+              "playsInline": true,
+              "source": "http://127.0.0.1:4173/assets/landing/birdview-hero-film.mp4"
+            }
+          ]
+        },
+        "reducedFramesBefore": {
+          "pending": 0,
+          "requested": 0,
+          "completed": 0
+        },
+        "reducedFramesAfter": {
+          "pending": 0,
+          "requested": 0,
+          "completed": 0
         }
       }
     },
@@ -1891,8 +2071,11 @@
           "getUserMedia": 0,
           "play": 0,
           "speech": 0,
+          "playTargets": [],
           "tavusRegistered": false,
-          "tavusElements": 0
+          "tavusElements": 0,
+          "audioElements": 0,
+          "videos": []
         }
       }
     },
@@ -1905,8 +2088,11 @@
           "getUserMedia": 0,
           "play": 0,
           "speech": 0,
+          "playTargets": [],
           "tavusRegistered": false,
-          "tavusElements": 0
+          "tavusElements": 0,
+          "audioElements": 0,
+          "videos": []
         }
       }
     }
@@ -1916,32 +2102,34 @@
   "tavusRequests": [],
   "thirdPartyRequests": [],
   "loadedAssets": [
-    "/assets/app-Uamf5CIp.js",
+    "/assets/app-D6fYRlIo.js",
     "/assets/modulepreload-polyfill-B5Qt9EMX.js",
-    "/assets/app-B0jtHwJ5.css",
     "/assets/latin-500-BoHSStLk.css",
     "/assets/latin-600-BnRhtdY-.css",
-    "/assets/app-PyEpnAWq.js",
-    "/assets/landing/birdview-city-dark.webp",
+    "/assets/app--WrzxTao.css",
+    "/assets/app-Ci1zamBY.js",
+    "/assets/landing/birdview-hero-poster.webp",
     "/assets/dm-sans-latin-500-normal-B9HHJjqV.woff2",
-    "/assets/landing/birdview-sales.webp",
     "/assets/dm-sans-latin-400-normal-CW0RaeGs.woff2",
+    "/assets/landing/birdview-hero-film.mp4",
+    "/assets/landing/birdview-city.webp",
+    "/assets/landing/birdview-sales.webp",
     "/assets/landing/birdview-team.webp",
-    "/assets/landing/birdview-industry.webp",
     "/assets/landing/birdview-activity.webp",
+    "/assets/landing/birdview-industry.webp",
     "/assets/landing/birdview-mark.svg",
     "/assets/latin-700-BsCA67n7.css",
-    "/assets/sparkles-WWxNemCu.js",
-    "/assets/RGBELoader-JdYcDdxD.js",
     "/assets/app-BtU1d9e3.css",
+    "/assets/RGBELoader-JdYcDdxD.js",
+    "/assets/sparkles-WWxNemCu.js",
     "/assets/sliders-horizontal-b2r-6EBp.js",
+    "/assets/app-CKBZV7uD.js",
     "/assets/info-DbmJmdsJ.js",
     "/assets/users-CblT-ZKR.js",
-    "/assets/app-CKBZV7uD.js",
     "/assets/latin-700-CTtVcDEB.js",
     "/assets/manrope-latin-700-normal-BZp_XxE4.woff2",
     "/assets/manrope-latin-600-normal-4f0koTD-.woff2",
-    "/assets/app-xsxwn5-D.js",
+    "/assets/app-UNeUydzs.js",
     "/assets/simulation-app-Dhoxv6ta.js",
     "/assets/style-Bm_FjAwn.css",
     "/assets/simulation-app-BP9ylIrr.css",
@@ -1952,12 +2140,14 @@
     "index.html": "93d387f4b00ee4d4fb2d32633e1de4503e5e0c974fb11d41c3df4dd24782eac9",
     "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
     "package.json": "0873351b5f5987ce9d81fd78fc941d06cbf3fdc5ac3def280b1948f8d621b3bb",
-    "page/index.html": "3ee6cad8ee4fe619f7e6be891af08d415b6ada599c8b7752c60c4af28bbb576b",
+    "page/index.html": "8b3920e43ef6878a78f6e6302501037f5300f66497c93af2e7274120b24a3f74",
     "public/assets/landing/birdview-activity.webp": "d29648bd586109bdf4b20a1b468ec35d3ec538a80f35cacc175c658c91c745f0",
     "public/assets/landing/birdview-city-dark.webp": "33291115ff5fbb81a6620915fc729610746ca65b91331a7ab0a5075fd524f817",
     "public/assets/landing/birdview-city.webp": "3e191243e7bd709ad2522a3b1d98a1bc032c4a12e7dfb00c77fd3155a84679b4",
+    "public/assets/landing/birdview-hero-film.mp4": "b2a826c4315884aa0284610a21c57df5c61a9ab7266e25f10cdda4b5e363da19",
+    "public/assets/landing/birdview-hero-poster.webp": "1fcc44390ec185655969a1b9d935a008db317c346780264dba9082d4ef841efd",
     "public/assets/landing/birdview-industry.webp": "a7b9cfc2beb61d219714b827808d7d211641b108728073f0f2002f8450f5bd3d",
-    "public/assets/landing/birdview-mark.svg": "f8eec6638c129b65a1b6f7ff7bcd96201daafa55ef2eee45f37f1aa158d551f5",
+    "public/assets/landing/birdview-mark.svg": "4176b5fa77fe46aa22c0a13a877f0629443fbe7ce78c0568a5a7f12a42a65731",
     "public/assets/landing/birdview-sales.webp": "35bf4a738c41f7a08b2638418b3e4ca3ab8677f5d710cce6af979f5ccc65173e",
     "public/assets/landing/birdview-team.webp": "146e4f80959a051c22470a29afe020d577c5cec63207585f758339d3cc98bf0c",
     "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
@@ -2001,15 +2191,16 @@
     "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
     "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
     "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
-    "src/landing/app.js": "1c03dd3a19b7adeba58ea78c19118ac87186152c1f933f0b732ecd0263437700",
-    "src/landing/director-story.css": "cbe92b119564463004cb52517d06bb8dba90ec4ddaeba63bd72327341767e114",
+    "src/landing/app.js": "a56ead6b8297ecea1788b3250a498179458aedbe9cbff9ab66e7c7c70a5661b5",
+    "src/landing/director-story.css": "f333cdf6d49699974246194687c7f15627355b342f0efb84a196c12e3e690df5",
     "src/landing/director-story.js": "b87a272deac21382fd3c89fd2ec021177d066ec3265625391f7e2c4c81880fe8",
     "src/landing/executive-data.js": "49ccd8aff87115c9ae54d9bb9f5001f4937fbcce5e1a260a99dac5cbaafcc47f",
-    "src/landing/map-context.css": "4bbe0417a5d6616b0358404667220586fdc665f13a27ef9348dbf857c2f1e545",
-    "src/landing/map-context.js": "142de05f6def76e3aafdf6059f239e5b86be7b9b7c5b038c231307166e1de981",
+    "src/landing/hero-film.js": "e16c62839141c3a1b5c7ad243afea4ef071610bb004584024d37b5a0754fb265",
+    "src/landing/map-context.css": "163e98be73b868e5100dc25475e3a6e4152e7a062c62031acde16369c73cd5fb",
+    "src/landing/map-context.js": "f9cdef14772873e276ee027a3f2761b52a1ba99c4236d583dd59014dcfaa81dc",
     "src/landing/motion.css": "3c1a6d363b4e28329e90a14395d2970b0c3bb451065f6fecb8b5e1e0914f0c9e",
     "src/landing/motion.js": "24098fe127434a06253c2607cd0b3dd76f67d3fbed304b90498f8f8e453cfe8f",
-    "src/landing/style.css": "6a1d707df728d625b323c3c993cc1bed9f354e8e75c3d4a2358a1bebff51fd36",
+    "src/landing/style.css": "43a242c2d3a982d1c9c8dbb47904a9f68ef1f7a9eba4344b080cd70d8f8abb5f",
     "src/luma/app.js": "0146dc81f3542e6ae9c5bef8d1807c15d9414836507156ce4524b9cced991f0d",
     "src/luma/assets.js": "c88d2c789dad6af119ffcd3bf199918d61d3910fea1b8a1afa2bc41bc20a964d",
     "src/luma/renderer-lab.js": "ef8703b51f59af12ba1677ec16df57d5b7c714c391d03aea492ba61598b1c28e",
@@ -2029,12 +2220,14 @@
     "index.html": "93d387f4b00ee4d4fb2d32633e1de4503e5e0c974fb11d41c3df4dd24782eac9",
     "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
     "package.json": "0873351b5f5987ce9d81fd78fc941d06cbf3fdc5ac3def280b1948f8d621b3bb",
-    "page/index.html": "3ee6cad8ee4fe619f7e6be891af08d415b6ada599c8b7752c60c4af28bbb576b",
+    "page/index.html": "8b3920e43ef6878a78f6e6302501037f5300f66497c93af2e7274120b24a3f74",
     "public/assets/landing/birdview-activity.webp": "d29648bd586109bdf4b20a1b468ec35d3ec538a80f35cacc175c658c91c745f0",
     "public/assets/landing/birdview-city-dark.webp": "33291115ff5fbb81a6620915fc729610746ca65b91331a7ab0a5075fd524f817",
     "public/assets/landing/birdview-city.webp": "3e191243e7bd709ad2522a3b1d98a1bc032c4a12e7dfb00c77fd3155a84679b4",
+    "public/assets/landing/birdview-hero-film.mp4": "b2a826c4315884aa0284610a21c57df5c61a9ab7266e25f10cdda4b5e363da19",
+    "public/assets/landing/birdview-hero-poster.webp": "1fcc44390ec185655969a1b9d935a008db317c346780264dba9082d4ef841efd",
     "public/assets/landing/birdview-industry.webp": "a7b9cfc2beb61d219714b827808d7d211641b108728073f0f2002f8450f5bd3d",
-    "public/assets/landing/birdview-mark.svg": "f8eec6638c129b65a1b6f7ff7bcd96201daafa55ef2eee45f37f1aa158d551f5",
+    "public/assets/landing/birdview-mark.svg": "4176b5fa77fe46aa22c0a13a877f0629443fbe7ce78c0568a5a7f12a42a65731",
     "public/assets/landing/birdview-sales.webp": "35bf4a738c41f7a08b2638418b3e4ca3ab8677f5d710cce6af979f5ccc65173e",
     "public/assets/landing/birdview-team.webp": "146e4f80959a051c22470a29afe020d577c5cec63207585f758339d3cc98bf0c",
     "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
@@ -2078,15 +2271,16 @@
     "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
     "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
     "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
-    "src/landing/app.js": "1c03dd3a19b7adeba58ea78c19118ac87186152c1f933f0b732ecd0263437700",
-    "src/landing/director-story.css": "cbe92b119564463004cb52517d06bb8dba90ec4ddaeba63bd72327341767e114",
+    "src/landing/app.js": "a56ead6b8297ecea1788b3250a498179458aedbe9cbff9ab66e7c7c70a5661b5",
+    "src/landing/director-story.css": "f333cdf6d49699974246194687c7f15627355b342f0efb84a196c12e3e690df5",
     "src/landing/director-story.js": "b87a272deac21382fd3c89fd2ec021177d066ec3265625391f7e2c4c81880fe8",
     "src/landing/executive-data.js": "49ccd8aff87115c9ae54d9bb9f5001f4937fbcce5e1a260a99dac5cbaafcc47f",
-    "src/landing/map-context.css": "4bbe0417a5d6616b0358404667220586fdc665f13a27ef9348dbf857c2f1e545",
-    "src/landing/map-context.js": "142de05f6def76e3aafdf6059f239e5b86be7b9b7c5b038c231307166e1de981",
+    "src/landing/hero-film.js": "e16c62839141c3a1b5c7ad243afea4ef071610bb004584024d37b5a0754fb265",
+    "src/landing/map-context.css": "163e98be73b868e5100dc25475e3a6e4152e7a062c62031acde16369c73cd5fb",
+    "src/landing/map-context.js": "f9cdef14772873e276ee027a3f2761b52a1ba99c4236d583dd59014dcfaa81dc",
     "src/landing/motion.css": "3c1a6d363b4e28329e90a14395d2970b0c3bb451065f6fecb8b5e1e0914f0c9e",
     "src/landing/motion.js": "24098fe127434a06253c2607cd0b3dd76f67d3fbed304b90498f8f8e453cfe8f",
-    "src/landing/style.css": "6a1d707df728d625b323c3c993cc1bed9f354e8e75c3d4a2358a1bebff51fd36",
+    "src/landing/style.css": "43a242c2d3a982d1c9c8dbb47904a9f68ef1f7a9eba4344b080cd70d8f8abb5f",
     "src/luma/app.js": "0146dc81f3542e6ae9c5bef8d1807c15d9414836507156ce4524b9cced991f0d",
     "src/luma/assets.js": "c88d2c789dad6af119ffcd3bf199918d61d3910fea1b8a1afa2bc41bc20a964d",
     "src/luma/renderer-lab.js": "ef8703b51f59af12ba1677ec16df57d5b7c714c391d03aea492ba61598b1c28e",
@@ -2101,5 +2295,72 @@
     "src/style.css": "4e1c2f0abd9897376a73cc7b001d09d6400056d15a51d7e9ced62d9972626d17",
     "vercel.json": "668a25e743367c26c1467216d20d07312fa013a4e2a1b779a8f9c223211da05a",
     "vite.config.js": "e68a53983b8ed561934949c30ccabcc5f74502afd202b6f098ccdb17ab1cd33e"
+  },
+  "fullPageCaptureCaveat": "This headless Chromium/ANGLE environment repeats hero compositor layers near the end of long screenshots, even with the film paused. Use the viewport/section captures as visual evidence for the footer; the actual footer viewport and unique main/hero/footer DOM are correct.",
+  "visualReview": {
+    "excludedLongCaptures": [
+      "03-desktop-full-page.png",
+      "08-mobile-full-page.png"
+    ],
+    "validatedViewportEvidence": [
+      "01-desktop-hero.png",
+      "04-mobile-hero.png",
+      "09-desktop-map-context.png",
+      "10-mobile-commercial-map.png",
+      "11-narrow-mobile-map.png",
+      "20-desktop-perspectives.png",
+      "21-desktop-business-cases.png",
+      "22-desktop-cta.png"
+    ],
+    "footerViewportEvidence": [
+      "18-desktop-cta.png",
+      "19-desktop-footer.png",
+      "20-mobile-cta.png",
+      "21-mobile-footer.png"
+    ],
+    "footerDomAudit": [
+      {
+        "kind": "desktop",
+        "mainCount": 1,
+        "h1Count": 1,
+        "heroCount": 1,
+        "footerCount": 1,
+        "ctaBands": 2,
+        "wordmark": "BirdView",
+        "heroFilm": {
+          "playing": false,
+          "visible": false,
+          "reducedMotion": false,
+          "manuallyPaused": false,
+          "unavailable": false,
+          "disposed": false,
+          "currentTime": 0.744909,
+          "muted": true
+        },
+        "width": 1440,
+        "viewport": 1440
+      },
+      {
+        "kind": "mobile",
+        "mainCount": 1,
+        "h1Count": 1,
+        "heroCount": 1,
+        "footerCount": 1,
+        "ctaBands": 2,
+        "wordmark": "BirdView",
+        "heroFilm": {
+          "playing": false,
+          "visible": false,
+          "reducedMotion": false,
+          "manuallyPaused": false,
+          "unavailable": false,
+          "disposed": false,
+          "currentTime": 0.61401,
+          "muted": true
+        },
+        "width": 390,
+        "viewport": 390
+      }
+    ]
   }
 }

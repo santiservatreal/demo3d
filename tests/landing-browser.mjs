@@ -27,7 +27,7 @@ async function sourceHashes() {
   }
   await visit("src");
   for (const name of await readdir("public/assets/landing"))
-    if (/\.(?:png|jpe?g|webp|svg)$/i.test(name)) files.push(`public/assets/landing/${name}`);
+    if (/\.(?:png|jpe?g|webp|svg|mp4|webm)$/i.test(name)) files.push(`public/assets/landing/${name}`);
   return Object.fromEntries(await Promise.all(files.sort().map(async file => [file, createHash("sha256").update(await readFile(file)).digest("hex")])));
 }
 const sourceSha256 = await sourceHashes();
@@ -47,22 +47,37 @@ async function createPage(name, options = {}) {
   page.on("request", request => requests.push({ page: name, url: request.url(), method: request.method() }));
   page.on("response", response => {
     const url = new URL(response.url());
-    if (/\.(?:js|css|png|jpe?g|webp|svg|woff2?)(?:\?|$)/i.test(response.url())) loadedAssets.add(url.pathname);
+    if (/\.(?:js|css|png|jpe?g|webp|svg|woff2?|mp4|webm)(?:\?|$)/i.test(response.url())) loadedAssets.add(url.pathname);
     if (url.origin === new URL(base).origin && response.status() >= 400) failedResources.push({ page: name, url: url.pathname, status: response.status() });
   });
   await page.addInitScript(() => {
-    const media = { getUserMedia: 0, play: 0, speech: 0 };
+    const media = { getUserMedia: 0, play: 0, speech: 0, playTargets: [] };
     window.__LANDING_QA_MEDIA__ = media;
     if (navigator.mediaDevices) navigator.mediaDevices.getUserMedia = async () => {
       media.getUserMedia++;
       throw new DOMException("QA forbids media capture", "NotAllowedError");
     };
     const originalPlay = HTMLMediaElement.prototype.play;
-    HTMLMediaElement.prototype.play = function (...args) { media.play++; return originalPlay.apply(this, args); };
+    HTMLMediaElement.prototype.play = function (...args) {
+      media.play++;
+      media.playTargets.push({ hero: this.matches("[data-hero-film]"), tag: this.tagName, muted: this.muted, defaultMuted: this.defaultMuted, source: this.currentSrc || this.src || this.querySelector("source")?.src || "" });
+      return originalPlay.apply(this, args);
+    };
     if (window.speechSynthesis) {
       const speak = speechSynthesis.speak.bind(speechSynthesis);
       speechSynthesis.speak = (...args) => { media.speech++; return speak(...args); };
     }
+    const nativeFrame = requestAnimationFrame.bind(window), nativeCancel = cancelAnimationFrame.bind(window);
+    const pendingFrames = new Set();
+    let requestedFrames = 0, completedFrames = 0;
+    window.__LANDING_QA_RAF__ = { getState: () => ({ pending: pendingFrames.size, requested: requestedFrames, completed: completedFrames }) };
+    window.requestAnimationFrame = callback => {
+      requestedFrames++;
+      const id = nativeFrame(timestamp => { pendingFrames.delete(id); completedFrames++; callback.call(window, timestamp); });
+      pendingFrames.add(id);
+      return id;
+    };
+    window.cancelAnimationFrame = id => { pendingFrames.delete(id); return nativeCancel(id); };
     const counterSamples = new Map();
     window.__LANDING_QA_COUNTERS__ = counterSamples;
     new MutationObserver(records => {
@@ -83,7 +98,24 @@ async function boot(page, path = "/page") {
   await page.evaluate(() => document.fonts.ready);
 }
 async function capture(page, name, fullPage = false) {
-  await page.screenshot({ path: `${output}/${name}.png`, fullPage, animations: "disabled" });
+  let resumeFilm = false;
+  if (fullPage && await page.locator("[data-hero-film]").count()) {
+    const state = await page.evaluate(() => __BIRD_HERO_FILM__.getState());
+    if (!state.reducedMotion && !state.manuallyPaused && !state.unavailable) {
+      await page.waitForFunction(() => !document.querySelector("[data-hero-film]").paused);
+      await page.locator("[data-hero-film-toggle]").click();
+      resumeFilm = true;
+    }
+    await page.evaluate(() => {
+      scrollTo({ top: 0, behavior: "instant" });
+      return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    });
+  }
+  try {
+    await page.screenshot({ path: `${output}/${name}.png`, fullPage, animations: "disabled" });
+  } finally {
+    if (resumeFilm) await page.locator("[data-hero-film-toggle]").click();
+  }
 }
 async function readWholePage(page) {
   const metrics = await page.evaluate(() => ({ height: document.documentElement.scrollHeight, step: innerHeight * 0.75 }));
@@ -122,13 +154,43 @@ async function layout(page) {
   expect(measurement.documentWidth).toBeLessThanOrEqual(measurement.viewportWidth + 1);
   return measurement;
 }
-async function noAgentOrMedia(page) {
+async function noAgentOrMedia(page, { allowHeroVideo = false } = {}) {
   const media = await page.evaluate(() => ({
     ...__LANDING_QA_MEDIA__,
     tavusRegistered: !!customElements.get("tavus-embed") || !!customElements.get("tavus-widget"),
     tavusElements: document.querySelectorAll("tavus-embed, tavus-widget").length,
+    audioElements: document.querySelectorAll("audio").length,
+    videos: [...document.querySelectorAll("video")].map(video => ({ hero: video.matches("[data-hero-film]"), muted: video.muted, defaultMuted: video.defaultMuted, loop: video.loop, playsInline: video.playsInline, source: video.currentSrc || video.src || video.querySelector("source")?.src || "" })),
   }));
-  expect(media).toEqual({ getUserMedia: 0, play: 0, speech: 0, tavusRegistered: false, tavusElements: 0 });
+  expect(media.getUserMedia).toBe(0);
+  expect(media.speech).toBe(0);
+  expect(media.tavusRegistered).toBe(false);
+  expect(media.tavusElements).toBe(0);
+  expect(media.audioElements).toBe(0);
+  if (allowHeroVideo) {
+    expect(media.videos).toHaveLength(1);
+    for (const video of media.videos) {
+      expect(video.hero).toBe(true);
+      expect(video.muted).toBe(true);
+      expect(video.defaultMuted).toBe(true);
+      expect(video.loop).toBe(true);
+      expect(video.playsInline).toBe(true);
+      expect(new URL(video.source).origin).toBe(new URL(base).origin);
+      expect(new URL(video.source).pathname).toMatch(/^\/assets\/landing\/.+\.(?:mp4|webm)$/);
+    }
+    expect(media.playTargets).toHaveLength(media.play);
+    for (const target of media.playTargets) {
+      expect(target.hero).toBe(true);
+      expect(target.tag).toBe("VIDEO");
+      expect(target.muted).toBe(true);
+      expect(target.defaultMuted).toBe(true);
+      expect(new URL(target.source).origin).toBe(new URL(base).origin);
+    }
+  } else {
+    expect(media.play).toBe(0);
+    expect(media.playTargets).toEqual([]);
+    expect(media.videos).toEqual([]);
+  }
   return media;
 }
 async function settleVisibleCounters(page) {
@@ -218,6 +280,9 @@ try {
     process.exit(0);
   }
   await expect(desktop.page.locator("main#birdview-landing")).toBeVisible();
+  await expect(desktop.page.locator("main")).toHaveCount(1);
+  await expect(desktop.page.locator(".bv-hero")).toHaveCount(1);
+  await expect(desktop.page.locator("footer")).toHaveCount(1);
   await expect(desktop.page.locator("h1")).toHaveCount(1);
   await expect(desktop.page.locator("h1")).toBeVisible();
   await expect(desktop.page.locator("body")).toContainText("BirdView");
@@ -231,8 +296,8 @@ try {
   expect((await heroCtas.first().getAttribute("rel")).split(/\s+/)).toContain("noopener");
   await expect(desktop.page.locator("a[href='/demo']").first()).toBeVisible();
   const exampleBefore = await desktop.page.evaluate(() => JSON.stringify(__BIRD_LANDING__.getState().example));
-  await expect(desktop.page.locator(".bv-hero [data-map-pipeline]")).toBeVisible();
-  await expect(desktop.page.locator(".bv-hero [data-map-stage]")).toHaveCount(5);
+  await expect(desktop.page.locator("#city-map [data-map-pipeline]")).toBeVisible();
+  await expect(desktop.page.locator("#city-map [data-map-stage]")).toHaveCount(5);
   const firstViewportContext = await desktop.page.evaluate(() => [...document.querySelectorAll("[data-map-stage]")].filter(element => {
     const rect = element.getBoundingClientRect();
     return rect.bottom > 0 && rect.top < innerHeight && rect.left >= 0 && rect.right <= innerWidth;
@@ -247,12 +312,64 @@ try {
   expect(metadata.description.length).toBeGreaterThan(80);
   expect(metadata.validThemeColor).toBe(true);
   await desktop.page.waitForFunction(() => {
-    const image = document.querySelector(".bv-city-image");
-    return image?.complete && image.naturalWidth > 0;
+    const video = document.querySelector("[data-hero-film]");
+    return video?.readyState >= 2 && video.videoWidth > 0;
   });
-  const heroImage = await desktop.page.locator(".bv-city-image").evaluate(image => ({ path: new URL(image.currentSrc || image.src, location.href).pathname, width: image.naturalWidth, height: image.naturalHeight }));
+  const heroImage = await desktop.page.locator("[data-hero-film]").evaluate(video => ({ path: new URL(video.currentSrc || video.src, location.href).pathname, poster: new URL(video.poster, location.href).pathname, width: video.videoWidth, height: video.videoHeight }));
   await capture(desktop.page, "01-desktop-hero");
-  record("desktop-landing-presents-birdview-by-faradai-with-a-working-product-destination", { title, productUrl, metadata, heroImage, firstViewportContext, layout: await layout(desktop.page), media: await noAgentOrMedia(desktop.page) });
+  record("desktop-landing-presents-birdview-by-faradai-with-a-working-product-destination", { title, productUrl, metadata, heroImage, firstViewportContext, layout: await layout(desktop.page), media: await noAgentOrMedia(desktop.page, { allowHeroVideo: true }) });
+
+  const film = desktop.page.locator("[data-hero-film]");
+  const filmToggle = desktop.page.locator("[data-hero-film-toggle]");
+  await expect(film).toBeVisible();
+  await expect(filmToggle).toBeVisible();
+  await expect(filmToggle).toHaveAccessibleName(/.+/);
+  expect((await filmToggle.boundingBox()).height).toBeGreaterThanOrEqual(44);
+  await expect(desktop.page.locator(".bv-header")).toHaveAttribute("data-over-film", "");
+  await desktop.page.waitForFunction(() => !!window.__BIRD_HERO_FILM__?.getState && !document.querySelector("[data-hero-film]").paused);
+  const filmStart = await film.evaluate(video => ({ time: video.currentTime, duration: video.duration, muted: video.muted, defaultMuted: video.defaultMuted, loop: video.loop, playsInline: video.playsInline, poster: video.poster, source: video.currentSrc || video.src }));
+  expect(filmStart.duration).toBeGreaterThan(2);
+  expect(Number.isFinite(filmStart.duration)).toBe(true);
+  expect(filmStart.poster).not.toBe("");
+  expect(new URL(filmStart.poster).origin).toBe(new URL(base).origin);
+  await desktop.page.waitForFunction(initial => {
+    const video = document.querySelector("[data-hero-film]");
+    const distance = video.currentTime >= initial ? video.currentTime - initial : video.duration - initial + video.currentTime;
+    return !video.paused && distance > 0.15;
+  }, filmStart.time);
+  await filmToggle.click();
+  await expect(film).toHaveJSProperty("paused", true);
+  await expect(filmToggle).toHaveAttribute("aria-pressed", "true");
+  expect((await desktop.page.evaluate(() => __BIRD_HERO_FILM__.getState())).manuallyPaused).toBe(true);
+  const manuallyPausedAt = await film.evaluate(video => video.currentTime);
+  await desktop.page.waitForTimeout(220);
+  expect(await film.evaluate(video => video.currentTime)).toBe(manuallyPausedAt);
+  await filmToggle.click();
+  await expect(film).toHaveJSProperty("paused", false);
+  await expect(filmToggle).toHaveAttribute("aria-pressed", "false");
+  await desktop.page.locator("#city-map").evaluate(element => element.scrollIntoView({ block: "start", behavior: "instant" }));
+  await desktop.page.waitForFunction(() => !__BIRD_HERO_FILM__.getState().visible);
+  await expect(film).toHaveJSProperty("paused", true);
+  await expect(desktop.page.locator(".bv-header")).not.toHaveAttribute("data-over-film");
+  const offscreenAt = await film.evaluate(video => video.currentTime);
+  await desktop.page.waitForTimeout(220);
+  expect(await film.evaluate(video => video.currentTime)).toBe(offscreenAt);
+  await desktop.page.locator(".bv-hero").evaluate(element => element.scrollIntoView({ block: "start", behavior: "instant" }));
+  await expect(film).toHaveJSProperty("paused", false);
+  await desktop.page.evaluate(() => {
+    Object.defineProperty(document, "visibilityState", { configurable: true, get: () => "hidden" });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await expect(film).toHaveJSProperty("paused", true);
+  const hiddenFilmAt = await film.evaluate(video => video.currentTime);
+  await desktop.page.waitForTimeout(220);
+  expect(await film.evaluate(video => video.currentTime)).toBe(hiddenFilmAt);
+  await desktop.page.evaluate(() => {
+    delete document.visibilityState;
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await expect(film).toHaveJSProperty("paused", false);
+  record("local-silent-hero-film-advances-and-pauses-with-controls-scroll-and-page-visibility", { filmStart, manuallyPausedAt, offscreenAt, hiddenFilmAt, state: await desktop.page.evaluate(() => __BIRD_HERO_FILM__.getState()), visibilityMethod: "QA-controlled document.visibilityState with visibilitychange; not an OS focus test" });
 
   const stageFacts = [
     ["lead", /nuevos leads/i, 4, 20000],
@@ -377,7 +494,28 @@ try {
     await capture(desktop.page, `02-feature-${feature}`);
   }
   expect(new Set(featureStates.map(state => state.text)).size).toBe(3);
-  record("feature-controls-show-distinct-sales-team-and-activity-explanations", { featureStates });
+  const perspectiveLinks = [];
+  for (const feature of ["sales", "team", "activity"]) {
+    const link = desktop.page.locator(`[data-feature-link='${feature}']`).first();
+    // Start each link from a settled source viewport. A previous smooth scroll
+    // must not compete with Playwright's automatic scrolling to the next link.
+    await link.evaluate(element => element.scrollIntoView({ block: "center", behavior: "instant" }));
+    await desktop.page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await link.click();
+    await expect(desktop.page.locator(`[data-feature-tab='${feature}']`)).toHaveAttribute("aria-selected", "true");
+    await expect(desktop.page.locator(`[data-feature-panel='${feature}']`)).toBeVisible();
+    await expect(desktop.page.locator("#features")).toBeInViewport();
+    await desktop.page.waitForFunction(() => Math.abs(document.querySelector("#features").getBoundingClientRect().top - parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)) < 3);
+    perspectiveLinks.push({ feature, text: (await link.innerText()).replace(/\s+/g, " ") });
+  }
+  const operationsLink = desktop.page.locator(".bv-perspective-row[href='#operations']");
+  await operationsLink.evaluate(element => element.scrollIntoView({ block: "center", behavior: "instant" }));
+  await desktop.page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  await operationsLink.click();
+  await expect(desktop.page.locator("#operations")).toBeInViewport();
+  await expect(desktop.page.locator(".bv-business-case")).toHaveCount(3);
+  await expect(desktop.page.locator(".bv-business-case[href='/demo']")).toHaveCount(1);
+  record("feature-controls-show-distinct-sales-team-and-activity-explanations", { featureStates, perspectiveLinks, businessCases: 3 });
 
   await desktop.page.locator("#faq").scrollIntoViewIfNeeded();
   const questions = desktop.page.locator("#faq details");
@@ -513,7 +651,7 @@ try {
   await capture(mobile.page, "07-mobile-faq");
   await readWholePage(mobile.page);
   await capture(mobile.page, "08-mobile-full-page", true);
-  record("mobile-content-tabs-and-faq-remain-usable-without-horizontal-scroll", { featureLayout: mobileFeatureLayout, faqLayout: await layout(mobile.page), mobileMapControls, media: await noAgentOrMedia(mobile.page) });
+  record("mobile-content-tabs-and-faq-remain-usable-without-horizontal-scroll", { featureLayout: mobileFeatureLayout, faqLayout: await layout(mobile.page), mobileMapControls, media: await noAgentOrMedia(mobile.page, { allowHeroVideo: true }) });
   await mobile.context.close();
 
   const narrow = await createPage("landing-narrow-mobile", { viewport: { width: 360, height: 800 }, isMobile: true, hasTouch: true });
@@ -540,8 +678,22 @@ try {
   expect(reducedState.reducedMotion).toBe(true);
   expect(reducedState.pendingFrame).toBe(false);
   expect(reducedState.frameCount).toBe(0);
+  await expect(reduced.page.locator("[data-hero-film]")).toHaveJSProperty("paused", true);
+  await expect(reduced.page.locator("[data-hero-film-toggle]")).toBeHidden();
+  await expect(reduced.page.locator(".bv-hero")).toHaveAttribute("data-hero-film-state", "poster");
+  await expect(reduced.page.locator(".bv-hero-poster")).toBeVisible();
+  const reducedFilm = await reduced.page.evaluate(() => __BIRD_HERO_FILM__.getState());
+  expect(reducedFilm.reducedMotion).toBe(true);
+  expect(reducedFilm.playing).toBe(false);
+  const reducedMedia = await noAgentOrMedia(reduced.page, { allowHeroVideo: true });
+  expect(reducedMedia.play).toBe(0);
+  const reducedFramesBefore = await reduced.page.evaluate(() => __LANDING_QA_RAF__.getState());
+  expect(reducedFramesBefore.pending).toBe(0);
+  await reduced.page.waitForTimeout(220);
+  const reducedFramesAfter = await reduced.page.evaluate(() => __LANDING_QA_RAF__.getState());
+  expect(reducedFramesAfter).toEqual(reducedFramesBefore);
   expect(await reduced.page.evaluate(() => document.getAnimations().filter(animation => animation.playState === "running").length)).toBe(0);
-  record("trailing-slash-route-and-reduced-motion-show-final-metrics-without-animation", { path: "/page/", layout: await layout(reduced.page), reducedMetrics, reducedState });
+  record("trailing-slash-route-and-reduced-motion-show-final-metrics-without-animation", { path: "/page/", layout: await layout(reduced.page), reducedMetrics, reducedState, reducedFilm, reducedMedia, reducedFramesBefore, reducedFramesAfter });
   await reduced.context.close();
 
   for (const [path, name] of [["/", "dashboard"], ["/demo", "presentation"]]) {
@@ -573,6 +725,7 @@ try {
     generatedAt: new Date().toISOString(), startedAt, browser: browser.version(),
     environment: "Chromium headless on Linux; desktop 1440×1000 and mobile viewports 390×844 / 360×800, not a physical-phone test. Existing WebGL routes use ANGLE/SwiftShader.",
     screenshots: "Actual rendered landing. Finite DOM entrance animations are disabled for readable stills; number evolution is observed as real intermediate DOM values in a separate page.",
+    fullPageCaptureCaveat: "This headless Chromium/ANGLE environment can repeat hero compositor layers near the end of long screenshots, even with the film paused. Use the viewport/section captures as visual evidence for the footer; this does not occur in the actual footer viewport or DOM.",
     productDestination: productUrl, liveConversationStarted: false, microphoneOpened: false,
     results, errors, failedResources, tavusRequests, thirdPartyRequests, loadedAssets: [...loadedAssets], sourceSha256, workingTreeSourceSha256AtCompletion: finalSourceSha256,
   }, null, 2));
