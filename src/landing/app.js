@@ -1,8 +1,6 @@
 import "@fontsource/dm-sans/latin-400.css";
 import "@fontsource/dm-sans/latin-500.css";
 import "@fontsource/dm-sans/latin-600.css";
-import "@fontsource/manrope/latin-600.css";
-import "@fontsource/manrope/latin-700.css";
 import { LANDING_EXAMPLE } from "./executive-data.js";
 import { createLandingMotion } from "./motion.js";
 import { renderLandingMapContext, createLandingMapContext } from "./map-context.js";
@@ -33,8 +31,8 @@ const bird = `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="m
 const brand = `<span class="bv-brand-mark">${bird}</span><span class="bv-brand-word">BirdView</span>`;
 const external = `href="${productUrl}" target="_blank" rel="noopener noreferrer"`;
 
-document.title = "BirdView — Tu empresa, a vista de pájaro · FaradAI";
-document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#f4f6fb");
+document.title = "BirdView — Tu empresa. En perspectiva. · FaradAI";
+document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#131917");
 const description = document.querySelector('meta[name="description"]') || document.createElement("meta");
 description.name = "description";
 description.content = "Descubre BirdView, un producto de FaradAI. Una ciudad visual para explorar tus ventas, tu equipo y la actividad de tu negocio. Prueba la demo interactiva.";
@@ -44,32 +42,36 @@ document.querySelector("#app").innerHTML = `
   <a class="bv-skip" href="#birdview-landing">Saltar al contenido</a>
   <header class="bv-header">
     <div class="bv-nav-wrap">
-      <a class="bv-brand" href="/page" aria-label="BirdView, inicio">${brand}</a>
+      <a class="bv-brand" href="/page" aria-label="BirdView, inicio">${brand}<span class="bv-brand-origin">by FaradAI</span></a>
       <nav class="bv-nav" aria-label="Navegación principal">
-        <a href="#features">El producto</a><a href="#how-it-works">Cómo funciona</a><a href="#faq">Preguntas frecuentes</a>
+        <a href="#features">Plataforma</a><a href="#direction">Para dirección</a><a href="#how-it-works">Cómo funciona</a>
       </nav>
       <a class="bv-nav-cta" ${external}>Explorar BirdView ${icon("northeast")}</a>
       <button class="bv-menu" data-landing-menu aria-expanded="false" aria-controls="bv-mobile-nav" aria-label="Abrir menú"><span></span><span></span></button>
     </div>
-    <nav id="bv-mobile-nav" data-landing-mobile-nav aria-label="Navegación móvil" hidden><a href="#features">El producto</a><a href="#how-it-works">Cómo funciona</a><a href="#faq">Preguntas frecuentes</a><a ${external}>Explorar BirdView ${icon("northeast")}</a></nav>
+    <nav id="bv-mobile-nav" data-landing-mobile-nav aria-label="Navegación móvil" hidden><a href="#features">Plataforma</a><a href="#direction">Para dirección</a><a href="#how-it-works">Cómo funciona</a><a href="#faq">Preguntas frecuentes</a><a ${external}>Explorar BirdView ${icon("northeast")}</a></nav>
   </header>
 
   <main id="birdview-landing">
     <section class="bv-hero" aria-labelledby="bv-hero-title">
-      <div class="bv-hero-heading bv-container">
-        <div><p class="bv-eyebrow"><span></span> LA VISIÓN DE CONJUNTO PARA DIRIGIR TU NEGOCIO</p><h1 id="bv-hero-title">Tu empresa,<br>a vista de <span>pájaro.</span></h1></div>
-        <div class="bv-hero-intro"><p>Ve cuánto has facturado,<br class="bv-desktop-break"> qué ventas están por cerrar<br class="bv-desktop-break"> y dónde necesita apoyo tu equipo.<br class="bv-desktop-break"> Una visión de conjunto para decidir.</p><div class="bv-hero-actions"><a class="bv-button bv-button-blue" ${external}>Entrar en la ciudad ${icon("northeast")}</a><a class="bv-video-link" href="/demo"><span>${icon("play")}</span> Ver presentación</a></div><small>Un producto de <b>FaradAI</b></small></div>
+      <div class="bv-hero-top bv-container"><p class="bv-eyebrow"><i></i> INTELIGENCIA VISUAL PARA TU NEGOCIO</p><span>BIRDVIEW / BY FARADAI</span></div>
+      <div class="bv-hero-heading bv-container" data-reveal-sequence>
+        <div data-reveal-item><h1 id="bv-hero-title">Tu empresa.<br><span>En perspectiva.</span></h1></div>
+        <div class="bv-hero-intro" data-reveal-item><p>Los datos de tu CRM, convertidos en una ciudad. Ve qué avanza, qué necesita atención y dónde está tu próxima oportunidad.</p><div class="bv-hero-actions"><a class="bv-button bv-button-blue" ${external}>Explorar BirdView ${icon("northeast")}</a><a class="bv-video-link" href="/demo"><span>${icon("play")}</span> Ver presentación</a></div></div>
       </div>
+      <div class="bv-scene-index bv-container"><span><i></i> VISIÓN OPERATIVA / PIPELINE COMERCIAL</span><span>01 — EXPLORA TU EMPRESA</span></div>
       <div class="bv-city-stage">
         ${renderLandingMapContext(LANDING_EXAMPLE)}
-        <div class="bv-hero-caption"><span><i></i> Ciudad real de la demo · Datos de ejemplo</span><a href="#features">Descubre una nueva forma de ver ${icon("down")}</a><span>Diseñado por FaradAI</span></div>
+        <div class="bv-hero-caption"><span><i></i> Ciudad real de BirdView · Datos de ejemplo</span><a href="#direction">DEL DATO A LA DECISIÓN ${icon("down")}</a><span>FARADAI / BIRDVIEW</span></div>
       </div>
     </section>
+
+    <div class="bv-value-strip bv-container" data-reveal-sequence><div data-reveal-item><span>01 / VISIBILIDAD</span><p>El negocio, en una misma vista.</p></div><div data-reveal-item><span>02 / CONTEXTO</span><p>Las personas detrás de cada cifra.</p></div><div data-reveal-item><span>03 / DIRECCIÓN</span><p>Más claridad para decidir.</p></div></div>
 
     ${renderDirectorStory(LANDING_EXAMPLE)}
 
     <section class="bv-features bv-container" id="features" aria-labelledby="bv-features-title">
-      <div class="bv-section-heading"><div><p class="bv-eyebrow">DEL DATO A LA DECISIÓN</p><h2 id="bv-features-title">Acércate a lo<br>que importa.</h2></div><p>El contexto detrás de cada cifra.<br>Ventas, responsables y actividad en la misma vista.</p></div>
+      <div class="bv-section-heading"><div><p class="bv-eyebrow">[02] / EXPLORA LA PLATAFORMA</p><h2 id="bv-features-title">Cada dato.<br>Con su contexto.</h2></div><p>Una oportunidad, una persona, una conversación.<br>Entiende cómo se conecta todo.</p></div>
       <div class="bv-feature-tabs" role="tablist" aria-label="Perspectivas de BirdView"><button id="bv-tab-sales" role="tab" data-feature-tab="sales" aria-controls="bv-panel-sales" aria-selected="true" tabindex="0">${icon("chart")} Tus ventas <span>01</span></button><button id="bv-tab-team" role="tab" data-feature-tab="team" aria-controls="bv-panel-team" aria-selected="false" tabindex="-1">${icon("people")} Tu equipo <span>02</span></button><button id="bv-tab-activity" role="tab" data-feature-tab="activity" aria-controls="bv-panel-activity" aria-selected="false" tabindex="-1">${icon("message")} La actividad <span>03</span></button></div>
       <div class="bv-feature-panel" id="bv-panel-sales" data-feature-panel="sales" role="tabpanel" aria-labelledby="bv-tab-sales">
         <div class="bv-feature-copy"><span class="bv-feature-number">01 / VENTAS</span><h3>Cada oportunidad<br>tiene su lugar.</h3><p>Tu pipeline se convierte en barrios. Los edificios muestran las oportunidades y la ciudad cambia cuando una venta avanza.</p><ul><li>${icon("check")} Identifica la etapa de cada oportunidad.</li><li>${icon("check")} Reconoce dónde se concentra el valor.</li><li>${icon("check")} Celebra los acuerdos ganados.</li></ul><a ${external}>Recorrer el pipeline ${icon("northeast")}</a></div><div class="bv-feature-visual"><img src="${asset("sales")}" alt="Detalle del barrio comercial de BirdView con oportunidades representadas como edificios" width="1600" height="1000" loading="lazy"><div class="bv-visual-tag"><i></i> De nuevo lead a venta ganada</div></div>
@@ -84,14 +86,14 @@ document.querySelector("#app").innerHTML = `
     </section>
 
     <section class="bv-how" id="how-it-works" aria-labelledby="bv-how-title"><div class="bv-container">
-      <div class="bv-section-heading"><div><p class="bv-eyebrow">DE LA INFORMACIÓN A LA INTUICIÓN</p><h2 id="bv-how-title">Un nuevo punto de vista.<br>Una forma sencilla de empezar.</h2></div><a class="bv-text-link" href="/demo">Verlo en movimiento ${icon("northeast")}</a></div>
+      <div class="bv-section-heading"><div><p class="bv-eyebrow">[03] / DE LOS DATOS A LA VISIÓN</p><h2 id="bv-how-title">Tu información.<br>Una nueva dimensión.</h2></div><a class="bv-text-link" href="/demo">Verlo en movimiento ${icon("northeast")}</a></div>
       <div class="bv-steps"><article><span class="bv-step-number">01</span><div class="bv-step-illustration bv-data-illustration" aria-hidden="true"><i></i><i></i><i></i><span>${icon("layers")}</span></div><h3>Tu negocio tiene la historia.</h3><p>Oportunidades, responsables y actividades. La información de tu empresa es el punto de partida.</p></article><article><span class="bv-step-number">02</span><div class="bv-step-illustration bv-blocks-illustration" aria-hidden="true"><i></i><i></i><i></i></div><h3>BirdView le da forma.</h3><p>Cada etapa se convierte en un barrio. Cada oportunidad, en un edificio. El conjunto empieza a tener sentido.</p></article><article><span class="bv-step-number">03</span><div class="bv-step-illustration bv-view-illustration" aria-hidden="true">${icon("eye")}<i></i><i></i><i></i></div><h3>Exploras. Entiendes. Decides.</h3><p>Acércate a los detalles, detecta dónde prestar atención y comparte el mapa con tu equipo.</p></article></div>
       <div class="bv-how-note"><span>${icon("spark")} Pruébalo a tu ritmo.</span><p>La demo ya tiene una ciudad preparada con datos de ejemplo. Puedes entrar y explorar directamente desde el navegador.</p><a ${external}>Abrir demo ${icon("arrow")}</a></div>
     </div></section>
 
-    <section class="bv-possibilities bv-container" aria-labelledby="bv-possibilities-title"><div><p class="bv-eyebrow">UN MAPA QUE PUEDE IR MÁS ALLÁ</p><h2 id="bv-possibilities-title">Tu empresa no se queda quieta.<br><span>Su ciudad tampoco.</span></h2><p>El concepto se extiende a la producción, el almacén y el reparto. La presentación de BirdView muestra también cómo un producto recorre la empresa hasta llegar al cliente.</p><a class="bv-text-link" href="/demo">Ver el recorrido completo ${icon("northeast")}</a></div><div class="bv-industry-visual"><img src="${asset("industry")}" alt="Zona industrial de la demo con fábrica, almacén y vehículos de reparto" width="1600" height="1000" loading="lazy"><span>FABRICAR → PREPARAR → ENTREGAR</span></div></section>
+    <section class="bv-possibilities bv-container" aria-labelledby="bv-possibilities-title"><div><p class="bv-eyebrow">[04] / MÁS ALLÁ DE LA VENTA</p><h2 id="bv-possibilities-title">Una empresa.<br><span>Todas sus conexiones.</span></h2><p>De la producción al almacén. Del reparto al cliente. La presentación de BirdView explora también el recorrido industrial, con cada proceso en su lugar.</p><a class="bv-text-link" href="/demo">Explorar las operaciones ${icon("northeast")}</a></div><div class="bv-industry-visual"><img src="${asset("industry")}" alt="Zona industrial de la demo con fábrica, almacén y vehículos de reparto" width="1600" height="1000" loading="lazy"><span>FABRICAR → PREPARAR → ENTREGAR</span></div></section>
 
-    <section class="bv-faq bv-container" id="faq" aria-labelledby="bv-faq-title"><div><p class="bv-eyebrow">POR SI TE LO ESTÁS PREGUNTANDO</p><h2 id="bv-faq-title">Otra perspectiva.<br>Las cosas claras.</h2><p>Lo esencial para conocer BirdView.</p></div><div class="bv-questions">
+    <section class="bv-faq bv-container" id="faq" aria-labelledby="bv-faq-title"><div><p class="bv-eyebrow">[05] / PREGUNTAS FRECUENTES</p><h2 id="bv-faq-title">Las cosas,<br>claras.</h2><p>Lo esencial para conocer BirdView.</p></div><div class="bv-questions">
       <details><summary>¿Qué es exactamente BirdView? ${icon("plus")}</summary><p>BirdView es un producto de FaradAI que representa la información de una empresa como una ciudad visual. Las oportunidades son edificios; las etapas, barrios; y la actividad se convierte en movimiento. Su objetivo es ayudarte a entender el negocio de un vistazo.</p></details>
       <details><summary>¿Puedo probarlo sin conectar mi CRM? ${icon("plus")}</summary><p>Sí. La demo funciona desde el navegador con datos de ejemplo. Puedes explorar la ciudad o abrir la presentación guiada de cuatro minutos, sin configurar una conexión ni activar el asistente virtual.</p></details>
       <details><summary>¿Sustituye a mi CRM? ${icon("plus")}</summary><p>BirdView está planteado como una capa visual sobre la información de tu CRM. La idea es que puedas interpretar tus datos desde otra perspectiva y seguir utilizando tus herramientas de trabajo.</p></details>
@@ -99,7 +101,7 @@ document.querySelector("#app").innerHTML = `
       <details><summary>¿Para qué tipo de empresa está pensado? ${icon("plus")}</summary><p>El ejemplo comercial permite explorar ventas, responsables y conversaciones. El recorrido industrial amplía el concepto a fabricación, stock y entrega. La representación y los datos deberán adaptarse a los procesos de cada empresa.</p></details>
     </div></section>
 
-    <section class="bv-final-cta" aria-labelledby="bv-cta-title"><div class="bv-container"><div class="bv-cta-orbit" aria-hidden="true"><i></i><i></i><span>${bird}</span></div><p class="bv-eyebrow">LAS GRANDES IDEAS EMPIEZAN CAMBIANDO DE PERSPECTIVA</p><h2 id="bv-cta-title">Tu próxima gran decisión<br>empieza con un vistazo.</h2><p>Entra en la ciudad. Descubre BirdView.</p><a class="bv-button bv-button-light" ${external}>Explorar BirdView ${icon("northeast")}</a><span class="bv-cta-note">Demo interactiva · Datos de ejemplo · En tu navegador</span></div></section>
+    <section class="bv-final-cta" aria-labelledby="bv-cta-title"><div class="bv-container"><div class="bv-cta-top"><p class="bv-eyebrow">EL SIGUIENTE PASO EMPIEZA POR VERLO.</p><span aria-hidden="true">${bird}</span></div><h2 id="bv-cta-title">Cambia la perspectiva.<br>Cambia lo que viene.</h2><div class="bv-cta-bottom"><a class="bv-button bv-button-light" ${external}>Entrar en BirdView ${icon("northeast")}</a><span class="bv-cta-note">DEMO INTERACTIVA / DATOS DE EJEMPLO / EN TU NAVEGADOR</span></div></div></section>
   </main>
   <footer class="bv-footer bv-container"><div><a class="bv-brand" href="/page" aria-label="BirdView, volver al inicio">${brand}</a><p>Una nueva perspectiva para tu negocio.</p></div><div class="bv-footer-company"><span>UN PRODUCTO DE</span><b>${icon("spark")} FaradAI</b><small>© ${new Date().getFullYear()} FaradAI</small></div><nav aria-label="Enlaces del pie"><a href="#features">El producto</a><a href="/demo">Ver presentación ${icon("northeast")}</a><a href="#faq">Preguntas frecuentes</a></nav><div class="bv-footer-bottom"><span>Hecho para ver las cosas de otra manera.</span><a href="#birdview-landing">Volver arriba ↑</a></div></footer>
 `;

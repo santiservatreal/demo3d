@@ -185,6 +185,8 @@ try {
       await desktop.page.waitForTimeout(1500);
       await capture(desktop.page, `06-desktop-executive-${perspective}`);
     }
+    await readWholePage(desktop.page);
+    await capture(desktop.page, "07-desktop-full-page", true);
     const desktopLayout = await layout(desktop.page);
     await desktop.context.close();
     const mobile = await createPage("landing-mobile-preview", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
@@ -199,7 +201,19 @@ try {
     await capture(mobile.page, "09-mobile-executive");
     await readWholePage(mobile.page);
     await capture(mobile.page, "05-mobile-full-page", true);
-    await writeFile(`${output}/preview.json`, JSON.stringify({ generatedAt: new Date().toISOString(), exploratory: true, desktopLayout, mobileLayout: await layout(mobile.page), errors, failedResources }, null, 2));
+    const mobileLayout = await layout(mobile.page);
+    await mobile.context.close();
+    const narrow = await createPage("landing-narrow-mobile-preview", { viewport: { width: 360, height: 800 }, isMobile: true, hasTouch: true });
+    await boot(narrow.page);
+    await narrow.page.waitForTimeout(1600);
+    await capture(narrow.page, "10-narrow-mobile-hero");
+    await narrow.page.locator(".bv-city-stage").scrollIntoViewIfNeeded();
+    await settleVisibleCounters(narrow.page);
+    await capture(narrow.page, "11-narrow-mobile-map");
+    await narrow.page.locator("[data-director-board]").scrollIntoViewIfNeeded();
+    await settleVisibleCounters(narrow.page);
+    await capture(narrow.page, "12-narrow-mobile-executive");
+    await writeFile(`${output}/preview.json`, JSON.stringify({ generatedAt: new Date().toISOString(), exploratory: true, desktopLayout, mobileLayout, narrowLayout: await layout(narrow.page), errors, failedResources }, null, 2));
     await browser.close();
     process.exit(0);
   }
@@ -217,14 +231,28 @@ try {
   expect((await heroCtas.first().getAttribute("rel")).split(/\s+/)).toContain("noopener");
   await expect(desktop.page.locator("a[href='/demo']").first()).toBeVisible();
   const exampleBefore = await desktop.page.evaluate(() => JSON.stringify(__BIRD_LANDING__.getState().example));
-  await expect(desktop.page.locator("[data-map-pipeline]")).toBeInViewport();
+  await expect(desktop.page.locator(".bv-hero [data-map-pipeline]")).toBeVisible();
+  await expect(desktop.page.locator(".bv-hero [data-map-stage]")).toHaveCount(5);
   const firstViewportContext = await desktop.page.evaluate(() => [...document.querySelectorAll("[data-map-stage]")].filter(element => {
     const rect = element.getBoundingClientRect();
     return rect.bottom > 0 && rect.top < innerHeight && rect.left >= 0 && rect.right <= innerWidth;
   }).map(element => element.dataset.mapStage));
-  expect(firstViewportContext.length).toBeGreaterThanOrEqual(3);
+  const metadata = await desktop.page.evaluate(() => ({
+    description: document.querySelector('meta[name="description"]')?.content || "",
+    themeColor: document.querySelector('meta[name="theme-color"]')?.content || "",
+    validThemeColor: CSS.supports("color", document.querySelector('meta[name="theme-color"]')?.content || ""),
+  }));
+  expect(metadata.description).toContain("BirdView");
+  expect(metadata.description).toContain("FaradAI");
+  expect(metadata.description.length).toBeGreaterThan(80);
+  expect(metadata.validThemeColor).toBe(true);
+  await desktop.page.waitForFunction(() => {
+    const image = document.querySelector(".bv-city-image");
+    return image?.complete && image.naturalWidth > 0;
+  });
+  const heroImage = await desktop.page.locator(".bv-city-image").evaluate(image => ({ path: new URL(image.currentSrc || image.src, location.href).pathname, width: image.naturalWidth, height: image.naturalHeight }));
   await capture(desktop.page, "01-desktop-hero");
-  record("desktop-landing-presents-birdview-by-faradai-with-a-working-product-destination", { title, productUrl, firstViewportContext, layout: await layout(desktop.page), media: await noAgentOrMedia(desktop.page) });
+  record("desktop-landing-presents-birdview-by-faradai-with-a-working-product-destination", { title, productUrl, metadata, heroImage, firstViewportContext, layout: await layout(desktop.page), media: await noAgentOrMedia(desktop.page) });
 
   const stageFacts = [
     ["lead", /nuevos leads/i, 4, 20000],

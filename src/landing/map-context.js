@@ -3,14 +3,14 @@ const integer = new Intl.NumberFormat("es-ES");
 const escape = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 const icon = (name) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${({ check: '<path d="m5 12 4 4L19 6"/>', arrow: '<path d="M7 17 17 7M7 7h10v10"/>', attention: '<path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v5m0 3h.01"/>', trend: '<path d="m3 16 6-6 4 4 8-10M15 4h6v6"/>' })[name]}</svg>`;
 
-// Coordinates are projections of the five district plaques in birdview-city.webp,
+// Coordinates are projections of the five district plaques in birdview-city-dark.webp,
 // using the same orthographic camera as /tmp/bird-landing-render-assets.mjs.
 const neighborhoods = {
-  lead: { x: 28.74, y: 49.14, color: "#238bec", owner: "Equipo comercial", heading: "El próximo negocio empieza aquí.", action: "Prioriza los contactos que todavía esperan respuesta." },
-  qualified: { x: 36.68, y: 55.16, color: "#079d95", owner: "Lucía Costa", heading: "El interés ya tiene recorrido.", action: "Comprueba qué oportunidades están listas para una propuesta." },
-  proposal: { x: 44.50, y: 61.09, color: "#c58b14", owner: "Ana Gil", heading: "Propuestas con una decisión pendiente.", action: "Mira cuánto valor está esperando el siguiente paso." },
-  negotiation: { x: 52.31, y: 67.02, color: "#9953cc", owner: "Marc Ruiz", heading: "Una negociación que merece tu atención.", action: "Una oportunidad lleva cinco días sin actividad. Revisa el siguiente paso con Marc." },
-  won: { x: 60.25, y: 73.04, color: "#15945a", owner: "Todo el equipo", heading: "Los resultados también tienen barrio.", action: "Cuatro ventas ganadas este mes. El objetivo de cierre está al 75 %." },
+  lead: { x: 28.74, y: 49.14, color: "#80a8c2", owner: "Equipo comercial", heading: "El próximo negocio empieza aquí.", action: "Prioriza los contactos que todavía esperan respuesta." },
+  qualified: { x: 36.68, y: 55.16, color: "#75b5a6", owner: "Lucía Costa", heading: "El interés ya tiene recorrido.", action: "Comprueba qué oportunidades están listas para una propuesta." },
+  proposal: { x: 44.50, y: 61.09, color: "#d4b879", owner: "Ana Gil", heading: "Propuestas con una decisión pendiente.", action: "Mira cuánto valor está esperando el siguiente paso." },
+  negotiation: { x: 52.31, y: 67.02, color: "#b89ec8", owner: "Marc Ruiz", heading: "Una negociación que merece tu atención.", action: "Una oportunidad lleva cinco días sin actividad. Revisa el siguiente paso con Marc." },
+  won: { x: 60.25, y: 73.04, color: "#c5ef8f", owner: "Todo el equipo", heading: "Los resultados también tienen barrio.", action: "Cuatro ventas ganadas este mes. El objetivo de cierre está al 75 %." },
 };
 
 function view(snapshot) {
@@ -36,7 +36,7 @@ export function renderLandingMapContext(snapshot) {
   return `<div class="bv-map-context" data-map-context data-reveal-sequence>
     <div class="bv-map-scene">
       <div class="bv-map-grid" aria-hidden="true"></div>
-      <img class="bv-city-image" src="/assets/landing/birdview-city.webp" alt="Ciudad de BirdView. Los cinco barrios comerciales representan nuevos leads, cualificados, propuestas, negociación y ventas ganadas; detrás aparecen comunicaciones y producción." width="2400" height="1344" fetchpriority="high">
+      <img class="bv-city-image" src="/assets/landing/birdview-city-dark.webp" alt="Ciudad de BirdView. Los cinco barrios comerciales representan nuevos leads, cualificados, propuestas, negociación y ventas ganadas; detrás aparecen comunicaciones y producción." width="2400" height="1344" fetchpriority="high">
       <section class="bv-map-kpis" aria-label="Visión ejecutiva, datos de ejemplo" data-map-pipeline data-metric-group data-reveal-item>
         <div><span>Facturado este mes</span><strong>${count(totals.invoiced)}</strong><small>Facturas emitidas</small></div>
         <div><span>Pipeline abierto</span><strong>${count(totals.pipeline)}</strong><small>${integer.format(totals.opportunities || 0)} oportunidades activas</small></div>

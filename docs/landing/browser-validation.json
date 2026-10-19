@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-19T10:20:05.637Z",
-  "startedAt": "2026-10-19T10:19:25.783Z",
+  "generatedAt": "2026-10-19T15:46:12.354Z",
+  "startedAt": "2026-10-19T15:45:34.039Z",
   "browser": "154.0.8037.57",
   "environment": "Chromium headless on Linux; desktop 1440×1000 and mobile viewports 390×844 / 360×800, not a physical-phone test. Existing WebGL routes use ANGLE/SwiftShader.",
   "screenshots": "Actual rendered landing. Finite DOM entrance animations are disabled for readable stills; number evolution is observed as real intermediate DOM values in a separate page.",
@@ -12,14 +12,23 @@
       "name": "desktop-landing-presents-birdview-by-faradai-with-a-working-product-destination",
       "passed": true,
       "detail": {
-        "title": "BirdView — Tu empresa, a vista de pájaro · FaradAI",
+        "title": "BirdView — Tu empresa. En perspectiva. · FaradAI",
         "productUrl": "https://pipeline-city.vercel.app/",
+        "metadata": {
+          "description": "Descubre BirdView, un producto de FaradAI. Una ciudad visual para explorar tus ventas, tu equipo y la actividad de tu negocio. Prueba la demo interactiva.",
+          "themeColor": "#131917",
+          "validThemeColor": true
+        },
+        "heroImage": {
+          "path": "/assets/landing/birdview-city-dark.webp",
+          "width": 2400,
+          "height": 1344
+        },
         "firstViewportContext": [
           "lead",
           "qualified",
           "proposal",
-          "negotiation",
-          "won"
+          "negotiation"
         ],
         "layout": {
           "viewportWidth": 1440,
@@ -84,9 +93,9 @@
             "text": "1Nuevos leads4 oportunidades · 20.000 €",
             "label": null,
             "pressed": "true",
-            "x": 358.859375,
-            "y": 221.296875,
-            "width": 127,
+            "x": 333.0859375,
+            "y": 210.296875,
+            "width": 178.546875,
             "height": 46
           },
           {
@@ -94,9 +103,9 @@
             "text": "2Cualificados3 oportunidades · 18.000 €",
             "label": null,
             "pressed": "false",
-            "x": 470.015625,
-            "y": 268.5,
-            "width": 127,
+            "x": 444.2421875,
+            "y": 257.5,
+            "width": 178.546875,
             "height": 46
           },
           {
@@ -104,9 +113,9 @@
             "text": "3Propuestas2 oportunidades · 30.000 €",
             "label": null,
             "pressed": "false",
-            "x": 579.5,
-            "y": 314.984375,
-            "width": 127,
+            "x": 553.7265625,
+            "y": 303.984375,
+            "width": 178.546875,
             "height": 46
           },
           {
@@ -114,9 +123,9 @@
             "text": "4Negociación1 oportunidad · 27.000 €",
             "label": null,
             "pressed": "false",
-            "x": 688.828125,
-            "y": 361.484375,
-            "width": 127,
+            "x": 669.0703125,
+            "y": 350.484375,
+            "width": 166.515625,
             "height": 46
           },
           {
@@ -124,9 +133,9 @@
             "text": "5Ventas ganadas4 ganadas · 60.000 €",
             "label": null,
             "pressed": "false",
-            "x": 800,
-            "y": 408.671875,
-            "width": 127,
+            "x": 789.5,
+            "y": 397.671875,
+            "width": 148,
             "height": 46
           }
         ]
@@ -336,8 +345,28 @@
             "exists": true
           },
           {
-            "text": "El producto",
+            "text": "Plataforma",
             "href": "#features",
+            "exists": true
+          },
+          {
+            "text": "Para dirección",
+            "href": "#direction",
+            "exists": true
+          },
+          {
+            "text": "Cómo funciona",
+            "href": "#how-it-works",
+            "exists": true
+          },
+          {
+            "text": "Plataforma",
+            "href": "#features",
+            "exists": true
+          },
+          {
+            "text": "Para dirección",
+            "href": "#direction",
             "exists": true
           },
           {
@@ -351,23 +380,8 @@
             "exists": true
           },
           {
-            "text": "El producto",
-            "href": "#features",
-            "exists": true
-          },
-          {
-            "text": "Cómo funciona",
-            "href": "#how-it-works",
-            "exists": true
-          },
-          {
-            "text": "Preguntas frecuentes",
-            "href": "#faq",
-            "exists": true
-          },
-          {
-            "text": "Descubre una nueva forma de ver",
-            "href": "#features",
+            "text": "DEL DATO A LA DECISIÓN",
+            "href": "#direction",
             "exists": true
           },
           {
@@ -415,7 +429,7 @@
         "questions": 5,
         "images": [
           {
-            "src": "/assets/landing/birdview-city.webp",
+            "src": "/assets/landing/birdview-city-dark.webp",
             "complete": true,
             "width": 2400
           },
@@ -470,14 +484,14 @@
       "detail": {
         "visibilityMethod": "QA-controlled document.visibilityState with a real visibilitychange event; not an OS focus test",
         "hiddenBefore": {
-          "active": 1,
-          "completed": 4,
+          "active": 5,
+          "completed": 0,
           "total": 16,
           "pendingFrame": false,
           "reducedMotion": false,
           "suspended": true,
           "disposed": false,
-          "frameCount": 35,
+          "frameCount": 37,
           "observerCount": 1,
           "units": [
             {
@@ -510,6 +524,14 @@
             },
             {
               "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
               "visible": true
             },
             {
@@ -524,32 +546,32 @@
           "values": [
             {
               "target": 42000,
-              "value": 42000,
-              "formatted": "42.000 €",
-              "state": "complete"
+              "value": 41999.363955670175,
+              "formatted": "41.999 €",
+              "state": "running"
             },
             {
               "target": 95000,
-              "value": 95000,
-              "formatted": "95.000 €",
-              "state": "complete"
+              "value": 94998.56132830158,
+              "formatted": "94.999 €",
+              "state": "running"
             },
             {
               "target": 3,
-              "value": 3,
+              "value": 2.9999545682621553,
               "formatted": "3",
-              "state": "complete"
+              "state": "running"
             },
             {
               "target": 32000,
-              "value": 32000,
+              "value": 31999.515394796323,
               "formatted": "32.000 €",
-              "state": "complete"
+              "state": "running"
             },
             {
               "target": 18000,
-              "value": 7055.206727196045,
-              "formatted": "7.055 €",
+              "value": 737.6866550010888,
+              "formatted": "738 €",
               "state": "running"
             },
             {
@@ -622,14 +644,14 @@
           "businessMutation": false
         },
         "hiddenAfter": {
-          "active": 1,
-          "completed": 4,
+          "active": 5,
+          "completed": 0,
           "total": 16,
           "pendingFrame": false,
           "reducedMotion": false,
           "suspended": true,
           "disposed": false,
-          "frameCount": 35,
+          "frameCount": 37,
           "observerCount": 1,
           "units": [
             {
@@ -662,6 +684,14 @@
             },
             {
               "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
               "visible": true
             },
             {
@@ -676,32 +706,32 @@
           "values": [
             {
               "target": 42000,
-              "value": 42000,
-              "formatted": "42.000 €",
-              "state": "complete"
+              "value": 41999.363955670175,
+              "formatted": "41.999 €",
+              "state": "running"
             },
             {
               "target": 95000,
-              "value": 95000,
-              "formatted": "95.000 €",
-              "state": "complete"
+              "value": 94998.56132830158,
+              "formatted": "94.999 €",
+              "state": "running"
             },
             {
               "target": 3,
-              "value": 3,
+              "value": 2.9999545682621553,
               "formatted": "3",
-              "state": "complete"
+              "state": "running"
             },
             {
               "target": 32000,
-              "value": 32000,
+              "value": 31999.515394796323,
               "formatted": "32.000 €",
-              "state": "complete"
+              "state": "running"
             },
             {
               "target": 18000,
-              "value": 7055.206727196045,
-              "formatted": "7.055 €",
+              "value": 737.6866550010888,
+              "formatted": "738 €",
               "state": "running"
             },
             {
@@ -787,8 +817,8 @@
           "label": "18.000 €"
         },
         "partial": {
-          "value": 7055.206727196045,
-          "text": "7.055 €"
+          "value": 737.6866550010888,
+          "text": "738 €"
         },
         "animation": {
           "target": 18000,
@@ -808,111 +838,119 @@
               "state": "running"
             },
             {
-              "value": 3351.391130188152,
+              "value": 737.6866550010888,
               "state": "running"
             },
             {
-              "value": 7055.206727196045,
+              "value": 1023.9460739787974,
               "state": "running"
             },
             {
-              "value": 7738.1158526185345,
+              "value": 1654.5461720444055,
               "state": "running"
             },
             {
-              "value": 8187.911155278464,
+              "value": 4030.9609913228087,
               "state": "running"
             },
             {
-              "value": 9860.420609510016,
+              "value": 5125.902272737514,
               "state": "running"
             },
             {
-              "value": 10247.658601669553,
+              "value": 7143.963336180778,
               "state": "running"
             },
             {
-              "value": 10982.762198908491,
+              "value": 8509.967937962101,
               "state": "running"
             },
             {
-              "value": 12616.73386403813,
+              "value": 10146.851160674976,
               "state": "running"
             },
             {
-              "value": 13462.540364272496,
+              "value": 10888.418842479086,
               "state": "running"
             },
             {
-              "value": 14214.761130624507,
+              "value": 11911.839082114604,
               "state": "running"
             },
             {
-              "value": 14878.88313154409,
+              "value": 13115.664387445982,
               "state": "running"
             },
             {
-              "value": 15276.154312657505,
+              "value": 13908.385507413523,
               "state": "running"
             },
             {
-              "value": 15964.778710885703,
+              "value": 14822.57674222028,
               "state": "running"
             },
             {
-              "value": 16261.459538089215,
+              "value": 15590.366892059741,
               "state": "running"
             },
             {
-              "value": 16872.149260681697,
+              "value": 15923.347334092952,
               "state": "running"
             },
             {
-              "value": 17070.055550403216,
+              "value": 16361.369466580449,
               "state": "running"
             },
             {
-              "value": 17320.361204273733,
+              "value": 16616.411712719346,
               "state": "running"
             },
             {
-              "value": 17459.908807487347,
+              "value": 16947.39589198186,
               "state": "running"
             },
             {
-              "value": 17678.73979732519,
+              "value": 17221.369653910944,
               "state": "running"
             },
             {
-              "value": 17761.392666659987,
+              "value": 17373.8183290102,
               "state": "running"
             },
             {
-              "value": 17856.798519428263,
+              "value": 17564.018645273456,
               "state": "running"
             },
             {
-              "value": 17903.5924870343,
+              "value": 17710.928596819584,
               "state": "running"
             },
             {
-              "value": 17952.846892500707,
+              "value": 17820.461319282815,
               "state": "running"
             },
             {
-              "value": 17973.8999546249,
+              "value": 17875.379193265286,
               "state": "running"
             },
             {
-              "value": 17992.052133866706,
+              "value": 17934.826790896717,
               "state": "running"
             },
             {
-              "value": 17998.923105975126,
+              "value": 17971.525417332767,
               "state": "running"
             },
             {
-              "value": 17999.945753086395,
+              "value": 17990.936748242388,
+              "state": "running"
+            },
+            {
+              "value": 17997.035398260312,
+              "state": "running"
+            },
+            {
+              "value": 17999.898864197305,
               "state": "running"
             },
             {
@@ -928,33 +966,33 @@
         "initialMetrics": [
           {
             "target": 42000,
-            "value": 35715.65240605761,
+            "value": 34798.35390946502,
             "state": "running",
-            "text": "35.716 €",
+            "text": "34.798 €",
             "label": "42.000 €",
             "format": "eur"
           },
           {
             "target": 95000,
-            "value": 80785.40425179698,
+            "value": 78710.56241426611,
             "state": "running",
-            "text": "80.785 €",
+            "text": "78.711 €",
             "label": "95.000 €",
             "format": "eur"
           },
           {
             "target": 3,
-            "value": 2.5511180290041153,
+            "value": 2.48559670781893,
             "state": "running",
-            "text": "3",
+            "text": "2",
             "label": "3",
             "format": "integer"
           },
           {
             "target": 32000,
-            "value": 27211.92564271056,
+            "value": 26513.031550068587,
             "state": "running",
-            "text": "27.212 €",
+            "text": "26.513 €",
             "label": "32.000 €",
             "format": "eur"
           },
@@ -1069,7 +1107,7 @@
           "reducedMotion": false,
           "suspended": false,
           "disposed": false,
-          "frameCount": 73,
+          "frameCount": 80,
           "observerCount": 1,
           "units": [
             {
@@ -1089,10 +1127,6 @@
               "visible": false
             },
             {
-              "state": "pending",
-              "visible": false
-            },
-            {
               "state": "visible",
               "visible": false
             },
@@ -1109,7 +1143,19 @@
               "visible": false
             },
             {
-              "state": "pending",
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
               "visible": false
             }
           ],
@@ -1146,68 +1192,68 @@
             },
             {
               "target": 42000,
-              "value": 24028.05344562297,
-              "formatted": "24.028 €",
+              "value": 31853.270237301072,
+              "formatted": "31.853 €",
               "state": "running"
             },
             {
               "target": 60000,
-              "value": 34325.790636604244,
-              "formatted": "34.326 €",
+              "value": 45504.67176757296,
+              "formatted": "45.505 €",
               "state": "running"
             },
             {
               "target": 60000,
-              "value": 34310.645100960995,
-              "formatted": "34.311 €",
+              "value": 45504.67176757296,
+              "formatted": "45.505 €",
               "state": "running"
             },
             {
               "target": 42000,
-              "value": 24017.451570672696,
-              "formatted": "24.017 €",
+              "value": 31853.270237301072,
+              "formatted": "31.853 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 10293.193530288298,
-              "formatted": "10.293 €",
+              "value": 13651.401530271887,
+              "formatted": "13.651 €",
               "state": "running"
             },
             {
               "target": 75,
-              "value": 42.88830637620124,
-              "formatted": "43 %",
+              "value": 56.8808397094662,
+              "formatted": "57 %",
               "state": "running"
             },
             {
               "target": 3,
-              "value": 0,
-              "formatted": "0",
-              "state": "pending"
+              "value": 0.5399224319303734,
+              "formatted": "1",
+              "state": "running"
             },
             {
               "target": 60000,
-              "value": 8521.391555614719,
-              "formatted": "8.521 €",
+              "value": 3728.263244137597,
+              "formatted": "3.728 €",
               "state": "running"
             },
             {
               "target": 32000,
-              "value": 4538.320882237685,
-              "formatted": "4.538 €",
+              "value": 1981.5931542225726,
+              "formatted": "1.982 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 2552.8054962586975,
-              "formatted": "2.553 €",
+              "value": 1114.6461492501971,
+              "formatted": "1.115 €",
               "state": "running"
             },
             {
               "target": 10000,
-              "value": 1418.2252756992764,
-              "formatted": "1.418 €",
+              "value": 619.247860694554,
+              "formatted": "619 €",
               "state": "running"
             }
           ],
@@ -1221,7 +1267,7 @@
           "reducedMotion": false,
           "suspended": false,
           "disposed": false,
-          "frameCount": 73,
+          "frameCount": 80,
           "observerCount": 1,
           "units": [
             {
@@ -1241,10 +1287,6 @@
               "visible": false
             },
             {
-              "state": "pending",
-              "visible": false
-            },
-            {
               "state": "visible",
               "visible": false
             },
@@ -1261,7 +1303,19 @@
               "visible": false
             },
             {
-              "state": "pending",
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
               "visible": false
             }
           ],
@@ -1298,68 +1352,68 @@
             },
             {
               "target": 42000,
-              "value": 24028.05344562297,
-              "formatted": "24.028 €",
+              "value": 31853.270237301072,
+              "formatted": "31.853 €",
               "state": "running"
             },
             {
               "target": 60000,
-              "value": 34325.790636604244,
-              "formatted": "34.326 €",
+              "value": 45504.67176757296,
+              "formatted": "45.505 €",
               "state": "running"
             },
             {
               "target": 60000,
-              "value": 34310.645100960995,
-              "formatted": "34.311 €",
+              "value": 45504.67176757296,
+              "formatted": "45.505 €",
               "state": "running"
             },
             {
               "target": 42000,
-              "value": 24017.451570672696,
-              "formatted": "24.017 €",
+              "value": 31853.270237301072,
+              "formatted": "31.853 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 10293.193530288298,
-              "formatted": "10.293 €",
+              "value": 13651.401530271887,
+              "formatted": "13.651 €",
               "state": "running"
             },
             {
               "target": 75,
-              "value": 42.88830637620124,
-              "formatted": "43 %",
+              "value": 56.8808397094662,
+              "formatted": "57 %",
               "state": "running"
             },
             {
               "target": 3,
-              "value": 0,
-              "formatted": "0",
-              "state": "pending"
+              "value": 0.5399224319303734,
+              "formatted": "1",
+              "state": "running"
             },
             {
               "target": 60000,
-              "value": 8521.391555614719,
-              "formatted": "8.521 €",
+              "value": 3728.263244137597,
+              "formatted": "3.728 €",
               "state": "running"
             },
             {
               "target": 32000,
-              "value": 4538.320882237685,
-              "formatted": "4.538 €",
+              "value": 1981.5931542225726,
+              "formatted": "1.982 €",
               "state": "running"
             },
             {
               "target": 18000,
-              "value": 2552.8054962586975,
-              "formatted": "2.553 €",
+              "value": 1114.6461492501971,
+              "formatted": "1.115 €",
               "state": "running"
             },
             {
               "target": 10000,
-              "value": 1418.2252756992764,
-              "formatted": "1.418 €",
+              "value": 619.247860694554,
+              "formatted": "619 €",
               "state": "running"
             }
           ],
@@ -1405,9 +1459,9 @@
             "label": null,
             "pressed": "false",
             "x": 19.5,
-            "y": 322.125,
+            "y": 278.984375,
             "width": 171.5,
-            "height": 54
+            "height": 75
           },
           {
             "stage": "qualified",
@@ -1415,9 +1469,9 @@
             "label": null,
             "pressed": "false",
             "x": 199,
-            "y": 322.125,
+            "y": 278.984375,
             "width": 171.5,
-            "height": 54
+            "height": 75
           },
           {
             "stage": "proposal",
@@ -1425,9 +1479,9 @@
             "label": null,
             "pressed": "false",
             "x": 19.5,
-            "y": 384.125,
+            "y": 361.984375,
             "width": 171.5,
-            "height": 54
+            "height": 75
           },
           {
             "stage": "negotiation",
@@ -1435,9 +1489,9 @@
             "label": null,
             "pressed": "false",
             "x": 199,
-            "y": 384.125,
+            "y": 361.984375,
             "width": 171.5,
-            "height": 54
+            "height": 75
           },
           {
             "stage": "won",
@@ -1445,9 +1499,9 @@
             "label": null,
             "pressed": "true",
             "x": 19.5,
-            "y": 446.125,
+            "y": 444.984375,
             "width": 351,
-            "height": 46
+            "height": 48
           }
         ],
         "media": {
@@ -1470,9 +1524,9 @@
             "label": null,
             "pressed": "false",
             "x": 18,
-            "y": 361.328125,
+            "y": 325.984375,
             "width": 158,
-            "height": 52
+            "height": 75
           },
           {
             "stage": "qualified",
@@ -1480,9 +1534,9 @@
             "label": null,
             "pressed": "false",
             "x": 184,
-            "y": 361.328125,
+            "y": 325.984375,
             "width": 158,
-            "height": 52
+            "height": 75
           },
           {
             "stage": "proposal",
@@ -1490,9 +1544,9 @@
             "label": null,
             "pressed": "false",
             "x": 18,
-            "y": 421.328125,
+            "y": 408.984375,
             "width": 158,
-            "height": 52
+            "height": 75
           },
           {
             "stage": "negotiation",
@@ -1500,9 +1554,9 @@
             "label": null,
             "pressed": "true",
             "x": 184,
-            "y": 421.328125,
+            "y": 408.984375,
             "width": 158,
-            "height": 52
+            "height": 75
           },
           {
             "stage": "won",
@@ -1510,9 +1564,9 @@
             "label": null,
             "pressed": "false",
             "x": 18,
-            "y": 481.328125,
+            "y": 491.984375,
             "width": 324,
-            "height": 46
+            "height": 48
           }
         ],
         "layout": {
@@ -1711,6 +1765,14 @@
             },
             {
               "state": "visible",
+              "visible": false
+            },
+            {
+              "state": "visible",
+              "visible": true
+            },
+            {
+              "state": "visible",
               "visible": true
             },
             {
@@ -1854,48 +1916,48 @@
   "tavusRequests": [],
   "thirdPartyRequests": [],
   "loadedAssets": [
+    "/assets/app-Uamf5CIp.js",
     "/assets/modulepreload-polyfill-B5Qt9EMX.js",
-    "/assets/app-CO1zmH5I.js",
-    "/assets/app-DYXJ_CvF.css",
-    "/assets/app-C4jlBRnH.js",
+    "/assets/app-B0jtHwJ5.css",
+    "/assets/latin-500-BoHSStLk.css",
     "/assets/latin-600-BnRhtdY-.css",
-    "/assets/latin-700-LcJfTqXW.css",
-    "/assets/landing/birdview-city.webp",
-    "/assets/manrope-latin-700-normal-BZp_XxE4.woff2",
-    "/assets/landing/birdview-sales.webp",
-    "/assets/dm-sans-latin-600-normal-Aqo67rzb.woff2",
-    "/assets/dm-sans-latin-400-normal-CW0RaeGs.woff2",
-    "/assets/manrope-latin-600-normal-4f0koTD-.woff2",
+    "/assets/app-PyEpnAWq.js",
+    "/assets/landing/birdview-city-dark.webp",
     "/assets/dm-sans-latin-500-normal-B9HHJjqV.woff2",
+    "/assets/landing/birdview-sales.webp",
+    "/assets/dm-sans-latin-400-normal-CW0RaeGs.woff2",
     "/assets/landing/birdview-team.webp",
     "/assets/landing/birdview-industry.webp",
     "/assets/landing/birdview-activity.webp",
     "/assets/landing/birdview-mark.svg",
-    "/assets/latin-400-CIditRp3.css",
+    "/assets/latin-700-BsCA67n7.css",
+    "/assets/sparkles-WWxNemCu.js",
+    "/assets/RGBELoader-JdYcDdxD.js",
     "/assets/app-BtU1d9e3.css",
-    "/assets/sparkles-Da5qkh_G.js",
-    "/assets/RGBELoader-BquQ1Z7r.js",
-    "/assets/info-DtALk9Ur.js",
-    "/assets/users-CBh7sSBi.js",
-    "/assets/sliders-horizontal-qyZjLL62.js",
-    "/assets/app-BHK49WIY.js",
-    "/assets/latin-400-B4QAHSh-.js",
-    "/assets/app-B6XqXOYc.js",
-    "/assets/simulation-app-B2pmtNoY.js",
+    "/assets/sliders-horizontal-b2r-6EBp.js",
+    "/assets/info-DbmJmdsJ.js",
+    "/assets/users-CblT-ZKR.js",
+    "/assets/app-CKBZV7uD.js",
+    "/assets/latin-700-CTtVcDEB.js",
+    "/assets/manrope-latin-700-normal-BZp_XxE4.woff2",
+    "/assets/manrope-latin-600-normal-4f0koTD-.woff2",
+    "/assets/app-xsxwn5-D.js",
+    "/assets/simulation-app-Dhoxv6ta.js",
     "/assets/style-Bm_FjAwn.css",
     "/assets/simulation-app-BP9ylIrr.css",
-    "/assets/style-CwaeE-xL.js",
+    "/assets/style-B2u8Xx7o.js",
     "/assets/manrope-latin-400-normal-PaqtzbVb.woff2"
   ],
   "sourceSha256": {
     "index.html": "93d387f4b00ee4d4fb2d32633e1de4503e5e0c974fb11d41c3df4dd24782eac9",
     "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
     "package.json": "0873351b5f5987ce9d81fd78fc941d06cbf3fdc5ac3def280b1948f8d621b3bb",
-    "page/index.html": "54917a938ae0c43ce5e895824ae155c3f5125d4ef5466e46037446081ae20e8e",
+    "page/index.html": "3ee6cad8ee4fe619f7e6be891af08d415b6ada599c8b7752c60c4af28bbb576b",
     "public/assets/landing/birdview-activity.webp": "d29648bd586109bdf4b20a1b468ec35d3ec538a80f35cacc175c658c91c745f0",
+    "public/assets/landing/birdview-city-dark.webp": "33291115ff5fbb81a6620915fc729610746ca65b91331a7ab0a5075fd524f817",
     "public/assets/landing/birdview-city.webp": "3e191243e7bd709ad2522a3b1d98a1bc032c4a12e7dfb00c77fd3155a84679b4",
     "public/assets/landing/birdview-industry.webp": "a7b9cfc2beb61d219714b827808d7d211641b108728073f0f2002f8450f5bd3d",
-    "public/assets/landing/birdview-mark.svg": "86fe313b334a919596c504b78f0b669d16a46c8423179a0e28ce954d29b58a2d",
+    "public/assets/landing/birdview-mark.svg": "f8eec6638c129b65a1b6f7ff7bcd96201daafa55ef2eee45f37f1aa158d551f5",
     "public/assets/landing/birdview-sales.webp": "35bf4a738c41f7a08b2638418b3e4ca3ab8677f5d710cce6af979f5ccc65173e",
     "public/assets/landing/birdview-team.webp": "146e4f80959a051c22470a29afe020d577c5cec63207585f758339d3cc98bf0c",
     "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
@@ -1939,15 +2001,15 @@
     "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
     "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
     "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
-    "src/landing/app.js": "64142e264368ee22cbdb9b1e993d92c0f58ae6018a1d77da2f965d8245d12060",
-    "src/landing/director-story.css": "2af0c8522757088da4fc4013cb4000d4585bb66840e12f5a08c3803e36103674",
+    "src/landing/app.js": "1c03dd3a19b7adeba58ea78c19118ac87186152c1f933f0b732ecd0263437700",
+    "src/landing/director-story.css": "cbe92b119564463004cb52517d06bb8dba90ec4ddaeba63bd72327341767e114",
     "src/landing/director-story.js": "b87a272deac21382fd3c89fd2ec021177d066ec3265625391f7e2c4c81880fe8",
     "src/landing/executive-data.js": "49ccd8aff87115c9ae54d9bb9f5001f4937fbcce5e1a260a99dac5cbaafcc47f",
-    "src/landing/map-context.css": "9ff077edf3a082f65a210da3564cc8d1d791037033a9e8e036991ed4503a90f5",
-    "src/landing/map-context.js": "f0a717479c35b1a70c898176b125cdd3dc7c50edbb0b6c1e25e430935ae9e6f2",
-    "src/landing/motion.css": "a325f15c7eb501adf949be6a2972e8f07d6d0c6e733dffb78dddf81cd5a44f1f",
+    "src/landing/map-context.css": "4bbe0417a5d6616b0358404667220586fdc665f13a27ef9348dbf857c2f1e545",
+    "src/landing/map-context.js": "142de05f6def76e3aafdf6059f239e5b86be7b9b7c5b038c231307166e1de981",
+    "src/landing/motion.css": "3c1a6d363b4e28329e90a14395d2970b0c3bb451065f6fecb8b5e1e0914f0c9e",
     "src/landing/motion.js": "24098fe127434a06253c2607cd0b3dd76f67d3fbed304b90498f8f8e453cfe8f",
-    "src/landing/style.css": "f1db21625b6deda37425d03bf893476c3f1cf1cc9ca9c0e2a7289d5893912e49",
+    "src/landing/style.css": "6a1d707df728d625b323c3c993cc1bed9f354e8e75c3d4a2358a1bebff51fd36",
     "src/luma/app.js": "0146dc81f3542e6ae9c5bef8d1807c15d9414836507156ce4524b9cced991f0d",
     "src/luma/assets.js": "c88d2c789dad6af119ffcd3bf199918d61d3910fea1b8a1afa2bc41bc20a964d",
     "src/luma/renderer-lab.js": "ef8703b51f59af12ba1677ec16df57d5b7c714c391d03aea492ba61598b1c28e",
@@ -1967,11 +2029,12 @@
     "index.html": "93d387f4b00ee4d4fb2d32633e1de4503e5e0c974fb11d41c3df4dd24782eac9",
     "package-lock.json": "7ec081c9b4cebe0c242572b598b86e7cbd4b9a9845f587b029624c3e91a34524",
     "package.json": "0873351b5f5987ce9d81fd78fc941d06cbf3fdc5ac3def280b1948f8d621b3bb",
-    "page/index.html": "54917a938ae0c43ce5e895824ae155c3f5125d4ef5466e46037446081ae20e8e",
+    "page/index.html": "3ee6cad8ee4fe619f7e6be891af08d415b6ada599c8b7752c60c4af28bbb576b",
     "public/assets/landing/birdview-activity.webp": "d29648bd586109bdf4b20a1b468ec35d3ec538a80f35cacc175c658c91c745f0",
+    "public/assets/landing/birdview-city-dark.webp": "33291115ff5fbb81a6620915fc729610746ca65b91331a7ab0a5075fd524f817",
     "public/assets/landing/birdview-city.webp": "3e191243e7bd709ad2522a3b1d98a1bc032c4a12e7dfb00c77fd3155a84679b4",
     "public/assets/landing/birdview-industry.webp": "a7b9cfc2beb61d219714b827808d7d211641b108728073f0f2002f8450f5bd3d",
-    "public/assets/landing/birdview-mark.svg": "86fe313b334a919596c504b78f0b669d16a46c8423179a0e28ce954d29b58a2d",
+    "public/assets/landing/birdview-mark.svg": "f8eec6638c129b65a1b6f7ff7bcd96201daafa55ef2eee45f37f1aa158d551f5",
     "public/assets/landing/birdview-sales.webp": "35bf4a738c41f7a08b2638418b3e4ca3ab8677f5d710cce6af979f5ccc65173e",
     "public/assets/landing/birdview-team.webp": "146e4f80959a051c22470a29afe020d577c5cec63207585f758339d3cc98bf0c",
     "src/city/app.js": "6028c906f1c0e1f2ec5c3f721dcc9af775326ce576282d197946fdaf9b4fc0ee",
@@ -2015,15 +2078,15 @@
     "src/demo/tavus-close.js": "f3c5fc71d06856945f01823d22ba875588bfa3e64654309298163458e52ca894",
     "src/demo/tavus-session.js": "e3d69c4d7df2a9064fa8c2e74206a0caf4200f60fb2ef4b2c67745e85338ca66",
     "src/demo/tool-contracts.js": "da4cfeba26995197bf3a2f5913ab8f355873968d259777684fc4730d3e89c26c",
-    "src/landing/app.js": "64142e264368ee22cbdb9b1e993d92c0f58ae6018a1d77da2f965d8245d12060",
-    "src/landing/director-story.css": "2af0c8522757088da4fc4013cb4000d4585bb66840e12f5a08c3803e36103674",
+    "src/landing/app.js": "1c03dd3a19b7adeba58ea78c19118ac87186152c1f933f0b732ecd0263437700",
+    "src/landing/director-story.css": "cbe92b119564463004cb52517d06bb8dba90ec4ddaeba63bd72327341767e114",
     "src/landing/director-story.js": "b87a272deac21382fd3c89fd2ec021177d066ec3265625391f7e2c4c81880fe8",
     "src/landing/executive-data.js": "49ccd8aff87115c9ae54d9bb9f5001f4937fbcce5e1a260a99dac5cbaafcc47f",
-    "src/landing/map-context.css": "9ff077edf3a082f65a210da3564cc8d1d791037033a9e8e036991ed4503a90f5",
-    "src/landing/map-context.js": "f0a717479c35b1a70c898176b125cdd3dc7c50edbb0b6c1e25e430935ae9e6f2",
-    "src/landing/motion.css": "a325f15c7eb501adf949be6a2972e8f07d6d0c6e733dffb78dddf81cd5a44f1f",
+    "src/landing/map-context.css": "4bbe0417a5d6616b0358404667220586fdc665f13a27ef9348dbf857c2f1e545",
+    "src/landing/map-context.js": "142de05f6def76e3aafdf6059f239e5b86be7b9b7c5b038c231307166e1de981",
+    "src/landing/motion.css": "3c1a6d363b4e28329e90a14395d2970b0c3bb451065f6fecb8b5e1e0914f0c9e",
     "src/landing/motion.js": "24098fe127434a06253c2607cd0b3dd76f67d3fbed304b90498f8f8e453cfe8f",
-    "src/landing/style.css": "f1db21625b6deda37425d03bf893476c3f1cf1cc9ca9c0e2a7289d5893912e49",
+    "src/landing/style.css": "6a1d707df728d625b323c3c993cc1bed9f354e8e75c3d4a2358a1bebff51fd36",
     "src/luma/app.js": "0146dc81f3542e6ae9c5bef8d1807c15d9414836507156ce4524b9cced991f0d",
     "src/luma/assets.js": "c88d2c789dad6af119ffcd3bf199918d61d3910fea1b8a1afa2bc41bc20a964d",
     "src/luma/renderer-lab.js": "ef8703b51f59af12ba1677ec16df57d5b7c714c391d03aea492ba61598b1c28e",

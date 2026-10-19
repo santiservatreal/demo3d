@@ -15,18 +15,6 @@
   opacity: 1;
   translate: 0 0;
 }
-.bv-city-stage {
-  max-width: 1400px;
-}
-.bv-hero {
-  padding-top: 54px;
-}
-@media (max-width: 900px) {
-  .bv-hero { padding-top: 43px; }
-}
-@media (max-width: 600px) {
-  .bv-hero { padding-top: 37px; }
-}
 @media (prefers-reduced-motion: reduce) {
   #birdview-landing [data-reveal-sequence] [data-reveal-item] {
     opacity: 1;

@@ -2,7 +2,15 @@
 
 La landing está en `/page` y `/page/`. El producto principal conserva `/` y la presentación `/demo`.
 
-La página presenta BirdView como producto de FaradAI y se dirige a quienes toman decisiones: evolución del negocio, prioridades y contexto del equipo. Las cinco imágenes WebP proceden del renderer real del proyecto, sin HUD y con datos ficticios. El titular y el diseño siguen el concepto de la captura del usuario. La web externa proporcionada devolvió HTTP 403 desde este entorno; no se afirma haber verificado su contenido ni sus integraciones.
+La página presenta BirdView como producto de FaradAI y se dirige a quienes toman decisiones: evolución del negocio, prioridades y contexto del equipo. Las imágenes WebP proceden del renderer real del proyecto, sin HUD y con datos ficticios. La web externa del producto proporcionada devolvió HTTP 403 desde este entorno; no se afirma haber verificado su contenido ni sus integraciones.
+
+## Dirección visual
+
+El rediseño usa Palantir y HappyRobot como referencias indicadas por el usuario: composición editorial, tipografía grande, escenas amplias de producto, controles rectos y líneas finas. Las consultas a sus webs públicas quedaron bloqueadas por el proxy (CONNECT 403), por lo que no se afirma haber inspeccionado sus diseños actuales. La marca, la ciudad, los textos y el producto son los propios de BirdView / FaradAI.
+
+La portada es grafito `#131917`, las secciones claras usan crema `#f1f0eb` y el acento es verde `#c5ef8f`. DM Sans y las fuentes del sistema se sirven localmente. El tablero de dirección mantiene los indicadores en un marco oscuro; el recorrido y las preguntas se organizan como capítulos numerados.
+
+`birdview-city-dark.webp` es una nueva captura nocturna de 2400 × 1344, con la misma cámara que la imagen anterior para conservar los anclajes de las cinco etapas. Pesa 464 KB, está codificada sin pérdida y tiene el fondo exacto de la portada. Los materiales y luces se ajustaron en una captura aislada, sin cambiar las escenas de la aplicación o la presentación.
 
 ## Interacciones
 
@@ -38,8 +46,8 @@ La URL del servidor de pruebas puede configurarse con `BASE_URL`; `CAPTURE_DIR` 
 
 ## Verificación
 
-Compilación de producción correcta y **298 pruebas unitarias aprobadas**, incluidas interpolación de contadores y coherencia financiera del ejemplo. **17 de 17 grupos de navegador pasan** en Chromium, con formatos de escritorio 1440 × 1000 y móvil 390 × 844 / 360 × 800. Se comprueban las cinco zonas, importes y resultados del equipo, cambios de perspectiva al hacer scroll, valores intermedios de los contadores, ausencia de reinicios, pausa y reposo sin RAF, marca, destinos, anclas, pestañas, preguntas, teclado, menú, recursos gráficos, ausencia de desbordamientos, movimiento reducido y las rutas originales `/` y `/demo`.
+Compilación de producción correcta y **7 pruebas de los modelos de la landing aprobadas**, incluidas interpolación de contadores y coherencia financiera del ejemplo. **17 de 17 grupos de navegador pasan** en Chromium, con formatos de escritorio 1440 × 1000 y móvil 390 × 844 / 360 × 800. Se comprueban las cinco zonas, importes y resultados del equipo, cambios de perspectiva al hacer scroll, valores intermedios de los contadores, ausencia de reinicios, pausa y reposo sin RAF, marca, destinos, metadatos, anclas, pestañas, preguntas, teclado, menú, carga del nuevo mapa nocturno, ausencia de desbordamientos, movimiento reducido y las rutas originales `/` y `/demo`.
 
-Sin errores JavaScript, recursos HTTP fallidos, peticiones externas ni apertura de cámara, micrófono o audio. Las huellas de las 74 fuentes y recursos comprobados coinciden al inicio, al final y con el código entregado. La pausa por visibilidad se verifica mediante `visibilityState` controlado por QA y un evento real; no es una prueba de foco del sistema operativo. Los enlaces externos se verifican por su destino; no se sortea el bloqueo de red ni se prueba la página de destino. Móvil se valida mediante viewport, sin afirmar pruebas en un teléfono físico.
+Sin errores JavaScript, recursos HTTP fallidos, peticiones externas ni apertura de cámara, micrófono o audio. Las huellas de las 75 fuentes y recursos comprobados coinciden al inicio, al final y con el código entregado. La pausa por visibilidad se verifica mediante `visibilityState` controlado por QA y un evento real; no es una prueba de foco del sistema operativo. Los enlaces externos se verifican por su destino; no se sortea el bloqueo de red ni se prueba la página de destino. Móvil se valida mediante viewport, sin afirmar pruebas en un teléfono físico.
 
 [Informe completo](browser-validation.json) · [Portada de escritorio](captures/desktop-hero.png) · [Página completa](captures/desktop-full-page.png) · [Portada móvil](captures/mobile-hero.png) · [Página móvil completa](captures/mobile-full-page.png) · [Negocio](captures/director-overview.png) · [Prioridades](captures/director-attention.png) · [Equipo](captures/director-team.png) · [Mapa móvil](captures/mobile-commercial-map.png).
