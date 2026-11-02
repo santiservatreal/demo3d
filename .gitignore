@@ -5,3 +5,8 @@ test-results/
 .env
 .env.local
 .env.*.local
+.local/
+apps/*/dist/
+coverage/
+*.tsbuildinfo
+artifacts/

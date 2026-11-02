@@ -1,0 +1,14 @@
+.git
+.env
+.env.*
+!.env.example
+.local
+node_modules
+**/node_modules
+dist
+apps/*/dist
+artifacts
+coverage
+references/pipeline-city.html
+test-results
+playwright-report

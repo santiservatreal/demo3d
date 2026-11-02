@@ -1,0 +1,17 @@
+# Optional: a trusted organizational build proxy CA. TLS validation remains enabled.
+services:
+  migrate:
+    build:
+      secrets: [build_ca]
+  api:
+    build:
+      secrets: [build_ca]
+  worker:
+    build:
+      secrets: [build_ca]
+  web:
+    build:
+      secrets: [build_ca]
+secrets:
+  build_ca:
+    file: ${BIRDVIEW_BUILD_CA_FILE:?Set the public trusted proxy CA file}

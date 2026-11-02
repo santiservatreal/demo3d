@@ -1,8 +1,28 @@
 {
   "rewrites": [
-    { "source": "/page", "destination": "/page/index.html" },
-    { "source": "/page/", "destination": "/page/index.html" },
-    { "source": "/demo", "destination": "/index.html" },
-    { "source": "/demo/", "destination": "/index.html" }
+    {
+      "source": "/page",
+      "destination": "/page/index.html"
+    },
+    {
+      "source": "/page/",
+      "destination": "/page/index.html"
+    },
+    {
+      "source": "/demo",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/demo/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/app",
+      "destination": "/app/index.html"
+    },
+    {
+      "source": "/app/:path*",
+      "destination": "/app/index.html"
+    }
   ]
 }

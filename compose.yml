@@ -1,0 +1,116 @@
+name: birdview
+x-server: &server
+  image: birdview-server:local
+  build:
+    context: .
+    dockerfile: infra/docker/Dockerfile
+    target: server
+  init: true
+  security_opt: ['no-new-privileges:true']
+  cap_drop: [ALL]
+  volumes: [birdview_private:/app/.local]
+  restart: unless-stopped
+x-runtime: &runtime
+  APP_PROFILE: ${APP_PROFILE:-demo}
+  NODE_ENV: ${BIRDVIEW_NODE_ENV:-development}
+  APP_ORIGIN: ${PUBLIC_ORIGIN:-http://127.0.0.1:8080}
+  BETTER_AUTH_URL: ${PUBLIC_ORIGIN:-http://127.0.0.1:8080}
+  BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?Run bootstrap}
+  CSRF_SECRET: ${CSRF_SECRET:?Run bootstrap}
+  DATABASE_URL: postgresql://birdview_runtime:${RUNTIME_DB_PASSWORD:?Run bootstrap}@db:5432/${POSTGRES_DB:-birdview}
+  AUTH_DATABASE_URL: postgresql://birdview_auth:${AUTH_DB_PASSWORD:?Run bootstrap}@db:5432/${POSTGRES_DB:-birdview}
+  REDIS_URL: redis://:${REDIS_PASSWORD:?Run bootstrap}@redis:6379
+  VAULT_ENCRYPTION_KEY: ${VAULT_ENCRYPTION_KEY:?Run bootstrap}
+  VAULT_LOOKUP_KEY: ${VAULT_LOOKUP_KEY:?Run bootstrap}
+  CHROMIUM_PATH: /usr/bin/chromium
+  ARTIFACT_DIR: /app/.local/artifacts
+  AI_ALLOWED_ENDPOINTS: ${AI_ALLOWED_ENDPOINTS:-}
+services:
+  db:
+    image: postgres:17.6-alpine@sha256:ef257d85f76e48da1c64832459b59fcaba1a4dac97bf5d7450c77753542eee94
+    user: '70:70'
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-birdview}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run bootstrap}
+    volumes: [birdview_pg:/var/lib/postgresql/data]
+    healthcheck:
+      test: ['CMD-SHELL','pg_isready -U postgres -d $$POSTGRES_DB']
+      interval: 3s
+      timeout: 3s
+      retries: 40
+    restart: unless-stopped
+  redis:
+    image: redis:7.4.6-alpine@sha256:3b73847e72874be07e6657b129a94761662b79bc0f679273757d4218573b2a98
+    user: '999:999'
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?Run bootstrap}
+    command: ['sh','-c','exec redis-server --appendonly yes --requirepass "$$REDIS_PASSWORD"']
+    volumes: [birdview_redis:/data]
+    healthcheck:
+      test: ['CMD-SHELL','REDISCLI_AUTH=$$REDIS_PASSWORD redis-cli ping | grep -q PONG']
+      interval: 3s
+      timeout: 3s
+      retries: 40
+    restart: unless-stopped
+  migrate:
+    <<: *server
+    environment:
+      <<: *runtime
+      MIGRATION_DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:?Run bootstrap}@db:5432/${POSTGRES_DB:-birdview}
+      RUNTIME_DB_PASSWORD: ${RUNTIME_DB_PASSWORD:?Run bootstrap}
+      AUTH_DB_PASSWORD: ${AUTH_DB_PASSWORD:?Run bootstrap}
+      VAULT_DB_PASSWORD: ${VAULT_DB_PASSWORD:?Run bootstrap}
+    command: ['node','--import','tsx','packages/db/src/migrate.ts']
+    depends_on:
+      db: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    restart: 'no'
+  api:
+    <<: *server
+    environment: *runtime
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    healthcheck:
+      test: ['CMD','node','-e','fetch("http://127.0.0.1:3001/health/ready").then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  worker:
+    <<: *server
+    environment:
+      <<: *runtime
+      VAULT_DATABASE_URL: postgresql://birdview_vault:${VAULT_DB_PASSWORD:?Run bootstrap}@db:5432/${POSTGRES_DB:-birdview}
+    command: ['node','--import','tsx','apps/worker/src/index.ts']
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    shm_size: '256mb'
+    healthcheck:
+      test: ['CMD','node','-e','const fs=require("fs");if(Date.now()-fs.statSync(".local/worker-heartbeat").mtimeMs>120000)process.exit(1)']
+      interval: 30s
+      timeout: 5s
+      retries: 5
+  web:
+    image: birdview-web:local
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+      target: web
+    ports: ['127.0.0.1:8080:8080']
+    environment: {XDG_CONFIG_HOME: /tmp/config, XDG_DATA_HOME: /tmp/data, NO_PROXY: 'localhost,127.0.0.1,api,db,redis', no_proxy: 'localhost,127.0.0.1,api,db,redis'}
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: ['no-new-privileges:true']
+    cap_drop: [ALL]
+    depends_on:
+      api: {condition: service_healthy}
+    healthcheck:
+      test: ['CMD','wget','-Y','off','-q','--spider','http://127.0.0.1:8080/app/']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  birdview_pg:
+  birdview_redis:
+  birdview_private:

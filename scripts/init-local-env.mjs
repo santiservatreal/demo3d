@@ -1,0 +1,17 @@
+import { randomBytes } from 'node:crypto';
+import { existsSync, readFileSync, writeFileSync, mkdirSync, chmodSync } from 'node:fs';
+const path = '.env';
+const current = existsSync(path) ? readFileSync(path, 'utf8') : readFileSync('.env.example', 'utf8');
+const values = Object.fromEntries(current.split('\n').filter(line => /^[A-Z_]+=/.test(line)).map(line => { const i=line.indexOf('='); return [line.slice(0,i),line.slice(i+1)]; }));
+const hex = () => randomBytes(32).toString('hex');
+for (const name of ['POSTGRES_PASSWORD','RUNTIME_DB_PASSWORD','AUTH_DB_PASSWORD','VAULT_DB_PASSWORD','REDIS_PASSWORD','BETTER_AUTH_SECRET','CSRF_SECRET']) values[name] ||= hex();
+for (const name of ['VAULT_ENCRYPTION_KEY','VAULT_LOOKUP_KEY']) values[name] ||= randomBytes(32).toString('base64');
+values.MIGRATION_DATABASE_URL ||= `postgresql://postgres:${values.POSTGRES_PASSWORD}@127.0.0.1:54329/birdview`;
+values.DATABASE_URL ||= `postgresql://birdview_runtime:${values.RUNTIME_DB_PASSWORD}@127.0.0.1:54329/birdview`;
+values.AUTH_DATABASE_URL ||= `postgresql://birdview_auth:${values.AUTH_DB_PASSWORD}@127.0.0.1:54329/birdview`;
+values.VAULT_DATABASE_URL ||= `postgresql://birdview_vault:${values.VAULT_DB_PASSWORD}@127.0.0.1:54329/birdview`;
+values.REDIS_URL ||= `redis://:${values.REDIS_PASSWORD}@127.0.0.1:63799`;
+mkdirSync('.local', { recursive:true, mode:0o700 });
+writeFileSync(path, Object.entries(values).map(([key,value]) => `${key}=${value}`).join('\n')+'\n', { mode:0o600 });
+chmodSync(path, 0o600);
+console.log('Local environment initialized; secret values were not printed.');

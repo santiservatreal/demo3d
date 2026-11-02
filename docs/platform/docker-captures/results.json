@@ -1,0 +1,30 @@
+{
+  "testedAt": "2026-11-02T16:25:53.473Z",
+  "browser": "Chromium",
+  "results": [
+    {
+      "flow": "guided_chat",
+      "milliseconds": 903
+    },
+    {
+      "flow": "pdf_report",
+      "milliseconds": 2084
+    },
+    {
+      "viewport": 1280,
+      "overflow": false
+    },
+    {
+      "viewport": 768,
+      "overflow": false
+    },
+    {
+      "viewport": 390,
+      "overflow": false
+    },
+    {
+      "browserErrors": 0,
+      "externalRequests": 0
+    }
+  ]
+}

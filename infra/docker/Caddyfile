@@ -1,0 +1,27 @@
+:8080 {
+ header {
+  X-Content-Type-Options nosniff
+  Referrer-Policy same-origin
+  Permissions-Policy "camera=(), microphone=(), geolocation=()"
+ }
+ handle /api/* {
+  reverse_proxy api:3001
+ }
+ handle /health/* {
+  reverse_proxy api:3001
+ }
+ handle /app/* {
+  root * /srv
+  header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'"
+  try_files {path} /app/index.html
+  file_server
+ }
+ handle /app {
+  redir /app/ 308
+ }
+ handle {
+  root * /srv
+  try_files {path} {path}/index.html /index.html
+  file_server
+ }
+}

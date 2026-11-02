@@ -1,0 +1,47 @@
+name: BirdView platform
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: {version: 11.25.0}
+      - uses: actions/setup-node@v4
+        with: {node-version: 24.19.0, cache: pnpm}
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm platform:lint && pnpm platform:types && pnpm test && pnpm build
+      - name: Real PostgreSQL and Redis
+        run: |
+          node scripts/init-local-env.mjs
+          docker compose -f compose.infra.yml up -d --wait
+          pnpm platform:migrate
+          pnpm platform:seed
+          pnpm platform:test:prepare
+      - name: Chromium
+        run: sudo apt-get update && sudo apt-get install -y chromium-browser || sudo apt-get install -y chromium
+      - run: pnpm platform:test
+      - name: Browser end to end
+        run: |
+          pnpm platform:dev > /tmp/birdview-dev.log 2>&1 &
+          for attempt in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:5174/api/v1/config > /dev/null; then break; fi
+            sleep 1
+          done
+          pnpm platform:e2e
+      - name: Dependency report
+        run: pnpm audit --prod --json > dependency-audit.json
+      - name: Build deployable images
+        run: docker compose build
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: birdview-validation
+          path: |
+            docs/platform/captures
+            dependency-audit.json
