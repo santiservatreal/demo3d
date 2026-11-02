@@ -23,8 +23,10 @@ jobs:
           pnpm platform:migrate
           pnpm platform:seed
           pnpm platform:test:prepare
-      - name: Chromium
-        run: sudo apt-get update && sudo apt-get install -y chromium-browser || sudo apt-get install -y chromium
+      - name: Chromium compatible with Playwright
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          node --input-type=module -e 'import { chromium } from "@playwright/test"; import { appendFileSync } from "node:fs"; appendFileSync(process.env.GITHUB_ENV, "CHROMIUM_PATH=" + chromium.executablePath() + "\n");'
       - run: pnpm platform:test
       - name: Browser end to end
         run: |
