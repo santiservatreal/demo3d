@@ -1,14 +1,14 @@
 {
-  "testedAt": "2026-11-02T16:14:25.678Z",
+  "testedAt": "2026-11-02T17:22:14.012Z",
   "browser": "Chromium",
   "results": [
     {
       "flow": "guided_chat",
-      "milliseconds": 451
+      "milliseconds": 418
     },
     {
       "flow": "pdf_report",
-      "milliseconds": 2227
+      "milliseconds": 2201
     },
     {
       "viewport": 1280,

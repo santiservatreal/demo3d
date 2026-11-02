@@ -28,7 +28,8 @@
     "platform:test": "node --env-file=.local/test.env node_modules/vitest/vitest.mjs run --config vitest.platform.config.ts",
     "platform:e2e": "node --env-file=.env --import tsx tests/platform/e2e.ts",
     "platform:test:prepare": "node --env-file=.env --import tsx scripts/prepare-test-db.ts",
-    "platform:lint": "node scripts/check-platform-source.mjs"
+    "platform:lint": "node scripts/check-platform-source.mjs",
+    "platform:e2e:static": "node --import tsx tests/platform/browser-demo-e2e.ts"
   },
   "dependencies": {
     "@fontsource/dm-sans": "5.3.0",
@@ -71,7 +72,8 @@
     "@birdview/reporting": "workspace:*",
     "@birdview/jobs": "workspace:*",
     "@birdview/city": "workspace:*",
-    "@birdview/fixtures": "workspace:*"
+    "@birdview/fixtures": "workspace:*",
+    "pdf-lib": "1.17.1"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1",

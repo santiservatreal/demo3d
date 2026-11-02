@@ -29,6 +29,25 @@ O `docker compose -f compose.yml -f infra/docker/compose.build-ca.yml build`. No
 
 Esta topología es de una instancia, sin alta disponibilidad. Vercel puede alojar la landing o el frontend estático; no sustituye API, PostgreSQL, Redis y workers. La evolución AWS prevista es compute para web/API/worker, PostgreSQL gestionado, Redis y S3 privado con KMS/Secrets Manager en una región elegida de la UE. Verifica disponibilidad regional y condiciones del modelo antes de prometer residencia. WAF es complementario, no reemplaza autorización.
 
+## Vercel y la ruta /app
+
+**Pruebas gratuitas, sin servidor:** el build de Vercel (`VERCEL=1`) selecciona la demo de navegador cuando falta `BIRDVIEW_API_ORIGIN`. `/app/` usa IndexedDB, datos ficticios y cálculos compartidos con la plataforma. No hace solicitudes `/api` ni necesita PostgreSQL, Redis, claves de IA o Tavus. Usa `pnpm build`, salida `dist`; abre el último Deployment y añade `/app/`. [Detalle y límites](BROWSER_DEMO.md).
+
+`BIRDVIEW_BROWSER_DEMO=1` fuerza ese modo en cualquier build; `BIRDVIEW_BROWSER_DEMO=0` fuerza servidor. `/app/?demo=local` entra explícitamente en pruebas y recuerda esa elección en la pestaña; `?demo=server` la elimina y solicita el servidor. Son modos separados: un backend configurado que falla **no** se sustituye silenciosamente por datos ficticios. Cambiar variables de build requiere volver a desplegar.
+
+**Instalación completa, para más adelante:** añadir `/app` no crea PostgreSQL, Redis ni el worker. El mensaje antiguo «Acceso no disponible / No se pudo completar la solicitud» podía provenir del 404 de `/api/v1/session`, sin que existiera un problema de permisos del usuario.
+
+La interfaz comprueba ahora `/api/v1/config` antes de solicitar sesión. Si falta la API o recibe el HTML de un sitio estático, muestra un estado de servidor pendiente/no disponible. Las funciones `api/v1/[...path].ts` y `api/auth/[...path].ts` permiten mantener la web en Vercel y conectar una API externa real:
+
+1. Publica la instalación de BirdView con API, PostgreSQL, Redis y worker y un origen HTTPS. El Compose de este repositorio es una opción; requiere alojamiento y no ha sido contratado automáticamente.
+2. En las variables del proyecto de Vercel configura **`BIRDVIEW_API_ORIGIN`** con el origen HTTPS de esa instalación, sin `/api`, rutas, credenciales ni parámetros. No es una URL de PostgreSQL y no requiere entregar secretos de base de datos a Vercel.
+3. Configura en el servidor **`PUBLIC_ORIGIN`** con el origen canónico del frontend de Vercel. En ejecución nativa, ajusta `APP_ORIGIN` y `BETTER_AUTH_URL` al mismo origen. Así las verificaciones de origen y las cookies corresponden a la web que usa el usuario. No abras CORS ni desactives CSRF para sortear esta configuración.
+4. Vuelve a desplegar en Vercel. Sus funciones conservan cookies, CSRF y respuestas privadas y dirigen únicamente `/api/v1/` y `/api/auth/` al destino configurado. El usuario no elige el destino de cada petición.
+
+Sin `BIRDVIEW_API_ORIGIN`, las funciones responden 503 `BACKEND_NOT_CONFIGURED` y no hacen llamadas externas; la demo de navegador no las utiliza. En modo servidor, la pantalla explica la conexión pendiente y ofrece entrar explícitamente en pruebas gratuitas. Direcciones inválidas y redirecciones se rechazan; los detalles de fallos de transporte no se devuelven al navegador. La conexión tiene un límite conservador de 4 MiB por petición/respuesta y corta streams antes del tiempo máximo de función. Para archivos mayores, usa la instalación principal con acceso autenticado. Las sesiones y permisos reales siguen en el backend; estas funciones no implementan otra base de datos ni sustituyen al worker.
+
+Los enlaces de preview con identificador de despliegue corresponden a una versión concreta. Un push nuevo produce otro despliegue: abre el último desde Vercel o utiliza un dominio canónico configurado. El origen del servidor debe coincidir con el frontend elegido, sin aceptar indiscriminadamente todos los dominios `vercel.app`.
+
 ## Backups y restore
 
 El piloto debe programar `pg_dump` desde una tarea operativa con credenciales separadas, cifrar el resultado antes de enviarlo a almacenamiento privado externo y copiar los objetos con sus checksums. Este repositorio no afirma que exista ya un servicio externo de backup. Conserva por separado las versiones de claves necesarias para restaurar, con acceso restringido.

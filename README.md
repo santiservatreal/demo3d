@@ -2,7 +2,11 @@
 
 Inteligencia de empresa con chat, evidencias, ciudad isométrica, tareas e informes. La nueva aplicación está en **`/app/`**, con el lenguaje visual del HTML aportado: interfaz clara, navegación lateral, conversación central y ciudad opcional.
 
-La demo usa PostgreSQL y Redis reales y datos ficticios persistentes. Sus respuestas se calculan localmente, sin API keys ni minutos de Tavus. Ciudad, presentación y landing anteriores siguen en `/`, `/demo` y `/page`.
+Para **pruebas gratuitas en Vercel**, `/app/` abre una demo con datos ficticios guardados en el navegador (IndexedDB), sin servidor ni API keys. Puedes consultar el chat guiado, explorar las dos empresas, importar CSV/JSON y generar informes y presentaciones. No consume minutos de Tavus ni llamadas a IA. Ciudad, presentación y landing anteriores siguen en `/`, `/demo` y `/page`.
+
+En Vercel, despliega esta rama con `pnpm build`, salida `dist`, y abre **el último despliegue**, ruta **`/app/`**. Sin `BIRDVIEW_API_ORIGIN`, se selecciona automáticamente el modo de pruebas. Para entrar explícitamente desde cualquier compilación, usa **`/app/?demo=local`**. Los datos quedan en ese navegador y origen; no se comparten entre dispositivos o enlaces de preview. El botón **Restablecer demo** recupera los ejemplos iniciales. [Funcionamiento y límites](docs/platform/BROWSER_DEMO.md).
+
+La instalación completa que sigue a continuación usa PostgreSQL y Redis reales, sesiones y permisos de servidor. Se conserva para la siguiente fase; no hace falta contratarla para estas pruebas.
 
 ## Arranque con Docker
 
@@ -52,7 +56,7 @@ Las pruebas de plataforma usan **`birdview_test`**, separada de la demo. No sust
 
 Chat guiado, datos y permisos, importación CSV/JSON, consultas con fuentes, propuestas aprobables, tareas, rutinas, HTML/PDF/CSV, presentaciones editables y gráficos locales están implementados. La IA externa requiere endpoint aprobado, revisión y presupuesto. HubSpot tiene un adaptador de lectura con pruebas de contrato. Holded y Factorial tienen transporte real desactivado hasta verificar sus contratos y cuentas. Studio generativo, voz, Slides/PPTX y MCP indican su dependencia pendiente.
 
-**Vercel estático no ejecuta esta plataforma completa.** `pnpm build` incluye su frontend en `dist/app`, pero API, PostgreSQL, Redis y worker requieren servidor. No se ha publicado un backend de producción ni creado infraestructura de pago.
+El modo gratuito es una prueba local con datos ficticios, sin usuarios reales, conexiones CRM ni automatizaciones en segundo plano. Para la plataforma completa, las funciones de Vercel permiten conectar la API mediante `BIRDVIEW_API_ORIGIN`; esa instalación sí necesita PostgreSQL, Redis y worker. [Configuración de ambos modos](docs/platform/OPERATIONS.md#vercel-y-la-ruta-app). No se ha contratado infraestructura ni publicado un backend de producción.
 
 - [Estado y límites](IMPLEMENTATION_STATUS.md)
 - [Arquitectura](docs/platform/ARCHITECTURE.md)

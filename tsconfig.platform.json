@@ -19,6 +19,8 @@
     ]
   },
   "include": [
+    "api/**/*.ts",
+    "server/**/*.ts",
     "apps/**/*.ts",
     "apps/**/*.tsx",
     "packages/**/*.ts",

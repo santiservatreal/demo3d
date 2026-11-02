@@ -45,7 +45,7 @@ export function ChatPage({incoming,onConsumed}:{incoming:ChatDraft|null;onConsum
       const reply=await api<{messageId:string;queryId:string;status:string;streamUrl:string}>(`/conversations/${conversationId}/messages`,{method:'POST',body:{content:value,...((from||to)?{filters:{...(from?{from}:{}),...(to?{to}:{})}}:{}),...(context?.entityId?{contextEntityId:context.entityId}:{})}});
       setDraft('');setContext(undefined);navigate(`/chat/${conversationId}`,{replace:!id});
       void client.invalidateQueries({queryKey:[session.organization.id,'messages',conversationId]});void client.invalidateQueries({queryKey:[session.organization.id,'/conversations']});
-      if(reply.queryId)openStream(reply.streamUrl,reply.queryId,conversationId);
+      if(reply.queryId&&reply.status!=='ready')openStream(reply.streamUrl,reply.queryId,conversationId);
     }catch(e){setError(e);}finally{setSending(false);}
   }
   async function cancel(){const target=queryId||text(recordData(pending).queryId);if(!target)return;try{await api(`/queries/${target}/cancel`,{method:'POST',body:{}});setQueryId(null);activeStream.current?.close();setProgress('');void messages.refetch();notify('Solicitud de cancelación registrada.');}catch(e){setError(e);}}

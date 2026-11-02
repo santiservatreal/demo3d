@@ -1,0 +1,52 @@
+{
+  "testedAt": "2026-11-02T17:23:12.892Z",
+  "browser": "Chromium",
+  "mode": "Static frontend, no API/database/server",
+  "results": [
+    {
+      "flow": "guided_chat_and_evidence",
+      "passed": true
+    },
+    {
+      "flow": "actual_local_pdf",
+      "bytes": 7344
+    },
+    {
+      "flow": "indexeddb_reload_persistence",
+      "passed": true
+    },
+    {
+      "flow": "csv_import",
+      "passed": true
+    },
+    {
+      "flow": "industrial_company_switch_persists",
+      "passed": true
+    },
+    {
+      "viewport": 1280,
+      "overflow": false
+    },
+    {
+      "viewport": 768,
+      "overflow": false
+    },
+    {
+      "viewport": 390,
+      "overflow": false
+    },
+    {
+      "flow": "logout_and_reset",
+      "passed": true
+    },
+    {
+      "browserErrors": 0,
+      "apiRequests": 0,
+      "externalRequests": 0
+    },
+    {
+      "flow": "explicit_server_error_and_local_entry",
+      "passed": true
+    }
+  ]
+}

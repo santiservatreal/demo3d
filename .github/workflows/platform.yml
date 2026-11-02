@@ -38,6 +38,15 @@ jobs:
           pnpm platform:e2e
       - name: Dependency report
         run: pnpm audit --prod --json > dependency-audit.json
+      - name: Free static browser demo, without API requests
+        run: |
+          BIRDVIEW_BROWSER_DEMO=1 pnpm platform:build
+          pnpm --filter @birdview/web exec vite preview --port 4177 --host 127.0.0.1 > /tmp/birdview-static.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4177/app/ > /dev/null; then break; fi
+            sleep 1
+          done
+          pnpm platform:e2e:static
       - name: Build deployable images
         run: docker compose build
       - uses: actions/upload-artifact@v4
@@ -46,4 +55,5 @@ jobs:
           name: birdview-validation
           path: |
             docs/platform/captures
+            docs/platform/browser-demo-captures
             dependency-audit.json

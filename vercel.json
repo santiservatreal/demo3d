@@ -24,5 +24,10 @@
       "source": "/app/:path*",
       "destination": "/app/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/**/*.ts": {
+      "maxDuration": 60
+    }
+  }
 }

@@ -5,12 +5,15 @@ Entorno: 2 de noviembre de 2026; Linux x64, Node 24.19.0, PostgreSQL 17.6 y Redi
 ## Evidencia
 
 - TypeScript estricto y comprobación de patrones peligrosos/secretos.
-- **30 pruebas de plataforma** con PostgreSQL/Redis reales, en una base aislada.
-- **30 pruebas anteriores** de modelos de ciudad.
+- **45 pruebas de plataforma**: 30 existentes con PostgreSQL/Redis reales y contratos, 7 de publicación/proxy y 8 de demo de navegador.
+- **298 pruebas anteriores** de modelos de ciudad.
 - Auditoría `pnpm audit --prod`: **0 vulnerabilidades publicadas** después de actualizar Ajv/Vitest y retirar plugins no usados. Es una fotografía del registro, no garantía de ausencia de vulnerabilidades.
 - E2E real: entrada demo, pregunta y fuentes, generación/descarga PDF, conocimiento, importación CSV, cambio de empresa, ciudad industrial, navegación móvil, teclado y movimiento reducido. Cero solicitudes externas de la demo y cero errores de JavaScript en el recorrido.
 - Docker Compose: API, PostgreSQL, Redis, worker y Caddy saludables; E2E completo también a través del puerto publicado.
 - Capturas en [captures](captures/desktop-1440.png); mediciones de cada ejecución en [results.json](captures/results.json).
+- Prueba estática del build `VERCEL=1`, sin backend: chat con fuentes, descarga PDF válida (7.344 bytes en esta ejecución), CSV, IndexedDB tras recargar, cambio de empresa, cierre/reentrada y reinicio. Anchos 390/768/1280/1440; cero solicitudes a `/api`, cero solicitudes externas y cero errores de JavaScript durante la demo. También se verifica entrada explícita desde el error de modo servidor. [Resultados y capturas](browser-demo-captures/results.json).
+
+El modo gratuito es una prueba local independiente, no una sustitución de PostgreSQL en los ensayos de aislamiento. Reutiliza analítica, fixtures y validación. Las funciones de puente se ensayaron mediante HTTP local con transportes controlados, no contra un servidor de producción en Vercel. No se pudo verificar la URL remota del usuario desde este entorno (fallo de resolución DNS); una URL de preview antigua no recibe los cambios de una compilación nueva.
 
 ## Aceptación
 
